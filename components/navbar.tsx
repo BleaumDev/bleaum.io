@@ -34,7 +34,7 @@ export const NAVLINKS: NavItem[] = [
         href: "#",
         children: [
           { title: "Point of Sale", href: "/grow/point-of-sale", description: "Retail POS for any size operation", icon: ShoppingCartIcon },
-          { title: "Ecommerce ", href: "/grow/ecommerce", description: "A whole web service availabilty", icon: GlobeIcon },
+          { title: "Ecommerce ", href: "/grow/ecommerce", description: "Branded mobile apps adn web portals", icon: GlobeIcon },
           { title: "Marketing & Loyalty", href: "/grow/marketing", description: "Increase purchase frequency & reward your regulars", icon: GiftIcon },
           { title: "Payments", href: "/grow/payments", description: "Boost AOV with cashless payments", icon: CreditCardIcon },
           { title: "Delivery", href: "/grow/delivery", description: "Drive efficient delivery operations", icon: TruckIcon },
@@ -47,7 +47,7 @@ export const NAVLINKS: NavItem[] = [
           { title: "Reporting & Analytics", href: "/operations/reporting-analytics", description: "Unified, customizable reporting & insights", icon: BarChart2Icon },
           { title: "Automated Compliance", href: "/operations/automated-compilance", description: "Tools for retailers&apos; intense regulatory needs", icon: ShieldCheckIcon },
           { title: "Inventory Management", href: "/operations/inventory-management", description: "Optimize spend, inventory levels, & minimize waste", icon: BoxesIcon },
-          { title: "Integrations", href: "/operations/integrations", description: "Seamlessly integrated with over 100 tech partners", icon: PlugIcon },
+          { title: "Integrations", href: "/operations/integrations", description: "Integration partners that help you run your business better", icon: PlugIcon },
           
         ],
       },
@@ -367,7 +367,7 @@ export function NavMenu({ isSheet = false }) {
                   onClick={handleProductClick}
                 >
                   {item.title}
-                  <svg className={`ml-1 w-3 h-3 transition-transform duration-200 ${dropdownOpenState || isNavItemActive(item) ? 'rotate-180' : 'group-hover:rotate-180 group-focus-within:rotate-180'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                  <svg className={`ml-1 w-3 h-3 transition-transform duration-200 ${dropdownOpenState ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
                 </Anchor>
                 {!isSheet && (
                   <div className={`dropdown-menu absolute left-0 mt-3 w-[90vw] max-w-[700px] bg-background border border-border rounded-xl shadow-2xl z-50 p-4 sm:p-8 ${
@@ -450,7 +450,7 @@ export function NavMenu({ isSheet = false }) {
                   onClick={handleResourcesClick}
                 >
                   {item.title}
-                  <svg className={`ml-1 w-3 h-3 transition-transform duration-200 ${dropdownOpenState || isNavItemActive(item) ? 'rotate-180' : 'group-hover:rotate-180 group-focus-within:rotate-180'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                  <svg className={`ml-1 w-3 h-3 transition-transform duration-200 ${dropdownOpenState ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
                 </Anchor>
                 {!isSheet && (
                   <div className={`dropdown-menu absolute left-0 mt-3 w-72 bg-background border border-border rounded-xl shadow-2xl z-50 py-2 ${
@@ -516,7 +516,7 @@ export function NavMenu({ isSheet = false }) {
                   onClick={handleCompanyClick}
                 >
                   {item.title}
-                  <svg className={`ml-1 w-3 h-3 transition-transform duration-200 ${dropdownOpenState || isNavItemActive(item) ? 'rotate-180' : 'group-hover:rotate-180 group-focus-within:rotate-180'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                  <svg className={`ml-1 w-3 h-3 transition-transform duration-200 ${dropdownOpenState ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
                 </Anchor>
                 {!isSheet && (
                   <div className={`dropdown-menu absolute left-0 mt-3 w-72 bg-background border border-border rounded-xl shadow-2xl z-50 py-2 ${
@@ -582,7 +582,7 @@ export function NavMenu({ isSheet = false }) {
                   onClick={handleHelpSupportClick}
                 >
                   {item.title}
-                  <svg className={`ml-1 w-3 h-3 transition-transform duration-200 ${dropdownOpenState || isNavItemActive(item) ? 'rotate-180' : 'group-hover:rotate-180 group-focus-within:rotate-180'}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                  <svg className={`ml-1 w-3 h-3 transition-transform duration-200 ${dropdownOpenState ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
                 </Anchor>
                 {!isSheet && (
                   <div className={`dropdown-menu absolute left-0 mt-3 w-72 bg-background border border-border rounded-xl shadow-2xl z-50 py-2 ${
