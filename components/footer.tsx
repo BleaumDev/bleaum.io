@@ -105,7 +105,7 @@ export function Footer() {
                   {section.links.map((link) => (
                     <li key={link.title}>
                       <Link
-                        href={link.href}
+                        href={link.title === "Blog" ? "/blog" : link.href}
                         className="text-white/70 hover:text-white transition-colors duration-300 text-sm inline-block hover:translate-x-1"
                       >
                         {link.title}
