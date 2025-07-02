@@ -176,7 +176,44 @@ export default function Home() {
         </motion.section>
       </motion.section>
 
-   
+      {/* Demo CTA Section */}
+      {/* <motion.section 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="w-full max-w-6xl mx-auto mb-20 md:mb-32 p-8 sm:p-10 md:p-12 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-600 rounded-2xl shadow-2xl text-white text-center relative z-10 hover:shadow-blue-500/25 transition-shadow duration-300"
+      >
+        <div className="flex justify-center mb-6">
+          <Rocket className="w-16 h-16 text-white" />
+        </div>
+        <h2 className="text-3xl md:text-5xl font-bold mb-6">
+          See Your Branded Store Live
+        </h2>
+        <p className="text-lg mb-10 leading-relaxed">
+          Get more than a website — get a fully integrated retail engine optimized for search, conversion, and growth.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link href="/demo">
+            <button className={buttonVariants({ 
+              variant: "secondary", 
+              size: "lg", 
+              className: "px-8 py-3 text-xl hover:scale-105 transition-transform duration-300 flex items-center gap-2"
+            })}>
+              Schedule a Demo <ArrowRight className="w-5 h-5" />
+            </button>
+          </Link>
+          <Link href="/sample-store">
+            <button className={buttonVariants({ 
+              variant: "outline", 
+              size: "lg", 
+              className: "px-8 py-3 text-xl hover:scale-105 transition-transform duration-300 flex items-center gap-2 border-white text-white hover:bg-white hover:text-blue-600"
+            })}>
+              View Sample Store <Eye className="w-5 h-5" />
+            </button>
+          </Link>
+        </div>
+      </motion.section> */}
 
       {/* Customizable Tools Section */}
       <motion.section 
@@ -272,6 +309,127 @@ export default function Home() {
         </div>
       </motion.section>
 
+      {/* Born From the Front Lines Section */}
+      {/* <motion.section 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="w-full max-w-4xl mx-auto mb-20 md:mb-32 p-8 sm:p-10 md:p-12 bg-white/5 dark:bg-white/5 backdrop-filter backdrop-blur-lg rounded-2xl shadow-2xl border border-white/10 relative z-10 hover:border-white/20 transition-colors duration-300 text-center"
+      >
+        <div className="flex justify-center mb-6">
+          <Quote className="w-16 h-16 text-blue-400" />
+        </div>
+        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
+          Every Feature Solves a Real Problem
+        </h2>
+        <p className="text-lg text-gray-300 mb-6 leading-relaxed italic max-w-2xl mx-auto">
+          If it doesn't save time, reduce errors, or make your team faster—we don't build it. No fluff. Just what actually works.
+        </p>
+        <p className="text-blue-300 font-semibold">
+          — Antonio Panella, Founder
+        </p>
+      </motion.section> */}
+
+      {/* Secure & Compliant Section */}
+      {/* <motion.section 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="w-full max-w-6xl mx-auto mb-20 md:mb-32 p-8 sm:p-10 md:p-12 bg-white/5 dark:bg-white/5 backdrop-filter backdrop-blur-lg rounded-2xl shadow-2xl border border-white/10 relative z-10 hover:border-white/20 transition-colors duration-300"
+      >
+        <div className="flex justify-center mb-8">
+          <Lock className="w-16 h-16 text-blue-400" />
+        </div>
+        <h2 className="text-3xl md:text-5xl font-bold mb-8 text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300 text-center">
+          Secure & Compliant, End to End
+        </h2>
+        <ul className="list-none space-y-4 text-lg text-gray-300 max-w-2xl mx-auto">
+          {[ 
+            "Metrc, BioTrack & state integrations",
+            "Encrypted + backed-up data",
+            "Full audit trails & staff permissions",
+            "PCI DSS compliant payments",
+            "GDPR and CCPA privacy controls"
+          ].map((item, index) => (
+            <motion.li
+              key={item}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="flex items-center space-x-3"
+            >
+              <CheckCircle2 className="w-5 h-5 text-blue-400" />
+              <span>{item}</span>
+            </motion.li>
+          ))}
+        </ul>
+      </motion.section> */}
+
+      {/* Industries We Serve Section */}
+      {/* <motion.section 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="w-full max-w-6xl mx-auto mb-20 md:mb-32 p-8 sm:p-10 md:p-12 bg-white/5 dark:bg-white/5 backdrop-filter backdrop-blur-lg rounded-2xl shadow-2xl border border-white/10 relative z-10 hover:border-white/20 transition-colors duration-300 text-center"
+      >
+        <div className="flex justify-center mb-8">
+          <Building className="w-16 h-16 text-blue-400" />
+        </div>
+        <h2 className="text-3xl md:text-5xl font-bold mb-8 text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
+          Who Uses Bleaum?
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-lg text-gray-300 max-w-4xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} viewport={{ once: true }} className="flex items-center justify-center space-x-2 p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors duration-300">
+             <ShoppingCart className="w-5 h-5 text-blue-400"/><span>Cannabis Retail & Delivery</span>
+          </motion.div>
+           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} viewport={{ once: true }} className="flex items-center justify-center space-x-2 p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors duration-300">
+            <MessageSquare className="w-5 h-5 text-blue-400"/> <span>Pharmacies & Wellness Retail</span>
+          </motion.div>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} viewport={{ once: true }} className="flex items-center justify-center space-x-2 p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors duration-300">
+            <Building2 className="w-5 h-5 text-blue-400"/><span>High-Compliance General Retail</span>
+          </motion.div>
+        </div>
+      </motion.section> */}
+
+      {/* Integrations Section */}
+      <motion.section 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="w-full max-w-6xl mx-auto mb-20 md:mb-32 p-8 sm:p-10 md:p-12 bg-white/5 dark:bg-white/5 backdrop-filter backdrop-blur-lg rounded-2xl shadow-2xl border border-white/10 relative z-10 hover:border-white/20 transition-colors duration-300 text-center"
+      >
+        <div className="flex justify-center mb-8">
+          <Link2 className="w-16 h-16 text-blue-400" />
+        </div>
+        <h2 className="text-3xl md:text-5xl font-bold mb-8 text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
+          Integrations That Just Work
+        </h2>
+        <div className="flex flex-wrap justify-center gap-6 text-lg font-medium text-gray-300">
+          {[
+            "QuickBooks",
+            "Weedmaps",
+            "Leafly",
+            "Custom API Access"
+          ].map((item, index) => (
+             <motion.span
+              key={item}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="px-6 py-3 bg-blue-600/30 text-blue-200 rounded-full shadow-inner hover:bg-blue-600/40 transition-colors duration-300"
+            >
+              {item}
+            </motion.span>
+          ))}
+        </div>
+      </motion.section>
+
       {/* Track Everything Section */}
       <motion.section 
         initial={{ opacity: 0, y: 20 }}
@@ -314,8 +472,108 @@ export default function Home() {
         </div>
       </motion.section>
 
- 
-     
+      {/* What Customers Say Section - Auto-scrolling horizontal */}
+      <motion.section 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="w-full max-w-7xl mx-auto mb-20 md:mb-32 relative z-10"
+      >
+        <div className="text-center mb-12">
+          <div className="flex justify-center mb-8">
+            <MessageSquare className="w-16 h-16 text-blue-400" />
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold mb-8 text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
+            What Real Customers Say
+          </h2>
+        </div>
+        
+        {/* Scrolling container */}
+        <div className="relative overflow-hidden">
+          {/* Gradient overlays for smooth fade effect */}
+          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-950 to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-950 to-transparent z-10 pointer-events-none"></div>
+          
+          {/* Auto-scrolling testimonials */}
+          <motion.div
+            className="flex gap-8"
+            animate={{
+              x: [0, -100 * 7] // Adjust based on number of testimonials
+            }}
+            transition={{
+              x: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: 36, // Adjust speed here (higher = slower)
+                ease: "linear",
+              },
+            }}
+          >
+            {/* Duplicate testimonials for seamless loop */}
+            {[
+              {
+                quote: "Our products actually show up in Google searches now. The SEO-native storefront was a game changer.",
+                author: "Sarah M., Portland, Oregon",
+                company: "Green Valley Dispensary"
+              },
+              {
+                quote: "Having our own branded app made us feel like a real tech company. Customers love it.",
+                author: "Mike T., Denver, Colorado", 
+                company: "Mile High Wellness"
+              },
+              {
+                quote: "The loyalty program doubled our repeat customers. Everything syncs perfectly with our POS.",
+                author: "Jessica L., Los Angeles, California",
+                company: "Coastal Cannabis Co."
+              },
+              {
+                quote: "Real-time inventory sync means no more overselling online. It just works.",
+                author: "David R., Austin, Texas",
+                company: "Lone Star Remedies"
+              },
+              // Duplicated testimonials for endless loop effect
+              {
+                quote: "Our products actually show up in Google searches now. The SEO-native storefront was a game changer.",
+                author: "Sarah M., Portland, Oregon",
+                company: "Green Valley Dispensary"
+              },
+              {
+                quote: "Having our own branded app made us feel like a real tech company. Customers love it.",
+                author: "Mike T., Denver, Colorado",
+                company: "Mile High Wellness"
+              },
+              {
+                quote: "The loyalty program doubled our repeat customers. Everything syncs perfectly with our POS.",
+                author: "Jessica L., Los Angeles, California",
+                company: "Coastal Cannabis Co."
+              },
+              {
+                quote: "Real-time inventory sync means no more overselling online. It just works.",
+                author: "David R., Austin, Texas", 
+                company: "Lone Star Remedies"
+              },
+            ].map((testimonial, index) => (
+              <div
+                key={index}
+                className="flex-shrink-0 w-80 p-6 bg-white/5 backdrop-filter backdrop-blur-lg rounded-xl border border-white/10 hover:border-white/20 transition-all duration-300"
+              >
+                <div className="flex justify-center mb-4">
+                  <Quote className="w-8 h-8 text-blue-400" />
+                </div>
+                <p className="text-lg text-gray-300 italic mb-6 leading-relaxed whitespace-pre-line">
+                  "{testimonial.quote}"
+                </p>
+                <div className="text-center">
+                  <p className="text-white font-semibold">{testimonial.author}</p>
+                  <p className="text-gray-400 text-sm">{testimonial.company}</p>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </motion.section>
+
       {/* Talk to Us Section */}
       <motion.section 
         initial={{ opacity: 0, y: 20 }}
