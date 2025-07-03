@@ -29,7 +29,7 @@ export default function BleaumIntegrationsPage() {
       title: "Accounting & Finance",
       description: "Keep your books clean without the manual work",
       icon: <BriefcaseIcon className="w-8 h-8 text-blue-400" />,
-      integrations: ["Merchant Club USA","Mercco","Moneris","QuickBooks", "Moneris", "Aeropay"],
+      integrations: ["Merchant Club USA","Mercco","QuickBooks  Coming Soon", "Aeropay"],
       highlight: "Auto-sync sales data"
     },
     {
@@ -40,10 +40,10 @@ export default function BleaumIntegrationsPage() {
       highlight: "Real-time dashboards"
     },
     {
-      title: "Cultivation & Inventory",
-      description: "From seed to shelf, track every gram",
+      title: "Inventory",
+      description: "Keep your inventory up to date",
       icon: <LeafIcon className="w-8 h-8 text-blue-400" />,
-      integrations: ["GrowFlow", "Mercco","Treez","Weave","Indica online"],
+      integrations: ["GrowFlow", "Lightspeed","Treez","Weave","Indica online"],
       highlight: "Live inventory sync"
     },
     {
@@ -90,7 +90,7 @@ export default function BleaumIntegrationsPage() {
         One Platform. Total Sync. No Double Entry.
         </h1>
         <p className="text-base sm:text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-6 sm:mb-8">
-        Bleaum unifies your cannabis business — from mobile apps and ecommerce to POS, delivery, payments, and compliance — in a single intelligent system.
+        Bleaum unifies your business — from mobile apps and ecommerce to POS, delivery, payments, and compliance — in a single intelligent system.
         </p>
 
         {/* Customer Quote */}
@@ -104,7 +104,7 @@ export default function BleaumIntegrationsPage() {
           <p className="text-base sm:text-lg text-gray-300 italic mb-2 sm:mb-4">
             "We used to spend hours every week exporting reports and fixing mismatched data. Now, everything just flows. Our accountant is happy, and so am I."
           </p>
-          <p className="text-blue-300 font-semibold">— Bridgette , Green Meadow</p>
+          <p className="text-blue-300 font-semibold">— Diana, Doctor Greens</p>
         </motion.div>
 
         <Link href="/demo">
