@@ -266,7 +266,7 @@ export default function AboutPage() {
                 "Bleaum helped us cut inventory time in half and made compliance a breeze. Their support team actually
                 listens and solves problems fast."
               </blockquote>
-              <cite className="text-blue-200 text-base sm:text-lg">— Hugo, Go Green</cite>
+              <cite className="text-blue-200 text-base sm:text-lg">— Dominique, Green Releaf </cite>
               <p className="mt-4 sm:mt-8 text-blue-100 text-base sm:text-lg max-w-2xl mx-auto">
                 Our customers tell us they love how easy Bleaum is to use, and how much time it saves their staff. We're
                 proud to be a partner, not just a vendor.

@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { SearchIcon, BookOpenIcon, BarChart2Icon, ShoppingBagIcon, BookTextIcon, DollarSignIcon, ClipboardCheckIcon, MegaphoneIcon, ShoppingCartIcon, BuildingIcon, Rocket, Wrench, TrendingUp, ShieldCheckIcon, TruckIcon, ShoppingCart, AlertTriangleIcon, GiftIcon, PlugIcon, BoxIcon, UsersIcon, Megaphone, CreditCardIcon, MonitorIcon, LockIcon } from "lucide-react";
+import { SearchIcon, BookOpenIcon, BarChart2Icon, ShoppingBagIcon, BookTextIcon, DollarSignIcon, ClipboardCheckIcon, MegaphoneIcon, ShoppingCartIcon, BuildingIcon, Rocket, Wrench, TrendingUp, ShieldCheckIcon, TruckIcon, ShoppingCart, AlertTriangleIcon, GiftIcon, PlugIcon, BoxIcon, UsersIcon, Megaphone, CreditCardIcon, MonitorIcon, LockIcon, ChevronRight } from "lucide-react";
 import React, { useState } from "react";
 
 // Sample guides data
@@ -370,11 +370,17 @@ export default function BleaumSOPsPage() {
           {Object.keys(topicDetails).map((topic, index) => (
             <button
               key={index}
-              className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:border-blue-200 dark:hover:border-blue-700 transition-all duration-200"
+              className="group flex items-center justify-between w-full px-2 sm:px-4 py-2 sm:py-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:border-blue-200 dark:hover:border-blue-700 transition-all duration-200"
               onClick={() => { setSelectedTopic(topic); setModalOpen(true); }}
             >
-              <span className="text-lg sm:text-xl">{topicDetails[topic].icon}</span>
-              <span className="text-gray-700 dark:text-gray-300 text-xs sm:text-base">{topic}</span>
+              <span className="flex items-center gap-1 sm:gap-2">
+                <span className="text-lg sm:text-xl">{topicDetails[topic].icon}</span>
+                <span className="text-gray-700 dark:text-gray-300 text-xs sm:text-base">{topic}</span>
+              </span>
+              <ChevronRight
+                className="w-4 h-4 text-blue-400 flex-shrink-0 transform transition-transform duration-300 group-hover:rotate-12 group-hover:translate-x-1 group-hover:-translate-y-0.5 group-hover:scale-110"
+                style={{ willChange: 'transform' }}
+              />
             </button>
           ))}
         </div>
