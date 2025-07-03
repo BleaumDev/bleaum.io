@@ -514,44 +514,44 @@ export default function Home() {
             {[
               {
                 quote: "Our products actually show up in Google searches now. The SEO-native storefront was a game changer.",
-                author: "Sarah M., Portland, Oregon",
-                company: "Green Valley Dispensary"
+                author: "Casey, Oklahoma",
+                company: "Trading Post"
               },
               {
                 quote: "Having our own branded app made us feel like a real tech company. Customers love it.",
-                author: "Mike T., Denver, Colorado", 
-                company: "Mile High Wellness"
+                author: "Abigail, California,", 
+                company: "Park Social"
               },
               {
                 quote: "The loyalty program doubled our repeat customers. Everything syncs perfectly with our POS.",
-                author: "Jessica L., Los Angeles, California",
-                company: "Coastal Cannabis Co."
+                author: "AJ, Oklahoma",
+                company: "Happy Root"
               },
               {
                 quote: "Real-time inventory sync means no more overselling online. It just works.",
-                author: "David R., Austin, Texas",
-                company: "Lone Star Remedies"
+                author: "Will, Oklahoma",
+                company: "Gold Leaf"
               },
               // Duplicated testimonials for endless loop effect
               {
                 quote: "Our products actually show up in Google searches now. The SEO-native storefront was a game changer.",
-                author: "Sarah M., Portland, Oregon",
-                company: "Green Valley Dispensary"
+                author: "Samantha, Michigan",
+                company: "Peoples Place"
               },
               {
                 quote: "Having our own branded app made us feel like a real tech company. Customers love it.",
-                author: "Mike T., Denver, Colorado",
-                company: "Mile High Wellness"
+                author: "Abigail, California,", 
+                company: "Park Social"
               },
               {
                 quote: "The loyalty program doubled our repeat customers. Everything syncs perfectly with our POS.",
-                author: "Jessica L., Los Angeles, California",
-                company: "Coastal Cannabis Co."
+                author: "AJ, Oklahoma",
+                company: "Happy Root"
               },
               {
                 quote: "Real-time inventory sync means no more overselling online. It just works.",
-                author: "David R., Austin, Texas", 
-                company: "Lone Star Remedies"
+                author: "Will, Oklahoma",
+                company: "Gold Leaf"
               },
             ].map((testimonial, index) => (
               <div
