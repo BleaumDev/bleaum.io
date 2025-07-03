@@ -295,7 +295,7 @@ export default function Home() {
                 onClick={() => window.location.href = '/demo'}
                 style={{ backgroundImage: 'url(/IMAGE.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}
               >
-                <div className="absolute inset-0 bg-black/30" />
+                <div className="absolute inset-0 bg-black/30 backdrop-blur" />
                 <motion.button
                   className="relative z-10 flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 shadow-2xl border-4 border-white/30 group-hover:border-cyan-400 group-hover:scale-110 transition-all duration-300"
                   whileHover={{ scale: 1.1 }}
