@@ -29,21 +29,21 @@ export default function BleaumIntegrationsPage() {
       title: "Accounting & Finance",
       description: "Keep your books clean without the manual work",
       icon: <BriefcaseIcon className="w-8 h-8 text-blue-400" />,
-      integrations: ["Merchant Club USA","Mercco","QuickBooks  Coming Soon", "Aeropay"],
+      integrations: ["Merchant Club USA","Mercco","QuickBooks (Coming Soon)", "Aeropay"],
       highlight: "Auto-sync sales data"
     },
     {
       title: "Analytics & Insights", 
       description: "See what's working, what's not, and what's next",
       icon: <BarChart2Icon className="w-8 h-8 text-blue-400" />,
-      integrations: ["Google Analytics", "AI-powered reporting (coming soon)"],
+      integrations: ["Google Analytics", "AI-powered reporting (Coming soon)"],
       highlight: "Real-time dashboards"
     },
     {
       title: "Inventory",
       description: "Keep your inventory up to date",
       icon: <LeafIcon className="w-8 h-8 text-blue-400" />,
-      integrations: ["GrowFlow", "Lightspeed","Treez","Weave","Indica online"],
+      integrations: ["GrowFlow", "Lightspeed", "Treez", "Weave", "Indica online", "Cova"],
       highlight: "Live inventory sync"
     },
     {
