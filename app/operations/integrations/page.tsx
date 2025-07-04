@@ -40,11 +40,11 @@ export default function BleaumIntegrationsPage() {
       highlight: "Real-time dashboards"
     },
     {
-      title: "Inventory",
+      title: "Inventory & Stock Control",
       description: "Keep your inventory up to date",
       icon: <LeafIcon className="w-8 h-8 text-blue-400" />,
       integrations: ["GrowFlow", "Lightspeed", "Treez", "Weave", "Indica online", "Cova"],
-      highlight: "Live inventory sync"
+      highlight: "Live sync with full visibilty across the channels"
     },
     {
       title: "Compliance & Traceability",
@@ -195,7 +195,7 @@ export default function BleaumIntegrationsPage() {
             size: "lg", 
             className: "w-full sm:w-auto mx-auto px-6 sm:px-8 py-2 sm:py-3 text-lg sm:text-xl hover:scale-105 transition-transform duration-300 flex items-center justify-center gap-1 sm:gap-2 mb-2"
           })}>
-            Want a custom integration? Let's talk <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+            Would you like to become integration partner? Let's talk <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </Link>
       </motion.section>
