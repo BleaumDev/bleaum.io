@@ -24,6 +24,12 @@ type NavItem = {
   isNew?: boolean;
 };
 
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
+
 export const NAVLINKS: NavItem[] = [
   {
     title: "Product",
@@ -164,6 +170,14 @@ export function Navbar() {
           <Link
             href="/demo"
             className="text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 font-semibold rounded-full text-sm px-5 py-2.5 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 hover:scale-[1.02] active:scale-[0.98]"
+            onClick={() => {
+              if (window.gtag) {
+                window.gtag('event', 'click', {
+                  event_category: 'Button',
+                  event_label: 'Demo'
+                });
+              }
+            }}
           >
             Demo
           </Link>

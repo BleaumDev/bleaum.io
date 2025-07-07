@@ -227,6 +227,14 @@ export default function BleaumPOSPage() {
               size: "lg", 
               className: "w-full sm:w-auto mx-auto px-6 sm:px-10 py-3 sm:py-4 text-lg sm:text-xl hover:scale-105 transition-transform duration-300 flex items-center justify-center gap-2 sm:gap-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-lg shadow-blue-500/25 mb-2"
             })}
+            onClick={() => {
+              if (window.gtag) {
+                window.gtag('event', 'click', {
+                  event_category: 'Button',
+                  event_label: 'Demo'
+                });
+              }
+            }}
           >
             <ShoppingCartIcon className="w-5 h-5 sm:w-6 sm:h-6" />
             See It Handle Real Traffic
@@ -558,6 +566,14 @@ export default function BleaumPOSPage() {
                   size: "lg", 
                   className: "w-full sm:w-auto mx-auto px-6 sm:px-8 py-3 sm:py-4 text-lg sm:text-xl hover:scale-105 transition-transform duration-300 flex items-center justify-center gap-2 sm:gap-3 mb-2"
                 })}
+                onClick={() => {
+                  if (window.gtag) {
+                    window.gtag('event', 'click', {
+                      event_category: 'Button',
+                      event_label: 'Demo'
+                    });
+                  }
+                }}
               >
                 <ShoppingCartIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                 Book Your Personalized Demo

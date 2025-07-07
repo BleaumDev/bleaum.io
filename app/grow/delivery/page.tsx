@@ -76,7 +76,16 @@ export default function DeliveryPage() {
             <p className="text-sm sm:text-lg text-slate-300 leading-relaxed">We built Bleaum Delivery after too many nights tracking down lost drivers, fixing manifest mistakes, and fielding "where's my order?" calls. Now, your team can see every order, every route, and every delivery—live.</p>
           </div>
           <Link href="/demo">
-            <button className="group bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold px-6 sm:px-10 py-3 sm:py-4 rounded-full text-base sm:text-lg transition-all duration-300 transform hover:scale-105 touch-manipulation">
+            <button className="group bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold px-6 sm:px-10 py-3 sm:py-4 rounded-full text-base sm:text-lg transition-all duration-300 transform hover:scale-105 touch-manipulation"
+              onClick={() => {
+                if (window.gtag) {
+                  window.gtag('event', 'click', {
+                    event_category: 'Button',
+                    event_label: 'Demo'
+                  });
+                }
+              }}
+            >
               <span className="flex items-center gap-2 sm:gap-3 justify-center">
                 Book a Demo
                 <ArrowRightIcon className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
@@ -179,7 +188,16 @@ export default function DeliveryPage() {
             <h2 className="text-lg sm:text-2xl lg:text-4xl font-bold mb-2 sm:mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent px-2">Ready for Delivery That Just Works?</h2>
             <p className="text-base sm:text-lg text-slate-300 mb-4 sm:mb-8 max-w-2xl mx-auto px-2">Want to see how Bleaum Delivery could work for your team? Let's set up a quick demo and show you the difference.</p>
             <Link href="/demo">
-              <button className="group bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold px-6 sm:px-12 py-3 sm:py-5 rounded-full text-base sm:text-xl transition-all duration-300 transform hover:scale-105 touch-manipulation">
+              <button className="group bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold px-6 sm:px-12 py-3 sm:py-5 rounded-full text-base sm:text-xl transition-all duration-300 transform hover:scale-105 touch-manipulation"
+                onClick={() => {
+                  if (window.gtag) {
+                    window.gtag('event', 'click', {
+                      event_category: 'Button',
+                      event_label: 'Demo'
+                    });
+                  }
+                }}
+              >
                 <span className="flex items-center gap-2 sm:gap-3 justify-center">
                   <span className="hidden sm:inline">Schedule a Demo to See It in Action</span>
                   <span className="sm:hidden">Schedule a Demo</span>

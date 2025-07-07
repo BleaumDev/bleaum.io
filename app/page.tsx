@@ -167,7 +167,16 @@ export default function Home() {
               >
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
                   <Link href="/demo">
-                    <button className="group relative bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-8 py-3 sm:px-10 sm:py-4 rounded-2xl text-base sm:text-lg font-semibold overflow-hidden shadow-2xl w-full sm:w-auto">
+                    <button className="group relative bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-8 py-3 sm:px-10 sm:py-4 rounded-2xl text-base sm:text-lg font-semibold overflow-hidden shadow-2xl w-full sm:w-auto"
+                      onClick={() => {
+                        if (window.gtag) {
+                          window.gtag('event', 'click', {
+                            event_category: 'Button',
+                            event_label: 'Demo'
+                          });
+                        }
+                      }}
+                    >
                       <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
                       <span className="relative flex items-center justify-center gap-3">
                         <Rocket className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -181,7 +190,15 @@ export default function Home() {
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
                   <button
                     className="group border-2 border-blue-500/50 text-blue-200 px-8 py-3 sm:px-10 sm:py-4 rounded-2xl text-base sm:text-lg font-semibold hover:border-cyan-400 hover:text-cyan-300 transition-all duration-300 backdrop-blur-sm w-full sm:w-auto"
-                    onClick={() => window.location.href = '/demo'}
+                    onClick={() => {
+                      if (window.gtag) {
+                        window.gtag('event', 'click', {
+                          event_category: 'Button',
+                          event_label: 'Demo'
+                        });
+                      }
+                      window.location.href = '/demo';
+                    }}
                   >
                     <span className="flex items-center justify-center gap-3">
                       <Play className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 group-hover:text-cyan-400 transition-colors" />

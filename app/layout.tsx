@@ -44,6 +44,18 @@ export default function RootLayout({
           type="text/css"
           href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
         />
+        {/* Google Analytics */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NB2W40DTPK"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-NB2W40DTPK');
+            `,
+          }}
+        />
       </head>
       <body
         className={`${sansFont.variable} ${monoFont.variable} font-regular antialiased tracking-wide bg-background`}
