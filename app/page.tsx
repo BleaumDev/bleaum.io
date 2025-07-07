@@ -383,88 +383,95 @@ export default function Home() {
                     alt: "pos",
                     title: "All-in-One POS System",
                     description: "Complete point-of-sale solution",
+                    href: "/grow/point-of-sale",
                   },
-
                   {
                     src: "/delivery.png",
                     alt: "Last Mile Delivery Solutions",
                     title: "Last Mile Delivery",
                     description: "Smart routing & tracking",
+                    href: "/grow/delivery",
                   },
                   {
                     src: "/bleaumpay.png",
                     alt: "Bleaum Pay",
                     title: "Bleaum Pay",
                     description: "One Payment Platform. Fully Covered",
+                    href: "/grow/payments",
                   },
-
                   {
                     src: "/3.png",
                     alt: "Branded Mobile App Screenshot",
                     title: "Branded Mobile App",
                     description: "iOS & Android app ",
+                    href: "/grow/ecommerce",
                   },
-                 
                   {
                     src: "/5.png",
                     alt: "Human Support Staff Assisting Customer",
                     title: "Human Support",
                     description: "Real people, real solutions",
+                    href: "/company/support",
                   },
                   {
                     src:"/realtime.png",
                     alt: "Multi-Location Management",
                     title: "Multi-Location Ready",
                     description: "Scale across multiple locations",
+                    href: "/grow/point-of-sale",
                   },
                   {
                     src: "/7.png",
                     alt: "Secure & Compliant Platform",
                     title: "Secure & Compliant",
                     description: "Enterprise-grade security",
+                    href: "/operations/automated-compilance",
                   },
                   {
                     src: "/4.png",
                     alt: "Smart Receipts Drag and Drop Graphic",
                     title: "Smart Receipts",
                     description: "Dynamic receipts for every order",
+                    href: "/grow/point-of-sale",
                   },
                   {
                     src:"/inventory.png",
                     alt: "Real-Time Inventory Tracking",
                     title: "Real-Time Inventory",
                     description: "Live inventory management",
+                    href: "/operations/inventory-management",
                   },
-                 
-                ].map((img: { src: string; alt: string; title: string; description: string }, idx: number) => (
-                  <motion.div
-                    key={idx}
-                    className="relative flex-shrink-0 snap-start group"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: idx * 0.1 }}
-                    viewport={{ once: true }}
-                  >
-                    <div className="relative w-64 h-80 sm:w-80 sm:h-96 rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-br from-blue-900/40 to-blue-800/20 backdrop-blur-xl border border-blue-700/30 group-hover:border-blue-500/50 transition-all duration-500">
-                      <img
-                        src={img.src || "/placeholder.svg"}
-                        alt={img.alt}
-                        className="w-full h-48 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-transparent to-transparent" />
+                ].map((img: { src: string; alt: string; title: string; description: string; href: string }, idx: number) => (
+                  <Link href={img.href} key={idx} className="block group cursor-pointer">
+                    <motion.div
+                      className="relative flex-shrink-0 snap-start group"
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: idx * 0.1 }}
+                      viewport={{ once: true }}
+                      whileHover={{ scale: 1.03 }}
+                    >
+                      <div className="relative w-64 h-80 sm:w-80 sm:h-96 rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-br from-blue-900/40 to-blue-800/20 backdrop-blur-xl border border-blue-700/30 group-hover:border-blue-500/50 transition-all duration-500">
+                        <img
+                          src={img.src || "/placeholder.svg"}
+                          alt={img.alt}
+                          className="w-full h-48 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-transparent to-transparent" />
 
-                      <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
-                        <h3 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2 group-hover:text-cyan-400 transition-colors duration-300">
-                          {img.title}
-                        </h3>
-                        <p className="text-blue-200 text-sm leading-relaxed">{img.description}</p>
+                        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+                          <h3 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2 group-hover:text-cyan-400 transition-colors duration-300">
+                            {img.title}
+                          </h3>
+                          <p className="text-blue-200 text-sm leading-relaxed">{img.description}</p>
+                        </div>
+
+                        {/* Hover overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       </div>
-
-                      {/* Hover overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    </div>
-                  </motion.div>
+                    </motion.div>
+                  </Link>
                 ))}
               </div>
             </div>

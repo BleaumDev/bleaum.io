@@ -34,7 +34,7 @@ export const NAVLINKS: NavItem[] = [
         href: "#",
         children: [
           { title: "Point of Sale", href: "/grow/point-of-sale", description: "Retail POS for any size operation", icon: ShoppingCartIcon },
-          { title: "Ecommerce ", href: "/grow/ecommerce", description: "Branded mobile apps adn web portals", icon: GlobeIcon },
+          { title: "Ecommerce ", href: "/grow/ecommerce", description: "Branded mobile apps and web portals", icon: GlobeIcon },
           { title: "Marketing & Loyalty", href: "/grow/marketing", description: "Increase purchase frequency & reward your regulars", icon: GiftIcon },
           { title: "Payments", href: "/grow/payments", description: "Boost AOV with cashless payments", icon: CreditCardIcon },
           { title: "Delivery", href: "/grow/delivery", description: "Drive efficient delivery operations", icon: TruckIcon },

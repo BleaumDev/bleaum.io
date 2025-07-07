@@ -1,16 +1,11 @@
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
-import { motion } from "framer-motion";
 
 export default function NotFound() {
   return (
     <div className="min-h-[87vh] px-2 sm:py-28 py-36 flex flex-col gap-4 items-center">
       {/* Talk to Us Section */}
-      <motion.section 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
+      <section
         className="w-full max-w-4xl mx-auto mt-12 bg-gradient-to-br from-white/10 via-cyan-900/10 to-blue-900/10 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 overflow-hidden"
       >
         {/* Header */}
@@ -53,7 +48,7 @@ export default function NotFound() {
             By submitting this form, you&apos;re agreeing to receive marketing communications from Bleaum. For information on our privacy practices and commitment to protecting your privacy, please review our <a href="/privacy" className="underline text-cyan-400 hover:text-blue-400">privacy policies</a>.
           </p>
         </div>
-      </motion.section>
+      </section>
     </div>
   );
 }
