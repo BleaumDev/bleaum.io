@@ -46,7 +46,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${sansFont.variable} ${monoFont.variable} font-regular antialiased tracking-wide bg-[#020917]`}
+        className={`${sansFont.variable} ${monoFont.variable} font-regular antialiased tracking-wide bg-background`}
         suppressHydrationWarning
       >
         <ThemeProvider

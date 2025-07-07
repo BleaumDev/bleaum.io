@@ -56,7 +56,7 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="w-full relative overflow-hidden bg-background border-t border-white/10">
+    <footer className="w-full relative overflow-hidden border-t border-white/10" style={{ background: '#020917' }}>
       {/* Decorative Elements */}
       {/* <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div> */}
       {/* <div className="absolute inset-0 bg-gradient-to-b from-[#051530] via-white/5 to-transparent"></div> */}

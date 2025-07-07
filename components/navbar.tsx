@@ -113,7 +113,7 @@ const algolia_props = {
 
 export function Navbar() {
   return (
-    <nav className="w-full border-b h-20 sticky top-0 z-50 bg-background">
+    <nav className="w-full border-b h-20 sticky top-0 z-50" style={{ background: '#020917' }}>
       <div className="container mx-auto px-4 h-full flex items-center justify-between">
         <div className="flex items-center gap-8">
           <SheetLeftbar />
