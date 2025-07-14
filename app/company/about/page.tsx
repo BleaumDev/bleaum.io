@@ -1,75 +1,3 @@
-// import Link from "next/link";
-// import { BriefcaseBusinessIcon, GlobeIcon, LeafIcon, LightbulbIcon, UsersIcon, SparklesIcon, ScaleIcon } from "lucide-react";
-
-// export default function AboutPage() {
-//   return (
-//     <div className="container mx-auto px-4 py-10 max-w-3xl">
-//       <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">About Bleaum</h1>
-//       <h2 className="text-xl font-semibold mb-2 text-blue-700 dark:text-blue-300">A Team of Retailers, Builders, and Problem-Solvers</h2>
-//       <p className="mb-6 text-gray-700 dark:text-gray-300">
-//         Bleaum started in 2021 with a simple goal: make running a retail shop or specialty retail shop less stressful and more profitable. Our founders spent years in the trenches—managing inventory, dealing with compliance headaches, and trying to keep customers happy. We knew there had to be a better way.
-//       </p>
-//       <p className="mb-6 text-gray-700 dark:text-gray-300">
-//         Today, Bleaum is trusted by over 150 retailers across the US. We help teams save hours every week, reduce costly mistakes, and focus on what matters: growing their business and serving their communities.
-//       </p>
-
-//       <div className="flex items-center gap-3 mb-4 mt-8">
-//         <SparklesIcon className="w-8 h-8 text-blue-500" />
-//         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Why We Built Bleaum</h2>
-//       </div>
-//       <p className="mb-6 text-gray-700 dark:text-gray-300">
-//         We saw friends and colleagues struggle with clunky POS systems, endless spreadsheets, and confusing regulations. We built Bleaum to give operators a single, easy-to-use platform that actually helps—not hinders—them. Our software is designed to be intuitive, reliable, and flexible enough to handle the real-world challenges of retail.
-//       </p>
-
-//       <div className="flex items-center gap-3 mb-4 mt-8">
-//         <LightbulbIcon className="w-8 h-8 text-blue-500" />
-//         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Our Mission</h2>
-//       </div>
-//       <p className="mb-6 text-gray-700 dark:text-gray-300">
-//         We believe small businesses are the backbone of every community. Our mission is to help them thrive by making technology accessible, affordable, and genuinely helpful. Whether you're a single-location retail shop or a fast-growing retail chain, we're here to help you scale without losing your edge.
-//       </p>
-
-//       <div className="flex items-center gap-3 mb-4 mt-8">
-//         <LeafIcon className="w-8 h-8 text-blue-500" />
-//         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Built for Cannabis, Ready for More</h2>
-//       </div>
-//       <p className="mb-6 text-gray-700 dark:text-gray-300">
-//         We cut our teeth in cannabis retail, where compliance and efficiency are everything. Our tools help retailers stay audit-ready, keep shelves stocked, and deliver a great customer experience. But our platform works just as well for wellness shops, specialty grocers, and other regulated retailers.
-//       </p>
-
-//       <div className="flex items-center gap-3 mb-4 mt-8">
-//         <UsersIcon className="w-8 h-8 text-blue-500" />
-//         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Real Results, Real People</h2>
-//       </div>
-//       <p className="mb-6 text-gray-700 dark:text-gray-300">
-//         "Bleaum helped us cut inventory time in half and made compliance a breeze. Their support team actually listens and solves problems fast."<br />
-//         <span className="italic text-blue-700 dark:text-blue-300">— Jamie R., GreenLeaf retail shop, Denver</span>
-//       </p>
-//       <p className="mb-6 text-gray-700 dark:text-gray-300">
-//         Our customers tell us they love how easy Bleaum is to use, and how much time it saves their staff. We're proud to be a partner, not just a vendor.
-//       </p>
-
-//       <div className="flex items-center gap-3 mb-4 mt-8">
-//         <BriefcaseBusinessIcon className="w-8 h-8 text-blue-500" />
-//         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Looking Ahead</h2>
-//       </div>
-//       <p className="mb-6 text-gray-700 dark:text-gray-300">
-//         We're constantly improving, adding new features, and listening to feedback. Our roadmap is shaped by the needs of real operators. If you have an idea or a pain point, we want to hear from you.
-//       </p>
-
-//       <div className="flex items-center gap-3 mb-4 mt-8">
-//         <ScaleIcon className="w-8 h-8 text-blue-500" />
-//         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Let's Grow Together</h2>
-//       </div>
-//       <p className="mb-6 text-gray-700 dark:text-gray-300">
-//         Bleaum is more than software—it's a community of builders, operators, and dreamers. If you're ready to simplify your operations and grow your business, let's talk.
-//       </p>
-//       <Link href="/demo">
-//         <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-full mb-8 transition">Book a Demo</button>
-//       </Link>
-//     </div>
-//   );
-// } 
 
 
 import Link from "next/link"
@@ -243,8 +171,7 @@ export default function AboutPage() {
               <h3 className="text-base sm:text-xl font-bold text-slate-900 dark:text-slate-100">Built for Cannabis</h3>
             </div>
             <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-sm sm:text-base">
-              We cut our teeth in cannabis retail, where compliance and efficiency are everything. Our platform works
-              for retailers, wellness shops, and other regulated retailers.
+            We got our start in cannabis retail, where compliance, efficiency, and precision are everything. That foundation taught us how to solve real operational challenges — fast. Today, our platform supports a wide range of highly regulated and fast-moving industries, including cannabis, wellness, retail, and more. If your business demands clarity, control, and compliance, Bleaum was built for you.
             </p>
           </div>
         </div>

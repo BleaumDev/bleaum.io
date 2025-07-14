@@ -30,13 +30,15 @@ export default function NotFound() {
           <input type="text" placeholder="Business website*" className="w-full rounded-lg border border-slate-300 bg-white/80 px-3 sm:px-4 py-2.5 sm:py-3 text-slate-900 placeholder-slate-400 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-cyan-400" required />
           <div className="relative">
             <select className="appearance-none w-full rounded-lg border border-slate-300 bg-white/80 px-3 sm:px-4 py-2.5 sm:py-3 text-slate-900 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-cyan-400 pr-10" required>
-              <option value="">Current eCommerce setup (if any)*</option>
-              <option value="none">No online store yet</option>
+              <option value="">What type of business are you:</option>
+              <option value="none">Marketing</option>
               <option value="weedmaps">Weedmaps only</option>
-              <option value="leafly">Leafly only</option>
-              <option value="custom">Custom website</option>
-              <option value="other">Other platform</option>
+              <option value="leafly">Ecommerce</option>
+              <option value="custom">Delivery</option>
+              <option value="other">Other</option>
             </select>
+            <label htmlFor="business-description" className="block mt-4 mb-1 text-white text-sm sm:text-base font-medium">Describe your business</label>
+            <textarea id="business-description" name="business-description" rows={3} className="appearance-none w-full rounded-lg border border-slate-300 bg-white/80 px-3 sm:px-4 py-2.5 sm:py-3 text-slate-900 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-cyan-400" placeholder="Tell us a bit about your business..." />
             <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-slate-400">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
             </div>
