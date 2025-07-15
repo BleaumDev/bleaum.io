@@ -4,6 +4,8 @@ import { Navbar } from "@/components/navbar";
 import { Space_Mono, Space_Grotesk } from "next/font/google";
 import { Footer } from "@/components/footer";
 import "@/styles/globals.css";
+import Script from 'next/script';
+import AnalyticsTracker from "@/components/AnalyticsTracker";
 
 const sansFont = Space_Grotesk({
   subsets: ["latin"],
@@ -57,10 +59,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className={`${sansFont.variable} ${monoFont.variable} font-regular antialiased tracking-wide bg-background`}
-        suppressHydrationWarning
-      >
+      <body className={sansFont.className + " bg-[#020917] min-h-screen flex flex-col"}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -72,6 +71,25 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <AnalyticsTracker />
+          <Script
+            strategy="afterInteractive"
+            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+          />
+          <Script
+            id="gtag-init"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}', {
+                  page_path: window.location.pathname,
+                });
+              `,
+            }}
+          />
         </ThemeProvider>
       </body>
     </html>

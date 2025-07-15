@@ -40,7 +40,7 @@ export function SheetLeftbar() {
             </SheetClose>
           </div>
         </SheetHeader>
-        <div className="flex flex-col gap-4 overflow-y-auto flex-1 pb-28">
+        <div className="relative flex flex-col gap-4 overflow-y-auto flex-1 pb-32">
           <div className="flex flex-col gap-2.5 mt-3 mx-2 px-5">
             <NavMenu isSheet />
           </div>
@@ -51,13 +51,12 @@ export function SheetLeftbar() {
             {/* FooterButtons removed */}
           </div>
         </div>
-        <div className="fixed bottom-0 left-0 w-full z-50 px-6 pb-6 pointer-events-none">
+        <div className="absolute inset-x-0 bottom-0 z-50 px-6 pb-6 pointer-events-none md:hidden">
           <SheetClose asChild>
             <a
               href="/demo"
               className="pointer-events-auto block w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-lg font-bold rounded-2xl shadow-xl py-4 text-center transition-all duration-200 hover:from-blue-500 hover:to-cyan-400 active:scale-95"
-              style={{maxWidth:'420px',margin:'0 auto'}}
-            >
+              style={{maxWidth:'420px',margin:'0 auto'}}>
               Get a demo
             </a>
           </SheetClose>
