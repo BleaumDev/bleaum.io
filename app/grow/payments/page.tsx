@@ -165,12 +165,12 @@ export default function PaymentsPage() {
                 <ShieldCheckIcon className="w-6 h-6 sm:w-8 sm:h-8 text-cyan-400 mb-1 sm:mb-2" />
                 <h3 className="text-base sm:text-lg font-semibold text-cyan-300 mb-2 sm:mb-3">Regulated Verticals</h3>
                 <ul className="list-none text-slate-200 space-y-1 sm:space-y-2 text-sm sm:text-base">
-                  <li className="flex items-center gap-1.5 sm:gap-2"><UserIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Health & Wellness</li>
-                  <li className="flex items-center gap-1.5 sm:gap-2"><LeafIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Beauty & Cosmetics</li>
-                  <li className="flex items-center gap-1.5 sm:gap-2"><ZapIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Supplements & Nutrition</li>
-                  <li className="flex items-center gap-1.5 sm:gap-2"><ShoppingBagIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Apparel & Footwear</li>
-                  <li className="flex items-center gap-1.5 sm:gap-2"><TruckIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Convenience Stores</li>
-                  <li className="flex items-center gap-1.5 sm:gap-2"><BarChart2Icon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Electronics</li>
+                  <li className="flex items-center gap-1.5 sm:gap-2"><UserIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Cannabis Retail</li>
+                  <li className="flex items-center gap-1.5 sm:gap-2"><LeafIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />CBD and Hemp</li>
+                  <li className="flex items-center gap-1.5 sm:gap-2"><ZapIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Liqour Stores</li>
+                  <li className="flex items-center gap-1.5 sm:gap-2"><ShoppingBagIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Pharmaceutical Outlets</li>
+                  {/* <li className="flex items-center gap-1.5 sm:gap-2"><TruckIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Convenience Stores</li> */}
+                  {/* <li className="flex items-center gap-1.5 sm:gap-2"><BarChart2Icon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Electronics</li> */}
                 </ul>
               </div>
               <div className="bg-slate-900/40 rounded-xl p-4 sm:p-6 flex flex-col items-center shadow-md border border-slate-700/40">
