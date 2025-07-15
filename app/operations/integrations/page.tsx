@@ -307,49 +307,6 @@ export default function BleaumIntegrationsPage() {
         </Link>
       </motion.section>
 
-      {/* Integration Categories Grid (old grid) */}
-      <motion.section 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="w-full max-w-7xl mx-auto mb-12 sm:mb-20 relative z-10 px-2 sm:px-0"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
-          {integrationCategories.map((category, index) => (
-            <motion.div
-              key={category.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="p-4 sm:p-8 bg-white/5 backdrop-filter backdrop-blur-lg rounded-xl border border-white/10 hover:border-white/20 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 group"
-            >
-              <div className="flex items-center gap-2 sm:gap-4 mb-2 sm:mb-4">
-                <div className="transform group-hover:scale-110 transition-transform duration-300">
-                  {category.icon}
-                </div>
-                <div>
-                  <h3 className="text-base sm:text-xl font-bold text-white mb-1">{category.title}</h3>
-                  <span className="text-xs sm:text-sm text-blue-300 bg-blue-600/20 px-2 py-0.5 sm:py-1 rounded-full">
-                    {category.highlight}
-                  </span>
-                </div>
-              </div>
-              <p className="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">{category.description}</p>
-              <div className="space-y-2">
-                {category.integrations.map((integration, idx) => (
-                  <div key={idx} className="flex items-center gap-1 sm:gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0" />
-                    <span className="text-gray-300 text-xs sm:text-base">{integration}</span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.section>
-
       {/* Integration Partners Section (new sidebar + filterable cards) */}
       <section className="w-full max-w-7xl mx-auto mb-12 sm:mb-20 relative z-10 flex flex-col lg:flex-row items-start px-2 sm:px-0">
         {/* Sidebar for categories */}
