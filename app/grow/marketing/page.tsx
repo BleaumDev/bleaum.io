@@ -33,7 +33,7 @@ export default function BleaumMarketingPage() {
       title: "Smart Email & SMS Campaigns",
       description: "Send the right message at the right time. No marketing degree required—just results.",
       icon: <MailIcon className="w-12 h-12 text-blue-400" />,
-      quote: "Our open rates doubled, and so did our repeat customers.",
+      // quote: "Our open rates doubled, and so did our repeat customers.",
       features: ["Drag-and-drop campaign builder", "Pre-built templates", "A/B testing built-in"],
       highlight: "Coming Soon"
     },
@@ -41,7 +41,7 @@ export default function BleaumMarketingPage() {
       title: "Customer Segmentation That Works",
       description: "Target based on real behavior—purchase history, visit frequency, favorite products.",
       icon: <TargetIcon className="w-12 h-12 text-blue-400" />,
-      quote: "Finally, promotions that actually convert.",
+      // quote: "Finally, promotions that actually convert.",
       features: ["Smart customer segments", "Behavioral triggers", "Purchase-based targeting"],
       highlight: "Coming Soon"
     },
@@ -140,7 +140,7 @@ export default function BleaumMarketingPage() {
         </div>
 
         {/* Customer Quote */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
@@ -151,7 +151,7 @@ export default function BleaumMarketingPage() {
             "We used to send out the same promo to everyone. Now, our regulars get birthday deals, first-timers get a welcome text, and our slow days are actually busy. It's made a real difference."
           </p>
           <p className="text-blue-300 font-semibold">— AJ, Happy Root</p>
-        </motion.div>
+        </motion.div> */}
 
         <Link href="/demo">
           <button className={buttonVariants({ 
@@ -205,9 +205,12 @@ export default function BleaumMarketingPage() {
                 ))}
               </div>
 
-              <div className="border-t border-white/10 pt-4">
-                <p className="text-blue-300 italic">"{feature.quote}"</p>
-              </div>
+              {/* Only render the quote if it exists */}
+              {feature.quote && (
+                <div className="border-t border-white/10 pt-4">
+                  <p className="text-blue-300 italic">"{feature.quote}"</p>
+                </div>
+              )}
             </motion.div>
           ))}
         </div>
