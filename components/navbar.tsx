@@ -179,7 +179,7 @@ export function Navbar() {
               }
             }}
           >
-            Demo
+            Demo1
           </Link>
         </div>
       </div>
