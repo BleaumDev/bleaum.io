@@ -36,6 +36,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  console.log('NEXT_EMAIL_SERVER_HOST:', process.env.NEXT_EMAIL_SERVER_HOST);
+  console.log('NEXT_EMAIL_SERVER_PORT:', process.env.NEXT_EMAIL_SERVER_PORT);
+  console.log('NEXT_EMAIL_SERVER_SECURE:', process.env.NEXT_EMAIL_SERVER_SECURE);
+  console.log('NEXT_EMAIL_SERVER_USER:', process.env.NEXT_EMAIL_SERVER_USER);
+  console.log('NEXT_EMAIL_SERVER_PASSWORD:', process.env.NEXT_EMAIL_SERVER_PASSWORD);
+  console.log('NEXT_EMAIL_FROM:', process.env.NEXT_EMAIL_FROM);
+
+
+
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>

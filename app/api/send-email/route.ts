@@ -3,6 +3,15 @@ import nodemailer from 'nodemailer';
 
 export async function POST(request: Request) {
   const formData = await request.json();
+  console.log('Received send-email formData:', formData);
+
+  // Log environment variables
+  console.log('NEXT_EMAIL_SERVER_HOST:', process.env.NEXT_EMAIL_SERVER_HOST);
+  console.log('NEXT_EMAIL_SERVER_PORT:', process.env.NEXT_EMAIL_SERVER_PORT);
+  console.log('NEXT_EMAIL_SERVER_SECURE:', process.env.NEXT_EMAIL_SERVER_SECURE);
+  console.log('NEXT_EMAIL_SERVER_USER:', process.env.NEXT_EMAIL_SERVER_USER);
+  console.log('NEXT_EMAIL_SERVER_PASSWORD:', process.env.NEXT_EMAIL_SERVER_PASSWORD);
+  console.log('NEXT_EMAIL_FROM:', process.env.NEXT_EMAIL_FROM);
 
   const transporter = nodemailer.createTransport({
     host: process.env.NEXT_EMAIL_SERVER_HOST,
