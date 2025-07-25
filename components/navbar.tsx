@@ -225,13 +225,13 @@ export function NavMenu({ isSheet = false }) {
     // Check if the current pathname exactly matches the item's href
     if (item.href !== '#' && pathname === item.href) return true;
     // Check if the current pathname starts with the item's href for section pages
-    if (item.href !== '#' && pathname.startsWith(item.href + '/')) return true;
+    if (item.href !== '#' && pathname && pathname.startsWith(item.href + '/')) return true;
 
     // For items with children, check if any child or grandchild link is active
     if (item.children) {
-      if (item.children.some(child => child.href && (pathname === child.href || (child.href !== '#' && pathname.startsWith(child.href + '/'))))) return true;
+      if (item.children.some(child => child.href && (pathname === child.href || (child.href !== '#' && pathname && pathname.startsWith(child.href + '/'))))) return true;
       // Check grandchildren for Product, if applicable
-      if (item.title === "Product" && item.children.some(child => child.children?.some(subChild => subChild.href && (pathname === subChild.href || (subChild.href !== '#' && pathname.startsWith(subChild.href + '/')))))) return true;
+      if (item.title === "Product" && item.children.some(child => child.children?.some(subChild => subChild.href && (pathname === subChild.href || (subChild.href !== '#' && pathname && pathname.startsWith(subChild.href + '/')))))) return true;
     }
     return false;
   };
