@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
+export const runtime = 'nodejs';
+
 export async function POST(request: Request) {
   const formData = await request.json();
   console.log('Received send-email formData:', formData);
@@ -15,7 +17,7 @@ export async function POST(request: Request) {
 
   const transporter = nodemailer.createTransport({
     host: process.env.NEXT_EMAIL_SERVER_HOST,
-    port: Number(process.env.EMAIL_SERVER_PORT),
+    port: Number(process.env.NEXT_EMAIL_SERVER_PORT),
     secure: process.env.NEXT_EMAIL_SERVER_SECURE === 'true',
     auth: {
       user: process.env.NEXT_EMAIL_SERVER_USER,
