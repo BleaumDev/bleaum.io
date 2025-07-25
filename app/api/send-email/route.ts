@@ -5,17 +5,17 @@ export async function POST(request: Request) {
   const formData = await request.json();
 
   const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_SERVER_HOST,
+    host: process.env.NEXT_EMAIL_SERVER_HOST,
     port: Number(process.env.EMAIL_SERVER_PORT),
-    secure: process.env.EMAIL_SERVER_SECURE === 'true',
+    secure: process.env.NEXT_EMAIL_SERVER_SECURE === 'true',
     auth: {
-      user: process.env.EMAIL_SERVER_USER,
-      pass: process.env.EMAIL_SERVER_PASSWORD,
+      user: process.env.NEXT_EMAIL_SERVER_USER,
+      pass: process.env.NEXT_EMAIL_SERVER_PASSWORD,
     },
   });
 
   const mailOptions = {
-    from: process.env.EMAIL_FROM,
+    from: process.env.NEXT_EMAIL_FROM,
     to: 'comms@bleaum.io',
     subject: 'New Demo Request',
     text: `
