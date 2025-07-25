@@ -4,6 +4,7 @@ import nodemailer from 'nodemailer';
 export async function POST(request: Request) {
   const formData = await request.json();
 
+  // Configure the email transporter using environment variables
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_SERVER_HOST,
     port: Number(process.env.EMAIL_SERVER_PORT),
