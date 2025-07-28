@@ -39,8 +39,9 @@ export default function DemoPage() {
           howHear: '',
         });
       } else {
-        alert('Failed to send demo request.');
+        alert('++++Failed to send demo request.++++');
       }
+      console.log('+++Failed Response++++', response);
     } catch (error) {
       alert('An error occurred while sending the demo request.');
     }
