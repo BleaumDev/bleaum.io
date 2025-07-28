@@ -1,56 +1,33 @@
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+
+// Test GET handler to see if route is deployed
+export async function GET() {
+  return NextResponse.json({ 
+    message: 'send-referral API route is deployed and working!',
+    timestamp: new Date().toISOString()
+  });
+}
 
 export async function POST(request: Request) {
-  // Debug: Throw a test error to see if the route is being reached
-  console.log('=== DEBUG: send-referral route reached ===');
-  throw new Error('DEBUG: Testing if send-referral route is deployed and working');
+  console.log('=== DEBUG: send-referral POST route reached ===');
   
-  const formData = await request.json();
-  console.log('Received send-referral formData:', formData);
-
-  // Log environment variables
-  // console.log('NEXT_PUBLIC_EMAIL_SERVER_HOST:', process.env.NEXT_PUBLIC_EMAIL_SERVER_HOST);
-  // console.log('NEXT_PUBLIC_EMAIL_SERVER_PORT:', process.env.NEXT_PUBLIC_EMAIL_SERVER_PORT);
-  // console.log('NEXT_PUBLIC_EMAIL_SERVER_SECURE:', process.env.NEXT_PUBLIC_EMAIL_SERVER_SECURE);
-  // console.log('NEXT_PUBLIC_EMAIL_SERVER_USER:', process.env.NEXT_PUBLIC_EMAIL_SERVER_USER);
-  // console.log('NEXT_PUBLIC_EMAIL_SERVER_PASSWORD:', process.env.NEXT_PUBLIC_EMAIL_SERVER_PASSWORD);
-  // console.log('NEXT_PUBLIC_EMAIL_FROM:', process.env.NEXT_PUBLIC_EMAIL_FROM);
-
-  // Configure the email transporter using environment variables
-  const transporter = nodemailer.createTransport({
-    host: process.env.NEXT_PUBLIC_EMAIL_SERVER_HOST,
-    port: Number(process.env.NEXT_PUBLIC_EMAIL_SERVER_PORT),
-    secure: process.env.NEXT_PUBLIC_EMAIL_SERVER_SECURE === 'true',
-    auth: {
-      user: process.env.NEXT_PUBLIC_EMAIL_SERVER_USER,
-      pass: process.env.NEXT_PUBLIC_EMAIL_SERVER_PASSWORD,
-    },
-  });
-  const mailOptions = {
-    from: process.env.NEXT_PUBLIC_EMAIL_FROM,
-    to: process.env.NEXT_PUBLIC_EMAIL_FROM || 'comms@bleaum.io',
-    subject: 'New Referral Submission',
-    text: `
-Referral Type: ${formData.referralType}
-Your Name: ${formData.yourFirstName} ${formData.yourLastName}
-Your Email: ${formData.yourEmail}
-Your Phone: ${formData.yourPhone}
-Referral Name: ${formData.referralFirstName} ${formData.referralLastName}
-Referral Email: ${formData.referralEmail}
-Referral Shop Name: ${formData.referralShopName}
-Referral Phone: ${formData.referralPhone}
-Referral State: ${formData.referralState}
-Referral Zip: ${formData.referralZip}
-Referral Notified: ${formData.referralNotified}
-    `,
-  };
-
   try {
-    await transporter.sendMail(mailOptions);
-    return NextResponse.json({ message: 'Referral email sent successfully!' }, { status: 200 });
+    const formData = await request.json();
+    console.log('Received formData:', formData);
+
+    // Simple response to test
+    return NextResponse.json({ 
+      message: 'POST request received successfully!', 
+      formData: formData,
+      timestamp: new Date().toISOString()
+    }, { status: 200 });
+    
   } catch (error) {
-    console.error('Error sending referral email:', error);
-    return NextResponse.json({ message: 'Error sending referral email.', error }, { status: 500 });
+    console.error('Error in send-referral route:', error);
+    return NextResponse.json({ 
+      message: 'Error in API route', 
+      error: error instanceof Error ? error.message : 'Unknown error',
+      timestamp: new Date().toISOString()
+    }, { status: 500 });
   }
 } 
