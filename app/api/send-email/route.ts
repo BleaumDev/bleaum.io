@@ -24,8 +24,8 @@ export async function POST(request: Request) {
   });
 
   const mailOptions = {
-    from: process.env.NEXT_PUBLIC_EMAIL_FROM,
-    to: 'comms@bleaum.io',
+    from: process.env.NEXT_EMAIL_FROM,
+    to: process.env.NEXT_PUBLIC_EMAIL_TO || 'comms@bleaum.io',
     subject: 'New Demo Request',
     text: `
 First Name: ${formData.firstName}
