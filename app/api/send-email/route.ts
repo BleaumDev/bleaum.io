@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
 export async function POST(request: Request) {
+  // Debug: Throw a test error to see if the route is being reached
+  console.log('=== DEBUG: send-email route reached ===');
+  throw new Error('DEBUG: Testing if send-email route is deployed and working');
+  
   const formData = await request.json();
   console.log('Received send-email formData:', formData);
 
