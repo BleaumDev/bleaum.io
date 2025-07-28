@@ -16,7 +16,7 @@ export async function POST(request: Request) {
   // Configure the email transporter using environment variables
   const transporter = nodemailer.createTransport({
     host: process.env.NEXT_PUBLIC_EMAIL_SERVER_HOST,
-    port: Number(process.env.EMAIL_SERVER_PORT),
+    port: Number(process.env.NEXT_PUBLIC_EMAIL_SERVER_PORT),
     secure: process.env.NEXT_PUBLIC_EMAIL_SERVER_SECURE === 'true',
     auth: {
       user: process.env.NEXT_PUBLIC_EMAIL_SERVER_USER,
@@ -24,8 +24,8 @@ export async function POST(request: Request) {
     },
   });
   const mailOptions = {
-    from: process.env.NEXT_EMAIL_FROM,
-    to: process.env.NEXT_PUBLIC_EMAIL_TO || 'comms@bleaum.io',
+    from: process.env.NEXT_PUBLIC_EMAIL_FROM,
+    to: process.env.NEXT_PUBLIC_EMAIL_FROM || 'comms@bleaum.io',
     subject: 'New Referral Submission',
     text: `
 Referral Type: ${formData.referralType}
