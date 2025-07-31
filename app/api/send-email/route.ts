@@ -15,6 +15,12 @@ export async function POST(request: Request) {
     const formData = await request.json();
     console.log('Received formData:', formData);
 
+    console.log('Preparing to send email...');
+    // Example: const transporter = nodemailer.createTransport(...);
+    // const mailOptions = { from: ..., to: ..., subject: ..., text: ... };
+    // const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully:', /* info.response or similar */);
+
     // Simple response to test
     return NextResponse.json({ 
       message: 'POST request received successfully!', 

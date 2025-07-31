@@ -26,6 +26,8 @@ export default function DemoPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+      const data = await response.json();
+      console.log('Response Data:', data);
       if (response.ok) {
         alert('Demo request sent successfully!');
         setFormData({
@@ -39,9 +41,8 @@ export default function DemoPage() {
           howHear: '',
         });
       } else {
-        alert('Failed to send demo request.');
+        alert(`Failed to send demo request: ${data.message}`);
       }
-      console.log('Failed Response', response);
     } catch (error) {
       alert('An error occurred while sending the demo request.');
     }
