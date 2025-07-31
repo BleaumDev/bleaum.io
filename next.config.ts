@@ -19,7 +19,7 @@ import type { NextConfig } from "next";
 const nextConfig = {
   // Only add basePath if your site should be served from a subdirectory
   // basePath: '/your-subdirectory',
-  trailingSlash: true,
+  trailingSlash: false,
   // output: 'export', // Removed to enable API routes
   images: {
     remotePatterns: [
