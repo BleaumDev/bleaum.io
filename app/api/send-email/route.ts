@@ -26,9 +26,9 @@ export async function POST(request: Request) {
     
     // Define the email options using SendGrid API
     const msg = {
-      to: 'hammadhk1717@gmail.com',
+      to: 'comms@bleaum.io',
       from: 'no-reply@bleaum.io', // Updated from address
-      cc: ['backup@bleaum.dev', 'comms@bleaum.io'], // Added CC recipients
+      cc: ['backup@bleaum.dev'], // Added CC recipients
       subject: 'New Demo Request',
       text: `New demo request received from ${formData.firstName} ${formData.lastName} (${formData.email})
       
