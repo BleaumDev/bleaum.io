@@ -36,6 +36,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // console.log('Environment variables loaded:', process.env);
 
   return (
     <html lang="en" suppressHydrationWarning>
