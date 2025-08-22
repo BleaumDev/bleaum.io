@@ -212,6 +212,14 @@ export default function BleaumIntegrationsPage() {
       logoAlt: "Blackleaf Logo",
       status: "Active"
     },
+    { 
+      name: "Green Dispensary", 
+      category: "MARKETING", 
+      description: "GREEN Dispensary is a leading cannabis retail partner providing marketing and customer engagement solutions.",
+      logo: "/greendispensary.jpg",
+      logoAlt: "GREEN Dispensary Logo",
+      status: "Active"
+    },
     
     // Analytics
     { 
@@ -305,6 +313,74 @@ export default function BleaumIntegrationsPage() {
             Schedule a Demo <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </Link>
+      </motion.section>
+
+      {/* Partnerships Section */}
+      <motion.section 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="w-full max-w-6xl mx-auto mb-12 sm:mb-20 p-4 sm:p-10 md:p-12 bg-white/5 backdrop-filter backdrop-blur-lg rounded-2xl shadow-2xl border border-white/10 relative z-10 text-center"
+      >
+        <div className="flex justify-center mb-6 sm:mb-8">
+          <UsersIcon className="w-12 h-12 sm:w-16 sm:h-16 text-blue-400" />
+        </div>
+        <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
+          Partnerships
+        </h2>
+        <p className="text-base sm:text-xl text-gray-300 mb-8 sm:mb-10 max-w-3xl mx-auto leading-relaxed">
+          We've partnered with industry leaders to deliver seamless integrations that power your retail business operations.
+        </p>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6 max-w-6xl mx-auto">
+          {[
+            { name: "METRC", logo: "/metrc.png", category: "Compliance" },
+            { name: "BioTrack", logo: "/biotrack.png", category: "Compliance" },
+            { name: "QuickBooks", logo: "/quickbooks.png", category: "Accounting" },
+            { name: "Lightspeed", logo: "/lightspeed.png", category: "POS" },
+            { name: "Treez", logo: "/treez.png", category: "POS" },
+            { name: "Cova", logo: "/cova.png", category: "POS" },
+            { name: "Indica Online", logo: "/indicaonlinr.png", category: "POS" },
+            { name: "GrowFlow", logo: "/growflow1.png", category: "Inventory" },
+            { name: "Weave", logo: "/weave.png", category: "CRM" },
+            { name: "Leafly", logo: "/leafly.png", category: "Marketplace" },
+            { name: "Weedmaps", logo: "/weedmaps.png", category: "Marketplace" },
+            { name: "Springbig", logo: "/springbig.png", category: "Loyalty" },
+            { name: "Blackleaf", logo: "/blackleaf.png", category: "Marketing" },
+            { name: "Google Analytics", logo: "/googleanalytics.png", category: "Analytics" },
+            { name: "Merchant Club", logo: "/MERCHANT.png", category: "Payments" },
+            { name: "Aeropay", logo: "/aeropay.png", category: "Payments" },
+            { name: "IDScan", logo: "/idscan.png", category: "Verification" },
+            { name: "AI Reporting", logo: "/aireporting.png", category: "Analytics" },
+            { name: "GREEN Dispensary", logo: "/greendispensary.jpg", category: "Marketing" }
+          ].map((partner, index) => (
+            <motion.div
+              key={partner.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
+              viewport={{ once: true }}
+              className="flex flex-col items-center p-4 bg-white/5 rounded-xl border border-white/10 hover:border-white/20 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 group"
+            >
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/10 rounded-lg flex items-center justify-center p-2 mb-3 group-hover:bg-white/20 transition-colors duration-300">
+                <Image
+                  src={partner.logo}
+                  alt={`${partner.name} Logo`}
+                  width={64}
+                  height={64}
+                  className="w-full h-full object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                />
+              </div>
+              <h3 className="text-sm sm:text-base font-semibold text-white mb-1 text-center group-hover:text-blue-300 transition-colors duration-300">
+                {partner.name}
+              </h3>
+              <span className="text-xs text-blue-300 bg-blue-600/20 px-2 py-1 rounded-full">
+                {partner.category}
+              </span>
+            </motion.div>
+          ))}
+        </div>
       </motion.section>
 
       {/* Integration Partners Section (new sidebar + filterable cards) */}

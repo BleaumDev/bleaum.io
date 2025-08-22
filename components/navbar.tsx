@@ -53,7 +53,7 @@ export const NAVLINKS: NavItem[] = [
           { title: "Reporting & Analytics", href: "/operations/reporting-analytics", description: "Unified, customizable reporting & insights", icon: BarChart2Icon },
           { title: "Automated Compliance", href: "/operations/automated-compilance", description: "Tools for retailers&apos; intense regulatory needs", icon: ShieldCheckIcon },
           { title: "Inventory Management", href: "/operations/inventory-management", description: "Optimize spend, inventory levels, & minimize waste", icon: BoxesIcon },
-          { title: "Integrations", href: "/operations/integrations", description: "Integration partners that help you run your business better", icon: PlugIcon },
+          { title: "Integrations and Partnerships", href: "/operations/integrations", description: "Integration partners that help you run your business better", icon: PlugIcon },
           
         ],
       },
