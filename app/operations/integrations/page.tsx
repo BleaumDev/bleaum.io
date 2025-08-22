@@ -213,7 +213,7 @@ export default function BleaumIntegrationsPage() {
       status: "Active"
     },
     { 
-      name: "Green Dispensary", 
+      name: "Green Dispensary Marketing", 
       category: "MARKETING", 
       description: "GREEN Dispensary is a leading cannabis retail partner providing marketing and customer engagement solutions.",
       logo: "/greendispensary.jpg",
@@ -353,7 +353,12 @@ export default function BleaumIntegrationsPage() {
             { name: "Aeropay", logo: "/aeropay.png", category: "Payments" },
             { name: "IDScan", logo: "/idscan.png", category: "Verification" },
             { name: "AI Reporting", logo: "/aireporting.png", category: "Analytics" },
-            { name: "GREEN Dispensary", logo: "/greendispensary.jpg", category: "Marketing" }
+            { name: "GREEN Dispensary Marketing", logo: "/greendispensary.jpg", category: "Marketing" },
+            { name: "Microsoft Azure", logo: "/azure.jpg", category: "Partners" },
+            { name: "Google", logo: "/google.jpg", category: "Startups" },
+            
+            { name: "Microsoft", logo: "/microsoft.png", category: "Startups" },
+            { name: "AWS", logo: "/AWS1.jpg", category: "Partners" }
           ].map((partner, index) => (
             <motion.div
               key={partner.name}
