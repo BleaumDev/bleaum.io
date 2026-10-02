@@ -27,16 +27,16 @@ export function SheetLeftbar() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="md:hidden flex">
+        <Button variant="ghost" size="icon" aria-label="Open menu" className="md:hidden flex text-ui-fg hover:bg-ui-line/5 hover:text-ui-fg">
           <AlignLeftIcon />
         </Button>
       </SheetTrigger>
-      <SheetContent className="flex flex-col gap-4 px-0 w-screen max-w-none sm:max-w-sm" side="left">
+      <SheetContent className="flex flex-col gap-4 px-0 w-screen max-w-none sm:max-w-sm bg-brand-navy border-white/10 text-white" side="left">
         <DialogTitle className="sr-only">Menu</DialogTitle>
         <SheetHeader>
           <div className="pl-4">
             <SheetClose className="px-5" asChild>
-              <Logo />
+              <Logo variant="light" />
             </SheetClose>
           </div>
         </SheetHeader>
@@ -55,9 +55,8 @@ export function SheetLeftbar() {
           <SheetClose asChild>
             <a
               href="/demo"
-              className="pointer-events-auto block w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-lg font-bold rounded-2xl shadow-xl py-4 text-center transition-all duration-200 hover:from-blue-500 hover:to-cyan-400 active:scale-95"
-              style={{maxWidth:'420px',margin:'0 auto'}}>
-              Get a demo
+              className="pointer-events-auto mx-auto block w-full max-w-[420px] rounded-full bg-brand-coral py-4 text-center text-lg font-bold text-brand-navy shadow-xl transition-colors duration-200 hover:bg-brand-peach">
+              Book a demo
             </a>
           </SheetClose>
         </div>

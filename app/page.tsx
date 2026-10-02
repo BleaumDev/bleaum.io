@@ -1,1493 +1,780 @@
 "use client"
-import { 
-  ArrowRight, 
-  Shield,
-  Users,
-  ShoppingCart,
-  Smartphone,
-  CheckCircle2,
-  Clock,
-  Headphones,
-  Quote,
+
+import Link from "next/link"
+import Image from "next/image"
+import { motion, MotionConfig } from "framer-motion"
+import {
+  ArrowRight,
   Play,
+  Check,
+  ShoppingCart,
   MapPin,
-  Star,
-  Award,
-  Target,
-  Rocket,
-  BarChart3,
-  Sparkles,
-  ChevronDown,
-  Menu,
-  X,
-  Eye,
-  Zap,
-  Receipt,
-  Building2,
-  WifiOff,
+  CreditCard,
+  Smartphone,
+  Boxes,
   ShieldCheck,
+  Building2,
+  Receipt,
+  Headphones,
+  Clock,
+  CircleDollarSign,
   Lock,
   Link2,
   ScrollText,
+  Star,
+  Target,
+  Sparkles,
+  Award,
+  TrendingUp,
+  Eye,
+  Zap,
   Bell,
-  CreditCard,
+  Printer,
+  MessageSquare,
+  Mail,
 } from "lucide-react"
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
-import { useState, useEffect, useRef } from "react"
-import Link from "next/link"
-import Head from "next/head"
+import { trackDemoClick } from "@/components/navbar"
+
+const wrap = "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+const btnPrimary =
+  "group inline-flex items-center justify-center gap-2 rounded-full bg-brand-coral px-7 py-3.5 text-[15px] font-semibold text-brand-navy shadow-lg shadow-brand-coral/25 transition-colors duration-200 hover:bg-brand-peach focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ui-fg focus-visible:ring-offset-2"
+const btnSecondary =
+  "inline-flex items-center justify-center gap-2 rounded-full border border-ui-line/15 bg-ui-surface px-7 py-3.5 text-[15px] font-semibold text-ui-fg transition-colors duration-200 hover:border-ui-line/30 hover:bg-ui-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ui-fg focus-visible:ring-offset-2"
+
+const INTEGRATIONS = [
+  { name: "Metrc", src: "/metrc.png" },
+  { name: "BioTrack", src: "/biotrack.png" },
+  { name: "Leafly", src: "/leafly.png" },
+  { name: "Weedmaps", src: "/weedmaps.png" },
+  { name: "Springbig", src: "/springbig.png" },
+  { name: "QuickBooks", src: "/quickbooks.png" },
+  { name: "AeroPay", src: "/aeropay.png" },
+  { name: "IDScan", src: "/idscan.png" },
+]
+
+const PRODUCTS = [
+  { title: "All-in-one POS", desc: "Lightning-fast checkout with real-time inventory sync, offline mode and multi-payment support.", href: "/grow/point-of-sale", img: "/posimage.png", icon: ShoppingCart, featured: true },
+  { title: "Bleaum Pay", desc: "One payment platform. Fully covered.", href: "/grow/payments", img: "/bleaumpay.png", icon: CreditCard },
+  { title: "Last-mile delivery", desc: "Smart routing, OTP verification and live driver tracking.", href: "/grow/delivery", img: "/delivery.png", icon: MapPin },
+  { title: "Branded mobile app", desc: "Your own iOS & Android storefront, live in days.", href: "/grow/ecommerce", img: "/3.png", icon: Smartphone },
+  { title: "Real-time inventory", desc: "Live counts, shrinkage tracking and low-stock alerts.", href: "/operations/inventory-management", img: "/inventory.png", icon: Boxes },
+  { title: "Secure & compliant", desc: "Metrc & BioTrack sync, audit trails and staff permissions.", href: "/operations/automated-compilance", img: "/7.png", icon: ShieldCheck },
+  { title: "Multi-location ready", desc: "Scale across stores and states from one dashboard.", href: "/grow/point-of-sale", img: "/realtime.png", icon: Building2 },
+  { title: "Smart receipts", desc: "Print, text or email — branded and tax-compliant.", href: "/grow/point-of-sale", img: "/4.png", icon: Receipt },
+]
+
+const REASONS = [
+  { title: "POS onboard in 24 hours", desc: "Get up and running fast with our streamlined setup process.", icon: Clock },
+  { title: "Multi-location ready", desc: "Scale seamlessly across multiple locations and states.", icon: Building2 },
+  { title: "Works on any device", desc: "From storefront to sidewalk — your POS runs on whatever device you've got.", icon: Smartphone },
+  { title: "Real support, real fast", desc: "Human help when you need it, not chatbots.", icon: Headphones },
+  { title: "Fully compliant, always", desc: "Stay audit-ready 24/7 with built-in compliance tools.", icon: ShieldCheck },
+  { title: "Transparent pricing", desc: "No hidden fees, no surprises — just honest pricing.", icon: CircleDollarSign },
+]
+
+const SECURITY = [
+  { title: "State integrations", desc: "Metrc, BioTrack & state compliance systems.", icon: Link2 },
+  { title: "Data security", desc: "Encrypted, backed-up, and SOC 2 compliant.", icon: Lock },
+  { title: "Audit ready", desc: "Full audit trails & granular staff permissions.", icon: ScrollText },
+]
+
+const INDUSTRIES = [
+  { title: "Cannabis retail & delivery", desc: "Complete seed-to-sale tracking with state compliance.", icon: ShoppingCart },
+  { title: "Pharmacies & wellness", desc: "Secure handling of controlled substances and patient data.", icon: ShieldCheck },
+  { title: "High-compliance retail", desc: "Any retail environment requiring detailed tracking and reporting.", icon: Building2 },
+]
+
+const VALUES = [
+  { title: "Our mission", desc: "Empower small businesses with enterprise-grade tools that actually work.", icon: Target },
+  { title: "Our vision", desc: "A world where running a retail business is simple, profitable, and stress-free.", icon: Sparkles },
+  { title: "Our values", desc: "Transparency, reliability, and genuine care for our customers' success.", icon: Award },
+]
+
+const STATS = [
+  { value: "300+", label: "Happy retailers" },
+  { value: "50%", label: "Time saved" },
+  { value: "99.9%", label: "Uptime" },
+  { value: "24/7", label: "Human support" },
+]
+
+const TESTIMONIALS = [
+  { quote: "Bleaum cut our inventory time from 4 hours to 30 minutes. Our team actually enjoys using it now!", name: "Perry Jones", company: "Centered by Design", location: "Tulsa, Oklahoma" },
+  { quote: "The mobile app launched our online presence overnight. Sales increased 40% in the first month.", name: "Andrew H", company: "Go Green", location: "Ontario, Canada" },
+  { quote: "We switched from a big-name POS and never looked back. Bleaum just works—no more headaches.", name: "AJ", company: "Happy Root", location: "Oklahoma City, Oklahoma" },
+  { quote: "The compliance features saved us during our last audit. Everything was organized and ready to go.", name: "Angelica", company: "Park Social", location: "Alameda, California" },
+]
 
 export default function Home() {
-  const [showVideo, setShowVideo] = useState(false)
-  const [activeSection, setActiveSection] = useState(0)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { scrollYProgress } = useScroll()
-  const heroRef = useRef<HTMLDivElement>(null)
-
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0])
-  const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.8])
-
-  const heroMessages = [
-    "Trusted by 300+ retailers and specialty retailers.",
-    "98% of teams say Bleaum saves them hours every week.",
-    "Built by operators, for operators—no more clunky POS.",
-  ]
-  const [currentMessage, setCurrentMessage] = useState(0)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentMessage((prev) => (prev + 1) % heroMessages.length)
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [])
-
-  // Intersection Observer for section tracking
-  useEffect(() => {
-    const sections = document.querySelectorAll("section[data-section]")
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(Number.parseInt(entry.target.getAttribute("data-section") || "0"))
-          }
-        })
-      },
-      { threshold: 0.3 },
-    )
-
-    sections.forEach((section) => observer.observe(section))
-    return () => observer.disconnect()
-  }, [])
-
   return (
-    <>
-      <div className="min-h-screen bg-[#020917] overflow-hidden">
-        {/* Hero Section */}
-        <motion.section
-          ref={heroRef}
-          data-section="0"
-          className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden"
-          style={{ opacity: heroOpacity, scale: heroScale }}
-        >
-          {/* Background image for hero section */}
-          <div className="absolute inset-0 z-0">
-            <img
-              src="/background.png"
-              alt="Background"
-              className="w-full h-full object-cover opacity-60 blur-sm scale-105"
-              style={{ filter: 'blur(2px)', objectPosition: 'center' }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#020917]/80 to-[#020917]/90" />
-          </div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-            >
-              {/* Hero Badge */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2, duration: 0.8 }}
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 backdrop-blur-sm border border-blue-400/30 rounded-full px-4 py-2 sm:px-6 sm:py-3 mb-6 sm:mb-8"
-              >
-                <Award className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
-                <span className="text-blue-200 font-medium text-sm sm:text-base">Trusted by 300+ Retailers</span>
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              </motion.div>
-              
-              {/* Main Headline */}
-              <motion.h1
-                className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 sm:mb-8 leading-tight"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.8 }}
-              >
-                Where Retail Runs{" "}
-                <motion.span
-                  className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent"
-                  animate={{
-                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                  }}
-                  transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
-                  style={{ backgroundSize: "200% 200%" }}
-                >
-                  Smart
-                </motion.span>
-              </motion.h1>
-              
-              {/* Animated Tagline */}
-              <motion.div
-                className="h-12 sm:h-16 mb-8 sm:mb-12"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6, duration: 0.8 }}
-              >
-                <AnimatePresence mode="wait">
-                  <motion.p
-                    key={currentMessage}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-base sm:text-xl md:text-2xl text-blue-200 leading-relaxed max-w-4xl mx-auto px-4"
-                  >
-                    {heroMessages[currentMessage]}
-                  </motion.p>
-                </AnimatePresence>
-              </motion.div>
-
-              {/* CTA Buttons */}
-              <motion.div
-                className="flex flex-col gap-4 sm:flex-row sm:gap-6 justify-center items-center mb-12 sm:mb-16 px-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.8 }}
-              >
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
-                  <Link href="/demo">
-                    <button className="group relative bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-8 py-3 sm:px-10 sm:py-4 rounded-2xl text-base sm:text-lg font-semibold overflow-hidden shadow-2xl w-full sm:w-auto"
-                      onClick={() => {
-                        if (window.gtag) {
-                          window.gtag('event', 'click', {
-                            event_category: 'Button',
-                            event_label: 'Demo'
-                          });
-                        }
-                      }}
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-                      <span className="relative flex items-center justify-center gap-3">
-                        <Rocket className="w-4 h-4 sm:w-5 sm:h-5" />
-                        Get Live Demo
-                        <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-                      </span>
-                    </button>
-                  </Link>
-                </motion.div>
-
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
-                  <button
-                    className="group border-2 border-blue-500/50 text-blue-200 px-8 py-3 sm:px-10 sm:py-4 rounded-2xl text-base sm:text-lg font-semibold hover:border-cyan-400 hover:text-cyan-300 transition-all duration-300 backdrop-blur-sm w-full sm:w-auto"
-                    onClick={() => {
-                      if (window.gtag) {
-                        window.gtag('event', 'click', {
-                          event_category: 'Button',
-                          event_label: 'Demo'
-                        });
-                      }
-                      window.location.href = '/demo';
-                    }}
-                  >
-                    <span className="flex items-center justify-center gap-3">
-                      <Play className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 group-hover:text-cyan-400 transition-colors" />
-                      Watch Demo
-                    </span>
-                  </button>
-                </motion.div>
-              </motion.div>
-
-              {/* Stats */}
-              <motion.div
-                className="grid grid-cols-3 gap-4 sm:gap-8 max-w-2xl mx-auto px-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1, duration: 0.8 }}
-              >
-                {[
-                  { number: "300+", label: "Retailers" },
-                  { number: "98%", label: "Satisfaction" },
-                  { number: "24/7", label: "Support" },
-                ].map((stat: { number: string; label: string }, index: number) => (
-                  <motion.div
-                    key={stat.label}
-                    className="text-center"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 1.2 + index * 0.1, duration: 0.5 }}
-                  >
-                    <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-400 mb-1 sm:mb-2">{stat.number}</div>
-                    <div className="text-blue-300 text-xs sm:text-sm uppercase tracking-wider">{stat.label}</div>
-                  </motion.div>
-                ))}
-              </motion.div>
-
-              {/* Scroll Indicator */}
-              <motion.div
-                className="absolute bottom--4 sm:bottom-8 left-1/2 transform -translate-x-1/2"
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-              >
-                <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
-              </motion.div>
-            </motion.div>
-          </div>
-        </motion.section>
-
-        {/* Video Modal */}
-        <AnimatePresence>
-          {showVideo && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
-              onClick={() => setShowVideo(false)}
-            >
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.8, opacity: 0 }}
-                className="relative w-full max-w-5xl aspect-[16/9]"
-                onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
-              >
-                <button
-                  className="absolute -top-8 sm:-top-12 right-0 text-white hover:text-blue-400 transition-colors"
-                  onClick={() => setShowVideo(false)}
-                >
-                  <X className="w-6 h-6 sm:w-8 sm:h-8" />
-                </button>
-                <iframe
-                  width="100%"
-                  height="100%"
-                  allow="autoplay"
-                  allowFullScreen
-                  className="w-full h-full rounded-xl sm:rounded-2xl shadow-2xl"
-                  style={{ border: "none" }}
-                />
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Video Preview Section */}
-        <section data-section="1" className="py-12 sm:py-16 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              className="text-center mb-8 sm:mb-12"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
-                See Bleaum in{" "}
-                <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Action</span>
-              </h2>
-              <p className="text-lg sm:text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed px-4">
-                Watch how we transform retail operations from chaos to clockwork
-              </p>
-            </motion.div>
-
-            <motion.div
-              className="relative max-w-5xl mx-auto"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <div
-                className="relative w-full aspect-[16/9] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex items-center justify-center cursor-pointer group"
-                onClick={() => window.location.href = '/demo'}
-                style={{ backgroundImage: 'url(/IMAGE.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}
-              >
-                <div className="absolute inset-0 bg-black/30 backdrop-blur" />
-                <motion.button
-                  className="relative z-10 flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 shadow-2xl border-4 border-white/30 group-hover:border-cyan-400 group-hover:scale-110 transition-all duration-300"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Play className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white drop-shadow-lg ml-1" />
-                </motion.button>
-                {/* Video overlay info */}
-                <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6">
-                  <div className="bg-black/50 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4">
-                    <h3 className="text-white font-bold text-base sm:text-lg mb-1 sm:mb-2">Platform Demo</h3>
-                    <p className="text-blue-200 text-xs sm:text-sm">See how Bleaum streamlines retail operations</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Professional Expertise Gallery Section */}
-        <section data-section="2" className="py-16 sm:py-24 relative rounded-3xl">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 to-cyan-900/10 rounded-3xl" />
-        
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 rounded-3xl">
-            <motion.div
-              className="text-center mb-12 sm:mb-16"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
-                Our Professional{" "}
-                <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                  Expertise
-                </span>
-              </h2>
-              <p className="text-lg sm:text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed px-4">
-                Explore our gallery of successful projects and see how we elevate businesses through strategic solutions
-              </p>
-            </motion.div>
-
-            {/* Gallery with enhanced scroll arrows */}
-            <div className="relative">
-              <button
-                type="button"
-                aria-label="Scroll left"
-                onClick={() => {
-                  if (typeof window !== "undefined") {
-                    const el = document.getElementById("expertise-gallery-scroll")
-                    if (el) el.scrollBy({ left: -350, behavior: "smooth" })
-                  }
-                }}
-                className="hidden lg:flex items-center justify-center absolute -left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 text-white shadow-2xl border-2 border-white/20 hover:scale-110 hover:border-cyan-300 transition-all duration-200 opacity-90 hover:opacity-100"
-              >
-                <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-
-              <button
-                type="button"
-                aria-label="Scroll right"
-                onClick={() => {
-                  if (typeof window !== "undefined") {
-                    const el = document.getElementById("expertise-gallery-scroll")
-                    if (el) el.scrollBy({ left: 350, behavior: "smooth" })
-                  }
-                }}
-                className="hidden lg:flex items-center justify-center absolute -right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 text-white shadow-2xl border-2 border-white/20 hover:scale-110 hover:border-cyan-300 transition-all duration-200 opacity-90 hover:opacity-100"
-              >
-                <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-
-              <div
-                id="expertise-gallery-scroll"
-                className="flex gap-4 sm:gap-6 overflow-x-auto snap-x scroll-smooth scrollbar-hide pb-4"
-                style={{ scrollBehavior: "smooth" }}
-              >
-                {[
-                  {
-                    src: "/2.png",
-                    alt: "pos",
-                    title: "All-in-One POS System",
-                    description: "Complete point-of-sale solution",
-                    href: "/grow/point-of-sale",
-                  },
-                  {
-                    src: "/delivery.png",
-                    alt: "Last Mile Delivery Solutions",
-                    title: "Last Mile Delivery",
-                    description: "Smart routing & tracking",
-                    href: "/grow/delivery",
-                  },
-                  {
-                    src: "/bleaumpay.png",
-                    alt: "Bleaum Pay",
-                    title: "Bleaum Pay",
-                    description: "One Payment Platform. Fully Covered",
-                    href: "/grow/payments",
-                  },
-                  {
-                    src: "/3.png",
-                    alt: "Branded Mobile App Screenshot",
-                    title: "Branded Mobile App",
-                    description: "iOS & Android app ",
-                    href: "/grow/ecommerce",
-                  },
-                  {
-                    src: "/5.png",
-                    alt: "Human Support Staff Assisting Customer",
-                    title: "Human Support",
-                    description: "Real people, real solutions",
-                    href: "/company/support",
-                  },
-                  {
-                    src:"/realtime.png",
-                    alt: "Multi-Location Management",
-                    title: "Multi-Location Ready",
-                    description: "Scale across multiple locations",
-                    href: "/grow/point-of-sale",
-                  },
-                  {
-                    src: "/7.png",
-                    alt: "Secure & Compliant Platform",
-                    title: "Secure & Compliant",
-                    description: "Enterprise-grade security",
-                    href: "/operations/automated-compilance",
-                  },
-                  {
-                    src: "/4.png",
-                    alt: "Smart Receipts Drag and Drop Graphic",
-                    title: "Smart Receipts",
-                    description: "Dynamic receipts for every order",
-                    href: "/grow/point-of-sale",
-                  },
-                  {
-                    src:"/inventory.png",
-                    alt: "Real-Time Inventory Tracking",
-                    title: "Real-Time Inventory",
-                    description: "Live inventory management",
-                    href: "/operations/inventory-management",
-                  },
-                ].map((img: { src: string; alt: string; title: string; description: string; href: string }, idx: number) => (
-                  <Link href={img.href} key={idx} className="block group cursor-pointer">
-                    <motion.div
-                      className="relative flex-shrink-0 snap-start group"
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: idx * 0.1 }}
-                      viewport={{ once: true }}
-                      whileHover={{ scale: 1.03 }}
-                    >
-                      <div className="relative w-64 h-80 sm:w-80 sm:h-96 rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-br from-blue-900/40 to-blue-800/20 backdrop-blur-xl border border-blue-700/30 group-hover:border-blue-500/50 transition-all duration-500">
-                        <img
-                          src={img.src || "/placeholder.svg"}
-                          alt={img.alt}
-                          className="w-full h-48 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-                          loading="lazy"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-transparent to-transparent" />
-
-                        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
-                          <h3 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2 group-hover:text-cyan-400 transition-colors duration-300">
-                            {img.title}
-                          </h3>
-                          <p className="text-blue-200 text-sm leading-relaxed">{img.description}</p>
-                        </div>
-
-                        {/* Hover overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      </div>
-                    </motion.div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Features Section */}
-        <section data-section="3" className="py-20 sm:py-32 relative" id="features">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Section Header */}
-            <motion.div
-              className="text-center mb-16 sm:mb-20"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6">
-                Everything You Need,{" "}
-                <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                  Nothing You Don't
-                </span>
-              </h2>
-              <p className="text-lg sm:text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed px-4">
-                From point of sale to last-mile delivery, we've built the complete retail ecosystem
-              </p>
-            </motion.div>
-
-            {/* Feature Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {[
-                {
-                  icon: <ShoppingCart className="w-6 h-6 sm:w-8 sm:h-8" />,
-                  title: "Smart POS System",
-                  description: "Lightning-fast checkout with real-time inventory sync",
-                  features: ["Offline capability", "Custom receipts", "Multi-payment support"],
-                },
-                {
-                  icon: <MapPin className="w-6 h-6 sm:w-8 sm:h-8" />,
-                  title: "Last-Mile Delivery",
-                  description: "Smart routing and real-time tracking for your drivers",
-                  features: ["Route optimization", "OTP verification", "Live tracking"],
-                },
-                {
-                  icon: <BarChart3 className="w-6 h-6 sm:w-8 sm:h-8" />,
-                  title: "Real-Time Analytics",
-                  description: "Know your business inside and out with live dashboards",
-                  features: ["Sales insights", "Inventory alerts", "Performance metrics"],
-                },
-                {
-                  icon: <Shield className="w-6 h-6 sm:w-8 sm:h-8" />,
-                  title: "Compliance Ready",
-                  description: "Stay audit-ready with built-in compliance tools",
-                  features: ["Metrc integration", "Audit trails", "Staff permissions"],
-                },
-                {
-                  icon: <Users className="w-6 h-6 sm:w-8 sm:h-8" />,
-                  title: "Team Management",
-                  description: "Empower your team with role-based access and training",
-                  features: ["User roles", "Training modules", "Performance tracking"],
-                },
-              ].map((feature: { icon: JSX.Element; title: string; description: string; features: string[]; src?: string; alt?: string }, index: number) => (
-                <motion.div
-                  key={feature.title}
-                  className="group relative"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{ y: -10 }}
-                >
-                  <div className="relative bg-gradient-to-br from-blue-900/40 to-blue-800/20 backdrop-blur-xl border border-blue-700/30 rounded-2xl sm:rounded-3xl p-6 sm:p-8 h-full overflow-hidden group-hover:border-blue-500/50 transition-all duration-500">
-                    {/* Hover effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                    <div className="relative z-10">
-                      <div className="bg-gradient-to-br from-blue-500 to-cyan-500 w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 text-white group-hover:scale-110 transition-transform duration-300">
-                        {feature.icon}
-                      </div>
-
-                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 group-hover:text-cyan-400 transition-colors duration-300">
-                        {feature.title}
-                      </h3>
-
-                      <p className="text-blue-200 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">{feature.description}</p>
-
-                      <ul className="space-y-2">
-                        {feature.features.map((item: string, idx: number) => (
-                          <li key={idx} className="flex items-center gap-3 text-blue-300">
-                            <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0" />
-                            <span className="text-xs sm:text-sm">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      {/* Add image for Branded Mobile App only */}
-                      {feature.src && (
-                        <img
-                          src={feature.src}
-                          alt={feature.alt || feature.title}
-                          className="w-full h-48 object-cover rounded-xl mt-6"
-                          loading="lazy"
-                        />
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Real-Time Inventory Section */}
-        <section data-section="4" className="py-20 sm:py-32 relative bg-gradient-to-br from-blue-900/10 to-cyan-900/10">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
-                  Real-Time Inventory,{" "}
-                  <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                    Real Easy
-                  </span>
-                </h2>
-                <p className="text-lg sm:text-xl text-blue-200 mb-6 sm:mb-8 leading-relaxed">
-                  Know exactly what's on your shelf—anytime, anywhere.
-                </p>
-                
-                <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
-                  {[
-                    "Run midday audits without closing",
-                    "Track shrinkage in real-time",
-                    "Catch theft before it happens",
-                    "No more counting blind",
-                  ].map((feature: string, index: number) => (
-                    <motion.div
-                      key={feature}
-                      className="flex items-center gap-3"
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                    >
-                      <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 flex-shrink-0" />
-                      <span className="text-blue-200 text-sm sm:text-base">{feature}</span>
-                    </motion.div>
-                  ))}
-                </div>
-
-                <div className="bg-gradient-to-br from-blue-900/40 to-blue-800/20 backdrop-blur-xl border border-blue-700/30 rounded-xl sm:rounded-2xl p-4 sm:p-6">
-                  <Quote className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400 mb-3 sm:mb-4" />
-                  <p className="text-blue-200 italic text-base sm:text-lg leading-relaxed">
-                    "With Bleaum, we don't wait until close to count—we count while we sell. It's a game changer."
-                  </p>
-                  <div className="mt-3 sm:mt-4 text-blue-400 font-semibold text-sm sm:text-base">— AJ, Happy Root</div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                <div className="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-white shadow-2xl">
-                  <div className="grid grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
-                      <Eye className="w-6 h-6 sm:w-8 sm:h-8 text-white mx-auto mb-2 sm:mb-3" />
-                      <div className="text-xl sm:text-2xl font-bold mb-1">Live</div>
-                      <div className="text-blue-100 text-xs sm:text-sm">Inventory View</div>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
-                      <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-white mx-auto mb-2 sm:mb-3" />
-                      <div className="text-xl sm:text-2xl font-bold mb-1">Instant</div>
-                      <div className="text-blue-100 text-xs sm:text-sm">Updates</div>
-                    </div>
-                  </div>
-                  <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6">
-                    <div className="flex justify-between items-center mb-3 sm:mb-4">
-                      <span className="text-white font-semibold text-sm sm:text-base">Current Stock Levels</span>
-                      <span className="bg-green-400 text-green-900 px-2 py-1 rounded text-xs font-bold animate-pulse">
-                        LIVE
-                      </span>
-                    </div>
-                    <div className="space-y-2 sm:space-y-3">
-                      {[
-                        { name: "Blue Dream 1/8oz", stock: 24, status: "good" },
-                        { name: "OG Kush Pre-rolls", stock: 12, status: "good" },
-                        { name: "Sativa Gummies", stock: 3, status: "low" },
-                        { name: "CBD Tincture", stock: 18, status: "good" },
-                      ].map((product: { name: string; stock: number; status: string }, idx: number) => (
-                        <div key={idx} className="flex justify-between items-center">
-                          <span className="text-blue-100 text-xs sm:text-sm truncate flex-1 mr-2">{product.name}</span>
-                          <span
-                            className={`font-semibold text-xs sm:text-sm flex-shrink-0 ${
-                              product.status === "low" ? "text-yellow-300" : "text-white"
-                            }`}
-                          >
-                            {product.stock} units {product.status === "low" && "⚠️"}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Last Mile Delivery Section */}
-        <section data-section="5" className="py-20 sm:py-32 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="order-2 lg:order-1"
-              >
-                <div className="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-white shadow-2xl">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6">
-                    <MapPin className="w-8 h-8 sm:w-12 sm:h-12 text-white mb-3 sm:mb-4" />
-                    <h3 className="text-lg sm:text-xl font-bold mb-2">Smart Routing</h3>
-                    <p className="text-blue-100 text-sm sm:text-base">AI-optimized delivery routes in real-time</p>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 text-center">
-                      <div className="text-lg sm:text-2xl font-bold mb-1">OTP</div>
-                      <div className="text-blue-100 text-xs sm:text-sm">Verification</div>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 text-center">
-                      <div className="text-lg sm:text-2xl font-bold mb-1">Live</div>
-                      <div className="text-blue-100 text-xs sm:text-sm">Tracking</div>
-                    </div>
-                  </div>
-                  <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4">
-                    <div className="text-white font-semibold mb-2 sm:mb-3 text-sm sm:text-base">Active Deliveries</div>
-                    <div className="space-y-2">
-                      {[
-                        { driver: "AJ", orders: 3, eta: "15 min" },
-                        { driver: "Perry", orders: 2, eta: "8 min" },
-                        { driver: "Andrew", orders: 4, eta: "22 min" },
-                      ].map((delivery: { driver: string; orders: number; eta: string }, idx: number) => (
-                        <div key={idx} className="flex justify-between items-center text-xs sm:text-sm">
-                          <span className="text-blue-100">{delivery.driver}</span>
-                          <span className="text-white">{delivery.orders} orders</span>
-                          <span className="text-green-300">{delivery.eta}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="order-1 lg:order-2"
-              >
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
-                  Last Mile,{" "}
-                  <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                    Locked In
-                  </span>
-                </h2>
-                <p className="text-lg sm:text-xl text-blue-200 mb-6 sm:mb-8 leading-relaxed">
-                  Drivers get a connected app. You get smart routes, live tracking, OTP verification, and full control.
-                </p>
-
-                <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
-                  {[
-                    "Connected driver mobile app",
-                    "AI-powered route optimization",
-                    "Real-time GPS tracking",
-                    "Secure OTP verification system",
-                    "Automated customer notifications",
-                  ].map((feature: string, index: number) => (
-                    <motion.div
-                      key={feature}
-                      className="flex items-center gap-3"
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                    >
-                      <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 flex-shrink-0" />
-                      <span className="text-blue-200 text-sm sm:text-base">{feature}</span>
-                    </motion.div>
-                  ))}
-                </div>
-
-                <div className="bg-gradient-to-br from-blue-900/40 to-blue-800/20 backdrop-blur-xl border border-blue-700/30 rounded-xl sm:rounded-2xl p-4 sm:p-6">
-                  <Quote className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400 mb-3 sm:mb-4" />
-                  <p className="text-blue-200 italic text-base sm:text-lg leading-relaxed">
-                    "We went from chaos to clockwork overnight. Our delivery times improved by 40%."
-                  </p>
-                  <div className="mt-3 sm:mt-4 text-blue-400 font-semibold text-sm sm:text-base">— Collin, Park Social</div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Mobile App Section */}
-        <section data-section="6" className="py-20 sm:py-32 relative bg-gradient-to-br from-blue-900/10 to-cyan-900/10">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
-                  Your Branded{" "}
-                  <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                    Mobile App
-                  </span>
-                </h2>
-                <p className="text-lg sm:text-xl text-blue-200 mb-6 sm:mb-8 leading-relaxed">
-                  Launch a custom storefront without the custom development cost. Get your own iOS & Android app in
-                  days, not months.
-                </p>
-                
-                <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
-                  {[
-                    "Live inventory synchronization",
-                    "Secure in-app payment processing",
-                    "Real-time delivery tracking",
-                    "Custom branding & design",
-                    "Push notification campaigns",
-                    "Customer loyalty programs",
-                  ].map((feature: string, index: number) => (
-                    <motion.div
-                      key={feature}
-                      className="flex items-center gap-3"
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                    >
-                      <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 flex-shrink-0" />
-                      <span className="text-blue-200 text-sm sm:text-base">{feature}</span>
-                    </motion.div>
-                  ))}
-                </div>
-
-                <div className="bg-gradient-to-br from-blue-900/40 to-blue-800/20 backdrop-blur-xl border border-blue-700/30 rounded-xl sm:rounded-2xl p-4 sm:p-6">
-                  <Quote className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400 mb-3 sm:mb-4" />
-                  <p className="text-blue-200 italic text-base sm:text-lg leading-relaxed">
-                    "It's like having our own app development team—without the headache or the cost."
-                  </p>
-                  <div className="mt-3 sm:mt-4 text-blue-400 font-semibold text-sm sm:text-base">— Hugo, Go Green</div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                <div className="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-white shadow-2xl">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6">
-                    <Smartphone className="w-8 h-8 sm:w-12 sm:h-12 text-white mb-3 sm:mb-4" />
-                    <h3 className="text-lg sm:text-xl font-bold mb-2">Native Mobile Experience</h3>
-                    <p className="text-blue-100 text-sm sm:text-base">iOS & Android ready with app store deployment</p>
-                  </div>
-                  <div className="space-y-3 sm:space-y-4">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 flex items-center gap-3 sm:gap-4">
-                      <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-white flex-shrink-0" />
-                      <div>
-                        <div className="text-white font-semibold text-sm sm:text-base">Seamless Shopping</div>
-                        <div className="text-blue-100 text-xs sm:text-sm">Cart, checkout, and order tracking</div>
-                      </div>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 flex items-center gap-3 sm:gap-4">
-                      <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 text-white flex-shrink-0" />
-                      <div>
-                        <div className="text-white font-semibold text-sm sm:text-base">Secure Payments</div>
-                        <div className="text-blue-100 text-xs sm:text-sm">Multiple payment methods supported</div>
-                      </div>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 flex items-center gap-3 sm:gap-4">
-                      <Bell className="w-5 h-5 sm:w-6 sm:h-6 text-white flex-shrink-0" />
-                      <div>
-                        <div className="text-white font-semibold text-sm sm:text-base">Smart Notifications</div>
-                        <div className="text-blue-100 text-xs sm:text-sm">Order updates and promotions</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Smart Receipts Section */}
-        <section data-section="7" className="py-20 sm:py-32 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="order-2 lg:order-1"
-              >
-                <div className="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-white shadow-2xl">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6">
-                    <Receipt className="w-8 h-8 sm:w-12 sm:h-12 text-white mb-3 sm:mb-4" />
-                    <h3 className="text-lg sm:text-xl font-bold mb-2">Smart Receipt System</h3>
-                    <p className="text-blue-100 text-sm sm:text-base">Print, text, or email automatically based on customer preference</p>
-                  </div>
-                  <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4">
-                      <div className="text-white font-semibold mb-2 text-sm sm:text-base">Receipt Delivery Options:</div>
-                      <div className="grid grid-cols-3 gap-2 text-center text-xs sm:text-sm">
-                        <div className="bg-white/10 rounded-xl p-2 sm:p-3">
-                          <div className="font-semibold">Print</div>
-                          <div className="text-blue-100 text-xs">Thermal printer</div>
-                        </div>
-                        <div className="bg-white/10 rounded-xl p-2 sm:p-3">
-                          <div className="font-semibold">Text</div>
-                          <div className="text-blue-100 text-xs">SMS delivery</div>
-                        </div>
-                        <div className="bg-white/10 rounded-xl p-2 sm:p-3">
-                          <div className="font-semibold">Email</div>
-                          <div className="text-blue-100 text-xs">Digital copy</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4">
-                      <div className="text-white font-semibold mb-2 text-sm sm:text-base">Compliance Features:</div>
-                      <div className="text-blue-100 text-xs sm:text-sm space-y-1">
-                        <div>✓ Tax calculations included</div>
-                        <div>✓ Regulatory compliance built-in</div>
-                        <div>✓ Custom branding options</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="order-1 lg:order-2"
-              >
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
-                  Receipts That{" "}
-                  <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                    Just Work
-                  </span>
-                </h2>
-                <p className="text-lg sm:text-xl text-blue-200 mb-6 sm:mb-8 leading-relaxed">
-                  Print, text, or email. Itemized, branded, tax-compliant. Your customers choose how they want their
-                  receipt.
-                </p>
-
-                <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
-                  {[
-                    "Fully synced with POS & inventory systems",
-                    "Custom branding and logo integration",
-                    "Automatic tax compliance calculations",
-                    "Multiple delivery method options",
-                    "Digital receipt storage and retrieval",
-                    "Environmental impact reduction",
-                  ].map((feature: string, index: number) => (
-                    <motion.div
-                      key={feature}
-                      className="flex items-center gap-3"
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                    >
-                      <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 flex-shrink-0" />
-                      <span className="text-blue-200 text-sm sm:text-base">{feature}</span>
-                    </motion.div>
-                  ))}
-                </div>
-
-                <div className="bg-gradient-to-br from-blue-900/40 to-blue-800/20 backdrop-blur-xl border border-blue-700/30 rounded-xl sm:rounded-2xl p-4 sm:p-6">
-                  <Quote className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400 mb-3 sm:mb-4" />
-                  <p className="text-blue-200 italic text-base sm:text-lg leading-relaxed">
-                    "Customers love choosing how they get their receipts. It's the little things that make a big
-                    difference."
-                  </p>
-                  <div className="mt-3 sm:mt-4 text-blue-400 font-semibold text-sm sm:text-base">— Cam, Project Releaf</div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Why Teams Switch Section */}
-        <section data-section="8" className="py-20 sm:py-32 relative bg-gradient-to-br from-blue-900/10 to-cyan-900/10">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              className="text-center mb-16 sm:mb-20"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6">
-                Why Teams Switch to{" "}
-                <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Bleaum</span>
-              </h2>
-              <p className="text-lg sm:text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed px-4">
-                See why retailers choose Bleaum over the competition
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {[
-                {
-                  title: "POS Onboard in 24 hours",
-                  icon: <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-white-400" />,
-                  description: "Get up and running fast with our streamlined setup process",
-                },
-                {
-                  title: "Multi-location ready",
-                  icon: <Building2 className="w-6 h-6 sm:w-8 sm:h-8 text-white-400" />,
-                  description: "Scale seamlessly across multiple locations and states",
-                },
-                {
-                  title: "Work on Any Device",
-                  icon: <WifiOff className="w-6 h-6 sm:w-8 sm:h-8 text-white-400" />,
-                  description: "From storefront to sidewalk—your POS works on whatever device you've got.",
-                },
-                {
-                  title: "Real support, real fast",
-                  icon: <Headphones className="w-6 h-6 sm:w-8 sm:h-8 text-white-400" />,
-                  description: "Human help when you need it, not chatbots",
-                },
-                {
-                  title: "Fully compliant, always",
-                  icon: <ShieldCheck className="w-6 h-6 sm:w-8 sm:h-8 text-white-400" />,
-                  description: "Stay audit-ready 24/7 with built-in compliance tools",
-                },
-                {
-                  title: "Transparent pricing",
-                  icon: <Target className="w-6 h-6 sm:w-8 sm:h-8 text-white-400" />,
-                  description: "No hidden fees, no surprises, just honest pricing",
-                },
-              ].map((feature: { title: string; icon: JSX.Element; description: string }, index: number) => (
-                <motion.div
-                  key={feature.title}
-                  className="group relative"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{ y: -10 }}
-                >
-                  <div className="bg-gradient-to-br from-blue-900/40 to-blue-800/20 backdrop-blur-xl border border-blue-700/30 rounded-2xl sm:rounded-3xl p-6 sm:p-8 h-full text-center group-hover:border-blue-500/50 transition-all duration-500">
-                    <div className="bg-gradient-to-br from-blue-500 to-cyan-500 w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
-                      {feature.icon}
-                    </div>
-                    <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4 group-hover:text-cyan-400 transition-colors duration-300">
-                      {feature.title}
-                    </h3>
-                    <p className="text-blue-200 leading-relaxed text-sm sm:text-base">{feature.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* About Section */}
-        <section data-section="9" className="py-20 sm:py-32 relative" id="about">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              className="text-center mb-16 sm:mb-20"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6">
-                Built by{" "}
-                <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                  Operators
-                </span>
-              </h2>
-              <p className="text-lg sm:text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed px-4">
-                We've been in the trenches. We know the pain points. That's why we built something different.
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 items-center mb-16 sm:mb-20">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                <div className="bg-gradient-to-br from-blue-900/40 to-blue-800/20 backdrop-blur-xl border border-blue-700/30 rounded-2xl sm:rounded-3xl p-6 sm:p-8">
-                  <Quote className="w-8 h-8 sm:w-12 sm:h-12 text-blue-400 mb-4 sm:mb-6" />
-                  <blockquote className="text-xl sm:text-2xl text-white font-medium mb-6 sm:mb-8 leading-relaxed">
-                    "Every feature we build comes from real problems we've solved in the field. That's what makes Bleaum
-                    different."
-                  </blockquote>
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center overflow-hidden">
-                      <img src="/6.png" alt="Antonio Panella" className="object-cover w-full h-full" />
-                    </div>
-                    <div>
-                      <div className="text-white font-bold text-sm sm:text-base">Antonio Panella</div>
-                      <div className="text-blue-400 text-sm sm:text-base">Founder & CEO</div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="space-y-6 sm:space-y-8"
-              >
-                {[
-                  {
-                    icon: <Target className="w-5 h-5 sm:w-6 sm:h-6" />,
-                    title: "Our Mission",
-                    description: "Empower small businesses with enterprise-grade tools that actually work",
-                  },
-                  {
-                    icon: <Sparkles className="w-5 h-5 sm:w-6 sm:h-6" />,
-                    title: "Our Vision",
-                    description: "A world where running a retail business is simple, profitable, and stress-free",
-                  },
-                  {
-                    icon: <Award className="w-5 h-5 sm:w-6 sm:h-6" />,
-                    title: "Our Values",
-                    description: "Transparency, reliability, and genuine care for our customers' success",
-                  },
-                ].map((item: { icon: JSX.Element; title: string; description: string }, index: number) => (
-                  <motion.div
-                    key={item.title}
-                    className="flex gap-3 sm:gap-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                  >
-                    <div className="bg-gradient-to-br from-blue-500 to-cyan-500 w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center text-white flex-shrink-0">
-                      {item.icon}
-                    </div>
-                    <div>
-                      <h3 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2">{item.title}</h3>
-                      <p className="text-blue-200 leading-relaxed text-sm sm:text-base">{item.description}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
-
-            {/* Achievement Stats */}
-            <motion.div
-              className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              {[
-                { number: "300+", label: "Happy Retailers", icon: <Users className="w-5 h-5 sm:w-6 sm:h-6" /> },
-                { number: "50%", label: "Time Saved", icon: <Clock className="w-5 h-5 sm:w-6 sm:h-6" /> },
-                { number: "99.9%", label: "Uptime", icon: <Shield className="w-5 h-5 sm:w-6 sm:h-6" /> },
-                { number: "24/7", label: "Support", icon: <Headphones className="w-5 h-5 sm:w-6 sm:h-6" /> },
-              ].map((stat: { number: string; label: string; icon: JSX.Element }, index: number) => (
-                <motion.div
-                  key={stat.label}
-                  className="text-center bg-gradient-to-br from-blue-900/40 to-blue-800/20 backdrop-blur-xl border border-blue-700/30 rounded-xl sm:rounded-2xl p-4 sm:p-6"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="bg-gradient-to-br from-blue-500 to-cyan-500 w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center text-white mx-auto mb-3 sm:mb-4">
-                    {stat.icon}
-                  </div>
-                  <div className="text-2xl sm:text-3xl font-bold text-cyan-400 mb-1 sm:mb-2">{stat.number}</div>
-                  <div className="text-blue-300 text-xs sm:text-sm uppercase tracking-wider">{stat.label}</div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Secure & Compliant Section */}
-        <section data-section="10" className="py-20 sm:py-32 relative bg-gradient-to-br from-blue-900/10 to-cyan-900/10">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              className="text-center mb-16 sm:mb-20"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6">
-                Secure & Compliant,{" "}
-                <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                  End to End
-                </span>
-              </h2>
-              <p className="text-lg sm:text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed px-4">
-                Built with enterprise-grade security and compliance from day one
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
-              {[
-                {
-                  title: "State Integrations",
-                  description: "Metrc, BioTrack & state compliance systems",
-                  icon: <Link2 className="w-6 h-6 sm:w-8 sm:h-8 text-white-400" />,
-                },
-                {
-                  title: "Data Security",
-                  description: "Encrypted, backed-up, and SOC 2 compliant",
-                  icon: <Lock className="w-6 h-6 sm:w-8 sm:h-8 text-white-400" />,
-                },
-                {
-                  title: "Audit Ready",
-                  description: "Full audit trails & granular staff permissions",
-                  icon: <ScrollText className="w-6 h-6 sm:w-8 sm:h-8 text-white-400" />,
-                },
-              ].map((feature: { title: string; description: string; icon: JSX.Element }, index: number) => (
-                <motion.div
-                  key={feature.title}
-                  className="group relative"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{ y: -10 }}
-                >
-                  <div className="bg-gradient-to-br from-blue-900/40 to-blue-800/20 backdrop-blur-xl border border-blue-700/30 rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center h-full group-hover:border-blue-500/50 transition-all duration-500">
-                    <div className="bg-gradient-to-br from-blue-500 to-cyan-500 w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
-                      {feature.icon}
-                    </div>
-                    <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4 group-hover:text-cyan-400 transition-colors duration-300">
-                      {feature.title}
-                    </h3>
-                    <p className="text-blue-200 leading-relaxed text-sm sm:text-base">{feature.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Industries We Serve Section */}
-        <section data-section="11" className="py-20 sm:py-32 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              className="text-center mb-16 sm:mb-20"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6">
-                Industries We{" "}
-                <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Serve</span>
-              </h2>
-              <p className="text-lg sm:text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed px-4">
-                Specialized solutions for regulated and high-compliance retail environments
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-              {[
-                {
-                  title: "Cannabis Retail & Delivery",
-                  description: "Complete seed-to-sale tracking with state compliance",
-                  icon: <ShoppingCart className="w-8 h-8 sm:w-12 sm:h-12 text-blue-400" />,
-                },
-                {
-                  title: "Pharmacies & Wellness",
-                  description: "Secure handling of controlled substances and patient data",
-                  icon: <Shield className="w-8 h-8 sm:w-12 sm:h-12 text-blue-400" />,
-                },
-                {
-                  title: "High-Compliance Retail",
-                  description: "Any retail environment requiring detailed tracking and reporting",
-                  icon: <Building2 className="w-8 h-8 sm:w-12 sm:h-12 text-blue-400" />,
-                },
-              ].map((industry: { title: string; description: string; icon: JSX.Element }, index: number) => (
-                <motion.div
-                  key={industry.title}
-                  className="group relative"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{ y: -10 }}
-                >
-                  <div className="bg-gradient-to-br from-blue-900/40 to-blue-800/20 backdrop-blur-xl border border-blue-700/30 rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center h-full group-hover:border-blue-500/50 transition-all duration-500">
-                    <div className="mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">{industry.icon}</div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 group-hover:text-cyan-400 transition-colors duration-300">
-                      {industry.title}
-                    </h3>
-                    <p className="text-blue-200 leading-relaxed text-sm sm:text-base">{industry.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Testimonials Section */}
-        <section
-          data-section="12"
-          className="py-20 sm:py-32 relative bg-gradient-to-br from-blue-900/10 to-cyan-900/10"
-          id="testimonials"
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              className="text-center mb-16 sm:mb-20"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6">
-                What Our{" "}
-                <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                  Customers Say
-                </span>
-              </h2>
-              <p className="text-lg sm:text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed px-4">
-                Real stories from real retailers who've transformed their business with Bleaum
-              </p>
-            </motion.div>
-
-            <TestimonialCarousel />
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section data-section="13" className="py-10 sm:py-16 relative overflow-hidden rounded-3xl mx-2 sm:mx-4 lg:mx-8">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-600 rounded-3xl"></div>
-          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.05)_50%,transparent_75%)] bg-[length:40px_40px] rounded-3xl"></div>
-        
-          <div className="relative max-w-2xl mx-auto px-2 sm:px-4 lg:px-8 text-center rounded-3xl">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">Ready to Transform Your Business?</h2>
-              <p className="text-base sm:text-lg text-blue-100 mb-4 sm:mb-6 leading-relaxed max-w-xl mx-auto">
-                Join 300+ retailers who've already made the switch. See the difference in just 24 hours.
-              </p>
-
-              <motion.div
-                className="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-center items-center mb-6 sm:mb-8"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                viewport={{ once: true }}
-              >
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
-                  <Link href="/demo">
-                    <button className="bg-white text-blue-600 px-6 py-2 sm:px-8 sm:py-3 rounded-2xl text-base sm:text-lg font-semibold hover:shadow-2xl transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto">
-                      <Rocket className="w-4 h-4 sm:w-5 sm:h-5" />
-                      Schedule Your Demo
-                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </button>
-                  </Link>
-                </motion.div>
-
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
-                  <Link href="/demo">
-                    <button className="border-2 border-white/50 text-white px-6 py-2 sm:px-8 sm:py-3 rounded-2xl text-base sm:text-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300 w-full sm:w-auto">
-                      Talk to Sales
-                    </button>
-                  </Link>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
+    <MotionConfig reducedMotion="user">
+      <div className="relative left-1/2 w-screen -translate-x-1/2 bg-ui-bg text-ui-fg">
+        <Hero />
+        <IntegrationStrip />
+        <Platform />
+        <DeepDives />
+        <Reasons />
+        <Compliance />
+        <Operators />
+        <Testimonials />
+        <FinalCta />
       </div>
-    </>
+    </MotionConfig>
   )
 }
 
-function TestimonialCarousel() {
-  const testimonials = [
-    {
-      quote: "Bleaum cut our inventory time from 4 hours to 30 minutes. Our team actually enjoys using it now!",
-      name: "Perry Jones",
-      company: "Centered by Design",
-      location: "Tulsa, Oklahoma",
-      rating: 5,
-    },
-    {
-      quote: "The mobile app launched our online presence overnight. Sales increased 40% in the first month.",
-      name: "Andrew H",
-      company: "Go Green",
-      location: "Ontario, Canada",
-      rating: 5,
-    },
-    {
-      quote: "We switched from a big-name POS and never looked back. Bleaum just works—no more headaches.",
-      name: "AJ",
-      company: "Happy Root",
-      location: "Oklahoma City, Oklahoma",
-      rating: 5,
-    },
-    {
-      quote: "The compliance features saved us during our last audit. Everything was organized and ready to go.",
-      name: "Angelica",
-      company: "Park Social",
-      location: "Alameda, California",
-      rating: 5,
-    },
-  ]
-
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [testimonials.length])
-
+function Reveal({ children, delay = 0, className }: { children: React.ReactNode; delay?: number; className?: string }) {
   return (
-    <div className="relative max-w-4xl mx-auto">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentIndex}
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -100 }}
-          transition={{ duration: 0.5 }}
-          className="bg-gradient-to-br from-blue-900/40 to-blue-800/20 backdrop-blur-xl border border-blue-700/30 rounded-2xl sm:rounded-3xl p-6 sm:p-12 text-center"
-        >
-          <div className="flex justify-center mb-4 sm:mb-6">
-            {[...Array(testimonials[currentIndex].rating)].map((_: undefined, i: number) => (
-              <Star key={i} className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400 fill-current" />
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+function BrandMark({ className }: { className?: string }) {
+  const cells: [number, number, string][] = [
+    [0, 0, "#FBC9C5"], [1, 0, "#E08E5F"],
+    [0, 1, "#FDB56E"], [1, 1, "#FBA382"], [2, 1, "#FBC9C5"],
+    [1, 2, "#FDB27E"], [2, 2, "#E08E5F"],
+  ]
+  return (
+    <svg aria-hidden viewBox="0 0 34 34" className={className}>
+      {cells.map(([x, y, fill]) => (
+        <rect key={`${x}-${y}`} x={x * 12} y={y * 12} width="10" height="10" rx="1.5" fill={fill} />
+      ))}
+    </svg>
+  )
+}
+
+function SectionHeading({
+  eyebrow,
+  title,
+  description,
+  dark = false,
+}: {
+  eyebrow: string
+  title: React.ReactNode
+  description?: string
+  dark?: boolean
+}) {
+  return (
+    <Reveal className="mx-auto max-w-3xl text-center">
+      <p className={`text-[13px] font-semibold uppercase tracking-[0.16em] ${dark ? "text-brand-peach" : "text-ui-accent"}`}>{eyebrow}</p>
+      <h2 className={`mt-4 text-balance text-3xl font-extrabold tracking-tight sm:text-5xl ${dark ? "text-white" : "text-ui-fg"}`}>{title}</h2>
+      {description && (
+        <p className={`mx-auto mt-5 max-w-2xl text-lg leading-relaxed ${dark ? "text-brand-mist" : "text-ui-body"}`}>{description}</p>
+      )}
+    </Reveal>
+  )
+}
+
+function Hero() {
+  return (
+    <section className="relative overflow-hidden">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_60%_at_90%_0%,#FCE6DD_0%,transparent_65%),radial-gradient(40%_50%_at_0%_100%,#FDEBD9_0%,transparent_60%)] dark:opacity-[0.12]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(11,27,69,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(11,27,69,0.05)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,black,transparent)] dark:invert"
+      />
+
+      <div className={`${wrap} relative grid items-center gap-16 pb-20 pt-14 lg:grid-cols-12 lg:gap-10 lg:pb-28 lg:pt-24`}>
+        <Reveal className="lg:col-span-5">
+          <span className="inline-flex items-center gap-2 rounded-full border border-ui-line/10 bg-ui-surface px-3.5 py-1.5 text-xs font-semibold text-ui-fg shadow-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-teal opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-teal" />
+            </span>
+            Trusted by 300+ retailers
+          </span>
+
+          <h1 className="mt-6 text-[2.75rem] font-extrabold leading-[1.04] tracking-tight text-ui-fg sm:text-6xl lg:text-[4.25rem]">
+            Where retail runs{" "}
+            <span className="relative inline-block whitespace-nowrap text-ui-accent">
+              smart.
+              <svg aria-hidden viewBox="0 0 220 16" preserveAspectRatio="none" className="absolute -bottom-1.5 left-0 h-3 w-full text-brand-coral">
+                <path d="M3 12C55 4 140 2 217 8" stroke="currentColor" strokeWidth="5" strokeLinecap="round" fill="none" />
+              </svg>
+            </span>
+          </h1>
+
+          <p className="mt-7 max-w-xl text-lg leading-relaxed text-ui-body">
+            Point of sale, inventory, delivery, payments and compliance in one platform — built by operators, for
+            operators. No more clunky POS.
+          </p>
+
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <Link href="/demo" onClick={trackDemoClick} className={btnPrimary}>
+              Book a live demo
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+            </Link>
+            <Link href="/demo" onClick={trackDemoClick} className={btnSecondary}>
+              <Play className="h-4 w-4 fill-current" />
+              Watch the tour
+            </Link>
+          </div>
+
+          <ul className="mt-9 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-ui-body">
+            {["Onboard in 24 hours", "No hidden fees", "Real human support"].map((item) => (
+              <li key={item} className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-brand-teal" strokeWidth={3} />
+                {item}
+              </li>
             ))}
+          </ul>
+        </Reveal>
+
+        <Reveal delay={0.15} className="relative lg:col-span-7">
+          <div className="relative rounded-2xl border border-ui-line/10 bg-ui-surface p-2 shadow-2xl shadow-brand-navy/15">
+            <div className="flex items-center gap-1.5 px-3 pb-2 pt-1">
+              <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#FEBC2E]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
+              <span className="ml-3 text-xs font-medium text-ui-subtle">Bleaum Dashboard</span>
+            </div>
+            <Image
+              src="/IMAGE.png"
+              alt="Bleaum dashboard showing sales trends, popular times, revenue and the live customer queue"
+              width={1366}
+              height={768}
+              priority
+              className="rounded-xl border border-ui-line/5"
+            />
           </div>
 
-          <Quote className="w-8 h-8 sm:w-12 sm:h-12 text-blue-400 mx-auto mb-4 sm:mb-6" />
-
-          <blockquote className="text-lg sm:text-2xl text-white font-medium mb-6 sm:mb-8 leading-relaxed px-4">
-            "{testimonials[currentIndex].quote}"
-          </blockquote>
-
-          <div className="flex items-center justify-center gap-3 sm:gap-4">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-sm sm:text-lg">
-                {testimonials[currentIndex].name
-                  .split(' ')
-                  .map((n: string) => n[0])
-                  .join('')}
-              </span>
+          <div className="absolute -bottom-6 -left-4 hidden w-56 rounded-2xl border border-ui-line/10 bg-ui-surface p-4 shadow-xl shadow-brand-navy/10 sm:block lg:-left-10">
+            <div className="flex items-center gap-2 text-xs font-semibold text-ui-subtle">
+              <TrendingUp className="h-4 w-4 text-brand-teal" />
+              Sales today
             </div>
-            <div className="text-left">
-              <div className="text-white font-bold text-sm sm:text-base">{testimonials[currentIndex].name}</div>
-              <div className="text-blue-400 text-sm sm:text-base">{testimonials[currentIndex].company}</div>
-              <div className="text-blue-300 text-xs sm:text-sm">{testimonials[currentIndex].location}</div>
+            <div className="mt-1.5 text-2xl font-extrabold text-ui-fg">$12,480</div>
+            <div className="mt-1 text-xs font-semibold text-brand-teal">+18% vs last week</div>
+          </div>
+
+          <div className="absolute -right-3 -top-5 hidden items-center gap-3 rounded-2xl border border-ui-line/10 bg-ui-surface px-4 py-3 shadow-xl shadow-brand-navy/10 sm:flex lg:-right-6">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-ui-tint text-ui-accent">
+              <ShieldCheck className="h-5 w-5" />
+            </span>
+            <div>
+              <div className="text-sm font-bold text-ui-fg">Metrc synced</div>
+              <div className="text-xs text-ui-subtle">Compliant · 2 min ago</div>
             </div>
           </div>
-        </motion.div>
-      </AnimatePresence>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
 
-      {/* Dots indicator */}
-      <div className="flex justify-center gap-2 mt-6 sm:mt-8">
-        {testimonials.map((_: { quote: string; name: string; company: string; location: string; rating: number }, index: number) => (
-          <button
-            key={index}
-            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
-              index === currentIndex ? 'bg-blue-400' : 'bg-blue-800'
-            }`}
-            onClick={() => setCurrentIndex(index)}
-          />
+function IntegrationStrip() {
+  return (
+    <section className="border-y border-ui-line/5 bg-ui-surface">
+      <div className={`${wrap} py-12`}>
+        <p className="text-center text-sm font-medium text-ui-subtle">
+          Connected to the compliance, payment and marketing tools you already use
+        </p>
+        <ul className="mt-8 grid grid-cols-4 gap-3 sm:grid-cols-8 sm:gap-4">
+          {INTEGRATIONS.map((integration) => (
+            <li key={integration.name} className="flex h-20 items-center justify-center rounded-2xl border border-ui-line/10 bg-white p-3 transition duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-navy/5">
+              <Image src={integration.src} alt={integration.name} width={64} height={64} className="h-full w-auto object-contain" />
+            </li>
+          ))}
+        </ul>
+        <div className="mt-8 text-center">
+          <Link href="/operations/integrations" className="inline-flex items-center gap-1 text-sm font-semibold text-ui-accent hover:underline">
+            See all integrations <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Platform() {
+  return (
+    <section id="features" className="py-20 lg:py-28">
+      <div className={wrap}>
+        <SectionHeading
+          eyebrow="The platform"
+          title="Everything you need. Nothing you don't."
+          description="From point of sale to last-mile delivery, we've built the complete retail ecosystem."
+        />
+
+        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {PRODUCTS.map((product, index) => (
+            <Reveal key={product.title} delay={(index % 3) * 0.08} className={product.featured ? "sm:col-span-2" : ""}>
+              <Link
+                href={product.href}
+                className="group flex h-full flex-col rounded-3xl border border-ui-line/10 bg-ui-surface p-2.5 transition duration-300 hover:-translate-y-1 hover:border-brand-coral/40 hover:shadow-xl hover:shadow-brand-navy/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-coral"
+              >
+                <div className="relative h-52 overflow-hidden rounded-2xl bg-ui-bg">
+                  <Image
+                    src={product.img}
+                    alt=""
+                    fill
+                    sizes={product.featured ? "(min-width: 1024px) 66vw, 100vw" : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"}
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-4">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-ui-tint text-ui-accent">
+                      <product.icon className="h-[18px] w-[18px]" />
+                    </span>
+                    <h3 className="text-lg font-bold text-ui-fg">{product.title}</h3>
+                  </div>
+                  <p className="mt-3 flex-1 text-[15px] leading-relaxed text-ui-body">{product.desc}</p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-ui-accent">
+                    Learn more
+                    <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                  </span>
+                </div>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function MockCard({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="relative">
+      <BrandMark className="absolute -right-4 -top-6 h-16 w-16 opacity-90" />
+      <div className="relative rounded-3xl border border-ui-line/10 bg-ui-surface p-5 shadow-2xl shadow-brand-navy/10 sm:p-7">{children}</div>
+    </div>
+  )
+}
+
+function InventoryMock() {
+  const items = [
+    { name: "Blue Dream 1/8oz", stock: 24, low: false },
+    { name: "OG Kush Pre-rolls", stock: 12, low: false },
+    { name: "Sativa Gummies", stock: 3, low: true },
+    { name: "CBD Tincture", stock: 18, low: false },
+  ]
+  return (
+    <MockCard>
+      <div className="grid grid-cols-2 gap-3">
+        {[
+          { icon: Eye, value: "Live", label: "Inventory view" },
+          { icon: Zap, value: "Instant", label: "Updates" },
+        ].map((stat) => (
+          <div key={stat.label} className="rounded-2xl bg-ui-bg p-4">
+            <stat.icon className="h-5 w-5 text-ui-accent" />
+            <div className="mt-3 text-xl font-extrabold">{stat.value}</div>
+            <div className="text-xs font-medium text-ui-subtle">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-5 flex items-center justify-between">
+        <span className="text-sm font-bold">Current stock levels</span>
+        <span className="rounded-full bg-brand-teal/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-brand-teal">Live</span>
+      </div>
+      <ul className="mt-3 divide-y divide-ui-line/5">
+        {items.map((item) => (
+          <li key={item.name} className="flex items-center justify-between py-3 text-sm">
+            <span className="text-ui-body">{item.name}</span>
+            <span className={`rounded-md px-2 py-0.5 font-semibold ${item.low ? "bg-amber-100 text-amber-800 dark:bg-amber-400/15 dark:text-amber-300" : "text-ui-fg"}`}>
+              {item.stock} units{item.low && " · Low"}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </MockCard>
+  )
+}
+
+function DeliveryMock() {
+  const drivers = [
+    { driver: "AJ", orders: 3, eta: "15 min" },
+    { driver: "Perry", orders: 2, eta: "8 min" },
+    { driver: "Andrew", orders: 4, eta: "22 min" },
+  ]
+  return (
+    <MockCard>
+      <div className="flex items-start gap-4 rounded-2xl bg-brand-navy p-5 text-white">
+        <MapPin className="h-6 w-6 flex-none text-brand-peach" />
+        <div>
+          <div className="font-bold">Smart routing</div>
+          <div className="mt-1 text-sm text-brand-mist">AI-optimized delivery routes in real time</div>
+        </div>
+      </div>
+      <div className="mt-3 grid grid-cols-2 gap-3">
+        {[
+          { value: "OTP", label: "Verification" },
+          { value: "Live", label: "Tracking" },
+        ].map((stat) => (
+          <div key={stat.label} className="rounded-2xl bg-ui-bg p-4 text-center">
+            <div className="text-xl font-extrabold">{stat.value}</div>
+            <div className="text-xs font-medium text-ui-subtle">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-5 text-sm font-bold">Active deliveries</div>
+      <ul className="mt-2 divide-y divide-ui-line/5">
+        {drivers.map((d) => (
+          <li key={d.driver} className="grid grid-cols-3 items-center py-3 text-sm">
+            <span className="flex items-center gap-2 font-semibold">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-ui-tint text-xs font-bold text-ui-accent">{d.driver[0]}</span>
+              {d.driver}
+            </span>
+            <span className="text-center text-ui-body">{d.orders} orders</span>
+            <span className="text-right font-semibold text-brand-teal">{d.eta}</span>
+          </li>
+        ))}
+      </ul>
+    </MockCard>
+  )
+}
+
+function AppMock() {
+  return (
+    <div className="relative">
+      <BrandMark className="absolute -right-4 -top-6 z-10 h-16 w-16" />
+      <div className="relative overflow-hidden rounded-3xl border border-ui-line/10 bg-ui-surface shadow-2xl shadow-brand-navy/10">
+        <Image src="/3.png" alt="Branded Bleaum storefront app on a phone" width={1080} height={1080} className="h-auto w-full" />
+      </div>
+      <div className="absolute -bottom-6 left-6 right-6 grid grid-cols-3 gap-2 rounded-2xl border border-ui-line/10 bg-ui-surface p-3 shadow-xl shadow-brand-navy/10 sm:left-10 sm:right-10">
+        {[
+          { icon: ShoppingCart, label: "Shopping" },
+          { icon: CreditCard, label: "Payments" },
+          { icon: Bell, label: "Push alerts" },
+        ].map((f) => (
+          <div key={f.label} className="flex flex-col items-center gap-1 py-1 text-center text-xs font-semibold text-ui-body">
+            <f.icon className="h-5 w-5 text-ui-accent" />
+            {f.label}
+          </div>
         ))}
       </div>
     </div>
+  )
+}
+
+function ReceiptMock() {
+  return (
+    <MockCard>
+      <div className="flex items-center gap-3">
+        <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-ui-tint text-ui-accent">
+          <Receipt className="h-5 w-5" />
+        </span>
+        <div>
+          <div className="font-bold">Smart receipt system</div>
+          <div className="text-sm text-ui-subtle">Delivered the way each customer prefers</div>
+        </div>
+      </div>
+      <div className="mt-5 grid grid-cols-3 gap-3">
+        {[
+          { icon: Printer, label: "Print", sub: "Thermal printer" },
+          { icon: MessageSquare, label: "Text", sub: "SMS delivery" },
+          { icon: Mail, label: "Email", sub: "Digital copy" },
+        ].map((o) => (
+          <div key={o.label} className="rounded-2xl bg-ui-bg p-3 text-center">
+            <o.icon className="mx-auto h-5 w-5 text-ui-fg" />
+            <div className="mt-2 text-sm font-bold">{o.label}</div>
+            <div className="text-[11px] text-ui-subtle">{o.sub}</div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-5 rounded-2xl border border-dashed border-ui-line/15 p-4">
+        <div className="text-sm font-bold">Compliance built in</div>
+        <ul className="mt-3 space-y-2 text-sm text-ui-body">
+          {["Tax calculations included", "Regulatory compliance built-in", "Custom branding options"].map((t) => (
+            <li key={t} className="flex items-center gap-2">
+              <Check className="h-4 w-4 text-brand-teal" strokeWidth={3} />
+              {t}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </MockCard>
+  )
+}
+
+const DEEP_DIVES = [
+  {
+    eyebrow: "Inventory",
+    title: "Real-time inventory, real easy.",
+    body: "Know exactly what's on your shelf — anytime, anywhere.",
+    points: ["Run midday audits without closing", "Track shrinkage in real time", "Catch theft before it happens", "No more counting blind"],
+    quote: { text: "With Bleaum, we don't wait until close to count—we count while we sell. It's a game changer.", author: "AJ, Happy Root" },
+    href: "/operations/inventory-management",
+    visual: <InventoryMock />,
+  },
+  {
+    eyebrow: "Delivery",
+    title: "Last mile, locked in.",
+    body: "Drivers get a connected app. You get smart routes, live tracking, OTP verification, and full control.",
+    points: ["Connected driver mobile app", "AI-powered route optimization", "Real-time GPS tracking", "Secure OTP verification", "Automated customer notifications"],
+    quote: { text: "We went from chaos to clockwork overnight. Our delivery times improved by 40%.", author: "Collin, Park Social" },
+    href: "/grow/delivery",
+    visual: <DeliveryMock />,
+  },
+  {
+    eyebrow: "Branded app",
+    title: "Your brand, in every pocket.",
+    body: "Launch a custom storefront without the custom development cost. Get your own iOS & Android app in days, not months.",
+    points: ["Live inventory synchronization", "Secure in-app payments", "Real-time delivery tracking", "Custom branding & design", "Push notification campaigns", "Customer loyalty programs"],
+    quote: { text: "It's like having our own app development team—without the headache or the cost.", author: "Hugo, Go Green" },
+    href: "/grow/ecommerce",
+    visual: <AppMock />,
+  },
+  {
+    eyebrow: "Receipts",
+    title: "Receipts that just work.",
+    body: "Print, text, or email. Itemized, branded, tax-compliant. Your customers choose how they get their receipt.",
+    points: ["Fully synced with POS & inventory", "Custom branding and logo", "Automatic tax calculations", "Digital receipt storage and retrieval"],
+    quote: { text: "Customers love choosing how they get their receipts. It's the little things that make a big difference.", author: "Cam, Project Releaf" },
+    href: "/grow/point-of-sale",
+    visual: <ReceiptMock />,
+  },
+]
+
+function DeepDives() {
+  return (
+    <section className="bg-ui-surface py-20 lg:py-28">
+      <div className={`${wrap} space-y-24 lg:space-y-32`}>
+        {DEEP_DIVES.map((dive, index) => (
+          <div key={dive.eyebrow} className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+            <Reveal className={index % 2 ? "lg:order-2" : ""}>
+              <p className="text-[13px] font-semibold uppercase tracking-[0.16em] text-ui-accent">{dive.eyebrow}</p>
+              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-ui-fg sm:text-[2.75rem] sm:leading-[1.1]">{dive.title}</h2>
+              <p className="mt-5 text-lg leading-relaxed text-ui-body">{dive.body}</p>
+              <ul className="mt-7 grid gap-3 sm:grid-cols-2">
+                {dive.points.map((point) => (
+                  <li key={point} className="flex items-start gap-3 text-[15px] text-ui-body">
+                    <span className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-brand-teal/10">
+                      <Check className="h-3 w-3 text-brand-teal" strokeWidth={3.5} />
+                    </span>
+                    {point}
+                  </li>
+                ))}
+              </ul>
+              <figure className="mt-8 border-l-4 border-brand-coral pl-5">
+                <blockquote className="text-[15px] leading-relaxed text-ui-body">&ldquo;{dive.quote.text}&rdquo;</blockquote>
+                <figcaption className="mt-2 text-sm font-semibold text-ui-fg">— {dive.quote.author}</figcaption>
+              </figure>
+              <Link href={dive.href} className="mt-8 inline-flex items-center gap-1 text-sm font-semibold text-ui-accent hover:underline">
+                Explore {dive.eyebrow.toLowerCase()} <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Reveal>
+            <Reveal delay={0.1} className={index % 2 ? "lg:order-1" : ""}>
+              {dive.visual}
+            </Reveal>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function Reasons() {
+  return (
+    <section className="py-20 lg:py-28">
+      <div className={wrap}>
+        <SectionHeading eyebrow="Why Bleaum" title="Why teams switch to Bleaum" description="See why retailers choose Bleaum over the competition." />
+        <div className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-ui-line/10 bg-ui-line/10 sm:grid-cols-2 lg:grid-cols-3">
+          {REASONS.map((reason, index) => (
+            <Reveal key={reason.title} delay={(index % 3) * 0.06} className="h-full">
+              <div className="group h-full bg-ui-surface p-8 transition-colors duration-300 hover:bg-ui-bg">
+                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-navy text-brand-peach transition-colors dark:bg-ui-tint dark:text-ui-accent duration-300 group-hover:bg-brand-coral group-hover:text-brand-navy">
+                  <reason.icon className="h-6 w-6" />
+                </span>
+                <h3 className="mt-6 text-lg font-bold text-ui-fg">{reason.title}</h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-ui-body">{reason.desc}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Compliance() {
+  return (
+    <section className="relative overflow-hidden bg-brand-navy py-20 text-white lg:py-28">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(45%_55%_at_100%_0%,rgba(240,138,93,0.18)_0%,transparent_70%)]"
+      />
+      <div className={`${wrap} relative`}>
+        <SectionHeading
+          dark
+          eyebrow="Security & compliance"
+          title="Secure & compliant, end to end."
+          description="Built with enterprise-grade security and compliance from day one."
+        />
+        <div className="mt-14 grid gap-5 md:grid-cols-3">
+          {SECURITY.map((item, index) => (
+            <Reveal key={item.title} delay={index * 0.08} className="h-full">
+              <div className="h-full rounded-3xl border border-white/10 bg-white/[0.04] p-8 transition-colors duration-300 hover:border-brand-coral/50 hover:bg-white/[0.07]">
+                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-coral text-brand-navy">
+                  <item.icon className="h-6 w-6" />
+                </span>
+                <h3 className="mt-6 text-lg font-bold">{item.title}</h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-brand-mist">{item.desc}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal className="mt-20 border-t border-white/10 pt-14">
+          <div className="grid gap-10 lg:grid-cols-4">
+            <div>
+              <p className="text-[13px] font-semibold uppercase tracking-[0.16em] text-brand-peach">Industries we serve</p>
+              <h3 className="mt-3 text-2xl font-extrabold">Made for regulated, high-compliance retail.</h3>
+            </div>
+            {INDUSTRIES.map((industry) => (
+              <div key={industry.title}>
+                <industry.icon className="h-7 w-7 text-brand-peach" />
+                <h4 className="mt-4 font-bold">{industry.title}</h4>
+                <p className="mt-2 text-[15px] leading-relaxed text-brand-mist">{industry.desc}</p>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+function Operators() {
+  return (
+    <section id="about" className="py-20 lg:py-28">
+      <div className={wrap}>
+        <SectionHeading
+          eyebrow="Our story"
+          title="Built by operators."
+          description="We've been in the trenches. We know the pain points. That's why we built something different."
+        />
+
+        <div className="mt-14 grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <Reveal>
+            <figure className="relative rounded-3xl bg-ui-surface p-8 shadow-xl shadow-brand-navy/5 ring-1 ring-ui-line/10 sm:p-10">
+              <BrandMark className="h-10 w-10" />
+              <blockquote className="mt-6 text-2xl font-semibold leading-snug text-ui-fg">
+                &ldquo;Every feature we build comes from real problems we&apos;ve solved in the field. That&apos;s what makes Bleaum different.&rdquo;
+              </blockquote>
+              <figcaption className="mt-8 flex items-center gap-4">
+                <Image src="/6.png" alt="Antonio Panella" width={56} height={56} className="h-14 w-14 rounded-full object-cover ring-2 ring-ui-tint" />
+                <div>
+                  <div className="font-bold text-ui-fg">Antonio Panella</div>
+                  <div className="text-sm text-ui-subtle">Founder & CEO</div>
+                </div>
+              </figcaption>
+            </figure>
+          </Reveal>
+
+          <div className="space-y-8">
+            {VALUES.map((value, index) => (
+              <Reveal key={value.title} delay={index * 0.08}>
+                <div className="flex gap-5">
+                  <span className="flex h-12 w-12 flex-none items-center justify-center rounded-2xl bg-ui-tint text-ui-accent">
+                    <value.icon className="h-6 w-6" />
+                  </span>
+                  <div>
+                    <h3 className="text-lg font-bold text-ui-fg">{value.title}</h3>
+                    <p className="mt-1 text-[15px] leading-relaxed text-ui-body">{value.desc}</p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+
+        <Reveal className="mt-20">
+          <dl className="grid grid-cols-2 gap-y-10 rounded-3xl border border-ui-line/10 bg-ui-surface py-10 md:grid-cols-4 md:divide-x md:divide-ui-line/10">
+            {STATS.map((stat) => (
+              <div key={stat.label} className="text-center">
+                <dt className="text-sm font-medium text-ui-subtle">{stat.label}</dt>
+                <dd className="mt-2 text-4xl font-extrabold tracking-tight text-ui-fg sm:text-5xl">{stat.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+function Testimonials() {
+  return (
+    <section id="testimonials" className="bg-ui-surface py-20 lg:py-28">
+      <div className={wrap}>
+        <SectionHeading
+          eyebrow="Customer stories"
+          title="What our customers say"
+          description="Real stories from real retailers who've transformed their business with Bleaum."
+        />
+        <div className="mt-14 grid gap-5 md:grid-cols-2">
+          {TESTIMONIALS.map((t, index) => (
+            <Reveal key={t.name} delay={(index % 2) * 0.08} className="h-full">
+              <figure className="flex h-full flex-col rounded-3xl border border-ui-line/10 bg-ui-bg p-8">
+                <div className="flex gap-1" aria-label="5 out of 5 stars">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <blockquote className="mt-5 flex-1 text-lg font-medium leading-relaxed text-ui-fg">&ldquo;{t.quote}&rdquo;</blockquote>
+                <figcaption className="mt-8 flex items-center gap-4">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-navy text-sm font-bold text-brand-peach">
+                    {t.name.split(" ").map((n) => n[0]).join("")}
+                  </span>
+                  <div>
+                    <div className="font-bold text-ui-fg">{t.name}</div>
+                    <div className="text-sm text-ui-subtle">
+                      {t.company} · {t.location}
+                    </div>
+                  </div>
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function FinalCta() {
+  return (
+    <section className="py-20 lg:py-28">
+      <div className={wrap}>
+        <Reveal>
+          <div className="relative overflow-hidden rounded-[2rem] bg-brand-navy px-6 py-16 dark:ring-1 dark:ring-white/10 text-center sm:px-16 lg:py-20">
+            <BrandMark className="pointer-events-none absolute -left-10 -top-10 h-48 w-48 opacity-20" />
+            <BrandMark className="pointer-events-none absolute -bottom-12 -right-8 h-56 w-56 rotate-180 opacity-20" />
+            <div className="relative mx-auto max-w-2xl">
+              <h2 className="text-balance text-3xl font-extrabold tracking-tight text-white sm:text-5xl">Ready to transform your business?</h2>
+              <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-brand-mist">
+                Join 300+ retailers who&apos;ve already made the switch. See the difference in just 24 hours.
+              </p>
+              <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+                <Link href="/demo" onClick={trackDemoClick} className={`${btnPrimary} focus-visible:ring-offset-brand-navy`}>
+                  Schedule your demo
+                  <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                </Link>
+                <Link
+                  href="/demo"
+                  onClick={trackDemoClick}
+                  className="inline-flex items-center justify-center rounded-full border border-white/25 px-7 py-3.5 text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-white hover:text-brand-navy"
+                >
+                  Talk to sales
+                </Link>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
   )
 }

@@ -21,6 +21,27 @@ const config = {
     },
     extend: {
       colors: {
+        brand: {
+          navy: "#0B1B45",
+          ink: "#071233",
+          coral: "#F08A5D",
+          "coral-ink": "#C2522A",
+          peach: "#FDBA8C",
+          blush: "#FCE6DD",
+          teal: "#2A9D8F",
+          cream: "#FBF8F4",
+          mist: "#A9B4CC",
+        },
+        ui: {
+          bg: "rgb(var(--ui-bg) / <alpha-value>)",
+          surface: "rgb(var(--ui-surface) / <alpha-value>)",
+          fg: "rgb(var(--ui-fg) / <alpha-value>)",
+          body: "rgb(var(--ui-body) / <alpha-value>)",
+          subtle: "rgb(var(--ui-subtle) / <alpha-value>)",
+          line: "rgb(var(--ui-line) / <alpha-value>)",
+          tint: "rgb(var(--ui-tint) / <alpha-value>)",
+          accent: "rgb(var(--ui-accent) / <alpha-value>)",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

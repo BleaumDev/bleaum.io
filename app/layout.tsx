@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/contexts/theme-provider";
 import { Navbar } from "@/components/navbar";
-import { Space_Mono, Space_Grotesk } from "next/font/google";
+import { Space_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import { Footer } from "@/components/footer";
 import "@/styles/globals.css";
 import Script from 'next/script';
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 
-const sansFont = Space_Grotesk({
+const sansFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-geist-sans",
   display: "swap",
-  weight: "400",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 const monoFont = Space_Mono({
@@ -61,7 +61,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={sansFont.className + " bg-[#020917] min-h-screen flex flex-col"}>
+      <body className={sansFont.className + " bg-[#0B1220] min-h-screen flex flex-col overflow-x-clip"}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
