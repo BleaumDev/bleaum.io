@@ -1,7 +1,7 @@
 # Payments
 
 - **URL path:** `/grow/payments`
-- **Changes:** 10 (High 8, Medium 2)
+- **Changes:** 11 (High 8, Medium 2, Low 1)
 - **Source:** `Bleaum_Website_Update_Sheet (1).xlsx`, tab "Find & Replace". Row # matches the sheet.
 
 Update the **Status** column as work moves: `To do` → `In progress` → `Done` or `Skipped`.
@@ -18,3 +18,4 @@ Update the **Status** column as work moves: `To do` → `In progress` → `Done`
 | 61 | High | Verify | To do | "100% secure", "Fully compliant" | Soften, e.g. "End-to-end encrypted" and "built for regulated retail" |  |
 | 62 | Medium | Verify | To do | "Same-day funds", "No hidden fees, no long-term contracts" | Confirm with your processor agreements |  |
 | 63 | Medium | Verify | To do | Quote attributed to Collin, Park Social appears as an intro to the page | Confirm it is a real, approved quote |  |
+| 130 | Low | Wording | Done | "Workflows" section has only the heading | Keep the heading "Workflows". Add the line "Mix. Match. Get paid." and the text "See how different businesses combine Bleaum Pay solutions to fit the way they sell." | Added at the user's request during the payments redesign. No statistics or absolute claims. Not an item from the original sheet. Needs CEO review. |

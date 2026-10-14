@@ -1,119 +1,264 @@
-'use client';
+import type { Metadata } from "next"
+import type { ComponentType } from "react"
+import Image from "next/image"
+import {
+  BellRingIcon,
+  ClipboardListIcon,
+  HandshakeIcon,
+  PackageIcon,
+  ShoppingCartIcon,
+  UserCheckIcon,
+  UsersIcon,
+  UserRoundIcon,
+} from "lucide-react"
+import { Bloom } from "@/components/views/bloom"
+import { RevealOnScroll } from "@/components/views/home-client"
+import * as ui from "@/components/views/home-ui"
 
-import { Typography } from '@/components/typography';
-import Image from 'next/image';
+type Icon = ComponentType<{ className?: string }>
+
+// Copy is unchanged from the old page, except "Metrc" -> "state tracking and reporting integrations"
+// (website-updates/all-pages.md row 3).
+const top: { icon: Icon; label: string; text: string }[] = [
+  { icon: UserCheckIcon, label: "Welcome Message:", text: "A quick greeting with user personalization." },
+  { icon: ClipboardListIcon, label: "Due Tasks Summary:", text: "View any pending tasks directly on login." },
+  { icon: BellRingIcon, label: "New Orders Summary:", text: "Instantly see if new orders have been placed." },
+]
+
+const charts: { chart: string; purpose: string; features: string }[] = [
+  {
+    chart: "Top Products / Categories / Brands",
+    purpose: "Visualizes top-selling products, categories, or brands.",
+    features: "Dropdown to switch view. Select different timelines for broader or narrower insights.",
+  },
+  {
+    chart: "Conversion Chart",
+    purpose: "Tracks customer flow: how many were added to the queue vs. how many completed a purchase.",
+    features: "Dropdown to switch between timelines (Past 7, 14, 30 days, 3 months, 6 months).",
+  },
+  {
+    chart: "Popular Times",
+    purpose: "Shows busiest times based on historical order data.",
+    features: "Hover over bars to see exact numbers. Great for staffing and scheduling insights.",
+  },
+  {
+    chart: "Total Revenue Chart",
+    purpose: "Displays total revenue performance over time.",
+    features: "Dropdown to adjust timeline (similar to Conversion Chart).",
+  },
+]
+
+const links: { icon: Icon; name: string }[] = [
+  { icon: PackageIcon, name: "Products" },
+  { icon: ClipboardListIcon, name: "Tasks" },
+  { icon: UsersIcon, name: "Employees" },
+  { icon: ShoppingCartIcon, name: "Orders" },
+  { icon: UserRoundIcon, name: "Customers" },
+  { icon: HandshakeIcon, name: "Deals" },
+]
+
+const shortcuts: { name: string; fn: string }[] = [
+  { name: "Customer Queue", fn: "Quickly jump to view and manage the customer queue." },
+  {
+    name: "Task List",
+    fn: "Add new tasks, track pending/completed tasks, view priority, assigned user, creation and due dates.",
+  },
+  {
+    name: "Registers",
+    fn: 'View and manage registers. Toggle status ON/OFF. Under "Action", see associated drawers, open/close a drawer, create deposits or withdrawals.',
+  },
+  {
+    name: "State Reporting Alerts",
+    fn: 'Monitor all sales, transfer, and communication issues with state tracking and reporting integrations. Each event has a "+" button to expand and view detailed information, including links to resolve the issue.',
+  },
+]
+
+// Icon chip: navy with a copper icon and a faint copper ring.
+const chip = "grid shrink-0 place-items-center rounded-ctl bg-navy-800 text-copper-400 shadow-[inset_0_0_0_1px_rgba(223,151,112,.28)]"
+
+const shot = "h-auto w-full rounded-card border border-h-line shadow-[0_24px_48px_-28px_rgba(11,30,49,.5)]"
+
+// Decorative dashboard: stat tiles and a bar chart. No text, so it adds no copy.
+const bars = ["h-1/3", "h-1/2", "h-2/5", "h-3/4", "h-3/5", "h-full", "h-2/3"]
+
+function Preview() {
+  return (
+    <div className="relative hidden h-[20rem] lg:block" aria-hidden="true">
+      <div className="absolute right-0 top-0 w-80 animate-rise rounded-2xl border-2 border-white/25 bg-navy-950 p-4 shadow-[0_32px_64px_-24px_rgba(0,0,0,.8)] [animation-delay:200ms]">
+        <div className="mb-3 grid grid-cols-2 gap-3">
+          <div className="rounded-lg bg-white/[.06] p-3">
+            <div className="h-1.5 w-1/2 rounded-full bg-white/25" />
+            <div className="mt-3 h-3 w-2/3 rounded-full bg-copper-400/80" />
+          </div>
+          <div className="rounded-lg bg-white/[.06] p-3">
+            <div className="h-1.5 w-1/2 rounded-full bg-white/25" />
+            <div className="mt-3 h-3 w-1/2 rounded-full bg-white/40" />
+          </div>
+        </div>
+        <div className="flex h-32 items-end gap-2 rounded-lg bg-white/[.06] p-3">
+          {bars.map((h, i) => (
+            <div key={i} className={`flex-1 rounded-t ${h} ${i === 5 ? "bg-copper-400" : "bg-white/30"}`} />
+          ))}
+        </div>
+        <div className="mt-3 grid gap-2">
+          <div className="h-2 w-3/4 rounded-full bg-white/20" />
+          <div className="h-2 w-1/2 rounded-full bg-white/10" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export const metadata: Metadata = {
+  title: "Help Guide",
+  description: "Step-by-step help for using the Bleaum POS.",
+}
 
 export default function DashboardOverviewPage() {
   return (
-    <div className="container mx-auto px-4 py-12 max-w-4xl font-sans text-[1.08rem] bg-background">
-      <div className="mx-auto">
-        <Typography>
-          {/* Dashboard Overview Section */}
-          <section id="dashboard-overview" className="mb-16">
-            <h1 className="text-5xl font-extrabold mb-10 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300 drop-shadow-lg">Dashboard Overview</h1>
-            <p className="text-gray-300 mb-6">The Dashboard gives you a full snapshot of store performance, tasks, sales, and system activity — all in one interactive place.</p>
+    <div data-page="dashboard-overview" className={ui.root}>
+      <RevealOnScroll />
 
-            {/* Top Section */}
-            <div id="top-section" className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-100 mb-4">Top Section: Welcome & Quick Overview</h2>
-              <Image src="/help/dashboard.jpg" alt="Dashboard top section with welcome message and summaries" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
-              <ul className="list-disc list-inside text-gray-300 space-y-2">
-                <li>Welcome Message: A quick greeting with user personalization.</li>
-                <li>Due Tasks Summary: View any pending tasks directly on login.</li>
-                <li>New Orders Summary: Instantly see if new orders have been placed.</li>
-              </ul>
-            </div>
+      {/* Hero */}
+      <section className={`relative overflow-hidden text-white ${ui.heroBg}`} aria-labelledby="do-h">
+        <Bloom />
+        <div className={`${ui.wrap} relative grid items-center gap-10 py-hero lg:grid-cols-[7fr_5fr]`}>
+          <div>
+            <h1 id="do-h" className={`${ui.h1} max-w-[16ch] animate-rise`}>
+              Dashboard Overview
+            </h1>
+            <p className="mt-5 max-w-[52ch] animate-rise text-[1.125rem] text-fog-200 [animation-delay:90ms]">
+              The Dashboard gives you a full snapshot of store performance, tasks, sales, and system activity — all in
+              one interactive place.
+            </p>
+          </div>
+          <Preview />
+        </div>
+      </section>
 
-            {/* Middle Section: Interactive Graphs */}
-            <div id="interactive-graphs" className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-100 mb-4">Middle Section: Interactive Graphs</h2>
-              <Image src="/help/dashboardmidsection.jpg" alt="Dashboard middle section with charts and quick links" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
-              <div className="overflow-x-auto">
-                <table className="min-w-full">
-                  <thead>
-                    <tr>
-                      <th className="px-4 py-2 text-left text-gray-100">Chart</th>
-                      <th className="px-4 py-2 text-left text-gray-100">Purpose</th>
-                      <th className="px-4 py-2 text-left text-gray-100">Key Features</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="px-4 py-2 text-gray-300">Top Products / Categories / Brands</td>
-                      <td className="px-4 py-2 text-gray-300">Visualizes top-selling products, categories, or brands.</td>
-                      <td className="px-4 py-2 text-gray-300">Dropdown to switch view. Select different timelines for broader or narrower insights.</td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 text-gray-300">Conversion Chart</td>
-                      <td className="px-4 py-2 text-gray-300">Tracks customer flow: how many were added to the queue vs. how many completed a purchase.</td>
-                      <td className="px-4 py-2 text-gray-300">Dropdown to switch between timelines (Past 7, 14, 30 days, 3 months, 6 months).</td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 text-gray-300">Popular Times</td>
-                      <td className="px-4 py-2 text-gray-300">Shows busiest times based on historical order data.</td>
-                      <td className="px-4 py-2 text-gray-300">Hover over bars to see exact numbers. Great for staffing and scheduling insights.</td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 text-gray-300">Total Revenue Chart</td>
-                      <td className="px-4 py-2 text-gray-300">Displays total revenue performance over time.</td>
-                      <td className="px-4 py-2 text-gray-300">Dropdown to adjust timeline (similar to Conversion Chart).</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-gray-300 mt-4">All charts are interactive. Hover over points to see detailed data.</p>
-            </div>
+      {/* Top section */}
+      <section id="dashboard-overview" className="py-pad" aria-labelledby="top-h">
+        <div id="top-section" className={`${ui.wrap} grid scroll-mt-24 items-center gap-10 lg:grid-cols-[5fr_7fr]`}>
+          <div {...ui.rv()}>
+            <h2 id="top-h" className={ui.h2}>Top Section: Welcome &amp; Quick Overview</h2>
+            <ul className="mt-6 grid gap-4">
+              {top.map((t) => (
+                <li key={t.label} className="flex gap-4">
+                  <span className={`${chip} size-11`}>
+                    <t.icon className="size-5" />
+                  </span>
+                  <p className="text-[.9375rem]">
+                    <span className="font-semibold text-h-accent">{t.label}</span> {t.text}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div {...ui.rv(1)}>
+            <Image
+              src="/help/dashboard.jpg"
+              alt="Dashboard top section with welcome message and summaries"
+              width={600}
+              height={300}
+              sizes="(min-width: 1024px) 40rem, 100vw"
+              className={shot}
+            />
+          </div>
+        </div>
+      </section>
 
-            {/* Quick Links Section */}
-            <div id="quick-links" className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-100 mb-4">Middle Section: Key Quick Links</h2>
-              <p className="text-gray-300 mb-4">Below the charts, you&apos;ll find six quick links:</p>
-              <ul className="list-disc list-inside text-gray-300 space-y-2">
-                <li>Products</li>
-                <li>Tasks</li>
-                <li>Employees</li>
-                <li>Orders</li>
-                <li>Customers</li>
-                <li>Deals</li>
-              </ul>
-              <p className="text-gray-300 mt-4">Clicking any link takes you directly to that section for deeper management.</p>
-            </div>
+      {/* Interactive graphs */}
+      <section id="interactive-graphs" className="scroll-mt-24 bg-h-surface2 py-pad" aria-labelledby="graphs-h">
+        <div className={ui.wrap}>
+          <div {...ui.rv(0, "max-w-[44rem]")}>
+            <h2 id="graphs-h" className={ui.h2}>Middle Section: Interactive Graphs</h2>
+          </div>
+          <div {...ui.rv(0, "mx-auto mt-8 max-w-[44rem]")}>
+            <Image
+              src="/help/dashboardmidsection.jpg"
+              alt="Dashboard middle section with charts and quick links"
+              width={600}
+              height={300}
+              sizes="(min-width: 768px) 44rem, 100vw"
+              className={shot}
+            />
+          </div>
+          <ul className="mt-10 grid gap-4 md:grid-cols-2 md:gap-6">
+            {charts.map((c, i) => (
+              <li key={c.chart} {...ui.rv(i)}>
+                <div className={`${ui.lift} h-full rounded-card border border-h-line bg-h-surface p-6 sm:p-8`}>
+                  <h3 className={ui.h3}>{c.chart}</h3>
+                  <dl className="mt-4 grid gap-3 border-t border-h-line pt-4 text-[.9375rem]">
+                    <div>
+                      <dt className="font-semibold text-h-accent">Purpose</dt>
+                      <dd className="text-h-muted">{c.purpose}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-semibold text-h-accent">Key Features</dt>
+                      <dd className="text-h-muted">{c.features}</dd>
+                    </div>
+                  </dl>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <p {...ui.rv(0, "mt-8 max-w-[56ch] border-l-2 border-copper-400 pl-4 font-display text-[1.0625rem] font-medium leading-[1.5]")}>
+            All charts are interactive. Hover over points to see detailed data.
+          </p>
+        </div>
+      </section>
 
-            {/* Shortcuts Section */}
-            <div id="shortcuts" className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-100 mb-4">Shortcuts Section</h2>
-              <div className="overflow-x-auto">
-                <table className="min-w-full">
-                  <thead>
-                    <tr>
-                      <th className="px-4 py-2 text-left text-gray-100">Shortcut</th>
-                      <th className="px-4 py-2 text-left text-gray-100">Function</th>
+      {/* Quick links */}
+      <section id="quick-links" className="scroll-mt-24 py-pad" aria-labelledby="links-h">
+        <div className={`${ui.wrap} max-w-[60rem]`}>
+          <div {...ui.rv()}>
+            <h2 id="links-h" className={ui.h2}>Middle Section: Key Quick Links</h2>
+            <p className="mt-3">Below the charts, you&apos;ll find six quick links:</p>
+          </div>
+          <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4">
+            {links.map((l, i) => (
+              <li key={l.name} {...ui.rv(i)}>
+                <div className={`${ui.lift} flex items-center gap-3 rounded-card border border-h-line bg-h-surface p-4`}>
+                  <span className={`${chip} size-10`}>
+                    <l.icon className="size-5" />
+                  </span>
+                  <span className="font-display font-medium">{l.name}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <p {...ui.rv(0, "mt-8 max-w-[56ch] border-l-2 border-copper-400 pl-4 font-display text-[1.0625rem] font-medium leading-[1.5]")}>
+            Clicking any link takes you directly to that section for deeper management.
+          </p>
+        </div>
+      </section>
+
+      {/* Shortcuts */}
+      <section id="shortcuts" className="scroll-mt-24 bg-h-surface2 py-pad" aria-labelledby="short-h">
+        <div className={`${ui.wrap} max-w-[60rem]`}>
+          <div {...ui.rv()}>
+            <h2 id="short-h" className={ui.h2}>Shortcuts Section</h2>
+            <div className="mt-8 overflow-x-auto rounded-card border border-h-line bg-h-surface">
+              <table className="w-full min-w-[32rem] border-collapse text-left text-[.9375rem]">
+                <thead>
+                  <tr className="bg-h-surface2">
+                    <th scope="col" className={`${ui.label} w-1/3 px-5 py-4 sm:px-8`}>Shortcut</th>
+                    <th scope="col" className={`${ui.label} px-5 py-4 sm:px-8`}>Function</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {shortcuts.map((s) => (
+                    <tr key={s.name} className="border-t border-h-line align-top">
+                      <th scope="row" className="px-5 py-5 font-semibold text-h-accent sm:px-8">{s.name}</th>
+                      <td className="px-5 py-5 text-h-muted sm:px-8">{s.fn}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="px-4 py-2 text-gray-300">Customer Queue</td>
-                      <td className="px-4 py-2 text-gray-300">Quickly jump to view and manage the customer queue.</td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 text-gray-300">Task List</td>
-                      <td className="px-4 py-2 text-gray-300">Add new tasks, track pending/completed tasks, view priority, assigned user, creation and due dates.</td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 text-gray-300">Registers</td>
-                      <td className="px-4 py-2 text-gray-300">View and manage registers. Toggle status ON/OFF. Under &quot;Action&quot;, see associated drawers, open/close a drawer, create deposits or withdrawals.</td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 text-gray-300">Metrc Alerts</td>
-                      <td className="px-4 py-2 text-gray-300">Monitor all sales, transfer, and communication issues with Metrc. Each event has a &quot;+&quot; button to expand and view detailed information, including links to resolve the issue.</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          </section>
-        </Typography>
-      </div>
+          </div>
+        </div>
+      </section>
     </div>
-  );
-} 
+  )
+}

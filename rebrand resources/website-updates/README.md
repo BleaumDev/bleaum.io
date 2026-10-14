@@ -19,7 +19,7 @@ Page-by-page change list for the Bleaum website rebrand (remove cannabis-specifi
 | [Point of Sale](point-of-sale.md) | `/grow/point-of-sale` | 9 | 4 | 5 | 0 |
 | [Ecommerce](ecommerce.md) | `/grow/ecommerce` | 8 | 3 | 3 | 2 |
 | [Marketing](marketing.md) | `/grow/marketing` | 6 | 1 | 4 | 1 |
-| [Payments](payments.md) | `/grow/payments` | 10 | 8 | 2 | 0 |
+| [Payments](payments.md) | `/grow/payments` | 11 | 8 | 2 | 1 |
 | [Delivery](delivery.md) | `/grow/delivery` | 4 | 0 | 2 | 2 |
 | [Reporting](reporting.md) | `/operations/reporting-analytics` | 4 | 1 | 1 | 2 |
 | [Compliance](compliance.md) | `/operations/automated-compilance` | 9 | 6 | 1 | 2 |
@@ -35,7 +35,7 @@ Page-by-page change list for the Bleaum website rebrand (remove cannabis-specifi
 | [SOPs](sops.md) | `/resources/sops` | 1 | 0 | 1 | 0 |
 | [Blog](blog.md) | `/blog` | 5 | 2 | 2 | 1 |
 | [Top nav](top-nav.md) | `/product` | 1 | 1 | 0 | 0 |
-| **Total** | | **129** | **63** | **38** | **28** |
+| **Total** | | **130** | **63** | **38** | **29** |
 
 Also see [not-yet-reviewed.md](not-yet-reviewed.md).
 
@@ -43,7 +43,7 @@ Also see [not-yet-reviewed.md](not-yet-reviewed.md).
 
 | Type | Count |
 |---|---|
-| Wording | 49 |
+| Wording | 50 |
 | Typo | 8 |
 | Decision | 13 |
 | Verify | 37 |

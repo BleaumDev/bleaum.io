@@ -1,370 +1,469 @@
-import Link from "next/link";
+import { Fragment, type ComponentType } from "react"
+import type { Metadata } from "next"
 import {
-  CreditCardIcon,
-  ShieldCheckIcon,
-  TrendingUpIcon,
-  RefreshCwIcon,
-  CheckCircle2Icon,
-  UserIcon,
-  BarChart2Icon,
-  ZapIcon,
-  WalletIcon,
-  LockIcon,
-  DollarSignIcon,
-  SmileIcon,
   ArrowRightIcon,
-  SparklesIcon,
-  ShoppingCartIcon,
-  HeartIcon,
-  CalendarIcon,
-  SettingsIcon,
-  LinkIcon,
-  TruckIcon,
-  ShoppingBagIcon,
-  BriefcaseIcon,
   BanknoteIcon,
+  BarChart2Icon,
+  BriefcaseIcon,
+  CalendarIcon,
+  CheckIcon,
+  CreditCardIcon,
+  DollarSignIcon,
+  HeartIcon,
+  LinkIcon,
+  LockIcon,
   QrCodeIcon,
-} from "lucide-react";
-import type { Metadata } from "next";
+  SettingsIcon,
+  ShieldCheckIcon,
+  ShoppingBagIcon,
+  ShoppingCartIcon,
+  TrendingUpIcon,
+  TruckIcon,
+  UserIcon,
+  WalletIcon,
+  ZapIcon,
+} from "lucide-react"
+import { Bloom } from "@/components/views/bloom"
+import { DemoLink, RevealOnScroll } from "@/components/views/home-client"
+import * as ui from "@/components/views/home-ui"
+import { WorkflowsFx } from "@/components/views/workflows-fx"
 
 export const metadata: Metadata = {
   title: "Payments",
   description:
     "Bleaum Pay brings card terminals, pay-by-bank, QR wallet and online payments into your POS and ecommerce.",
-};
-
-
-interface FeatureCardProps {
-  icon: React.ReactNode;
-  title: string;
-  description?: string;
-  features: string[];
-  gradient: string;
 }
 
-function FeatureCard({ icon, title, description, features, gradient }: FeatureCardProps) {
+type Icon = ComponentType<{ className?: string }>
+
+// Copy is unchanged from the old page. website-updates/payments.md #54 to #59 and #61 are already applied there, and
+// the Cashless ATM pairing and the 25-30% claim stay out. The quote's attribution (#63) waits on the business.
+// The one new line, "Mix. Match. Get paid." with its sentence under Workflows, is #130 and is awaiting CEO review.
+const features: { icon: Icon; title: string; text?: string; items: string[] }[] = [
+  {
+    icon: WalletIcon,
+    title: "No Cash, No Problem",
+    text: "Let your customers pay how they want—right from their bank, online or in-store. No more fumbling for cash, no more awkward 'cash only' signs.",
+    items: ["End-to-end encrypted", "Built for regulated retail", "Ready to use—no extra hardware, no downloads"],
+  },
+  {
+    icon: TrendingUpIcon,
+    title: "Bigger Orders, Happier Customers",
+    items: [
+      "Repeat customers come back faster with easy checkout",
+      "More loyalty, less friction—at the counter and online",
+    ],
+  },
+  {
+    icon: ShieldCheckIcon,
+    title: "Ditch the Cash Drawer",
+    items: [
+      "Protect your team and your store—less cash means less risk",
+      "Cut costs on cash pickups, storage, and mistakes",
+      "Automate your reporting—no more manual entry or late-night reconciliations",
+    ],
+  },
+  {
+    icon: ZapIcon,
+    title: "One-Tap Setup for Shoppers",
+    text: "After a quick one-time setup, your customers can pay with a single tap—online or in-store. No cards, no PINs, no confusion.",
+    items: ["Quick one-time customer setup", "Single tap payments in-store and online", "No cards, no PINs, no confusion"],
+  },
+]
+
+const safe: { label: string; text: string }[] = [
+  { label: "Security First", text: "End-to-end encrypted payments, built for regulated retail" },
+  {
+    label: "Efficiency Built-In",
+    text: "Linked directly to your POS and Bleaum Ecommerce—no data entry, no syncing headaches",
+  },
+  {
+    label: "Completely Integrated",
+    text: "Manage everything in one place: inventory, orders, payments, and customers",
+  },
+]
+
+const solutions: { icon: Icon; title: string; use: string; how: string; best: string }[] = [
+  {
+    icon: CreditCardIcon,
+    title: "Credit Card Terminals",
+    use: "In-store swipe, chip, tap payments",
+    how: "Accept all 4 card types via secure hardware",
+    best: "Retail, Wellness, Regulated Retail",
+  },
+  {
+    icon: BanknoteIcon,
+    title: "Virtual ACH / Pay-by-Bank",
+    use: "Cardless, cashless, direct-from-bank transactions",
+    how: "One-time setup, QR or link-based checkout, fast funding",
+    best: "Delivery, Subscriptions, eComm, Repeat Buyers",
+  },
+  {
+    icon: QrCodeIcon,
+    title: "QR Code Wallet",
+    use: "App-based, tap-to-pay solution",
+    how: "Customer scans QR code, confirms bank-linked payment",
+    best: "Retail, Wellness, Loyalty Programs",
+  },
+  {
+    icon: LinkIcon,
+    title: "eComm + POS Integration",
+    use: "Unified payments across online and in-store",
+    how: "Orders, payments, and inventory synced in real time",
+    best: "Businesses using Bleaum POS or eComm",
+  },
+  {
+    icon: WalletIcon,
+    title: "Standard Payment Processing",
+    use: "Traditional payments for non-regulated businesses",
+    how: "Swipe, tap, and online checkout through standard rails",
+    best: "Retail, Beauty, Health, Events, Food & Bev",
+  },
+]
+
+const why: { icon: Icon; title: string; text: string }[] = [
+  { icon: SettingsIcon, title: "Modular Setup", text: "Choose the solutions that match your business model" },
+  { icon: ShieldCheckIcon, title: "Compliance-Ready", text: "Built for complex industries, but flexible for all" },
+  { icon: LinkIcon, title: "Integrated Platform", text: "Syncs with Bleaum POS & eCommerce — no double entry" },
+  { icon: DollarSignIcon, title: "Clear Pricing", text: "Pricing explained up front" },
+  { icon: BarChart2Icon, title: "Real-Time Reporting", text: "Live sales, funding, and performance insights" },
+  { icon: UserIcon, title: "Customer-Centric UX", text: "ACH, Wallet, Cards — however they want to pay" },
+]
+
+const industries: { icon: Icon; name: string }[] = [
+  { icon: ShoppingCartIcon, name: "Retail" },
+  { icon: HeartIcon, name: "Wellness" },
+  { icon: CalendarIcon, name: "Events" },
+  { icon: BriefcaseIcon, name: "Professional Services" },
+]
+
+// Each stack is the old "A + B" line split into its parts, so the words are unchanged.
+const method: Record<string, Icon> = {
+  "Credit Terminal": CreditCardIcon,
+  "Virtual ACH": BanknoteIcon,
+  "QR Wallet": QrCodeIcon,
+  eCommerce: LinkIcon,
+  "Standard Processing": WalletIcon,
+  "Card Processing": CreditCardIcon,
+}
+
+const workflows: { icon: Icon; name: string; stack: string[] }[] = [
+  { icon: ShoppingCartIcon, name: "Retail Shop", stack: ["Credit Terminal", "Virtual ACH"] },
+  { icon: TruckIcon, name: "Delivery-Only Retail", stack: ["Virtual ACH", "QR Wallet"] },
+  { icon: HeartIcon, name: "Wellness Studio", stack: ["Credit Terminal", "eCommerce"] },
+  { icon: ShoppingBagIcon, name: "Retail Boutique", stack: ["Credit Terminal", "Standard Processing"] },
+  { icon: BriefcaseIcon, name: "High-Ticket B2B", stack: ["Virtual ACH", "Card Processing"] },
+]
+
+const tick = <CheckIcon className="mt-1 size-4 shrink-0 text-h-accent" aria-hidden="true" />
+
+// Icon chip: navy with a copper icon and a faint copper ring.
+const chip = "grid shrink-0 place-items-center rounded-ctl bg-navy-800 text-copper-400 shadow-[inset_0_0_0_1px_rgba(223,151,112,.28)]"
+
+// Decorative QR code. The three corner finders and a scatter of cells, no text.
+const qr = ["1110111", "1010101", "1110111", "0101010", "1110011", "1010110", "1110101"]
+
+// Decorative checkout: a card terminal with a keypad, and a QR wallet card over it. No text, so it adds no copy.
+function Preview() {
   return (
-    <div className="group relative p-6 sm:p-8 bg-slate-800/30 rounded-2xl sm:rounded-3xl border border-slate-700/50 hover:bg-slate-800/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105">
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-700/20 to-transparent rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-      
-      <div className="relative">
-        <div className={`inline-flex p-3 sm:p-4 bg-gradient-to-r ${gradient} rounded-xl sm:rounded-2xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300`}>
-          {icon}
+    <div className="relative hidden h-[27rem] lg:block" aria-hidden="true">
+      <div className="absolute right-6 top-0 w-56 animate-rise rounded-[1.75rem] border-2 border-white/25 bg-navy-950 p-4 shadow-[0_32px_64px_-24px_rgba(0,0,0,.8)] [animation-delay:200ms]">
+        <div className="flex h-20 items-end rounded-xl bg-[linear-gradient(100deg,rgba(223,151,112,.38),rgba(223,151,112,.04))] p-3">
+          <div className="h-2.5 w-1/2 rounded-full bg-white/40" />
         </div>
-        
-        <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white group-hover:text-cyan-300 transition-colors">
-          {title}
-        </h3>
-        
-        {description && (
-          <p className="text-sm sm:text-base text-slate-300 mb-4 sm:mb-6 leading-relaxed">
-            {description}
-          </p>
-        )}
-        
-        <ul className="space-y-2 sm:space-y-3">
-          {features.map((feature, index) => (
-            <li key={index} className="flex items-start gap-2 sm:gap-3 text-slate-300">
-              <div className="mt-0.5 sm:mt-1">
-                <CheckCircle2Icon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 flex-shrink-0" />
-              </div>
-              <span className="text-sm sm:text-base group-hover:text-white transition-colors" dangerouslySetInnerHTML={{ __html: feature }}></span>
-            </li>
+        <div className="mt-3 grid grid-cols-3 gap-2">
+          {Array.from({ length: 12 }, (_, i) => (
+            <div key={i} className="h-8 rounded-md bg-white/[.07]" />
           ))}
-        </ul>
+        </div>
+        <div className="mt-3 h-8 rounded-md bg-copper-400/80" />
+      </div>
+      <div className="absolute bottom-6 left-0 w-44 animate-rise rounded-2xl border border-white/15 bg-navy-900/90 p-3 shadow-[0_24px_48px_-16px_rgba(0,0,0,.7)] backdrop-blur [animation-delay:380ms]">
+        <div className="grid grid-cols-7 gap-1 rounded-lg bg-white/90 p-2">
+          {qr.flatMap((row, r) =>
+            [...row].map((c, i) => <span key={`${r}${i}`} className={`aspect-square rounded-[2px] ${c === "1" ? "bg-navy-950" : ""}`} />),
+          )}
+        </div>
+        <div className="mt-3 flex items-center gap-2">
+          <span className={`${chip} size-7`}>
+            <CheckIcon className="size-4" />
+          </span>
+          <div className="h-1.5 flex-1 rounded-full bg-white/20" />
+        </div>
       </div>
     </div>
-  );
+  )
 }
 
 export default function PaymentsPage() {
   return (
-    <div className="min-h-screen bg-[#020917] text-white">
-      <div className="container mx-auto px-2 sm:px-4 lg:px-8 py-6 sm:py-10 max-w-6xl">
-        {/* Hero Section */}
-        <div className="text-center mb-8 sm:mb-16">
-          <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-6">
-            <div className="p-2 sm:p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl sm:rounded-2xl shadow-lg">
-              <CreditCardIcon className="w-5 h-5 sm:w-8 sm:h-8 text-white" />
+    <div data-page="payments" className={ui.root}>
+      <RevealOnScroll />
+
+      {/* Hero */}
+      <section className={`relative overflow-hidden text-white ${ui.heroBg}`} aria-labelledby="pay-h">
+        <Bloom />
+        <div className={`${ui.wrap} relative grid items-center gap-12 py-hero lg:grid-cols-[7fr_5fr]`}>
+          <div>
+            <h1 id="pay-h" className={`${ui.h1} max-w-[16ch] animate-rise`}>
+              Bleaum Pay
+            </h1>
+            <p className={`${ui.h3} mt-4 max-w-[28ch] animate-rise text-copper-400 [animation-delay:90ms]`}>
+              One Payment Platform. Every Business. Fully Covered
+            </p>
+            <figure className="mt-6 max-w-[52ch] animate-rise border-l-2 border-copper-400 pl-4 [animation-delay:180ms]">
+              <blockquote className="text-[1.125rem] text-fog-200">
+                &ldquo;From regulated retail to everyday retail, wellness, and services — Bleaum Pay delivers a complete
+                suite of payment solutions that adapt to your business model, risk profile, and customer
+                expectations.&rdquo;
+              </blockquote>
+              <figcaption className="mt-2 text-[.9375rem] text-fog-200/70">— Collin, Park Social</figcaption>
+            </figure>
+            <div className={`${ui.actions} mt-8 animate-rise [animation-delay:270ms]`}>
+              <DemoLink className={`${ui.btnCopper} ${ui.stack} gap-2`}>
+                Get a Demo of Bleaum Pay
+                <ArrowRightIcon className="size-4" aria-hidden="true" />
+              </DemoLink>
             </div>
           </div>
-          <h1 className="text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-2 sm:mb-6 text-white leading-tight px-2">Bleaum Pay</h1>
-          <div className="max-w-3xl mx-auto mb-4 sm:mb-8 px-2 sm:px-4">
-            <h2 className="text-base sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-4 text-cyan-300">One Payment Platform. Every Business. Fully Covered</h2>
-            <div className="max-w-2xl mx-auto mb-6 p-3 sm:p-6 bg-slate-800/30 rounded-2xl sm:rounded-3xl border border-slate-700/50">
-              <p className="text-white italic text-sm sm:text-lg mb-2 sm:mb-3">"From regulated retail to everyday retail, wellness, and services — Bleaum Pay delivers a complete suite of payment solutions that adapt to your business model, risk profile, and customer expectations."</p>
-              <p className="text-xs sm:text-sm text-slate-400">— Collin, Park Social</p>
-            </div>
-          </div>
+          <Preview />
         </div>
+      </section>
 
-        {/* Feature Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 mb-8 sm:mb-16">
-          <FeatureCard
-            icon={<WalletIcon className="w-6 h-6 sm:w-8 sm:h-8" />}
-            title="No Cash, No Problem"
-            description="Let your customers pay how they want—right from their bank, online or in-store. No more fumbling for cash, no more awkward 'cash only' signs."
-            features={[
-              "End-to-end encrypted",
-              "Built for regulated retail",
-              "Ready to use—no extra hardware, no downloads"
-            ]}
-            gradient="from-purple-500 to-pink-500"
-          />
-
-          <FeatureCard
-            icon={<TrendingUpIcon className="w-6 h-6 sm:w-8 sm:h-8" />}
-            title="Bigger Orders, Happier Customers"
-            features={[
-              "Repeat customers come back faster with easy checkout",
-              "More loyalty, less friction—at the counter and online"
-            ]}
-            gradient="from-green-500 to-emerald-500"
-          />
-
-          <FeatureCard
-            icon={<ShieldCheckIcon className="w-6 h-6 sm:w-8 sm:h-8" />}
-            title="Ditch the Cash Drawer"
-            features={[
-              "Protect your team and your store—less cash means less risk",
-              "Cut costs on cash pickups, storage, and mistakes",
-              "Automate your reporting—no more manual entry or late-night reconciliations"
-            ]}
-            gradient="from-orange-500 to-red-500"
-          />
-
-          <FeatureCard
-            icon={<ZapIcon className="w-6 h-6 sm:w-8 sm:h-8" />}
-            title="One-Tap Setup for Shoppers"
-            description="After a quick one-time setup, your customers can pay with a single tap—online or in-store. No cards, no PINs, no confusion."
-            features={[
-              "Quick one-time customer setup",
-              "Single tap payments in-store and online",
-              "No cards, no PINs, no confusion"
-            ]}
-            gradient="from-indigo-500 to-purple-500"
-          />
-        </div>
-
-        {/* Security & Integration Section */}
-        <div className="mb-8 sm:mb-16">
-          <FeatureCard
-            icon={<LockIcon className="w-6 h-6 sm:w-8 sm:h-8" />}
-            title="Safe, Streamlined & Smart"
-            features={[
-              "<b>Security First:</b> End-to-end encrypted payments, built for regulated retail",
-              "<b>Efficiency Built-In:</b> Linked directly to your POS and Bleaum Ecommerce—no data entry, no syncing headaches",
-              "<b>Completely Integrated:</b> Manage everything in one place: inventory, orders, payments, and customers"
-            ]}
-            gradient="from-cyan-500 to-blue-500"
-          />
-        </div>
-
-        {/* Industries We Serve Section */}
-        <div className="mb-8 sm:mb-16">
-          <div className="p-6 sm:p-10 bg-slate-800/30 rounded-2xl sm:rounded-3xl border border-slate-700/50 text-center">
-            <h2 className="text-lg sm:text-2xl font-bold mb-6 sm:mb-8 text-white flex items-center justify-center gap-2">
-              <ShieldCheckIcon className="w-6 h-6 sm:w-7 sm:h-7 text-cyan-400" /> Industries We Serve
-            </h2>
-            <div className="max-w-md mx-auto mb-6 sm:mb-8">
-              <div className="bg-slate-900/40 rounded-xl p-4 sm:p-6 flex flex-col items-center shadow-md border border-slate-700/40">
-                <ul className="list-none text-slate-200 space-y-1 sm:space-y-2 text-sm sm:text-base">
-                  <li className="flex items-center gap-1.5 sm:gap-2"><ShoppingCartIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Retail</li>
-                  <li className="flex items-center gap-1.5 sm:gap-2"><HeartIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Wellness</li>
-                  <li className="flex items-center gap-1.5 sm:gap-2"><CalendarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Events</li>
-                  <li className="flex items-center gap-1.5 sm:gap-2"><BarChart2Icon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Professional Services</li>
+      {/* Features */}
+      <section className="py-pad" aria-label="Payment benefits">
+        <ul className={`${ui.wrap} grid gap-4 md:grid-cols-2 md:gap-6`}>
+          {features.map((f, i) => (
+            <li key={f.title} {...ui.rv(i % 2)}>
+              {/* The reveal and the hover lift both set `transition`, so they sit on separate elements. */}
+              <div className={`${ui.lift} group relative flex h-full flex-col overflow-hidden rounded-card border border-h-line bg-h-surface p-6 sm:p-8`}>
+                <span className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#DF9770,transparent)] opacity-0 transition-opacity duration-250 group-hover:opacity-100" />
+                <span className={`${chip} mb-5 size-12`}>
+                  <f.icon className="size-6" />
+                </span>
+                <h2 className={ui.h3}>{f.title}</h2>
+                {f.text && <p className="mt-2 text-[.9375rem] text-h-muted">{f.text}</p>}
+                <ul className="mt-5 grid gap-3 border-t border-h-line pt-5 text-[.9375rem]">
+                  {f.items.map((t) => (
+                    <li key={t} className="flex gap-3">
+                      {tick}
+                      {t}
+                    </li>
+                  ))}
                 </ul>
               </div>
-            </div>
-            <p className="text-slate-300 text-base max-w-2xl mx-auto">
-              Whether you're navigating compliance or scaling fast, Bleaum Pay has the tech, rails, and experience to support you.
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Safe, streamlined and smart. home-dk equals the page background in dark mode, so the gradient keeps the band apart. */}
+      <section className={`home-dk py-pad ${ui.heroBg}`} aria-labelledby="safe-h">
+        <div className={ui.wrap}>
+          <div {...ui.rv(0, "max-w-[60ch]")}>
+            <span className={ui.dotmark} aria-hidden="true" />
+            <h2 id="safe-h" className={ui.h2}>Safe, Streamlined &amp; Smart</h2>
+          </div>
+          <ul className="mt-10 grid gap-4 md:grid-cols-3">
+            {safe.map((s, i) => (
+              <li key={s.label} {...ui.rv(i)}>
+                <div className={`${ui.lift} flex h-full flex-col gap-3 rounded-card border border-h-line bg-h-surface p-6`}>
+                  <span className={`${chip} size-11`}>
+                    <LockIcon className="size-5" />
+                  </span>
+                  <p className="text-[.9375rem] text-h-muted">
+                    <strong className="font-semibold text-h-text">{s.label}:</strong> {s.text}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Solutions */}
+      <section className="py-pad" aria-labelledby="sol-h">
+        <div className={ui.wrap}>
+          <div {...ui.rv(0, "max-w-[60ch]")}>
+            <span className={ui.dotmark} aria-hidden="true" />
+            <h2 id="sol-h" className={ui.h2}>A Payment Solution for Every Type of Business</h2>
+          </div>
+          <ul className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-6">
+            {solutions.map((s, i) => (
+              <li
+                key={s.title}
+                {...ui.rv(i % 3, i < 3 ? "lg:col-span-2" : i === 4 ? "md:col-span-2 lg:col-span-3" : "lg:col-span-3")}
+              >
+                <div className={`${ui.lift} flex h-full flex-col rounded-card border border-h-line bg-h-surface p-6 sm:p-8`}>
+                  <span className={`${chip} mb-5 size-12`}>
+                    <s.icon className="size-6" />
+                  </span>
+                  <h3 className={ui.h3}>{s.title}</h3>
+                  <dl className="mt-4 grid gap-4 text-[.9375rem]">
+                    <div>
+                      <dt className="text-[.8125rem] font-semibold text-h-accent">Use Case</dt>
+                      <dd className="mt-0.5">{s.use}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-[.8125rem] font-semibold text-h-accent">How It Works</dt>
+                      <dd className="mt-0.5 text-h-muted">{s.how}</dd>
+                    </div>
+                  </dl>
+                  <div className="mt-auto pt-5">
+                    <p className="border-t border-h-line pt-4 text-[.875rem] font-semibold">Best for: {s.best}</p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Why businesses choose Bleaum Pay */}
+      <section className="bg-h-surface2 py-pad" aria-labelledby="why-h">
+        <div className={ui.wrap}>
+          <div {...ui.rv(0, "max-w-[60ch]")}>
+            <span className={ui.dotmark} aria-hidden="true" />
+            <h2 id="why-h" className={ui.h2}>Why Businesses Choose Bleaum Pay</h2>
+          </div>
+          <ul className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {why.map((w, i) => (
+              <li key={w.title} {...ui.rv(i % 3)}>
+                <div className={`${ui.lift} flex h-full flex-col gap-3 rounded-card border border-h-line bg-h-surface p-6`}>
+                  <span className={`${chip} size-11`}>
+                    <w.icon className="size-5" />
+                  </span>
+                  <h3 className={ui.h3}>{w.title}</h3>
+                  <p className="text-[.9375rem] text-h-muted">{w.text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Industries */}
+      <section className="py-pad" aria-labelledby="ind-h">
+        <div className={`${ui.wrap} grid items-start gap-10 lg:grid-cols-[5fr_7fr] lg:gap-20`}>
+          <div {...ui.rv()}>
+            <span className={ui.dotmark} aria-hidden="true" />
+            <h2 id="ind-h" className={ui.h2}>Industries We Serve</h2>
+            <p className="mt-4 text-h-muted">
+              Whether you&apos;re navigating compliance or scaling fast, Bleaum Pay has the tech, rails, and experience
+              to support you.
             </p>
           </div>
+          <ul className="grid gap-4 sm:grid-cols-2">
+            {industries.map((n, i) => (
+              <li key={n.name} {...ui.rv(i % 2)}>
+                <div className={`${ui.lift} flex items-center gap-4 rounded-card border border-h-line bg-h-surface p-5`}>
+                  <span className={`${chip} size-11`}>
+                    <n.icon className="size-5" />
+                  </span>
+                  <span className={ui.h3}>{n.name}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
+      </section>
 
-        {/* Why Businesses Choose Bleaum Pay Section */}
-        <div className="mb-8 sm:mb-16">
-          <div className="p-6 sm:p-10 bg-slate-800/30 rounded-2xl sm:rounded-3xl border border-slate-700/50 text-center">
-            <h2 className="text-lg sm:text-2xl font-bold mb-6 sm:mb-8 text-white flex items-center justify-center gap-2">
-              <LockIcon className="w-6 h-6 sm:w-7 sm:h-7 text-cyan-400" /> Why Businesses Choose Bleaum Pay
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-2">
-              <div className="bg-slate-900/40 rounded-xl p-5 flex flex-col items-center border border-slate-700/40 shadow-sm">
-                <SettingsIcon className="w-7 h-7 text-cyan-400 mb-2" />
-                <div className="font-bold text-white mb-1">Modular Setup</div>
-                <div className="text-slate-300 text-sm">Choose the solutions that match your business model</div>
-              </div>
-              <div className="bg-slate-900/40 rounded-xl p-5 flex flex-col items-center border border-slate-700/40 shadow-sm">
-                <ShieldCheckIcon className="w-7 h-7 text-cyan-400 mb-2" />
-                <div className="font-bold text-white mb-1">Compliance-Ready</div>
-                <div className="text-slate-300 text-sm">Built for complex industries, but flexible for all</div>
-              </div>
-              <div className="bg-slate-900/40 rounded-xl p-5 flex flex-col items-center border border-slate-700/40 shadow-sm">
-                <LinkIcon className="w-7 h-7 text-cyan-400 mb-2" />
-                <div className="font-bold text-white mb-1">Integrated Platform</div>
-                <div className="text-slate-300 text-sm">Syncs with Bleaum POS & eCommerce — no double entry</div>
-              </div>
-              <div className="bg-slate-900/40 rounded-xl p-5 flex flex-col items-center border border-slate-700/40 shadow-sm">
-                <DollarSignIcon className="w-7 h-7 text-cyan-400 mb-2" />
-                <div className="font-bold text-white mb-1">Clear Pricing</div>
-                <div className="text-slate-300 text-sm">Pricing explained up front</div>
-              </div>
-              <div className="bg-slate-900/40 rounded-xl p-5 flex flex-col items-center border border-slate-700/40 shadow-sm">
-                <BarChart2Icon className="w-7 h-7 text-cyan-400 mb-2" />
-                <div className="font-bold text-white mb-1">Real-Time Reporting</div>
-                <div className="text-slate-300 text-sm">Live sales, funding, and performance insights</div>
-              </div>
-              <div className="bg-slate-900/40 rounded-xl p-5 flex flex-col items-center border border-slate-700/40 shadow-sm">
-                <UserIcon className="w-7 h-7 text-cyan-400 mb-2" />
-                <div className="font-bold text-white mb-1">Customer-Centric UX</div>
-                <div className="text-slate-300 text-sm">ACH, Wallet, Cards — however they want to pay</div>
-              </div>
+      {/* Workflows. WorkflowsFx draws the rail and brings each step in as it scrolls past. GSAP owns each li's
+          transform, so the hover lift sits on the inner card. */}
+      <section className="bg-h-surface2 py-pad" aria-labelledby="wf-h">
+        <WorkflowsFx className={`${ui.wrap} grid items-start gap-10 lg:grid-cols-[5fr_7fr] lg:gap-20`}>
+          <div {...ui.rv(0, "lg:sticky lg:top-28")}>
+            <span className={ui.dotmark} aria-hidden="true" />
+            <h2 id="wf-h" className={ui.h2}>Workflows</h2>
+            {/* Copy from website-updates/payments.md #130 */}
+            <p data-fx="words" className={`${ui.heading} mt-6 text-[2.5rem] font-medium sm:text-[3rem]`}>
+              <span data-fx="word" className="block">Mix.</span>
+              <span data-fx="word" className="block">Match.</span>
+              <span data-fx="word" className="block text-h-accent">Get paid.</span>
+            </p>
+            <p className="mt-5 max-w-[40ch] text-h-muted">
+              See how different businesses combine Bleaum Pay solutions to fit the way they sell.
+            </p>
+          </div>
+          <div className="relative pl-10">
+            <span aria-hidden="true" className="absolute bottom-3 left-2 top-3 w-px bg-h-line" />
+            <span data-fx="rail" aria-hidden="true" className="absolute bottom-3 left-2 top-3 w-px origin-top bg-copper-400" />
+            <ol data-fx="list" className="grid gap-4">
+              {workflows.map((w, i) => (
+                <li key={w.name} data-fx="step" className="relative">
+                  <span
+                    data-fx="node"
+                    aria-hidden="true"
+                    className="absolute -left-[2.375rem] top-8 size-3 rounded-full bg-h-line ring-4 ring-h-surface2 transition-colors duration-300 [.is-active_&]:bg-copper-400"
+                  />
+                  <div
+                    className={`${ui.lift} flex flex-col gap-4 rounded-card border border-h-line bg-h-surface p-5 sm:p-6 [.is-active_&]:border-copper-400`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <span className={`${chip} size-11`}>
+                        <w.icon className="size-5" />
+                      </span>
+                      <h3 className={ui.h3}>{w.name}</h3>
+                      <span aria-hidden="true" className="ml-auto font-display text-[1.5rem] text-h-muted opacity-40">
+                        0{i + 1}
+                      </span>
+                    </div>
+                    <p className="flex flex-wrap items-center gap-2">
+                      {w.stack.map((m, j) => {
+                        const I = method[m]
+                        return (
+                          <Fragment key={m}>
+                            {j > 0 && (
+                              <>
+                                <span data-fx="plus" aria-hidden="true" className="inline-block text-h-muted">+</span>
+                                <span className="sr-only"> + </span>
+                              </>
+                            )}
+                            <span
+                              data-fx="pill"
+                              className="inline-flex items-center gap-2 rounded-full border border-h-line bg-h-surface2 px-3 py-1.5 text-[.875rem] font-medium"
+                            >
+                              <I className="size-4 text-h-accent" aria-hidden="true" />
+                              {m}
+                            </span>
+                          </Fragment>
+                        )
+                      })}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </WorkflowsFx>
+      </section>
+
+      {/* One platform and the call to action */}
+      <section className={`relative overflow-hidden py-pad text-white ${ui.ctaBg}`} aria-labelledby="cta-h">
+        <Bloom cta />
+        <div className={ui.wrap}>
+          <div {...ui.rv(0, "relative max-w-[60ch]")}>
+            <h2 id="cta-h" className={`${ui.heading} text-h2 font-normal`}>One Platform. All Payments.</h2>
+            <p className="mt-3 text-[1.25rem] text-fog-200">
+              No matter your vertical, Bleaum Pay offers a frictionless, secure, and fully scalable way to get paid.
+            </p>
+            <p className="mt-3 text-fog-200">
+              From POS and eCommerce to loyalty and reporting — it&apos;s all in one platform, built for you.
+            </p>
+            <h3 className={`${ui.h3} mt-10 border-t border-white/15 pt-8 text-[1.5rem]`}>Ready to Simplify your Payments?</h3>
+            <p className="mt-3 text-fog-200">
+              Want to see how Bleaum Pay could work in your retail shop? Let&apos;s set up a quick demo and show you the
+              difference.
+            </p>
+            <div className={`${ui.actions} mt-7`}>
+              <DemoLink className={`${ui.btnCopper} ${ui.stack} gap-2`}>
+                Get a Demo of Bleaum Pay
+                <ArrowRightIcon className="size-4" aria-hidden="true" />
+              </DemoLink>
             </div>
           </div>
         </div>
-
-        {/* A Payment Solution for Every Type of Business Section */}
-        <div className="mb-8 sm:mb-16">
-          <div className="p-6 sm:p-10 bg-slate-800/30 rounded-2xl sm:rounded-3xl border border-slate-700/50 text-center flex flex-col items-center">
-            <BriefcaseIcon className="w-8 h-8 sm:w-10 sm:h-10 text-cyan-400 mb-3 sm:mb-4" />
-            <h3 className="text-lg sm:text-2xl font-bold mb-6 sm:mb-8 text-white">A Payment Solution for Every Type of Business</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 w-full">
-              {/* Credit Card Terminals */}
-              <div className="group relative p-4 sm:p-8 bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-slate-700/50 hover:bg-slate-900/60 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105 flex flex-col items-center text-center">
-                <div className="inline-flex p-3 sm:p-4 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <CreditCardIcon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-                </div>
-                <div className="font-bold text-base sm:text-lg text-white mb-1">Credit Card Terminals</div>
-                <div className="text-blue-200 text-xs sm:text-sm mb-1 font-semibold">Use Case</div>
-                <div className="text-slate-300 text-xs sm:text-sm mb-2">In-store swipe, chip, tap payments</div>
-                <div className="text-blue-200 text-xs sm:text-sm mb-1 font-semibold">How It Works</div>
-                <div className="text-slate-400 text-xs mb-2">Accept all 4 card types via secure hardware</div>
-                <div className="text-cyan-300 text-xs font-semibold">Best for: Retail, Wellness, Regulated Retail</div>
-              </div>
-              {/* Virtual ACH / Pay-by-Bank */}
-              <div className="group relative p-4 sm:p-8 bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-slate-700/50 hover:bg-slate-900/60 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105 flex flex-col items-center text-center">
-                <div className="inline-flex p-3 sm:p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <BanknoteIcon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-                </div>
-                <div className="font-bold text-base sm:text-lg text-white mb-1">Virtual ACH / Pay-by-Bank</div>
-                <div className="text-blue-200 text-xs sm:text-sm mb-1 font-semibold">Use Case</div>
-                <div className="text-slate-300 text-xs sm:text-sm mb-2">Cardless, cashless, direct-from-bank transactions</div>
-                <div className="text-blue-200 text-xs sm:text-sm mb-1 font-semibold">How It Works</div>
-                <div className="text-slate-400 text-xs mb-2">One-time setup, QR or link-based checkout, fast funding</div>
-                <div className="text-cyan-300 text-xs font-semibold">Best for: Delivery, Subscriptions, eComm, Repeat Buyers</div>
-              </div>
-              {/* QR Code Wallet */}
-              <div className="group relative p-4 sm:p-8 bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-slate-700/50 hover:bg-slate-900/60 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105 flex flex-col items-center text-center">
-                <div className="inline-flex p-3 sm:p-4 bg-gradient-to-r from-blue-600 to-cyan-400 rounded-2xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <QrCodeIcon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-                </div>
-                <div className="font-bold text-base sm:text-lg text-white mb-1">QR Code Wallet</div>
-                <div className="text-blue-200 text-xs sm:text-sm mb-1 font-semibold">Use Case</div>
-                <div className="text-slate-300 text-xs sm:text-sm mb-2">App-based, tap-to-pay solution</div>
-                <div className="text-blue-200 text-xs sm:text-sm mb-1 font-semibold">How It Works</div>
-                <div className="text-slate-400 text-xs mb-2">Customer scans QR code, confirms bank-linked payment</div>
-                <div className="text-cyan-300 text-xs font-semibold">Best for: Retail, Wellness, Loyalty Programs</div>
-              </div>
-              {/* eComm + POS Integration */}
-              <div className="group relative p-4 sm:p-8 bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-slate-700/50 hover:bg-slate-900/60 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105 flex flex-col items-center text-center">
-                <div className="inline-flex p-3 sm:p-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <LinkIcon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-                </div>
-                <div className="font-bold text-base sm:text-lg text-white mb-1">eComm + POS Integration</div>
-                <div className="text-blue-200 text-xs sm:text-sm mb-1 font-semibold">Use Case</div>
-                <div className="text-slate-300 text-xs sm:text-sm mb-2">Unified payments across online and in-store</div>
-                <div className="text-blue-200 text-xs sm:text-sm mb-1 font-semibold">How It Works</div>
-                <div className="text-slate-400 text-xs mb-2">Orders, payments, and inventory synced in real time</div>
-                <div className="text-cyan-300 text-xs font-semibold">Best for: Businesses using Bleaum POS or eComm</div>
-              </div>
-              {/* Standard Payment Processing */}
-              <div className="group relative p-4 sm:p-8 bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-slate-700/50 hover:bg-slate-900/60 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105 flex flex-col items-center text-center">
-                <div className="inline-flex p-3 sm:p-4 bg-gradient-to-r from-orange-500 to-yellow-400 rounded-2xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <WalletIcon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-                </div>
-                <div className="font-bold text-base sm:text-lg text-white mb-1">Standard Payment Processing</div>
-                <div className="text-blue-200 text-xs sm:text-sm mb-1 font-semibold">Use Case</div>
-                <div className="text-slate-300 text-xs sm:text-sm mb-2">Traditional payments for non-regulated businesses</div>
-                <div className="text-blue-200 text-xs sm:text-sm mb-1 font-semibold">How It Works</div>
-                <div className="text-slate-400 text-xs mb-2">Swipe, tap, and online checkout through standard rails</div>
-                <div className="text-cyan-300 text-xs font-semibold">Best for: Retail, Beauty, Health, Events, Food & Bev</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Example Workflows Section */}
-        <div className="mb-8 sm:mb-16">
-          <div className="p-6 sm:p-10 bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-slate-700/50 text-center flex flex-col items-center">
-            <SettingsIcon className="w-8 h-8 sm:w-10 sm:h-10 text-cyan-400 mb-3 sm:mb-4" />
-            <h3 className="text-lg sm:text-2xl font-bold mb-6 sm:mb-8 text-white">Workflows</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full">
-              {/* retail shop (Retail) */}
-              <div className="bg-slate-800/60 rounded-xl p-6 flex flex-col items-center border border-slate-700/40 shadow-md">
-                <ShoppingCartIcon className="w-8 h-8 text-cyan-400 mb-2" />
-                <div className="font-bold text-white mb-1">Retail Shop</div>
-                <div className="text-slate-300 text-sm text-center">Credit Terminal + Virtual ACH</div>
-              </div>
-              {/* Delivery-Only Retail */}
-              <div className="bg-slate-800/60 rounded-xl p-6 flex flex-col items-center border border-slate-700/40 shadow-md">
-                <TruckIcon className="w-8 h-8 text-cyan-400 mb-2" />
-                <div className="font-bold text-white mb-1">Delivery-Only Retail</div>
-                <div className="text-slate-300 text-sm text-center">Virtual ACH + QR Wallet</div>
-              </div>
-              {/* Wellness Studio */}
-              <div className="bg-slate-800/60 rounded-xl p-6 flex flex-col items-center border border-slate-700/40 shadow-md">
-                <HeartIcon className="w-8 h-8 text-cyan-400 mb-2" />
-                <div className="font-bold text-white mb-1">Wellness Studio</div>
-                <div className="text-slate-300 text-sm text-center">Credit Terminal + eCommerce</div>
-              </div>
-              {/* Retail Boutique */}
-              <div className="bg-slate-800/60 rounded-xl p-6 flex flex-col items-center border border-slate-700/40 shadow-md">
-                <ShoppingBagIcon className="w-8 h-8 text-cyan-400 mb-2" />
-                <div className="font-bold text-white mb-1">Retail Boutique</div>
-                <div className="text-slate-300 text-sm text-center">Credit Terminal + Standard Processing</div>
-              </div>
-              {/* High-Ticket B2B */}
-              <div className="bg-slate-800/60 rounded-xl p-6 flex flex-col items-center border border-slate-700/40 shadow-md">
-                <BriefcaseIcon className="w-8 h-8 text-cyan-400 mb-2" />
-                <div className="font-bold text-white mb-1">High-Ticket B2B</div>
-                <div className="text-slate-300 text-sm text-center">Virtual ACH + Card Processing</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* One Platform. All Payments. Section */}
-        <div className="mb-8 sm:mb-16">
-          <div className="p-6 sm:p-12 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-600 rounded-2xl sm:rounded-3xl shadow-xl text-center flex flex-col items-center">
-            <BarChart2Icon className="w-8 h-8 sm:w-10 sm:h-10 text-white mb-3 sm:mb-4" />
-            <h3 className="text-lg sm:text-2xl font-bold mb-3 sm:mb-4 text-white">One Platform. All Payments.</h3>
-            <p className="text-base sm:text-lg text-blue-100 mb-2 max-w-2xl mx-auto">No matter your vertical, Bleaum Pay offers a frictionless, secure, and fully scalable way to get paid.</p>
-            <p className="text-base sm:text-lg text-blue-100 max-w-2xl mx-auto">From POS and eCommerce to loyalty and reporting — it's all in one platform, built for you.</p>
-          </div>
-        </div>
-
-        {/* CTA Section */}
-        <div className="text-center">
-          <div className="p-6 sm:p-12 bg-slate-800/30 rounded-2xl sm:rounded-3xl border border-slate-700/50">
-            <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-6">
-              <div className="p-2 sm:p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl sm:rounded-2xl">
-                <CreditCardIcon className="w-5 h-5 sm:w-8 sm:h-8 text-white" />
-              </div>
-            </div>
-            <h2 className="text-lg sm:text-2xl lg:text-4xl font-bold mb-2 sm:mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent px-2">Ready to Simplify your Payments?</h2>
-            <p className="text-base sm:text-lg text-slate-300 mb-4 sm:mb-8 max-w-2xl mx-auto px-2">Want to see how Bleaum Pay could work in your retail shop? Let's set up a quick demo and show you the difference.</p>
-            <Link href="/demo">
-              <button className="group bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold px-6 sm:px-12 py-3 sm:py-5 rounded-full text-base sm:text-xl transition-all duration-300 transform hover:scale-105 touch-manipulation">
-                <span className="flex items-center gap-2 sm:gap-3 justify-center">
-                  <span className="hidden sm:inline">Get a Demo of Bleaum Pay</span>
-                  <span className="sm:hidden">Get Demo</span>
-                  <ArrowRightIcon className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-2 transition-transform" />
-                </span>
-              </button>
-            </Link>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
-  );
+  )
 }
