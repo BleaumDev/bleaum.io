@@ -12,12 +12,10 @@ import { Footer } from "@/components/footer"
 const HomeHeader = dynamic(() => import("@/components/home-chrome").then((m) => m.HomeHeader))
 const HomeFooter = dynamic(() => import("@/components/home-chrome").then((m) => m.HomeFooter))
 
-const NEW_PATHS = ["/", "/blog"]
-
 function useNewChrome() {
   const path = usePathname()
   const segment = useSelectedLayoutSegment()
-  return NEW_PATHS.includes(path) || segment === "/_not-found"
+  return path === "/" || path === "/blog" || path.startsWith("/blog/") || segment === "/_not-found"
 }
 
 export function SiteHeader() {

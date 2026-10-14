@@ -14,15 +14,48 @@ type MenuLink = { title: string; text: string; href: string }
 const navLink =
   "whitespace-nowrap border-b-2 border-transparent py-1.5 text-[.9375rem] font-medium text-fog-300 transition-[color,border-color] duration-200 hover:border-copper-400 hover:text-white"
 const summary = `${navLink} flex cursor-pointer list-none items-center gap-2 group-open:border-copper-400 group-open:text-white [&::-webkit-details-marker]:hidden after:size-1.5 after:-translate-y-0.5 after:rotate-45 after:border-current after:[border-width:0_1.5px_1.5px_0] after:transition-transform after:duration-200 after:ease-soft group-open:after:translate-y-px group-open:after:rotate-[225deg]`
+// Small dropdowns float under their button; the Product mega panel hangs from the header edge.
 const panel =
-  "absolute left-[-16px] top-[calc(100%+14px)] z-40 min-w-[300px] max-w-[calc(100vw-32px)] animate-menu-in rounded-card border border-h-line bg-h-surface p-2.5 text-h-text shadow-[0_30px_60px_-30px_rgba(0,0,0,.55)]"
+  "absolute left-[-16px] top-[calc(100%+24px)] z-40 grid w-[340px] max-w-[calc(100vw-32px)] animate-menu-in gap-1 rounded-card border border-white/10 border-t-copper-400/60 bg-navy-950 p-2 text-white shadow-[0_30px_60px_-30px_rgba(0,0,0,.7)]"
 const footLink = "text-fog-300 transition-colors duration-200 hover:text-white hover:underline hover:decoration-copper-400 hover:underline-offset-4"
+
+// Mini halftone bloom (the brand mark's motif): dots swell and brighten when the row is hovered.
+const bloomDots = ["size-[3px]", "size-1", "size-[3px]", "size-1", "size-[7px]", "size-1", "size-[3px]", "size-1", "size-[3px]"]
 
 function MenuLinks({ links }: { links: MenuLink[] }) {
   return links.map((l) => (
-    <Link key={l.title} href={l.href} className="block rounded-ctl px-3 py-2.5 transition-colors duration-150 hover:bg-h-surface2">
-      <b className={`${ui.label} block text-[.9375rem]`}>{l.title}</b>
-      <span className="block text-[.8125rem] leading-[1.35] text-h-muted">{l.text}</span>
+    <Link
+      key={l.title}
+      href={l.href}
+      className="group/item flex items-center gap-3.5 rounded-card p-2.5 transition-colors duration-200 hover:bg-white/[.06] focus-visible:bg-white/[.06]"
+    >
+      <span
+        aria-hidden="true"
+        className="grid size-10 shrink-0 grid-cols-3 place-items-center rounded-ctl bg-white/[.05] p-2 ring-1 ring-white/10 transition-[background-color,box-shadow] duration-200 group-hover/item:bg-copper-400/15 group-hover/item:ring-copper-400/50"
+      >
+        {bloomDots.map((d, i) => (
+          <i
+            key={i}
+            className={`${d} rounded-full bg-copper-400 opacity-60 transition-[transform,opacity] duration-250 ease-soft group-hover/item:scale-[1.4] group-hover/item:opacity-100`}
+          />
+        ))}
+      </span>
+      <span className="min-w-0 flex-1">
+        <b className={`${ui.label} block text-[.9375rem] text-white`}>{l.title}</b>
+        <span className="block text-[.8125rem] leading-[1.35] text-fog-300">{l.text}</span>
+      </span>
+      <svg
+        viewBox="0 0 16 16"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+        className="size-4 shrink-0 -translate-x-1.5 text-copper-400 opacity-0 transition-[opacity,transform] duration-200 ease-soft group-hover/item:translate-x-0 group-hover/item:opacity-100 group-focus-visible/item:translate-x-0 group-focus-visible/item:opacity-100"
+      >
+        <path d="M3 8h10M9 4l4 4-4 4" />
+      </svg>
     </Link>
   ))
 }
@@ -89,15 +122,26 @@ export function HomeHeader() {
         <div className={`${ui.wrap} flex min-h-[76px] flex-wrap items-center gap-x-9 gap-y-3 py-3 max-md:gap-x-4 max-md:gap-y-2`}>
           <Brand />
           <nav className="mr-auto flex items-center gap-7 max-md:hidden" aria-label="Main">
-            <details className="group relative">
+            {/* No `relative` here: the panel positions against the header and spans its full width. */}
+            <details className="group">
               <summary className={summary}>Product</summary>
-              <div className={`${panel} grid min-w-[660px] grid-cols-2 gap-x-5 gap-y-1 p-3.5`}>
-                {nav.product.map((g) => (
-                  <div key={g.heading}>
-                    <h3 className="mb-1 ml-3 mt-1.5 font-body text-[.8125rem] font-semibold leading-[normal] tracking-[0] text-h-muted">{g.heading}</h3>
-                    <MenuLinks links={g.links} />
-                  </div>
-                ))}
+              <div className="absolute inset-x-0 top-full z-40 animate-menu-in overflow-hidden border-t border-t-copper-400/50 bg-navy-950 shadow-[0_40px_60px_-30px_rgba(0,0,0,.7)]">
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-y-0 right-0 w-3/5 bg-[radial-gradient(circle,rgba(223,151,112,.5)_1.4px,transparent_1.9px)] bg-[length:16px_16px] [mask-image:radial-gradient(ellipse_at_100%_100%,#000,transparent_70%)] [-webkit-mask-image:radial-gradient(ellipse_at_100%_100%,#000,transparent_70%)]"
+                />
+                <div className={`${ui.wrap} relative grid gap-x-10 py-8 md:grid-cols-2`}>
+                  {nav.product.map((g) => (
+                    <div key={g.heading}>
+                      <h3 className="mb-3 flex items-center gap-3 px-2.5 font-body text-[.75rem] font-semibold uppercase leading-[normal] tracking-[.08em] text-copper-400 after:h-[3px] after:flex-1 after:bg-[radial-gradient(circle,rgba(223,151,112,.6)_1px,transparent_1.5px)] after:bg-[length:8px_3px]">
+                        {g.heading}
+                      </h3>
+                      <div className="grid gap-1">
+                        <MenuLinks links={g.links} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </details>
             <Link href="/operations/integrations" className={navLink}>Integrations</Link>

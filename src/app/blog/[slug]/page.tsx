@@ -1,11 +1,11 @@
-import { Typography } from "@/components/typography";
-import { buttonVariants } from "@/components/ui/button";
 import {
   Author,
   getAllBlogStaticPaths,
   getCompiledBlogForSlug,
   getBlogFrontmatter,
 } from "@/lib/markdown";
+import { Bloom } from "@/components/views/bloom";
+import * as ui from "@/components/views/home-ui";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -35,77 +35,72 @@ export async function generateStaticParams() {
   return val.map((it) => ({ slug: it }));
 }
 
+// Article text follows the Home theme: prose colors come from the h-* tokens, so light and dark both work.
+const prose =
+  "prose prose-lg max-w-none font-body [--tw-prose-body:var(--h-text)] [--tw-prose-headings:var(--h-text)] [--tw-prose-bold:var(--h-text)] [--tw-prose-links:var(--h-accent)] [--tw-prose-bullets:var(--h-accent)] [--tw-prose-counters:var(--h-muted)] [--tw-prose-quotes:var(--h-text)] [--tw-prose-quote-borders:var(--h-line)] [--tw-prose-hr:var(--h-line)] prose-headings:font-display prose-headings:font-medium prose-h2:mb-3 prose-h2:mt-10 prose-h2:text-[1.5rem] prose-a:font-medium";
+
 export default async function BlogPage(props: PageProps) {
   const params = await props.params;
   const { slug } = params;
   const res = await getCompiledBlogForSlug(slug);
   if (!res) notFound();
+  const { title, date, cover, authors } = res.frontmatter;
   return (
-    <div className="flex flex-col items-start justify-center pt-8 pb-10 w-full mx-auto">
-    <div className="lg:w-[60%] sm:[95%] md:[75%] mx-auto">
-      <Link
-        className={buttonVariants({
-          variant: "link",
-          className: "!mx-0 !px-0 mb-7 !-ml-1 ",
-        })}
-        href="/blog"
-      >
-        <ArrowLeftIcon className="w-4 h-4 mr-1.5" /> Back to blog
-      </Link>
-      <div className="flex flex-col gap-3 pb-7 w-full mb-2">
-        <p className="text-muted-foreground text-sm">
-          {formatDate(res.frontmatter.date)}
-        </p>
-        <h1 className="sm:text-3xl text-2xl font-extrabold">
-          {res.frontmatter.title}
-        </h1>
-        <div className="mt-6 flex flex-col gap-3">
-          <p className="text-sm text-muted-foreground">Posted by</p>
-          <Authors authors={res.frontmatter.authors} />
+    <div data-page="blog-post" className={ui.root}>
+      <section className={`relative overflow-hidden text-white ${ui.heroBg}`} aria-labelledby="post-h">
+        <Bloom />
+        <div className={`${ui.wrap} relative pb-28 pt-band`}>
+          <Link
+            href="/blog"
+            className="mb-8 inline-flex items-center text-[.9375rem] font-medium text-fog-300 transition-colors duration-200 hover:text-white"
+          >
+            <ArrowLeftIcon className="mr-1.5 size-4" /> Back to blog
+          </Link>
+          <p className={`${ui.kicker} !mb-3 text-copper-400`}>{formatDate(date)}</p>
+          <h1
+            id="post-h"
+            className={`${ui.heading} max-w-[26ch] animate-rise text-[clamp(2rem,1.4rem+2.6vw,3rem)] font-normal`}
+          >
+            {title}
+          </h1>
+          <div className="mt-8 flex flex-col gap-3">
+            <p className="text-[.875rem] text-fog-300">Posted by</p>
+            <Authors authors={authors} />
+          </div>
         </div>
-      </div>
-      <div className="!w-full">
-        <div className="w-full mb-7">
-          <Image
-            src={res.frontmatter.cover}
-            alt="cover"
-            width={700}
-            height={400}
-            className="w-full h-[400px] rounded-md border object-cover"
-          />
-        </div>
-        <Typography>{res.content}</Typography>
-      </div>
-    </div>
+      </section>
+      <article className="mx-auto max-w-[860px] px-gutter pb-pad">
+        <Image
+          src={cover}
+          alt={title}
+          width={1200}
+          height={675}
+          priority
+          className="relative -mt-20 aspect-video w-full rounded-card border border-h-line bg-h-surface object-cover shadow-[0_30px_60px_-30px_rgba(11,30,49,.55)]"
+        />
+        <div className={`${prose} mt-10`}>{res.content}</div>
+      </article>
     </div>
   );
 }
 
 function Authors({ authors }: { authors: Author[] }) {
   return (
-    <div className="flex items-center gap-8 flex-wrap">
-      {authors.map((author) => {
-        return (
-          <Link
-            href={author.handleUrl}
-            className="flex items-center gap-2"
-            key={author.username}
-          >
-            <Avatar className="w-10 h-10">
-              <AvatarImage src={author.avatar} />
-              <AvatarFallback>
-                {author.username.slice(0, 2).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-            <div className="">
-              <p className="text-sm font-medium">{author.username}</p>
-              <p className="font-code text-[13px] text-muted-foreground">
-                @{author.handle}
-              </p>
-            </div>
-          </Link>
-        );
-      })}
+    <div className="flex flex-wrap items-center gap-8">
+      {authors.map((author) => (
+        <Link href={author.handleUrl} className="flex items-center gap-2.5" key={author.username}>
+          <Avatar className="size-10 border-2 border-white/20">
+            <AvatarImage src={author.avatar} />
+            <AvatarFallback className="bg-white/10 text-white">
+              {author.username.slice(0, 2).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <div>
+            <p className="text-[.9375rem] font-medium text-white">{author.username}</p>
+            <p className="text-[.8125rem] text-fog-300">@{author.handle}</p>
+          </div>
+        </Link>
+      ))}
     </div>
   );
-} 
+}
