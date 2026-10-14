@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { ThemeProvider } from "@/components/contexts/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { Space_Mono, Space_Grotesk } from "next/font/google";
@@ -31,6 +31,10 @@ export const metadata: Metadata = {
     "Empowering businesses with innovative solutions for growth and success.",
 };
 
+export const viewport: Viewport = {
+  themeColor: "#020917",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -41,8 +45,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-      
         <link
           rel="stylesheet"
           type="text/css"
