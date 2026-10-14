@@ -347,7 +347,7 @@ export default function PaymentsPage() {
         <div className="text-center">
           <div className="p-6 sm:p-12 bg-slate-800/30 rounded-2xl sm:rounded-3xl border border-slate-700/50">
             <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-6">
-              <div className="p-2 sm:p-2.5 sm:p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl sm:rounded-2xl">
+              <div className="p-2 sm:p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl sm:rounded-2xl">
                 <CreditCardIcon className="w-5 h-5 sm:w-8 sm:h-8 text-white" />
               </div>
             </div>
