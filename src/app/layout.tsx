@@ -5,6 +5,7 @@ import { Space_Mono, Space_Grotesk } from "next/font/google";
 import "@/styles/globals.css";
 import Script from 'next/script';
 import AnalyticsTracker from "@/components/AnalyticsTracker";
+import { GA_TRACKING_ID } from "@/lib/analytics";
 
 const sansFont = Space_Grotesk({
   subsets: ["latin"],
@@ -49,18 +50,6 @@ export default function RootLayout({
           type="text/css"
           href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
         />
-        {/* Google Analytics */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NB2W40DTPK"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-NB2W40DTPK');
-            `,
-          }}
-        />
       </head>
       <body className={sansFont.className + " bg-[#020917] min-h-screen flex flex-col"}>
         <ThemeProvider
@@ -77,7 +66,7 @@ export default function RootLayout({
           <AnalyticsTracker />
           <Script
             strategy="afterInteractive"
-            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
           />
           <Script
             id="gtag-init"
@@ -87,7 +76,7 @@ export default function RootLayout({
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}', {
+                gtag('config', '${GA_TRACKING_ID}', {
                   page_path: window.location.pathname,
                 });
               `,

@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react"
 import { IBM_Plex_Sans, Montserrat } from "next/font/google"
 
 const display = Montserrat({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-montserrat", display: "swap" })
@@ -49,6 +50,24 @@ export const lift =
 export const reveal =
   "transition-[opacity,transform] duration-600 ease-soft data-[reveal=pending]:translate-y-6 data-[reveal=pending]:opacity-0"
 
+// Props that mark an element for the scroll reveal: `i` staggers siblings, `cls` is the element's own classes.
+export const rv = (i = 0, cls = "") => ({
+  "data-reveal": "",
+  className: `${reveal} ${cls}`,
+  style: { transitionDelay: `${i * 70}ms` } as CSSProperties,
+})
+
+// Form fields: the label sits inside the box above the value, and the box lights up with the field.
+// The root's focus outline is dropped on the inner control because the whole box shows focus instead.
+export const fieldBox =
+  "block rounded-ctl border border-h-line bg-h-surface px-4 pb-2 pt-2.5 transition-[border-color,box-shadow] duration-200 focus-within:border-copper-400 focus-within:shadow-[0_0_0_3px_rgba(223,151,112,.28)]"
+export const fieldLabel = "block text-[.75rem] font-medium text-h-muted"
+export const fieldControl = "mt-0.5 block bg-transparent text-[1rem] text-h-text focus-visible:!outline-none"
+
 // Gradients
 export const heroBg = "bg-[linear-gradient(100deg,#0F2F4C_0%,#0B1E31_45%,#071321_100%)]"
 export const ctaBg = "bg-[linear-gradient(100deg,#0F2F4C_0%,#0B1E31_50%,#071321_100%)]"
+
+// Article text follows the Home theme: prose colors come from the h-* tokens, so light and dark both work.
+export const prose =
+  "prose prose-lg max-w-none font-body [--tw-prose-body:var(--h-text)] [--tw-prose-headings:var(--h-text)] [--tw-prose-bold:var(--h-text)] [--tw-prose-links:var(--h-accent)] [--tw-prose-bullets:var(--h-accent)] [--tw-prose-counters:var(--h-muted)] [--tw-prose-quotes:var(--h-text)] [--tw-prose-quote-borders:var(--h-line)] [--tw-prose-hr:var(--h-line)] prose-headings:font-display prose-headings:font-medium prose-h2:mb-3 prose-h2:mt-10 prose-h2:text-[1.5rem] prose-a:font-medium"

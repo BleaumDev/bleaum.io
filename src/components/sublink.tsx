@@ -5,11 +5,11 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
 import { SheetClose } from "@/components/ui/sheet";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import * as ui from "@/components/views/home-ui";
 
 export default function SubLink({
   title,
@@ -29,12 +29,13 @@ export default function SubLink({
 
   const Comp = (
     <Anchor
-      activeClassName="text-primary dark:font-medium font-semibold"
+      className="text-h-muted transition-colors duration-200 hover:text-h-text"
+      activeClassName="font-semibold text-h-accent hover:text-h-accent"
       href={href}
     >
       {title}
       {tag && (
-        <span className="dark:bg-blue-700 bg-blue-500 rounded-md px-1.5 py-0.5 mx-2 text-xs text-white !font-normal">
+        <span className="mx-2 rounded-chip bg-copper-400 px-1.5 py-0.5 text-xs !font-normal text-navy-900">
           {tag}
         </span>
       )}
@@ -48,10 +49,10 @@ export default function SubLink({
       Comp
     )
   ) : (
-    <h4 className="font-medium sm:text-sm text-primary">
+    <h4 className={`${ui.label} text-[.75rem] font-semibold uppercase tracking-[.08em] text-h-accent`}>
       {title}
       {tag && (
-        <span className="dark:bg-blue-700 bg-blue-500 rounded-md px-1.5 py-0.5 mx-2 text-xs text-white !font-normal">
+        <span className="mx-2 rounded-chip bg-copper-400 px-1.5 py-0.5 text-xs !font-normal text-navy-900">
           {tag}
         </span>
       )}
@@ -72,24 +73,21 @@ export default function SubLink({
             </span>
             <span className="sm:ml-0 -mr-1.5">
               {!isOpen ? (
-                <ChevronRight className="h-[0.9rem] w-[0.9rem]" />
+                <ChevronRight className="h-[0.9rem] w-[0.9rem] text-h-muted" />
               ) : (
-                <ChevronDown className="h-[0.9rem] w-[0.9rem]" />
+                <ChevronDown className="h-[0.9rem] w-[0.9rem] text-h-muted" />
               )}
             </span>
           </div>
         </CollapsibleTrigger>
         <CollapsibleContent>
           <div
-            className={cn(
-              "flex flex-col items-start sm:text-sm dark:text-stone-300/85 text-stone-800 ml-0.5 mt-2.5 gap-3",
-              level > 0 && "pl-4 border-l ml-1.5"
-            )}
+            className="mt-3 flex flex-col items-start gap-2.5 border-l border-h-line pl-4"
           >
             {items?.map((innerLink) => {
               const modifiedItems = {
                 ...innerLink,
-                href: `${href + innerLink.href}`,
+                href: innerLink.href,
                 level: level + 1,
                 isSheet,
               };

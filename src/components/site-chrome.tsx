@@ -15,7 +15,7 @@ const HomeFooter = dynamic(() => import("@/components/home-chrome").then((m) => 
 function useNewChrome() {
   const path = usePathname()
   const segment = useSelectedLayoutSegment()
-  return path === "/" || path === "/blog" || path.startsWith("/blog/") || segment === "/_not-found"
+  return path === "/" || path === "/company/about" || path === "/company/careers" || path === "/demo" || path === "/grow/delivery" || path === "/grow/ecommerce" || path.startsWith("/docs") || path === "/blog" || path.startsWith("/blog/") || segment === "/_not-found"
 }
 
 export function SiteHeader() {

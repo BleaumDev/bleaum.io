@@ -1,200 +1,177 @@
-import Link from "next/link";
-import DemoButton from "@/components/DemoButton";
-import {
-  TruckIcon,
-  ZapIcon,
-  MapPinIcon,
-  PackageIcon,
-  RefreshCwIcon,
-  CheckCircle2Icon,
-  UserIcon,
-  BarChart2Icon,
-  ShieldCheckIcon,
-  SmartphoneIcon,
-  MessageSquareIcon,
-  SmileIcon,
-  LayersIcon,
-  DollarSign,
-  ArrowRightIcon,
-  SparklesIcon,
-} from "lucide-react";
-import type { Metadata } from "next";
+import type { ComponentType } from "react"
+import type { Metadata } from "next"
+import { MapPinIcon, PackageIcon, RefreshCwIcon, SmartphoneIcon, SmileIcon, ZapIcon } from "lucide-react"
+import { Bloom } from "@/components/views/bloom"
+import { DemoLink, RevealOnScroll } from "@/components/views/home-client"
+import * as ui from "@/components/views/home-ui"
 
 export const metadata: Metadata = {
   title: "Delivery",
   description:
     "Route planning, a connected driver app, live tracking and ID and signature checks for retail delivery.",
-};
-
-
-interface FeatureCardProps {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-  features: string[];
-  gradient: string;
 }
 
-function FeatureCard({ icon, title, description, features, gradient }: FeatureCardProps) {
+type Feature = { icon: ComponentType<{ className?: string }>; title: string; text: string; items: string[] }
+
+// Copy is unchanged from the old page; website-updates/delivery.md #64 and #65 are already applied.
+const core: Feature[] = [
+  {
+    icon: RefreshCwIcon,
+    title: "From Order to Door—No Guesswork",
+    text: "No more switching tabs or copying addresses. Orders flow straight from your POS to the driver app.",
+    items: [
+      "Orders go right from POS to driver app—no manual entry",
+      "Inventory updates in real time as you pack and deliver",
+      "Routes, manifests, and compliance—all in one place",
+    ],
+  },
+  {
+    icon: SmartphoneIcon,
+    title: "A Driver App Drivers Actually Like",
+    text: "No more lost drivers or missed stops. Focus on delivering, not troubleshooting.",
+    items: [
+      "Turn-by-turn navigation built in",
+      "Route optimization for multiple stops",
+      "One-tap status: On Route, Delivered, Delayed",
+      "Digital ID check and signature capture",
+    ],
+  },
+  {
+    icon: MapPinIcon,
+    title: "Zones, GPS, and Full Control",
+    text: "Set your own rules—by zone, GPS, time, or order value. Deliver where and when you want.",
+    items: [
+      "Zone-based or GPS-based route generation",
+      "Dynamic delivery windows based on availability",
+      "Scheduled or on-demand delivery—your choice",
+      "Adjust pricing, fees, and limits per region",
+    ],
+  },
+  {
+    icon: PackageIcon,
+    title: "Inventory on Wheels—No More Guesswork",
+    text: "Track every item, every stop, every time. Compliance is built in.",
+    items: [
+      "Real-time inventory syncing with POS",
+      "Vehicle load limits and compliance rules",
+      "Automated return-to-store workflows",
+      "Full traceability from pack to delivery",
+    ],
+  },
+]
+
+const more: Feature[] = [
+  {
+    icon: ZapIcon,
+    title: "Deliver More, Stress Less",
+    text: "Whether you've got one driver or a fleet, deliver more, faster—with less stress.",
+    items: [
+      "Assign and batch multiple orders per route",
+      "Auto-prioritize based on time sensitivity",
+      "Customize workflows per driver or store",
+      "Review daily performance with built-in analytics",
+    ],
+  },
+  {
+    icon: SmileIcon,
+    title: "Customers Know Exactly What's Happening",
+    text: "No more 'where's my order?' calls. Real-time updates and driver ETAs.",
+    items: [
+      "Real-time order updates via SMS or app",
+      "Driver ETAs and delivery tracking",
+      "Custom notifications when order is on the way",
+      "Reorder in one tap from past delivery history",
+    ],
+  },
+]
+
+function Card({ f, i }: { f: Feature; i: number }) {
+  const Icon = f.icon
   return (
-    <div className="group relative p-6 sm:p-8 bg-slate-800/30 rounded-2xl sm:rounded-3xl border border-slate-700/50 hover:bg-slate-800/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105">
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-700/20 to-transparent rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-      
-      <div className="relative">
-        <div className={`inline-flex p-3 sm:p-4 bg-gradient-to-r ${gradient} rounded-xl sm:rounded-2xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300`}>
-          {icon}
-        </div>
-        
-        <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white group-hover:text-cyan-300 transition-colors">
-          {title}
-        </h3>
-        
-        <p className="text-sm sm:text-base text-slate-300 mb-4 sm:mb-6 leading-relaxed">
-          {description}
-        </p>
-        
-        <ul className="space-y-2 sm:space-y-3">
-          {features.map((feature, index) => (
-            <li key={index} className="flex items-start gap-2 sm:gap-3 text-slate-300">
-              <div className="mt-0.5 sm:mt-1">
-                <CheckCircle2Icon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 flex-shrink-0" />
-              </div>
-              <span className="text-sm sm:text-base group-hover:text-white transition-colors">{feature}</span>
+    // The reveal and the hover lift both set `transition`, so they sit on separate elements.
+    <li {...ui.rv(i)}>
+      <div className={`${ui.lift} flex h-full flex-col rounded-card border border-h-line bg-h-surface p-6 sm:p-8`}>
+        <span className="mb-5 grid size-11 place-items-center rounded-ctl bg-h-surface2 text-h-accent">
+          <Icon className="size-5" />
+        </span>
+        <h2 className={ui.h3}>{f.title}</h2>
+        <p className="mt-2 text-[.9375rem] text-h-muted">{f.text}</p>
+        <ul className="mt-5 grid gap-3 border-t border-h-line pt-5 text-[.9375rem]">
+          {f.items.map((t) => (
+            <li key={t} className="flex gap-3">
+              <span className="mt-[.55em] size-1.5 shrink-0 rounded-full bg-h-accent" aria-hidden="true" />
+              {t}
             </li>
           ))}
         </ul>
       </div>
-    </div>
-  );
+    </li>
+  )
 }
 
 export default function DeliveryPage() {
   return (
-    <div className="min-h-screen bg-[#020917] text-white">
-      <div className="container mx-auto px-2 sm:px-4 lg:px-8 py-6 sm:py-10 max-w-6xl">
-        {/* Hero Section */}
-        <div className="text-center mb-8 sm:mb-16">
-          <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-6">
-            <div className="p-2 sm:p-2.5 sm:p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl sm:rounded-2xl shadow-lg">
-              <TruckIcon className="w-5 h-5 sm:w-8 sm:h-8 text-white" />
-            </div>
+    <div data-page="delivery" className={ui.root}>
+      <RevealOnScroll />
+
+      {/* Hero */}
+      <section className={`relative overflow-hidden text-white ${ui.heroBg}`} aria-labelledby="delivery-h">
+        <Bloom />
+        <div className={`${ui.wrap} relative py-hero`}>
+          <h1 id="delivery-h" className={`${ui.h1} animate-rise`}>
+            Bleaum Last-Mile Delivery
+          </h1>
+          <p className="mt-5 max-w-[34ch] animate-rise font-display text-quote font-medium leading-[1.4] [animation-delay:90ms]">
+            Real-time routes. Fewer headaches. Happy customers.
+          </p>
+          <p className="mt-4 max-w-[52ch] animate-rise text-[1.125rem] text-fog-200 [animation-delay:180ms]">
+            We built Bleaum Delivery after too many nights tracking down lost drivers, fixing manifest mistakes, and
+            fielding &quot;where&apos;s my order?&quot; calls. Now, your team can see every order, every route, and every
+            delivery—live.
+          </p>
+          <div className={`${ui.actions} mt-8 animate-rise [animation-delay:270ms]`}>
+            <DemoLink className={`${ui.btnCopper} ${ui.stack}`}>Book a Demo</DemoLink>
           </div>
-          <h1 className="text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-2 sm:mb-6 text-white leading-tight px-2">Bleaum Last-Mile Delivery</h1>
-          <div className="max-w-3xl mx-auto mb-4 sm:mb-8 px-2 sm:px-4">
-            <h2 className="text-base sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-4 text-cyan-300">Real-time routes. Fewer headaches. Happy customers.</h2>
-            <p className="text-sm sm:text-lg text-slate-300 leading-relaxed">We built Bleaum Delivery after too many nights tracking down lost drivers, fixing manifest mistakes, and fielding "where's my order?" calls. Now, your team can see every order, every route, and every delivery—live.</p>
-          </div>
-          <DemoButton className="group bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold px-6 sm:px-10 py-3 sm:py-4 rounded-full text-base sm:text-lg transition-all duration-300 transform hover:scale-105 touch-manipulation">
-            <span className="flex items-center gap-2 sm:gap-3 justify-center">
-              Book a Demo
-              <ArrowRightIcon className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-            </span>
-          </DemoButton>
         </div>
+      </section>
 
-        {/* Feature Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 mb-8 sm:mb-16">
-          <FeatureCard
-            icon={<RefreshCwIcon className="w-6 h-6 sm:w-8 sm:h-8" />}
-            title="From Order to Door—No Guesswork"
-            description="No more switching tabs or copying addresses. Orders flow straight from your POS to the driver app."
-            features={[
-              "Orders go right from POS to driver app—no manual entry",
-              "Inventory updates in real time as you pack and deliver", 
-              "Routes, manifests, and compliance—all in one place"
-            ]}
-            gradient="from-purple-500 to-pink-500"
-          />
+      {/* Core features */}
+      <section className="py-pad" aria-label="Delivery features">
+        <ul className={`${ui.wrap} grid gap-4 md:grid-cols-2 md:gap-6`}>
+          {core.map((f, i) => (
+            <Card key={f.title} f={f} i={i % 2} />
+          ))}
+        </ul>
+      </section>
 
-          <FeatureCard
-            icon={<SmartphoneIcon className="w-6 h-6 sm:w-8 sm:h-8" />}
-            title="A Driver App Drivers Actually Like"
-            description="No more lost drivers or missed stops. Focus on delivering, not troubleshooting."
-            features={[
-              "Turn-by-turn navigation built in",
-              "Route optimization for multiple stops",
-              "One-tap status: On Route, Delivered, Delayed",
-              "Digital ID check and signature capture"
-            ]}
-            gradient="from-green-500 to-emerald-500"
-          />
+      {/* Speed and customer updates */}
+      <section className="bg-h-surface2 py-pad" aria-label="Faster deliveries and customer updates">
+        <ul className={`${ui.wrap} grid gap-4 md:grid-cols-2 md:gap-6`}>
+          {more.map((f, i) => (
+            <Card key={f.title} f={f} i={i} />
+          ))}
+        </ul>
+      </section>
 
-          <FeatureCard
-            icon={<MapPinIcon className="w-6 h-6 sm:w-8 sm:h-8" />}
-            title="Zones, GPS, and Full Control"
-            description="Set your own rules—by zone, GPS, time, or order value. Deliver where and when you want."
-            features={[
-              "Zone-based or GPS-based route generation",
-              "Dynamic delivery windows based on availability",
-              "Scheduled or on-demand delivery—your choice",
-              "Adjust pricing, fees, and limits per region"
-            ]}
-            gradient="from-orange-500 to-red-500"
-          />
-
-          <FeatureCard
-            icon={<PackageIcon className="w-6 h-6 sm:w-8 sm:h-8" />}
-            title="Inventory on Wheels—No More Guesswork"
-            description="Track every item, every stop, every time. Compliance is built in."
-            features={[
-              "Real-time inventory syncing with POS",
-              "Vehicle load limits and compliance rules",
-              "Automated return-to-store workflows",
-              "Full traceability from pack to delivery"
-            ]}
-            gradient="from-indigo-500 to-purple-500"
-          />
-        </div>
-
-        {/* Additional Features */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 mb-8 sm:mb-16">
-          <FeatureCard
-            icon={<ZapIcon className="w-6 h-6 sm:w-8 sm:h-8" />}
-            title="Deliver More, Stress Less"
-            description="Whether you've got one driver or a fleet, deliver more, faster—with less stress."
-            features={[
-              "Assign and batch multiple orders per route",
-              "Auto-prioritize based on time sensitivity",
-              "Customize workflows per driver or store",
-              "Review daily performance with built-in analytics"
-            ]}
-            gradient="from-cyan-500 to-blue-500"
-          />
-
-          <FeatureCard
-            icon={<SmileIcon className="w-6 h-6 sm:w-8 sm:h-8" />}
-            title="Customers Know Exactly What's Happening"
-            description="No more 'where's my order?' calls. Real-time updates and driver ETAs."
-            features={[
-              "Real-time order updates via SMS or app",
-              "Driver ETAs and delivery tracking",
-              "Custom notifications when order is on the way",
-              "Reorder in one tap from past delivery history"
-            ]}
-            gradient="from-yellow-500 to-orange-500"
-          />
-        </div>
-
-        {/* CTA Section */}
-        <div className="text-center">
-          <div className="p-6 sm:p-12 bg-slate-800/30 rounded-2xl sm:rounded-3xl border border-slate-700/50">
-            <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-6">
-              <div className="p-2 sm:p-2.5 sm:p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl sm:rounded-2xl">
-                <TruckIcon className="w-5 h-5 sm:w-8 sm:h-8 text-white" />
-              </div>
-            </div>
-            <h2 className="text-lg sm:text-2xl lg:text-4xl font-bold mb-2 sm:mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent px-2">Ready for Delivery That Just Works?</h2>
-            <p className="text-base sm:text-lg text-slate-300 mb-4 sm:mb-8 max-w-2xl mx-auto px-2">Want to see how Bleaum Delivery could work for your team? Let's set up a quick demo and show you the difference.</p>
-            <DemoButton className="group bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold px-6 sm:px-12 py-3 sm:py-5 rounded-full text-base sm:text-xl transition-all duration-300 transform hover:scale-105 touch-manipulation">
-              <span className="flex items-center gap-2 sm:gap-3 justify-center">
+      {/* Call to action */}
+      <section className={`relative overflow-hidden py-pad text-white ${ui.ctaBg}`} aria-labelledby="cta-h">
+        <Bloom cta />
+        <div className={ui.wrap}>
+          <div {...ui.rv(0, "relative max-w-[60ch]")}>
+            <h2 id="cta-h" className={`${ui.heading} text-h2 font-normal`}>Ready for Delivery That Just Works?</h2>
+            <p className="mt-3 text-[1.25rem] text-fog-200">
+              Want to see how Bleaum Delivery could work for your team? Let&apos;s set up a quick demo and show you the
+              difference.
+            </p>
+            <div className={`${ui.actions} mt-7`}>
+              <DemoLink className={`${ui.btnCopper} ${ui.stack}`}>
                 <span className="hidden sm:inline">Schedule a Demo to See It in Action</span>
                 <span className="sm:hidden">Schedule a Demo</span>
-                <ArrowRightIcon className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-2 transition-transform" />
-              </span>
-            </DemoButton>
+              </DemoLink>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
-  );
+  )
 }

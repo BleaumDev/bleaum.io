@@ -1,23 +1,33 @@
-import React from "react";
-import type { Metadata } from "next";
+import type { Metadata } from "next"
+import { Bloom } from "@/components/views/bloom"
+import * as ui from "@/components/views/home-ui"
 
 export const metadata: Metadata = {
   title: "Careers",
-  description:
-    "Join the Bleaum team. Roles will be posted here.",
-};
+  description: "Join the Bleaum team. Roles will be posted here.",
+}
 
-
+// Copy is unchanged on purpose: publishing roles or pulling the links is an open decision (website-updates/careers.md #110).
 export default function CareersPage() {
   return (
-    <div className="min-h-screen bg-[#020917] flex items-center justify-center px-4">
-      <div className="w-full max-w-lg text-center py-12 sm:py-20 rounded-2xl">
-        <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4 text-white leading-tight">
-          Careers at <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Bleaum</span>
-        </h1>
-        <p className="text-lg sm:text-xl text-blue-200 mb-2">We're growing fast—join us soon!</p>
-        <p className="text-base sm:text-lg text-slate-300">Careers page coming soon.</p>
-      </div>
+    <div data-page="careers" className={ui.root}>
+      <section
+        className={`relative flex min-h-[60vh] items-center overflow-hidden text-white ${ui.heroBg}`}
+        aria-labelledby="careers-h"
+      >
+        <Bloom />
+        <div className={`${ui.wrap} relative w-full py-hero`}>
+          <h1 id="careers-h" className={`${ui.h1} animate-rise`}>
+            Careers at Bleaum
+          </h1>
+          <p className="mt-5 max-w-[44ch] animate-rise text-[1.25rem] leading-[1.5] text-fog-200 [animation-delay:90ms]">
+            We&apos;re growing fast—join us soon!
+          </p>
+          <p className="mt-2 animate-rise font-semibold text-copper-400 [animation-delay:180ms]">
+            Careers page coming soon.
+          </p>
+        </div>
+      </section>
     </div>
-  );
-} 
+  )
+}

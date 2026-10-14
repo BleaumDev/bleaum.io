@@ -10,15 +10,12 @@ import { Logo, NavMenu } from "./navbar";
 import { Button } from "./ui/button";
 import { AlignLeftIcon } from "lucide-react";
 import { DialogTitle } from "./ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import DocsMenu from "./docs-menu";
 
 export function Leftbar() {
   return (
-    <aside className="md:flex hidden w-[20rem] sticky top-16 flex-col h-[93.75vh] overflow-y-auto">
-      <ScrollArea className="py-4 px-2">
-        <DocsMenu />
-      </ScrollArea>
+    <aside className="sticky top-6 hidden max-h-[calc(100vh-3rem)] overflow-y-auto lg:block">
+      <DocsMenu />
     </aside>
   );
 }

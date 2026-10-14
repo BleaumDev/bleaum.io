@@ -1,210 +1,203 @@
 'use client';
 
 import { useState } from 'react';
+import { Bloom } from './bloom';
+import * as ui from './home-ui';
+
+const states = [
+  'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming', 'District of Columbia'
+];
+
+const provinces = [
+  'Alberta', 'British Columbia', 'Manitoba', 'New Brunswick', 'Newfoundland and Labrador', 'Northwest Territories', 'Nova Scotia', 'Nunavut', 'Ontario', 'Prince Edward Island', 'Quebec', 'Saskatchewan', 'Yukon'
+];
+
+// The service covers the US and Canada only. The number is sent as "<dial code> <number>" so the email route needs no change.
+const dialCodes = [{ id: 'US', dial: '+1' }, { id: 'CA', dial: '+1' }];
+
+// Each inner array is one numbered step on the rail. `name` is the key the /api/send-email route reads.
+const groups = [
+  [
+    { name: 'firstName', label: 'First Name', type: 'text' },
+    { name: 'lastName', label: 'Last Name', type: 'text' },
+    { name: 'email', label: 'Email', type: 'email' },
+    { name: 'phoneNumber', label: 'Phone Number', type: 'tel' },
+  ],
+  [
+    { name: 'companyName', label: 'Company Name', type: 'text' },
+    { name: 'state', label: 'State / Province', type: 'select' },
+    { name: 'numberOfLocations', label: 'Number of Locations', type: 'number' },
+  ],
+  [
+    { name: 'howHear', label: 'How did you hear about Bleaum?', type: 'text' },
+    { name: 'industry', label: 'Industry (optional)', type: 'text' },
+    { name: 'devices', label: 'Devices you use (optional)', type: 'text' },
+  ],
+] as const;
+
+type FormData = Record<(typeof groups)[number][number]['name'], string>;
+
+const empty = Object.fromEntries(groups.flat().map((f) => [f.name, ''])) as FormData;
+
+const { fieldBox: box, fieldLabel: labelText, fieldControl: control } = ui;
 
 export default function DemoPage() {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    companyName: '',
-    state: '',
-    numberOfLocations: '',
-    howHear: '',
-    industry: '',
-    devices: '',
-  });
+  const [formData, setFormData] = useState<FormData>(empty);
+  const [status, setStatus] = useState<{ ok: boolean; text: string } | null>(null);
+  const [country, setCountry] = useState('US');
+  const [sending, setSending] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    // Phone accepts digits only, so pasted "(555) 123-4567" becomes 5551234567.
+    setFormData({ ...formData, [name]: name === 'phoneNumber' ? value.replace(/\D/g, '') : value });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSending(true);
+    setStatus(null);
     try {
       const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          phoneNumber: formData.phoneNumber && `${dialCodes.find((d) => d.id === country)!.dial} ${formData.phoneNumber}`,
+        }),
       });
       const data = await response.json();
-      console.log('Response Data:', data);
       if (response.ok) {
-        alert('Demo request sent successfully!');
-        setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phoneNumber: '',
-          companyName: '',
-          state: '',
-          numberOfLocations: '',
-          howHear: '',
-          industry: '',
-          devices: '',
-        });
+        setStatus({ ok: true, text: 'Demo request sent successfully!' });
+        setFormData(empty);
       } else {
-        alert(`Failed to send demo request: ${data.message}`);
+        setStatus({ ok: false, text: `Failed to send demo request: ${data.message}` });
       }
-    } catch (error) {
-      alert('An error occurred while sending the demo request.');
+    } catch {
+      setStatus({ ok: false, text: 'An error occurred while sending the demo request.' });
+    } finally {
+      setSending(false);
     }
   };
 
-  const states = [
-    'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming', 'District of Columbia'
-  ];
-
-  const provinces = [
-    'Alberta', 'British Columbia', 'Manitoba', 'New Brunswick', 'Newfoundland and Labrador', 'Northwest Territories', 'Nova Scotia', 'Nunavut', 'Ontario', 'Prince Edward Island', 'Quebec', 'Saskatchewan', 'Yukon'
-  ];
-
   return (
-    <div className="flex flex-col items-center bg-background py-6 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-2xl text-center pt-6 mb-6">
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-white drop-shadow-lg mb-2">
-          Is Your Retail Shop Ready for a Serious Upgrade?
-        </h2>
-        <p className="text-muted-foreground text-base sm:text-lg px-4">
-          Book a walkthrough of the platform built for how retail really runs.
-        </p>
-      </div>
+    <div data-page="demo" className={ui.root}>
+      <section
+        className={`relative overflow-hidden text-white ${ui.heroBg}`}
+        aria-labelledby="demo-h"
+      >
+        <Bloom />
+        <div className={`${ui.wrap} relative py-band`}>
+          <h1 id="demo-h" className={`${ui.h1} max-w-[20ch] animate-rise`}>
+            Is Your Retail Shop Ready for a Serious Upgrade?
+          </h1>
+          <p className="mt-4 max-w-[44ch] animate-rise text-[1.25rem] leading-[1.5] text-fog-200 [animation-delay:90ms]">
+            Book a walkthrough of the platform built for how retail really runs.
+          </p>
+        </div>
+      </section>
 
-      <div className="bg-card p-6 sm:p-8 rounded-xl shadow-lg w-full max-w-2xl mt-6">
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 w-full">
-          <div>
-            <label htmlFor="firstName" className="block text-sm font-medium text-foreground">First Name</label>
-            <input
-              type="text"
-              name="firstName"
-              id="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-border rounded-md shadow-sm p-2 bg-background text-foreground"
-            />
-          </div>
-          <div>
-            <label htmlFor="lastName" className="block text-sm font-medium text-foreground">Last Name</label>
-            <input
-              type="text"
-              name="lastName"
-              id="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-border rounded-md shadow-sm p-2 bg-background text-foreground"
-            />
-          </div>
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-foreground">Email</label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-border rounded-md shadow-sm p-2 bg-background text-foreground"
-            />
-          </div>
-          <div>
-            <label htmlFor="phoneNumber" className="block text-sm font-medium text-foreground">Phone Number</label>
-            <input
-              type="tel"
-              name="phoneNumber"
-              id="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-border rounded-md shadow-sm p-2 bg-background text-foreground"
-            />
-          </div>
-          <div>
-            <label htmlFor="companyName" className="block text-sm font-medium text-foreground">Company Name</label>
-            <input
-              type="text"
-              name="companyName"
-              id="companyName"
-              value={formData.companyName}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-border rounded-md shadow-sm p-2 bg-background text-foreground"
-            />
-          </div>
-          <div>
-            <label htmlFor="state" className="block text-sm font-medium text-foreground">State / Province</label>
-            <select
-              name="state"
-              id="state"
-              value={formData.state}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-border rounded-md shadow-sm p-2 bg-background text-foreground"
-            >
-              <option value="">Select a state or province</option>
-              <optgroup label="United States">
-                {states.map((state) => (
-                  <option key={state} value={state}>{state}</option>
-                ))}
-              </optgroup>
-              <optgroup label="Canada">
-                {provinces.map((province) => (
-                  <option key={province} value={province}>{province}</option>
-                ))}
-              </optgroup>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div>
-            <label htmlFor="numberOfLocations" className="block text-sm font-medium text-foreground">Number of Locations</label>
-            <input
-              type="number"
-              name="numberOfLocations"
-              id="numberOfLocations"
-              value={formData.numberOfLocations}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-border rounded-md shadow-sm p-2 bg-background text-foreground"
-            />
-          </div>
-          <div>
-            <label htmlFor="howHear" className="block text-sm font-medium text-foreground">How did you hear about Bleaum?</label>
-            <input
-              type="text"
-              name="howHear"
-              id="howHear"
-              value={formData.howHear}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-border rounded-md shadow-sm p-2 bg-background text-foreground"
-            />
-          </div>
-          <div>
-            <label htmlFor="industry" className="block text-sm font-medium text-foreground">Industry (optional)</label>
-            <input
-              type="text"
-              name="industry"
-              id="industry"
-              value={formData.industry}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-border rounded-md shadow-sm p-2 bg-background text-foreground"
-            />
-          </div>
-          <div>
-            <label htmlFor="devices" className="block text-sm font-medium text-foreground">Devices you use (optional)</label>
-            <input
-              type="text"
-              name="devices"
-              id="devices"
-              value={formData.devices}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-border rounded-md shadow-sm p-2 bg-background text-foreground"
-            />
-          </div>
-          <div className="md:col-span-2">
-            <button
-              type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-primary-foreground bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-            >
+      <section className="py-pad">
+        <form onSubmit={handleSubmit} className={`${ui.wrap} max-w-3xl`}>
+          {/* Numbered steps joined by copper dot trails, as in the delivery steps on Home */}
+          <ol className="[counter-reset:s]">
+            {groups.map((group, gi) => (
+              <li
+                key={gi}
+                className="relative pb-10 pl-[52px] [counter-increment:s] before:absolute before:left-0 before:top-0 before:grid before:size-[34px] before:place-items-center before:rounded-full before:bg-navy-800 before:font-display before:text-[.8125rem] before:font-semibold before:leading-none before:text-white before:shadow-[inset_0_0_0_1.5px_rgba(255,255,255,.22)] before:content-[counter(s)] after:absolute after:bottom-2 after:left-[15px] after:top-11 after:w-1 after:bg-[radial-gradient(circle,#DF9770_1.3px,transparent_1.7px)] after:bg-[length:4px_8px] after:bg-repeat-y sm:pl-[68px]"
+              >
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {group.map((f) => (
+                    <label
+                      key={f.name}
+                      className={`${box} ${f.name === 'email' || f.name === 'howHear' ? 'sm:col-span-2' : ''}`}
+                    >
+                      <span className={labelText}>{f.label}</span>
+                      {f.type === 'select' ? (
+                        <span className="relative block">
+                          <select
+                            name={f.name}
+                            value={formData[f.name]}
+                            onChange={handleChange}
+                            className={`${control} w-full appearance-none pr-7`}
+                          >
+                            <option value="">Select a state or province</option>
+                            <optgroup label="United States">
+                              {states.map((s) => (
+                                <option key={s} value={s}>{s}</option>
+                              ))}
+                            </optgroup>
+                            <optgroup label="Canada">
+                              {provinces.map((p) => (
+                                <option key={p} value={p}>{p}</option>
+                              ))}
+                            </optgroup>
+                            <option value="Other">Other</option>
+                          </select>
+                          <svg
+                            className="pointer-events-none absolute right-0 top-1/2 size-4 -translate-y-1/2 text-h-muted"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </span>
+                      ) : f.type === 'tel' ? (
+                        <span className="flex items-center gap-2">
+                          <select
+                            aria-label="Country code"
+                            value={country}
+                            onChange={(e) => setCountry(e.target.value)}
+                            className={`${control} shrink-0 border-r border-h-line pr-2`}
+                          >
+                            {dialCodes.map((d) => (
+                              <option key={d.id} value={d.id}>{d.id} {d.dial}</option>
+                            ))}
+                          </select>
+                          <input
+                            type="tel"
+                            inputMode="numeric"
+                            autoComplete="tel-national"
+                            aria-label={f.label}
+                            name={f.name}
+                            value={formData[f.name]}
+                            onChange={handleChange}
+                            className={`${control} min-w-0 flex-1`}
+                          />
+                        </span>
+                      ) : (
+                        <input
+                          type={f.type}
+                          name={f.name}
+                          value={formData[f.name]}
+                          onChange={handleChange}
+                          className={`${control} w-full`}
+                        />
+                      )}
+                    </label>
+                  ))}
+                </div>
+              </li>
+            ))}
+          </ol>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pl-[52px] sm:pl-[68px]">
+            <button type="submit" disabled={sending} className={`${ui.btnCopper} min-w-40 disabled:opacity-60`}>
               Send
             </button>
+            {status && (
+              <p
+                role="status"
+                className={`text-[.9375rem] font-medium ${status.ok ? 'text-h-accent' : 'text-red-700 dark:text-red-400'}`}
+              >
+                {status.text}
+              </p>
+            )}
           </div>
         </form>
-      </div>
+      </section>
     </div>
   );
-} 
+}

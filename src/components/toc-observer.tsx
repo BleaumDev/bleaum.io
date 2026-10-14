@@ -47,19 +47,23 @@ export default function TocObserver({ data }: Props) {
   }, [data]);
 
   return (
-    <div className="flex flex-col gap-2.5 text-sm dark:text-stone-300/85 text-stone-800 ml-0.5">
+    <div className="flex flex-col border-l border-h-line text-[.875rem]">
       {data.map(({ href, level, text }, index) => {
         return (
           <Link
             key={href + text + level + index}
             href={href}
-            className={clsx({
-              "pl-0": level == 2,
-              "pl-4": level == 3,
-              "pl-8 ": level == 4,
-              "dark:font-medium font-semibold text-primary":
-                activeId == href.slice(1),
-            })}
+            className={clsx(
+              "-ml-px border-l-2 py-1 pr-2 transition-colors duration-200 hover:text-h-text",
+              {
+                "pl-4": level == 2,
+                "pl-7": level == 3,
+                "pl-10": level == 4,
+              },
+              activeId == href.slice(1)
+                ? "border-copper-400 font-medium text-h-text"
+                : "border-transparent text-h-muted"
+            )}
           >
             {text}
           </Link>

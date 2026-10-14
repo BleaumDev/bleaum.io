@@ -35,10 +35,6 @@ export async function generateStaticParams() {
   return val.map((it) => ({ slug: it }));
 }
 
-// Article text follows the Home theme: prose colors come from the h-* tokens, so light and dark both work.
-const prose =
-  "prose prose-lg max-w-none font-body [--tw-prose-body:var(--h-text)] [--tw-prose-headings:var(--h-text)] [--tw-prose-bold:var(--h-text)] [--tw-prose-links:var(--h-accent)] [--tw-prose-bullets:var(--h-accent)] [--tw-prose-counters:var(--h-muted)] [--tw-prose-quotes:var(--h-text)] [--tw-prose-quote-borders:var(--h-line)] [--tw-prose-hr:var(--h-line)] prose-headings:font-display prose-headings:font-medium prose-h2:mb-3 prose-h2:mt-10 prose-h2:text-[1.5rem] prose-a:font-medium";
-
 export default async function BlogPage(props: PageProps) {
   const params = await props.params;
   const { slug } = params;
@@ -78,7 +74,7 @@ export default async function BlogPage(props: PageProps) {
           priority
           className="relative -mt-20 aspect-video w-full rounded-card border border-h-line bg-h-surface object-cover shadow-[0_30px_60px_-30px_rgba(11,30,49,.55)]"
         />
-        <div className={`${prose} mt-10`}>{res.content}</div>
+        <div className={`${ui.prose} mt-10`}>{res.content}</div>
       </article>
     </div>
   );
