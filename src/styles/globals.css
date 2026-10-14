@@ -269,3 +269,20 @@ main:has(> [data-page="home"]) {
   max-width: none;
   padding: 0;
 }
+
+/* Home page theme tokens. Everything else on the page is Tailwind (see tailwind.config.ts `h-*` colors). */
+@layer base {
+  .home-theme {
+    --h-bg: #F6F8FB; --h-surface: #fff; --h-surface-2: #EEF3F8; --h-text: #0B1E31; --h-muted: #53687F;
+    --h-line: #DCE3EB; --h-accent: #A4572C; --h-btn: #0F2F4C; --h-btn-text: #fff;
+  }
+  .dark .home-theme, .home-dk {
+    --h-bg: #071321; --h-surface: #0B1E31; --h-surface-2: #0E2539; --h-text: #EAF0F6; --h-muted: #A9B8C8;
+    --h-line: rgba(255, 255, 255, .12); --h-accent: #DF9770; --h-btn: #DF9770; --h-btn-text: #0B1E31;
+  }
+  /* Bands that stay navy in light mode */
+  .home-dk { --h-line: rgba(255, 255, 255, .14); background: var(--h-bg); color: var(--h-text); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-theme *, .home-theme *::before, .home-theme *::after { animation: none !important; transition: none !important; }
+}
