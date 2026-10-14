@@ -1,4 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Bloom } from "@/components/views/bloom";
+import * as ui from "@/components/views/home-ui";
 import {
   Author,
   BlogMdxFrontmatter,
@@ -18,20 +20,28 @@ export default async function BlogIndexPage() {
     (a, b) => stringToDate(b.date).getTime() - stringToDate(a.date).getTime()
   );
   return (
-    <div className="flex flex-col gap-1 sm:min-h-[91vh] min-h-[88vh] pt-2">
-      <div className="mb-7 flex flex-col gap-2">
-        <h1 className="sm:text-3xl text-2xl font-extrabold">
-          Latest from Bleaum
-        </h1>
-        <p className="text-muted-foreground sm:text-[16.5px] text-[14.5px]">
-          All the latest blogs and news, straight from the team.
-        </p>
-      </div>
-      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-8 gap-4 mb-5">
-        {blogs.map((blog) => (
-          <BlogCard {...blog} slug={blog.slug} key={blog.slug} />
-        ))}
-      </div>
+    <div data-page="blog" className={ui.root}>
+      <section
+        className={`relative overflow-hidden text-white ${ui.heroBg}`}
+        aria-labelledby="blog-h"
+      >
+        <Bloom />
+        <div className={`${ui.wrap} relative py-band`}>
+          <h1 id="blog-h" className={`${ui.h1} animate-rise`}>
+            Latest from Bleaum
+          </h1>
+          <p className="mt-4 max-w-[44ch] animate-rise text-[1.25rem] leading-[1.5] text-fog-200 [animation-delay:90ms]">
+            All the latest blogs and news, straight from the team.
+          </p>
+        </div>
+      </section>
+      <section className="py-pad">
+        <div className={`${ui.wrap} grid gap-6 sm:grid-cols-2 lg:grid-cols-3`}>
+          {blogs.map((blog) => (
+            <BlogCard {...blog} slug={blog.slug} key={blog.slug} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
@@ -47,24 +57,22 @@ function BlogCard({
   return (
     <Link
       href={`/blog/${slug}`}
-      className="flex flex-col gap-2 items-start border rounded-md py-5 px-3 min-h-[400px]"
+      className={`flex min-h-[400px] flex-col gap-3 rounded-card border border-h-line bg-h-surface p-5 ${ui.lift}`}
     >
-      <h3 className="text-md font-semibold -mt-1 pr-7">{title}</h3>
-      <div className="w-full">
-        {cover && cover !== "" && (
-          <Image
-            src={cover}
-            alt={title}
-            width={400}
-            height={150}
-            quality={80}
-            className="w-full rounded-md object-cover h-[180px] border"
-          />
-        )}
-      </div>
-      <p className="text-sm text-muted-foreground">{description}</p>
-      <div className="flex items-center justify-between w-full mt-auto">
-        <p className="text-[13px] text-muted-foreground">
+      {cover && cover !== "" && (
+        <Image
+          src={cover}
+          alt={title}
+          width={400}
+          height={225}
+          quality={80}
+          className="aspect-video w-full rounded-ctl border border-h-line object-cover"
+        />
+      )}
+      <h3 className={ui.h3}>{title}</h3>
+      <p className="text-[.9375rem] text-h-muted">{description}</p>
+      <div className="mt-auto flex w-full items-center justify-between gap-3 pt-2">
+        <p className="text-[.8125rem] text-h-muted">
           Published on {formatDate2(date)}
         </p>
         <AvatarGroup users={authors} />
@@ -76,27 +84,30 @@ function BlogCard({
 function AvatarGroup({ users, max = 4 }: { users: Author[]; max?: number }) {
   const displayUsers = users.slice(0, max);
   const remainingUsers = Math.max(users.length - max, 0);
+  const avatar = "border-2 border-h-surface bg-h-surface2 text-h-text";
 
   return (
     <div className="flex items-center">
       {displayUsers.map((user, index) => (
         <Avatar
           key={user.username}
-          className={`inline-block border-2 w-9 h-9 border-background ${
-            index !== 0 ? "-ml-3" : ""
-          } `}
+          className={`inline-block h-9 w-9 ${avatar} ${index !== 0 ? "-ml-3" : ""}`}
         >
           <AvatarImage src={user.avatar} alt={user.username} />
-          <AvatarFallback>
+          <AvatarFallback className="bg-h-surface2">
             {user.username.slice(0, 2).toUpperCase()}
           </AvatarFallback>
         </Avatar>
       ))}
       {remainingUsers > 0 && (
-        <Avatar className="-ml-3 inline-block border-2 border-background hover:translate-y-1 transition-transform">
-          <AvatarFallback>+{remainingUsers}</AvatarFallback>
+        <Avatar
+          className={`-ml-3 inline-block transition-transform hover:translate-y-1 ${avatar}`}
+        >
+          <AvatarFallback className="bg-h-surface2">
+            +{remainingUsers}
+          </AvatarFallback>
         </Avatar>
       )}
     </div>
   );
-} 
+}

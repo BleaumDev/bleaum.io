@@ -1,54 +1,92 @@
-import { buttonVariants } from "@/components/ui/button";
+import { Bloom } from "@/components/views/bloom";
+import * as ui from "@/components/views/home-ui";
 import Link from "next/link";
+
+const field =
+  "w-full rounded-ctl border border-h-line bg-h-bg px-3.5 py-2.5 text-[.9375rem] text-h-text placeholder:text-h-muted";
+
+const inputs = [
+  ["text", "First name*"],
+  ["text", "Last name*"],
+  ["email", "Business email address*"],
+  ["tel", "Business phone number*"],
+  ["text", "Business name*"],
+  ["text", "Job title*"],
+  ["text", "Business website*"],
+];
 
 export default function NotFound() {
   return (
-    <div className="min-h-[87vh] px-2 sm:py-28 py-36 flex flex-col gap-4 items-center">
-      {/* Talk to Us Section */}
-      <section
-        className="w-full max-w-4xl mx-auto mt-12 bg-gradient-to-br from-white/10 via-cyan-900/10 to-blue-900/10 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 overflow-hidden"
-      >
-        {/* Header */}
-        <div className="bg-gradient-to-r from-cyan-500 via-blue-500 to-blue-700 px-3 sm:px-6 py-3 sm:py-4 text-center">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1">Talk to our team</h2>
-          <p className="text-xs sm:text-sm md:text-base text-blue-100 font-medium">Interested in partnering and integrating with Bleaum</p>
-        </div>
-        {/* Form */}
-        <form className="px-2 sm:px-6 md:px-16 py-6 sm:py-8 space-y-4 sm:space-y-5 bg-white/10 backdrop-blur rounded-b-2xl">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-            <input type="text" placeholder="First name*" className="w-full rounded-lg border border-slate-300 bg-white/80 px-3 sm:px-4 py-2.5 sm:py-3 text-slate-900 placeholder-slate-400 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-cyan-400" required />
-            <input type="text" placeholder="Last name*" className="w-full rounded-lg border border-slate-300 bg-white/80 px-3 sm:px-4 py-2.5 sm:py-3 text-slate-900 placeholder-slate-400 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-cyan-400" required />
+    <div data-page="not-found" className={ui.root}>
+      <section className={`relative overflow-hidden text-white ${ui.heroBg}`}>
+        <Bloom />
+        <div className={`${ui.wrap} relative grid items-center gap-12 py-hero lg:grid-cols-[5fr_6fr] [&>*]:min-w-0`}>
+          <div>
+            <h1 className={`${ui.h1} animate-rise`}>Talk to our team</h1>
+            <p className="mt-5 max-w-[44ch] animate-rise text-[1.25rem] leading-[1.5] text-fog-200 [animation-delay:90ms]">
+              Interested in partnering and integrating with Bleaum
+            </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-            <input type="email" placeholder="Business email address*" className="w-full rounded-lg border border-slate-300 bg-white/80 px-3 sm:px-4 py-2.5 sm:py-3 text-slate-900 placeholder-slate-400 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-cyan-400" required />
-            <input type="tel" placeholder="Business phone number*" className="w-full rounded-lg border border-slate-300 bg-white/80 px-3 sm:px-4 py-2.5 sm:py-3 text-slate-900 placeholder-slate-400 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-cyan-400" required />
+          <div className="animate-rise rounded-card bg-h-surface p-6 text-h-text shadow-[0_40px_100px_-30px_rgba(223,151,112,.45)] [animation-delay:180ms] sm:p-8">
+            <form className="grid gap-4 sm:grid-cols-2">
+              {inputs.map(([type, placeholder], i) => (
+                <input
+                  key={placeholder}
+                  type={type}
+                  placeholder={placeholder}
+                  aria-label={placeholder}
+                  required
+                  className={`${field} ${i === inputs.length - 1 ? "sm:col-span-2" : ""}`}
+                />
+              ))}
+              <div className="relative sm:col-span-2">
+                <select
+                  required
+                  aria-label="What type of business are you"
+                  className={`${field} appearance-none pr-10`}
+                >
+                  <option value="">What type of business are you:</option>
+                  <option value="none">Marketing</option>
+                  <option value="weedmaps">Weedmaps only</option>
+                  <option value="leafly">Ecommerce</option>
+                  <option value="custom">Delivery</option>
+                  <option value="other">Other</option>
+                </select>
+                <svg
+                  className="pointer-events-none absolute right-3.5 top-1/2 size-4 -translate-y-1/2 text-h-muted"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+              <div className="sm:col-span-2">
+                <label htmlFor="business-description" className="mb-1.5 block text-[.9375rem] font-medium">
+                  Describe your business
+                </label>
+                <textarea
+                  id="business-description"
+                  name="business-description"
+                  rows={3}
+                  className={field}
+                  placeholder="Tell us a bit about your business..."
+                />
+              </div>
+              <button type="submit" className={`${ui.btnPrimary} sm:col-span-2`}>
+                Get My Branded Store
+              </button>
+            </form>
+            <p className="mt-4 text-[.8125rem] text-h-muted">
+              By submitting this form, you&apos;re agreeing to receive marketing communications from Bleaum. For information on our privacy practices and commitment to protecting your privacy, please review our{" "}
+              <Link href="/privacy" className="font-medium text-h-accent underline underline-offset-2">
+                privacy policies
+              </Link>
+              .
+            </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-            <input type="text" placeholder="Business name*" className="w-full rounded-lg border border-slate-300 bg-white/80 px-3 sm:px-4 py-2.5 sm:py-3 text-slate-900 placeholder-slate-400 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-cyan-400" required />
-            <input type="text" placeholder="Job title*" className="w-full rounded-lg border border-slate-300 bg-white/80 px-3 sm:px-4 py-2.5 sm:py-3 text-slate-900 placeholder-slate-400 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-cyan-400" required />
-          </div>
-          <input type="text" placeholder="Business website*" className="w-full rounded-lg border border-slate-300 bg-white/80 px-3 sm:px-4 py-2.5 sm:py-3 text-slate-900 placeholder-slate-400 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-cyan-400" required />
-          <div className="relative">
-            <select className="appearance-none w-full rounded-lg border border-slate-300 bg-white/80 px-3 sm:px-4 py-2.5 sm:py-3 text-slate-900 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-cyan-400 pr-10" required>
-              <option value="">What type of business are you:</option>
-              <option value="none">Marketing</option>
-              <option value="weedmaps">Weedmaps only</option>
-              <option value="leafly">Ecommerce</option>
-              <option value="custom">Delivery</option>
-              <option value="other">Other</option>
-            </select>
-            <label htmlFor="business-description" className="block mt-4 mb-1 text-white text-sm sm:text-base font-medium">Describe your business</label>
-            <textarea id="business-description" name="business-description" rows={3} className="appearance-none w-full rounded-lg border border-slate-300 bg-white/80 px-3 sm:px-4 py-2.5 sm:py-3 text-slate-900 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-cyan-400" placeholder="Tell us a bit about your business..." />
-            <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-slate-400">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-            </div>
-          </div>
-          <button type="submit" className="w-full mt-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-700 text-white font-bold py-3 sm:py-3.5 rounded-full text-base sm:text-lg transition-all duration-200 shadow-lg">Get My Branded Store</button>
-        </form>
-        <div className="px-2 sm:px-6 md:px-16 pb-6 sm:pb-8">
-          <p className="text-xs sm:text-sm text-slate-400 mt-3 sm:mt-4 max-w-2xl mx-auto text-center">
-            By submitting this form, you&apos;re agreeing to receive marketing communications from Bleaum. For information on our privacy practices and commitment to protecting your privacy, please review our <a href="/privacy" className="underline text-cyan-400 hover:text-blue-400">privacy policies</a>.
-          </p>
         </div>
       </section>
     </div>

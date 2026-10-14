@@ -41,6 +41,7 @@ export default async function BlogPage(props: PageProps) {
   const res = await getCompiledBlogForSlug(slug);
   if (!res) notFound();
   return (
+    <div className="flex flex-col items-start justify-center pt-8 pb-10 w-full mx-auto">
     <div className="lg:w-[60%] sm:[95%] md:[75%] mx-auto">
       <Link
         className={buttonVariants({
@@ -75,6 +76,7 @@ export default async function BlogPage(props: PageProps) {
         </div>
         <Typography>{res.content}</Typography>
       </div>
+    </div>
     </div>
   );
 }

@@ -1,20 +1,29 @@
 "use client"
 
 import dynamic from "next/dynamic"
-import { usePathname } from "next/navigation"
+import { usePathname, useSelectedLayoutSegment } from "next/navigation"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 
-// The Home page has its own header and footer (Phase-2 design). Every other page keeps the
+// Redesigned pages (Phase-2) have their own header and footer. Every other page keeps the
 // shared Navbar and Footer until it is redesigned too. Loaded lazily so other pages skip its CSS.
-// ponytail: path check, move to route groups when a second page gets the new chrome.
+// The 404 page renders at the missing URL, so it is matched by its layout segment instead of the path.
+// ponytail: path list, move to route groups when more pages get the new chrome.
 const HomeHeader = dynamic(() => import("@/components/home-chrome").then((m) => m.HomeHeader))
 const HomeFooter = dynamic(() => import("@/components/home-chrome").then((m) => m.HomeFooter))
 
+const NEW_PATHS = ["/", "/blog"]
+
+function useNewChrome() {
+  const path = usePathname()
+  const segment = useSelectedLayoutSegment()
+  return NEW_PATHS.includes(path) || segment === "/_not-found"
+}
+
 export function SiteHeader() {
-  return usePathname() === "/" ? <HomeHeader /> : <Navbar />
+  return useNewChrome() ? <HomeHeader /> : <Navbar />
 }
 
 export function SiteFooter() {
-  return usePathname() === "/" ? <HomeFooter /> : <Footer />
+  return useNewChrome() ? <HomeFooter /> : <Footer />
 }

@@ -1,6 +1,7 @@
 "use client"; // Error components must be Client Components
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Bloom } from "@/components/views/bloom";
+import * as ui from "@/components/views/home-ui";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -16,29 +17,32 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="min-h-[87vh] px-2 sm:py-28 py-36 flex flex-col gap-4 items-center">
-      <div className="text-center flex flex-col items-center justify-center w-fit gap-2">
-        <h2 className="text-7xl font-bold pr-1">Oops!</h2>
-        <p className="text-muted-foreground text-md font-medium">
-          Something went wrong {":`("}
-        </p>
-        <p>
-          We&apos;re sorry, but an error occurred while processing your request.
-        </p>
-      </div>
-      <div className="flex items-center gap-2">
-        <Button
-          onClick={
-            // Attempt to recover by trying to re-render the segment
-            () => reset()
-          }
-        >
-          Reload page
-        </Button>
-        <Link href="/" className={buttonVariants({})}>
-          Back to homepage
-        </Link>
-      </div>
+    <div data-page="error" className={ui.root}>
+      <section className={`relative overflow-hidden text-white ${ui.heroBg}`}>
+        <Bloom />
+        <div className={`${ui.wrap} relative py-hero`}>
+          <h1 className={`${ui.h1} animate-rise`}>Oops!</h1>
+          <p className="mt-4 animate-rise text-[1.25rem] font-medium text-copper-400 [animation-delay:90ms]">
+            Something went wrong {":`("}
+          </p>
+          <p className="mt-2 max-w-[44ch] animate-rise text-[1.25rem] leading-[1.5] text-fog-200 [animation-delay:180ms]">
+            We&apos;re sorry, but an error occurred while processing your request.
+          </p>
+          <div className={`${ui.actions} mt-8 animate-rise [animation-delay:270ms]`}>
+            <button
+              type="button"
+              // Attempt to recover by trying to re-render the segment
+              onClick={() => reset()}
+              className={`${ui.btnCopper} ${ui.stack}`}
+            >
+              Reload page
+            </button>
+            <Link href="/" className={`${ui.btnGhost} ${ui.stack}`}>
+              Back to homepage
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

@@ -29,8 +29,9 @@ function MenuLinks({ links }: { links: MenuLink[] }) {
 
 function Brand() {
   return (
-    <Link className="flex items-center" href="/" aria-label="Bleaum home">
-      <Image src="/brand/bleaum-lockup-on-dark.svg" alt="Bleaum" width={108} height={40} className="h-10 w-auto" priority />
+    <Link className="flex items-center gap-1 text-white" href="/" aria-label="Bleaum home">
+      <Image src="/brand/bleaum-dots.svg" alt="" width={30} height={30} className="size-[30px]" priority />
+      <span className="-mt-1 font-display text-2xl font-normal leading-none tracking-[.02em]">bleaum</span>
     </Link>
   )
 }
