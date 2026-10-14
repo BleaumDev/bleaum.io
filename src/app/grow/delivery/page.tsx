@@ -18,6 +18,14 @@ import {
   ArrowRightIcon,
   SparklesIcon,
 } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Delivery",
+  description:
+    "Route planning, a connected driver app, live tracking and ID and signature checks for retail delivery.",
+};
+
 
 interface FeatureCardProps {
   icon: React.ReactNode;
@@ -127,10 +135,10 @@ export default function DeliveryPage() {
           <FeatureCard
             icon={<PackageIcon className="w-6 h-6 sm:w-8 sm:h-8" />}
             title="Inventory on Wheels—No More Guesswork"
-            description="Track every gram, every stop, every time. Compliance is built in."
+            description="Track every item, every stop, every time. Compliance is built in."
             features={[
               "Real-time inventory syncing with POS",
-              "Vehicle-specific limits and compliance caps",
+              "Vehicle load limits and compliance rules",
               "Automated return-to-store workflows",
               "Full traceability from pack to delivery"
             ]}

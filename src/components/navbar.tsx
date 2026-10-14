@@ -33,7 +33,7 @@ declare global {
 export const NAVLINKS: NavItem[] = [
   {
     title: "Product",
-    href: "/product",
+    href: "/grow/point-of-sale",
     children: [
       {
         title: "Grow your business",
@@ -51,7 +51,7 @@ export const NAVLINKS: NavItem[] = [
         href: "#",
         children: [
           { title: "Reporting & Analytics", href: "/operations/reporting-analytics", description: "Unified, customizable reporting & insights", icon: BarChart2Icon },
-          { title: "Automated Compliance", href: "/operations/automated-compilance", description: "Tools for retailers&apos; intense regulatory needs", icon: ShieldCheckIcon },
+          { title: "Automated Compliance", href: "/operations/automated-compliance", description: "Tools for retailers&apos; intense regulatory needs", icon: ShieldCheckIcon },
           { title: "Inventory Management", href: "/operations/inventory-management", description: "Optimize spend, inventory levels, & minimize waste", icon: BoxesIcon },
           { title: "Integrations and Partnerships", href: "/operations/integrations", description: "Integration partners that help you run your business better", icon: PlugIcon },
           
@@ -76,12 +76,11 @@ export const NAVLINKS: NavItem[] = [
   */
   {
     title: "Resources",
-    href: "/resources",
+    href: "/blog",
     children: [
       { title: "Blog", href: "/blog", description: "Insights, news, and updates", icon: GlobeIcon },
       { title: "SOPs", href: "/resources/sops", description: "Standard operating procedures", icon: BookOpenIcon },
-      { title: "State Laws", href: "/resources/state-laws", description: "Cannabis regulations by state", icon: LandmarkIcon },
-      { title: "Industries", href: "/resources/Industries", description: "Industries we serve", icon: Building2Icon },
+      { title: "Industries", href: "/resources/industries", description: "Industries we serve", icon: Building2Icon },
 
 
       { title: "Refer", href: "/resources/refer", description: "Refer a business and earn rewards", icon: UsersIcon },
@@ -89,11 +88,10 @@ export const NAVLINKS: NavItem[] = [
   },
   {
     title: "Company",
-    href: "/company",
+    href: "/company/about",
     children: [
       { title: "About", href: "/company/about", description: "Learn more about us", icon: InfoIcon },
-      { title: "Careers", href: "/company/careers", description: "Join our team", icon: BriefcaseIcon },
-      { title: "Support", href: "/company/support", description: "Contact our support team", icon: LifeBuoyIcon },
+      { title: "Support", href: "/support", description: "Contact our support team", icon: LifeBuoyIcon },
     ],
   },
   // {

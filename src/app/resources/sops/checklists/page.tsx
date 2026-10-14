@@ -1,4 +1,12 @@
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "SOP Checklists",
+  description:
+    "Downloadable standard operating procedure checklists for your store operations.",
+};
+
 
 export default function SopsChecklistsPage() {
   return (

@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Bleaum",
     short_name: "Bleaum",
     description:
-      "Empowering businesses with innovative solutions for growth and success.",
+      "Bleaum is your business in a box: POS, invoicing, inventory, ordering, delivery and AI on one real-time platform.",
     start_url: "/",
     display: "standalone",
     background_color: "#020917",

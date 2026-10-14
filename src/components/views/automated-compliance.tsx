@@ -34,7 +34,7 @@ export default function CompliancePage() {
           </h1>
           <p className="text-base sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-3 sm:mb-4 px-1">
             Compliance that runs in the background — so you can focus on growing your retail.<br />
-            Bleaum's integrated compliance engine adapts to your state's specific cannabis regulations, automatically tracking inventory, sales, and reporting so you're always on the right side of the law.
+            Bleaum's integrated compliance engine adapts to your state's specific regulations, automatically tracking inventory, sales, and reporting to help you stay on the right side of the law.
           </p>
           <p className="text-sm sm:text-lg font-semibold text-cyan-300 mb-6 sm:mb-8">Seamless, stress-free compliance across your entire operation.</p>
           <div className="flex justify-center w-full">
@@ -62,25 +62,25 @@ export default function CompliancePage() {
           {/* Feature Card */}
           {[
             {
-              icon: <Brain className="w-7 h-7 text-white" />, title: "Intelligent Compliance That Works for You", desc: "Bleaum's engine adapts to your state's rules, so you're always compliant—automatically.", list: null
+              icon: <Brain className="w-7 h-7 text-white" />, title: "Intelligent Compliance That Works for You", desc: "Bleaum's engine adapts to your state's rules to help you stay compliant—automatically.", list: null
             },
             {
               icon: <Cog className="w-7 h-7 text-white" />, title: "Automated Traceability & Reporting", desc: null, list: [
-                "Every sale, every movement — automatically tracked and reported to state systems like Metrc, BioTrack, and others.",
+                "Every sale, every movement — automatically tracked and reported to the state tracking systems you are required to use.",
                 "Real-time syncing, batch-mode reconciliation, outage recovery, audit logs, and discrepancy detection."
               ]
             },
             {
               icon: <ClipboardList className="w-7 h-7 text-white" />, title: "SOP & Limit Management", desc: null, list: [
                 "Define and enforce SOPs for daily operations",
-                "Automatically adjust purchase limits for each customer—medical or recreational",
+                "Automatically enforce per-customer purchase limits where required",
                 "Dynamic limit enforcement, instant flagging, and clear reporting for regulators"
               ]
             },
             {
               icon: <AlertOctagon className="w-7 h-7 text-white" />, title: "Pre-Audit Safeguards", desc: null, list: [
                 "Automated audit system identifies red flags before regulators show up",
-                "Pre-emptive compliance alerts, auto-checks for zeroed out packages, Metrc sync issues, and full audit trail"
+                "Pre-emptive compliance alerts, auto-checks for inventory discrepancies and sync issues, and full audit trail"
               ]
             },
             {
@@ -91,13 +91,12 @@ export default function CompliancePage() {
             },
             {
               icon: <Puzzle className="w-7 h-7 text-white" />, title: "Full Traceability Integrations", desc: null, list: [
-                "Metrc, BioTrack, or custom-trace state support",
+                "Support for state tracking systems and custom traceability",
                 "Two-way sync, intelligent reconciliation, reduce check-in times, sync thousands of items, built to scale"
               ]
             },
             {
               icon: <ShieldCheck className="w-7 h-7 text-white" />, title: "Security You Can Trust", desc: null, list: [
-                "HIPAA-ready architecture to protect customer data",
                 "End-to-end encryption across all systems"
               ]
             }
@@ -131,7 +130,7 @@ export default function CompliancePage() {
         <div className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl sm:rounded-3xl md:rounded-[2rem] shadow-2xl text-white text-center px-2 sm:px-10 py-8 sm:py-14 flex flex-col items-center justify-center">
           <BarChart3 className="w-10 h-10 sm:w-14 sm:h-14 md:w-20 md:h-20 text-white mx-auto mb-4 sm:mb-6" />
           <h2 className="text-xl sm:text-3xl md:text-5xl font-extrabold mb-4 sm:mb-6">Let Compliance Be the Last Thing You Worry About</h2>
-          <p className="text-sm sm:text-lg md:text-2xl font-medium text-white mb-6 sm:mb-10 max-w-2xl mx-auto">Bleaum keeps your retail compliant, automatically No more spreadsheets. No more late-night syncs. No more fines.</p>
+          <p className="text-sm sm:text-lg md:text-2xl font-medium text-white mb-6 sm:mb-10 max-w-2xl mx-auto">Bleaum helps keep your retail compliant, automatically. No more spreadsheets. No more late-night syncs. Fewer surprises.</p>
           <div className="flex justify-center w-full mt-2">
             <Link href="/demo">
               <button className="bg-white text-blue-600 font-bold text-base sm:text-lg md:text-xl px-6 sm:px-10 md:px-14 py-3 sm:py-4 rounded-full shadow-lg hover:bg-blue-100 transition-all inline-flex items-center justify-center gap-2 w-full max-w-xs sm:max-w-md">

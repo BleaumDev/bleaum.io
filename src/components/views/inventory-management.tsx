@@ -42,28 +42,28 @@ export default function InventoryManagementPage() {
       title: "Live Inventory Audits",
       description: "Count while you sell. No more after-hours marathons or surprise variances.",
       icon: <ZapIcon className="w-12 h-12 text-blue-400" />,
-      quote: "We went from 4-hour closing counts to 20-minute midday audits.",
+      quote: "We went from long closing counts to quick midday audits.",
       features: ["Audit during business hours", "Blind counts with manager approval", "Instant variance alerts", "Full compliance logging"],
       highlight: "Real-Time",
-      stats: "Save 3+ hours per audit"
+      stats: "Faster audits"
     },
     {
       title: "Smart Compliance Sync",
-      description: "One-click Metrc acceptance, auto-sync with BioTrack. Compliance without the headache.",
+      description: "One-click package acceptance, auto-sync with state systems. Compliance without the headache.",
       icon: <ShieldCheckIcon className="w-12 h-12 text-blue-400" />,
-      quote: "Audit prep went from days to literally 10 minutes.",
-      features: ["One-click package acceptance", "Two-way compliance syncing", "Automatic overage alerts", "Seed-to-sale tracking"],
+      quote: "Audit prep is so much faster now.",
+      features: ["One-click package acceptance", "Two-way compliance syncing", "Automatic overage alerts", "Full traceability"],
       highlight: "Automated",
-      stats: "99.9% compliance rate"
+      stats: "Automated sync"
     },
     {
       title: "Multi-Location Command Center",
       description: "See everything, everywhere. Transfer between stores, sync online, control it all.",
       icon: <Building2 className="w-12 h-12 text-blue-400" />,
-      quote: "I can manage 6 locations and Move 100 items easily",
+      quote: "I can manage 6 locations and move 100 items easily.",
       features: ["Centralized inventory control", "Cross-store transfers", "Location-specific pricing", "Unified reporting"],
       highlight: "Enterprise",
-      stats: "Unlimited locations"
+      stats: "Multi-location control"
     },
     {
       title: "Bulk Operations That Actually Work",
@@ -72,7 +72,7 @@ export default function InventoryManagementPage() {
       quote: "Bulk actions saved us hours every single week.",
       features: ["Bulk move, adjust, relabel", "Instant compliant labels", "Mass product updates", "Scheduled operations"],
       highlight: "Efficient",
-      stats: "10x faster operations"
+      stats: "Faster operations"
     }
   ];
 
@@ -104,8 +104,7 @@ export default function InventoryManagementPage() {
   ];
 
   const complianceFeatures = [
-    "METRC integration",
-    "BioTrack sync",
+    "State system sync",
     "Custom compliance rules",
     "Audit trail logging"
   ];
@@ -341,8 +340,8 @@ export default function InventoryManagementPage() {
           {[
             { label: "Live Stock Levels", value: "Real-time", icon: <Eye className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" /> },
             { label: "Variance Alerts", value: "Instant", icon: <AlertCircleIcon className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400" /> },
-            { label: "Compliance Status", value: "99.9%", icon: <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" /> },
-            { label: "Audit Ready", value: "Always", icon: <CheckSquare className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" /> }
+            { label: "State Sync", value: "Automated", icon: <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" /> },
+            { label: "Audit Ready", value: "Built in", icon: <CheckSquare className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" /> }
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -389,14 +388,7 @@ export default function InventoryManagementPage() {
               author: "Perry Jones, Tulsa, Oklahoma",
               // role: "Operations Manager",
               company: "Centered by Design",
-              metric: "75% time saved"
-            },
-            {
-              quote: "The compliance features alone are worth it. We haven't had a single violation since switching.",
-              author: "Andrew H. , Ontario, Canada",
-              // role: "Owner", 
-              company: "Go Green",
-              metric: "100% compliant"
+              metric: "Time saved"
             },
             {
               quote: "Multi-location management finally makes sense. I can see everything from anywhere.",
@@ -440,7 +432,7 @@ export default function InventoryManagementPage() {
         Ready for Inventory That Works?
         </h2>
         <p className="text-base sm:text-lg mb-6 sm:mb-10 leading-relaxed max-w-2xl mx-auto">
-        Join hundreds of operators who've said goodbye to late-night counts and compliance stress. See why they call it "the best inventory system in cannabis."
+        Join 300+ retailers who've said goodbye to late-night counts and compliance stress.
         </p>
         <Link href="/demo">
           <button className={buttonVariants({ 

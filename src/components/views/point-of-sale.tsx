@@ -43,22 +43,22 @@ export default function BleaumPOSPage() {
   const posFeatures = [
     {
       title: "Lightning-Fast Checkout",
-      description: "30-second transactions, even during peak hours. Your budtenders will thank you, and so will your customers.",
+      description: "Fast transactions, even during peak hours. Your team will thank you, and so will your customers.",
       icon: <ZapIcon className="w-12 h-12 text-blue-400" />,
-      quote: "Lines move 3x faster now. Customers are happier, staff is less stressed.",
-      features: ["30-second average checkout", "One-tap item selection", "Smart suggested add-ons", "Instant receipt options"],
+      quote: "Lines move faster now. Customers are happier, staff is less stressed.",
+      features: ["Fast average checkout", "One-tap item selection", "Smart suggested add-ons", "Instant receipt options"],
       highlight: "Speed Demon",
-      stats: "3x faster checkouts",
+      stats: "Faster checkouts",
       category: "front"
     },
     {
       title: "Smart Customer Intelligence",
       description: "Know your customers before they speak. See purchase history, preferences, and loyalty status instantly.",
       icon: <Brain className="w-12 h-12 text-blue-400" />,
-      quote: "I actually know what to recommend now. Sales are up 25%.",
+      quote: "I actually know what to recommend now.",
       features: ["Purchase history at a glance", "Preference tracking", "Loyalty status display", "Smart upsell suggestions"],
       highlight: "AI-Powered",
-      stats: "25% higher sales",
+      stats: "Smarter upsells",
       category: "front"
     },
     {
@@ -68,17 +68,17 @@ export default function BleaumPOSPage() {
       quote: "I know my hourly sales, top products, and staff performance live.",
       features: ["Live sales dashboards", "Real-time inventory levels", "Performance metrics", "Instant reporting"],
       highlight: "Live Data",
-      stats: "100% real-time",
+      stats: "Real-time",
       category: "back"
     },
     {
-      title: "Bulletproof Compliance",
-      description: "METRC and BioTrack sync, audit trails, and compliance alerts happen automatically—so you can sleep easy during inspections.",
+      title: "Built-In Compliance",
+      description: "State reporting sync, audit trails, and compliance alerts happen automatically—so you can sleep easy during inspections.",
       icon: <ShieldCheckIcon className="w-12 h-12 text-blue-400" />,
-      quote: "Passed our state audit with zero issues. The inspector was impressed.",
-      features: ["Automatic METRC sync", "Complete audit trails", "Compliance alerts", "Error prevention"],
+      quote: "Audit prep is so much easier. Everything is logged and ready.",
+      features: ["Automatic state reporting sync", "Complete audit trails", "Compliance alerts", "Error prevention"],
       highlight: "Audit-Ready",
-      stats: "99.9% compliant",
+      stats: "Audit-ready",
       category: "back"
     }
   ];
@@ -86,7 +86,7 @@ export default function BleaumPOSPage() {
   const painPoints = [
     {
       problem: "Slow, clunky checkout",
-      solution: "30-second transactions",
+      solution: "Fast transactions",
       icon: <Timer className="w-8 h-8 text-blue-400" />,
       impact: "Happy customers, faster turnover"
     },
@@ -98,38 +98,15 @@ export default function BleaumPOSPage() {
     },
     {
       problem: "Compliance anxiety",
-      solution: "Automatic METRC sync",
+      solution: "Automatic state reporting sync",
       icon: <Shield className="w-8 h-8 text-blue-400" />,
-      impact: "Audit-ready, always"
+      impact: "Audit-ready tools built in"
     },
     {
       problem: "Support black holes",
       solution: "Real humans, real answers",
       icon: <Headphones className="w-8 h-8 text-blue-400" />,
       impact: "Problems solved, not escalated"
-    }
-  ];
-
-  const businessMetrics = [
-    {
-      metric: "30 sec",
-      description: "Average checkout time",
-      icon: <Clock className="w-8 h-8 text-blue-400" />
-    },
-    {
-      metric: "1 shift",
-      description: "New hire training time",
-      icon: <Users className="w-8 h-8 text-green-400" />
-    },
-    {
-      metric: "99.9%",
-      description: "Compliance success rate",
-      icon: <Shield className="w-8 h-8 text-purple-400" />
-    },
-    {
-      metric: "24/7",
-      description: "Human support availability",
-      icon: <Headphones className="w-8 h-8 text-yellow-400" />
     }
   ];
 
@@ -168,7 +145,7 @@ export default function BleaumPOSPage() {
           The POS that actually gets it
       </h1>
         <p className="text-base sm:text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-6 sm:mb-8">
-        Built by operators, for operators—whether you run a any high-stakes retail. Fast checkout, easy training, and rock-solid compliance—without the headaches.
+        Built by operators, for operators—whether you run any high-stakes retail operation. Fast checkout, easy training, and rock-solid compliance—without the headaches.
         </p>
 
         {/* Pain Point Solutions */}
@@ -241,39 +218,6 @@ export default function BleaumPOSPage() {
             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </motion.button>
       </Link>
-      </motion.section>
-
-      {/* Business Metrics */}
-      <motion.section 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="w-full max-w-6xl mx-auto mb-20 p-10 bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-blue-500/10 backdrop-filter backdrop-blur-lg rounded-3xl shadow-2xl border border-white/10 relative z-10"
-      >
-        <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Numbers That Matter</h2>
-          <p className="text-xl text-gray-300">Real metrics from real Retailers</p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {businessMetrics.map((metric, index) => (
-            <motion.div
-              key={metric.metric}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="text-center p-6 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors duration-300 group"
-            >
-              <div className="flex justify-center mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                {metric.icon}
-              </div>
-              <div className="text-3xl font-bold text-white mb-2">{metric.metric}</div>
-              <div className="text-gray-400">{metric.description}</div>
-            </motion.div>
-          ))}
-        </div>
       </motion.section>
 
       {/* Enhanced Features Grid */}
@@ -380,7 +324,7 @@ export default function BleaumPOSPage() {
           {[
             {
               title: "Real Retail Experience",
-              description: "Our support team has actually worked in retailers",
+              description: "Our support team has actually worked in retail",
               icon: <Users className="w-8 h-8 text-green-400" />
             },
             {
@@ -432,7 +376,7 @@ export default function BleaumPOSPage() {
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
           {[
-            { name: "METRC Sync", icon: <ShieldCheckIcon className="w-6 h-6 text-green-400" /> },
+            { name: "State Reporting Sync", icon: <ShieldCheckIcon className="w-6 h-6 text-green-400" /> },
             { name: "Delivery Tracking", icon: <Package className="w-6 h-6 text-blue-400" /> },
             { name: "Loyalty Programs", icon: <Heart className="w-6 h-6 text-pink-400" /> },
             { name: "Live Analytics", icon: <BarChart2Icon className="w-6 h-6 text-purple-400" /> },
@@ -475,11 +419,11 @@ export default function BleaumPOSPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
-              quote: "Training went from days to hours. New budtenders are confident on day one.",
+              quote: "Training went from days to hours. New staff are confident on day one.",
               author: "Andrew H.",
               // role: "Training Manager",
               company: "Go Green",
-              metric: "90% faster training",
+              metric: "Faster training",
               color: "blue"
             },
             {
@@ -487,7 +431,7 @@ export default function BleaumPOSPage() {
               author: "Perry Jones",
               // role: "Store Manager", 
               company: "Centered by Design",
-              metric: "3x faster checkout",
+              metric: "Faster checkout",
               color: "blue"
             },
             {
@@ -495,7 +439,7 @@ export default function BleaumPOSPage() {
               author: "AJ",
               // role: "Compliance Officer",
               company: "Happy Root",
-              metric: "Zero violations",
+              metric: "Audit-ready",
               color: "blue"
             },
             // {

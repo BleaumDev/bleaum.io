@@ -3,7 +3,7 @@
 import Link from "next/link"
 import {
   BriefcaseBusinessIcon,
-  LeafIcon,
+  ShieldCheckIcon,
   LightbulbIcon,
   UsersIcon,
   SparklesIcon,
@@ -14,6 +14,14 @@ import {
   Building2,
   Award,
 } from "lucide-react"
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Bleaum builds an all-in-one platform for retailers, from point of sale and inventory to delivery and payments.",
+};
+
 
 export default function AboutPage() {
   return (
@@ -63,14 +71,10 @@ export default function AboutPage() {
             </div>
 
             {/* Key metrics */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 max-w-2xl mx-auto">
               <div className="text-center bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10">
                 <div className="text-2xl sm:text-3xl font-bold text-cyan-400 mb-1 sm:mb-2">300+</div>
                 <div className="text-slate-300 font-medium text-xs sm:text-base">Trusted Retailers</div>
-              </div>
-              <div className="text-center bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10">
-                <div className="text-2xl sm:text-3xl font-bold text-blue-400 mb-1 sm:mb-2">50%</div>
-                <div className="text-slate-300 font-medium text-xs sm:text-base">Time Savings</div>
               </div>
               <div className="text-center bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10">
                 <div className="text-2xl sm:text-3xl font-bold text-green-400 mb-1 sm:mb-2">24/7</div>
@@ -115,17 +119,13 @@ export default function AboutPage() {
                 <h3 className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-slate-100">Today</h3>
               </div>
               <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-2 sm:mb-4 text-sm sm:text-base">
-                Today, Bleaum is trusted by over 300+ retailers across the US. We help teams save hours every week,
+                Today, Bleaum is trusted by over 300 retailers across the US. We help teams save hours every week,
                 reduce costly mistakes, and focus on what matters: growing their business and serving their communities.
               </p>
               <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
                 <div className="flex items-center gap-1 sm:gap-2">
                   <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                   <span>300+ Retailers</span>
-                </div>
-                <div className="flex items-center gap-1 sm:gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span>Hours Saved Weekly</span>
                 </div>
               </div>
             </div>
@@ -162,16 +162,16 @@ export default function AboutPage() {
             </p>
           </div>
 
-          {/* Built for Cannabis */}
+          {/* Built for regulated retail */}
           <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-8 shadow-lg border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-shadow duration-300 md:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2 sm:gap-4 mb-3 sm:mb-6">
               <div className="p-2 sm:p-3 bg-green-100 dark:bg-green-900/30 rounded-xl">
-                <LeafIcon className="w-6 h-6 sm:w-8 sm:h-8 text-green-600" />
+                <ShieldCheckIcon className="w-6 h-6 sm:w-8 sm:h-8 text-green-600" />
               </div>
-              <h3 className="text-base sm:text-xl font-bold text-slate-900 dark:text-slate-100">Built for Cannabis</h3>
+              <h3 className="text-base sm:text-xl font-bold text-slate-900 dark:text-slate-100">Built for regulated retail</h3>
             </div>
             <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-sm sm:text-base">
-            We got our start in cannabis retail, where compliance, efficiency, and precision are everything. That foundation taught us how to solve real operational challenges — fast. Today, our platform supports a wide range of highly regulated and fast-moving industries, including cannabis, wellness, retail, and more. If your business demands clarity, control, and compliance, Bleaum was built for you.
+            We got our start in regulated retail, where compliance, efficiency, and precision are everything. That foundation taught us how to solve real operational challenges — fast. Today our platform supports a wide range of regulated and fast-moving industries. If your business demands clarity, control, and compliance, Bleaum was built for you.
             </p>
           </div>
         </div>
@@ -247,7 +247,7 @@ export default function AboutPage() {
           <div className="bg-white dark:bg-slate-800 rounded-2xl sm:rounded-3xl p-6 sm:p-12 shadow-xl border border-slate-200 dark:border-slate-700">
             <h3 className="text-xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2 sm:mb-4">Ready to Get Started?</h3>
             <p className="text-base sm:text-xl text-slate-600 dark:text-slate-400 mb-4 sm:mb-8 max-w-2xl mx-auto">
-              Join over 300+ retailers who trust Bleaum to streamline their operations and grow their business.
+              Join over 300 retailers who trust Bleaum to streamline their operations and grow their business.
             </p>
             <Link href="/demo">
               <button className="group bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold px-6 sm:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-base sm:text-lg">

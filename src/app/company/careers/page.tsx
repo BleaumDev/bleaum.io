@@ -1,4 +1,12 @@
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Careers",
+  description:
+    "Join the Bleaum team. Roles will be posted here.",
+};
+
 
 export default function CareersPage() {
   return (

@@ -25,7 +25,6 @@ const NAVBAR_LINKS = [
     links: [
       { title: "Blog", href: "/resources/blog" },
       { title: "SOPs", href: "/resources/sops" },
-      { title: "State Laws", href: "/resources/state-laws" },
       { title: "Refer", href: "/resources/refer" },
     ],
   },
@@ -33,8 +32,7 @@ const NAVBAR_LINKS = [
     title: "Company",
     links: [
       { title: "About", href: "/company/about" },
-      { title: "Careers", href: "/company/careers" },
-      { title: "Support", href: "/company/support" },
+      { title: "Support", href: "/support" },
     ],
   },
   // {
@@ -77,7 +75,7 @@ export function Footer() {
               />
             </div>
             <p className="text-white/70 text-sm mb-6 max-w-sm leading-relaxed">
-              Empowering businesses with innovative solutions for growth and success.
+              Your business in a box.
             </p>
             <div className="flex space-x-5">
               {socialLinks.map((social) => (

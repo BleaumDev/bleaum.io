@@ -19,13 +19,20 @@ import {
   CalendarIcon,
   SettingsIcon,
   LinkIcon,
-  LeafIcon,
   TruckIcon,
   ShoppingBagIcon,
   BriefcaseIcon,
   BanknoteIcon,
   QrCodeIcon,
 } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Payments",
+  description:
+    "Bleaum Pay brings card terminals, pay-by-bank, QR wallet and online payments into your POS and ecommerce.",
+};
+
 
 interface FeatureCardProps {
   icon: React.ReactNode;
@@ -85,7 +92,7 @@ export default function PaymentsPage() {
           <div className="max-w-3xl mx-auto mb-4 sm:mb-8 px-2 sm:px-4">
             <h2 className="text-base sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-4 text-cyan-300">One Payment Platform. Every Business. Fully Covered</h2>
             <div className="max-w-2xl mx-auto mb-6 p-3 sm:p-6 bg-slate-800/30 rounded-2xl sm:rounded-3xl border border-slate-700/50">
-              <p className="text-white italic text-sm sm:text-lg mb-2 sm:mb-3">"From high-compliance verticals like cannabis and hemp to everyday retail, wellness, and service industries — Bleaum Pay delivers a complete suite of payment solutions that adapt to your business model, risk profile, and customer expectations."</p>
+              <p className="text-white italic text-sm sm:text-lg mb-2 sm:mb-3">"From regulated retail to everyday retail, wellness, and services — Bleaum Pay delivers a complete suite of payment solutions that adapt to your business model, risk profile, and customer expectations."</p>
               <p className="text-xs sm:text-sm text-slate-400">— Collin, Park Social</p>
             </div>
           </div>
@@ -98,8 +105,8 @@ export default function PaymentsPage() {
             title="No Cash, No Problem"
             description="Let your customers pay how they want—right from their bank, online or in-store. No more fumbling for cash, no more awkward 'cash only' signs."
             features={[
-              "100% secure",
-              "Fully compliant", 
+              "End-to-end encrypted",
+              "Built for regulated retail",
               "Ready to use—no extra hardware, no downloads"
             ]}
             gradient="from-purple-500 to-pink-500"
@@ -109,7 +116,6 @@ export default function PaymentsPage() {
             icon={<TrendingUpIcon className="w-6 h-6 sm:w-8 sm:h-8" />}
             title="Bigger Orders, Happier Customers"
             features={[
-              "Stores using cashless payments see 25–30% higher order values",
               "Repeat customers come back faster with easy checkout",
               "More loyalty, less friction—at the counter and online"
             ]}
@@ -146,7 +152,7 @@ export default function PaymentsPage() {
             icon={<LockIcon className="w-6 h-6 sm:w-8 sm:h-8" />}
             title="Safe, Streamlined & Smart"
             features={[
-              "<b>Security First:</b> End-to-end encrypted payments, built for cannabis regulations",
+              "<b>Security First:</b> End-to-end encrypted payments, built for regulated retail",
               "<b>Efficiency Built-In:</b> Linked directly to your POS and Bleaum Ecommerce—no data entry, no syncing headaches",
               "<b>Completely Integrated:</b> Manage everything in one place: inventory, orders, payments, and customers"
             ]}
@@ -160,34 +166,18 @@ export default function PaymentsPage() {
             <h2 className="text-lg sm:text-2xl font-bold mb-6 sm:mb-8 text-white flex items-center justify-center gap-2">
               <ShieldCheckIcon className="w-6 h-6 sm:w-7 sm:h-7 text-cyan-400" /> Industries We Serve
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-8 max-w-4xl mx-auto mb-6 sm:mb-8">
+            <div className="max-w-md mx-auto mb-6 sm:mb-8">
               <div className="bg-slate-900/40 rounded-xl p-4 sm:p-6 flex flex-col items-center shadow-md border border-slate-700/40">
-                <ShieldCheckIcon className="w-6 h-6 sm:w-8 sm:h-8 text-cyan-400 mb-1 sm:mb-2" />
-                <h3 className="text-base sm:text-lg font-semibold text-cyan-300 mb-2 sm:mb-3">Regulated Verticals</h3>
                 <ul className="list-none text-slate-200 space-y-1 sm:space-y-2 text-sm sm:text-base">
-                  <li className="flex items-center gap-1.5 sm:gap-2"><UserIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Cannabis Retail</li>
-                  <li className="flex items-center gap-1.5 sm:gap-2"><LeafIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />CBD and Hemp</li>
-                  <li className="flex items-center gap-1.5 sm:gap-2"><ZapIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Liqour Stores</li>
-                  <li className="flex items-center gap-1.5 sm:gap-2"><ShoppingBagIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Pharmaceutical Outlets</li>
-                  {/* <li className="flex items-center gap-1.5 sm:gap-2"><TruckIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Convenience Stores</li> */}
-                  {/* <li className="flex items-center gap-1.5 sm:gap-2"><BarChart2Icon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Electronics</li> */}
-                </ul>
-              </div>
-              <div className="bg-slate-900/40 rounded-xl p-4 sm:p-6 flex flex-col items-center shadow-md border border-slate-700/40">
-                <ShoppingCartIcon className="w-6 h-6 sm:w-8 sm:h-8 text-cyan-400 mb-1 sm:mb-2" />
-                <h3 className="text-base sm:text-lg font-semibold text-cyan-300 mb-2 sm:mb-3">Non-Regulated Verticals</h3>
-                <ul className="list-none text-slate-200 space-y-1 sm:space-y-2 text-sm sm:text-base">
-                  {/* <li className="flex items-center gap-1.5 sm:gap-2"><ShoppingCartIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Retail (Apparel,Electronics, etc.)</li> */}
-                  {/* <li className="flex items-center gap-1.5 sm:gap-2"><HeartIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Wellness & Fitness Studios</li> */}
-                  {/* <li className="flex items-center gap-1.5 sm:gap-2"><UserIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Beauty Salons, Barbershops, Spas</li> */}
-                  {/* <li className="flex items-center gap-1.5 sm:gap-2"><SmileIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Food & Beverage</li> */}
-                  <li className="flex items-center gap-1.5 sm:gap-2"><CalendarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Event Services</li>
-                  <li className="flex items-center gap-1.5 sm:gap-2"><BarChart2Icon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Digital & Professional Services</li>
+                  <li className="flex items-center gap-1.5 sm:gap-2"><ShoppingCartIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Retail</li>
+                  <li className="flex items-center gap-1.5 sm:gap-2"><HeartIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Wellness</li>
+                  <li className="flex items-center gap-1.5 sm:gap-2"><CalendarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Events</li>
+                  <li className="flex items-center gap-1.5 sm:gap-2"><BarChart2Icon className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />Professional Services</li>
                 </ul>
               </div>
             </div>
             <p className="text-slate-300 text-base max-w-2xl mx-auto">
-              Whether you're navigating compliance or scaling fast in a low-risk category, Bleaum Pay has the tech, rails, and experience to support you.
+              Whether you're navigating compliance or scaling fast, Bleaum Pay has the tech, rails, and experience to support you.
             </p>
           </div>
         </div>
@@ -216,8 +206,8 @@ export default function PaymentsPage() {
               </div>
               <div className="bg-slate-900/40 rounded-xl p-5 flex flex-col items-center border border-slate-700/40 shadow-sm">
                 <DollarSignIcon className="w-7 h-7 text-cyan-400 mb-2" />
-                <div className="font-bold text-white mb-1">No Hidden Fees</div>
-                <div className="text-slate-300 text-sm">Transparent pricing, no long-term contracts</div>
+                <div className="font-bold text-white mb-1">Clear Pricing</div>
+                <div className="text-slate-300 text-sm">Pricing explained up front</div>
               </div>
               <div className="bg-slate-900/40 rounded-xl p-5 flex flex-col items-center border border-slate-700/40 shadow-sm">
                 <BarChart2Icon className="w-7 h-7 text-cyan-400 mb-2" />
@@ -249,19 +239,7 @@ export default function PaymentsPage() {
                 <div className="text-slate-300 text-xs sm:text-sm mb-2">In-store swipe, chip, tap payments</div>
                 <div className="text-blue-200 text-xs sm:text-sm mb-1 font-semibold">How It Works</div>
                 <div className="text-slate-400 text-xs mb-2">Accept all 4 card types via secure hardware</div>
-                <div className="text-cyan-300 text-xs font-semibold">Best for: Retail, Wellness, Cannabis (where allowed)</div>
-              </div>
-              {/* Cashless ATM (POB) */}
-              <div className="group relative p-4 sm:p-8 bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-slate-700/50 hover:bg-slate-900/60 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105 flex flex-col items-center text-center">
-                <div className="inline-flex p-3 sm:p-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <DollarSignIcon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-                </div>
-                <div className="font-bold text-base sm:text-lg text-white mb-1">Cashless ATM (POB)</div>
-                <div className="text-blue-200 text-xs sm:text-sm mb-1 font-semibold">Use Case</div>
-                <div className="text-slate-300 text-xs sm:text-sm mb-2">PIN debit workaround for restricted industries</div>
-                <div className="text-blue-200 text-xs sm:text-sm mb-1 font-semibold">How It Works</div>
-                <div className="text-slate-400 text-xs mb-2">Customer enters PIN to "withdraw" exact amount</div>
-                <div className="text-cyan-300 text-xs font-semibold">Best for: Cannabis retailers</div>
+                <div className="text-cyan-300 text-xs font-semibold">Best for: Retail, Wellness, Regulated Retail</div>
               </div>
               {/* Virtual ACH / Pay-by-Bank */}
               <div className="group relative p-4 sm:p-8 bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-slate-700/50 hover:bg-slate-900/60 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105 flex flex-col items-center text-center">
@@ -272,7 +250,7 @@ export default function PaymentsPage() {
                 <div className="text-blue-200 text-xs sm:text-sm mb-1 font-semibold">Use Case</div>
                 <div className="text-slate-300 text-xs sm:text-sm mb-2">Cardless, cashless, direct-from-bank transactions</div>
                 <div className="text-blue-200 text-xs sm:text-sm mb-1 font-semibold">How It Works</div>
-                <div className="text-slate-400 text-xs mb-2">One-time setup, QR or link-based checkout, same-day funds</div>
+                <div className="text-slate-400 text-xs mb-2">One-time setup, QR or link-based checkout, fast funding</div>
                 <div className="text-cyan-300 text-xs font-semibold">Best for: Delivery, Subscriptions, eComm, Repeat Buyers</div>
               </div>
               {/* QR Code Wallet */}
@@ -285,7 +263,7 @@ export default function PaymentsPage() {
                 <div className="text-slate-300 text-xs sm:text-sm mb-2">App-based, tap-to-pay solution</div>
                 <div className="text-blue-200 text-xs sm:text-sm mb-1 font-semibold">How It Works</div>
                 <div className="text-slate-400 text-xs mb-2">Customer scans QR code, confirms bank-linked payment</div>
-                <div className="text-cyan-300 text-xs font-semibold">Best for: Cannabis, Retail, Loyalty Programs</div>
+                <div className="text-cyan-300 text-xs font-semibold">Best for: Retail, Wellness, Loyalty Programs</div>
               </div>
               {/* eComm + POS Integration */}
               <div className="group relative p-4 sm:p-8 bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-slate-700/50 hover:bg-slate-900/60 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105 flex flex-col items-center text-center">
@@ -325,12 +303,12 @@ export default function PaymentsPage() {
               <div className="bg-slate-800/60 rounded-xl p-6 flex flex-col items-center border border-slate-700/40 shadow-md">
                 <ShoppingCartIcon className="w-8 h-8 text-cyan-400 mb-2" />
                 <div className="font-bold text-white mb-1">Retail Shop</div>
-                <div className="text-slate-300 text-sm text-center">Credit Terminal + Virtual ACH + Cashless ATM</div>
+                <div className="text-slate-300 text-sm text-center">Credit Terminal + Virtual ACH</div>
               </div>
-              {/* Delivery-Only Cannabis */}
+              {/* Delivery-Only Retail */}
               <div className="bg-slate-800/60 rounded-xl p-6 flex flex-col items-center border border-slate-700/40 shadow-md">
                 <TruckIcon className="w-8 h-8 text-cyan-400 mb-2" />
-                <div className="font-bold text-white mb-1">Delivery-Only Cannabis</div>
+                <div className="font-bold text-white mb-1">Delivery-Only Retail</div>
                 <div className="text-slate-300 text-sm text-center">Virtual ACH + QR Wallet</div>
               </div>
               {/* Wellness Studio */}

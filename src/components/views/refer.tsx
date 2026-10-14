@@ -110,11 +110,11 @@ export default function BleaumReferralPage() {
               <Input type="text" name="referralLastName" value={formData.referralLastName} onChange={handleChange} placeholder="Referral Last Name*" required className="h-12 bg-gray-100 border-transparent text-gray-900 placeholder:text-gray-500 focus:border-blue-500 focus:ring-0 focus:ring-offset-0 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-400 dark:border-gray-700" />
             </div>
             <Input type="email" name="referralEmail" value={formData.referralEmail} onChange={handleChange} placeholder="Referral Email*" required className="h-12 bg-gray-100 border-transparent text-gray-900 placeholder:text-gray-500 focus:border-blue-500 focus:ring-0 focus:ring-offset-0 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-400 dark:border-gray-700" />
-            <Input type="text" name="referralShopName" value={formData.referralShopName} onChange={handleChange} placeholder="Referral retail shop Name*" required className="h-12 bg-gray-100 border-transparent text-gray-900 placeholder:text-gray-500 focus:border-blue-500 focus:ring-0 focus:ring-offset-0 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-400 dark:border-gray-700" />
+            <Input type="text" name="referralShopName" value={formData.referralShopName} onChange={handleChange} placeholder="Referral Business Name*" required className="h-12 bg-gray-100 border-transparent text-gray-900 placeholder:text-gray-500 focus:border-blue-500 focus:ring-0 focus:ring-offset-0 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-400 dark:border-gray-700" />
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
               <Input type="tel" name="referralPhone" value={formData.referralPhone} onChange={handleChange} placeholder="Referral Phone #" className="h-12 bg-gray-100 border-transparent text-gray-900 placeholder:text-gray-500 focus:border-blue-500 focus:ring-0 focus:ring-offset-0 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-400 dark:border-gray-700" />
               <select name="referralState" value={formData.referralState} onChange={handleChange} required className="flex h-12 w-full rounded-md border border-transparent bg-gray-100 px-3 py-2 text-xs sm:text-sm text-gray-900 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-400 dark:border-gray-700">
-                <option value="" className="bg-white text-gray-500 dark:bg-gray-900 dark:text-gray-400">retail shop State*</option>
+                <option value="" className="bg-white text-gray-500 dark:bg-gray-900 dark:text-gray-400">State / Province*</option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
                 <option value="AZ">Arizona</option>
@@ -165,8 +165,24 @@ export default function BleaumReferralPage() {
                 <option value="WV">West Virginia</option>
                 <option value="WI">Wisconsin</option>
                 <option value="WY">Wyoming</option>
+                <option value="DC">District of Columbia</option>
+                <optgroup label="Canada">
+                  <option value="AB">Alberta</option>
+                  <option value="BC">British Columbia</option>
+                  <option value="MB">Manitoba</option>
+                  <option value="NB">New Brunswick</option>
+                  <option value="NL">Newfoundland and Labrador</option>
+                  <option value="NT">Northwest Territories</option>
+                  <option value="NS">Nova Scotia</option>
+                  <option value="NU">Nunavut</option>
+                  <option value="ON">Ontario</option>
+                  <option value="PE">Prince Edward Island</option>
+                  <option value="QC">Quebec</option>
+                  <option value="SK">Saskatchewan</option>
+                  <option value="YT">Yukon</option>
+                </optgroup>
               </select>
-              <Input type="text" name="referralZip" value={formData.referralZip} onChange={handleChange} placeholder="retail shop Zip" className="h-12 bg-gray-100 border-transparent text-gray-900 placeholder:text-gray-500 focus:border-blue-500 focus:ring-0 focus:ring-offset-0 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-400 dark:border-gray-700" />
+              <Input type="text" name="referralZip" value={formData.referralZip} onChange={handleChange} placeholder="ZIP / Postal Code" className="h-12 bg-gray-100 border-transparent text-gray-900 placeholder:text-gray-500 focus:border-blue-500 focus:ring-0 focus:ring-offset-0 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-400 dark:border-gray-700" />
             </div>
             <div className="pt-6">
               <p className="text-sm font-medium mb-4 text-gray-700 dark:text-gray-300">Did you let them know you&apos;d be referring their business to us?</p>

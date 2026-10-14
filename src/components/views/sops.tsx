@@ -27,24 +27,20 @@ const topicDetails: { [key: string]: { icon: React.JSX.Element; title: string; d
   Compliance: {
     icon: <ShieldCheckIcon className="w-6 h-6 text-blue-500" />,
     title: "Compliance",
-    description: "Stay audit-ready and compliant with all state and local regulations. Includes METRC/BioTrack sync, audit prep, and daily/weekly checklists.",
+    description: "Stay audit-ready and compliant with all state and local regulations. Includes state reporting sync, audit prep, and daily/weekly checklists.",
     details: [
-      "METRC Sync & Reporting: How to stay fully synced and error-free with automatic METRC updates.",
+      "State Reporting Sync: How to stay synced with the state tracking systems you are required to use.",
       "Audit-Readiness Checklist: Internal steps to prepare for state inspections.",
       "Daily & Weekly Compliance Tasks: Routine tasks for managers to stay ahead of violations.",
       "Employee Training: Ensure all staff are up-to-date on compliance protocols.",
       "Document Storage: Best practices for digital and physical record-keeping.",
       "Incident Reporting: How to log and escalate compliance issues."
     ],
-    resources: [
-      { label: "METRC Official Guide", url: "https://www.metrc.com/resources" },
-      { label: "Cannabis Compliance Alliance", url: "https://cannabiscompliancealliance.org/" }
-    ]
   },
   Delivery: {
     icon: <TruckIcon className="w-6 h-6 text-blue-500" />,
     title: "Delivery",
-    description: "Best practices for compliant, efficient, and safe cannabis delivery operations.",
+    description: "Best practices for compliant, efficient, and safe delivery operations.",
     details: [
       "Setting Up Delivery Zones: Configure regions, fees, and service limits.",
       "Driver Management SOP: From onboarding to order dispatch and secure handoffs.",
@@ -52,25 +48,19 @@ const topicDetails: { [key: string]: { icon: React.JSX.Element; title: string; d
       "Manifest Creation: Ensure every delivery has a compliant manifest.",
       "ID Verification at Delivery: Steps for legal handoff.",
       "Returns & Discrepancies: SOP for missed deliveries or wrong orders."
-    ],
-    resources: [
-      { label: "Leafly Delivery Guide", url: "https://www.leafly.com/news/industry/cannabis-delivery-guide" }
     ]
   },
   Ecommerce: {
     icon: <ShoppingCartIcon className="w-6 h-6 text-blue-500" />,
     title: "Ecommerce",
-    description: "How to manage your online menu, orders, and customer experience for maximum sales.",
+    description: "How to manage your online store, orders, and customer experience for maximum sales.",
     details: [
-      "Menu Syncing (POS to Online): Keeping product listings and stock accurate across platforms.",
+      "Catalog Syncing (POS to Online): Keeping product listings and stock accurate across platforms.",
       "Click & Collect / Pickup Setup: Best practices for fulfillment and customer communication.",
       "App & Webstore Optimization Tips: How to boost conversions using your Bleaum storefront.",
       "Order Routing: Assigning orders by fulfillment type.",
       "Customer UX Optimization: Highlighting top categories and promos.",
       "Issue Handling: SOP for order edits, OOS products, or cancellations."
-    ],
-    resources: [
-      { label: "MJBizDaily Ecommerce Tips", url: "https://mjbizdaily.com/optimizing-cannabis-ecommerce/" }
     ]
   },
   Emergency: {
@@ -84,25 +74,19 @@ const topicDetails: { [key: string]: { icon: React.JSX.Element; title: string; d
       "Customer & Staff Communication: Messaging for delays or closures.",
       "Resumption SOP: Restart procedures post-downtime.",
       "Audit any missing orders or inventory gaps after an incident."
-    ],
-    resources: [
-      { label: "NCIA Security & Emergency Resources", url: "https://thecannabisindustry.org/resources/" }
     ]
   },
   Events: {
     icon: <GiftIcon className="w-6 h-6 text-blue-500" />,
     title: "Events",
-    description: "Plan, execute, and wrap up successful cannabis retail events and promotions.",
+    description: "Plan, execute, and wrap up successful retail events and promotions.",
     details: [
-      "Event-Based Discount Planning: Setting up promotions for 420, Black Friday, etc.",
+      "Event-Based Discount Planning: Setting up promotions for holidays, Black Friday, etc.",
       "On-Site Sales SOPs: Portable POS use, team assignments, and inventory prep.",
       "Customer Flow & Registration Tips: Managing queues and ID checks at scale.",
       "Pre-Event Prep: Assign team roles and load promos in advance.",
       "Inventory Management: Pull featured stock into event-only storage.",
       "Post-Event Wrap-Up: Close event sales drawer and run event-specific reports."
-    ],
-    resources: [
-      { label: "Eventbrite Cannabis Event Guide", url: "https://www.eventbrite.com/blog/cannabis-event-guide-ds00/" }
     ]
   },
   Integrations: {
@@ -110,7 +94,7 @@ const topicDetails: { [key: string]: { icon: React.JSX.Element; title: string; d
     title: "Integrations",
     description: "Connect Bleaum to compliance, marketing, and analytics platforms.",
     details: [
-      "Connecting Bleaum to BioTrack or METRC: Step-by-step for system sync and troubleshooting.",
+      "Connecting Bleaum to state tracking systems: Step-by-step for system sync and troubleshooting.",
       "Third-Party Marketing Tools: Integrate with Blackleaf, Springbig, or others.",
       "Analytics & GA Setup: Tracking customer behavior across your platforms.",
       "Troubleshooting Sync Errors: How to identify and retry failures.",
@@ -118,14 +102,13 @@ const topicDetails: { [key: string]: { icon: React.JSX.Element; title: string; d
       "API Key Management: Securely store and rotate credentials."
     ],
     resources: [
-      { label: "BioTrack Support", url: "https://biotrack.com/support/" },
       { label: "Google Analytics Help", url: "https://support.google.com/analytics/" }
     ]
   },
   Inventory: {
     icon: <BoxIcon className="w-6 h-6 text-blue-500" />,
     title: "Inventory",
-    description: "Best practices for intake, reconciliation, and storage of cannabis inventory.",
+    description: "Best practices for intake, reconciliation, and storage of retail inventory.",
     details: [
       "Receiving & Logging Packages: SOPs for intake, label printing, and QA.",
       "Mid-Shift & EOD Reconciliation: Daily checks to prevent shrinkage or compliance gaps.",
@@ -133,9 +116,6 @@ const topicDetails: { [key: string]: { icon: React.JSX.Element; title: string; d
       "Cycle Counts: How to schedule and perform regular audits.",
       "Shrinkage Investigation: Steps to identify and resolve discrepancies.",
       "Inventory Feedback Loop: Inform reordering and placement based on sales data."
-    ],
-    resources: [
-      { label: "NCIA Inventory Management", url: "https://thecannabisindustry.org/resource/inventory-management/" }
     ]
   },
   Loyalty: {
@@ -157,7 +137,7 @@ const topicDetails: { [key: string]: { icon: React.JSX.Element; title: string; d
   Marketing: {
     icon: <Megaphone className="w-6 h-6 text-blue-500" />,
     title: "Marketing",
-    description: "Automate, track, and optimize your cannabis marketing campaigns.",
+    description: "Automate, track, and optimize your marketing campaigns.",
     details: [
       "Automated Campaign Builder: Setting up winbacks, flash sales, and birthdays.",
       "Push Notifications vs. SMS: Best use cases and examples for both.",
@@ -165,9 +145,6 @@ const topicDetails: { [key: string]: { icon: React.JSX.Element; title: string; d
       "Audience Segmentation: Target by spend, frequency, or product type.",
       "A/B Testing: How to run and analyze campaign experiments.",
       "Compliance in Marketing: Avoiding restricted words and claims."
-    ],
-    resources: [
-      { label: "Leafly Marketing Guide", url: "https://www.leafly.com/news/industry/cannabis-marketing-guide" }
     ]
   },
   Operational: {
@@ -175,21 +152,18 @@ const topicDetails: { [key: string]: { icon: React.JSX.Element; title: string; d
     title: "Operational",
     description: "Daily, weekly, and shift-based routines for smooth store operations.",
     details: [
-      "Open & Close Checklists (Daily/Weekly): SOPs for managers and budtenders.",
+      "Open & Close Checklists (Daily/Weekly): SOPs for managers and associates.",
       "Shop Layout & Queue Management: Optimize foot traffic and wait times.",
       "Shift Changeover SOP: Clean handoffs and register accountability.",
       "Cleaning & Sanitation: Daily and deep-cleaning routines.",
       "Incident Log: How to record and review operational issues.",
       "Supply Ordering: Restock essentials and track usage."
-    ],
-    resources: [
-      { label: "NCIA Operations Resources", url: "https://thecannabisindustry.org/resources/" }
     ]
   },
   Payments: {
     icon: <CreditCardIcon className="w-6 h-6 text-blue-500" />,
     title: "Payments",
-    description: "Secure, compliant, and efficient payment handling for cannabis retail.",
+    description: "Secure, compliant, and efficient payment handling for retail.",
     details: [
       "Cash Handling SOPs: Secure drops, drawer balances, and vault activity.",
       "Digital Payments & Tips: Configuring virtual and tipping workflows.",
@@ -197,15 +171,12 @@ const topicDetails: { [key: string]: { icon: React.JSX.Element; title: string; d
       "Drawer Setup: Assign staff PIN, count starting cash.",
       "Card + Digital Processing: Support for compliant debit solutions.",
       "End-of-Day Reconciliation: Match drawer to transaction totals."
-    ],
-    resources: [
-      { label: "FinCEN Cannabis Banking Guidance", url: "https://www.fincen.gov/resources/statutes-regulations/guidance/bsa-expectations-regarding-marijuana-related-businesses" }
     ]
   },
   "Point of Sale": {
     icon: <MonitorIcon className="w-6 h-6 text-blue-500" />,
     title: "Point of Sale",
-    description: "Fast, compliant, and user-friendly POS operations for cannabis retail.",
+    description: "Fast, compliant, and user-friendly POS operations for retail.",
     details: [
       "Creating, Holding & Drafting Orders: Using the POS efficiently under pressure.",
       "Fast Checkout Tips: How to reduce clicks and improve flow.",
@@ -213,9 +184,6 @@ const topicDetails: { [key: string]: { icon: React.JSX.Element; title: string; d
       "Age & Purchase Limits: POS automatically blocks overage by type.",
       "Order Notes & Holds: Leave notes, park orders, or resume saved carts.",
       "Checkout & Receipt Handling: Digital, printed, or app receipt options."
-    ],
-    resources: [
-      { label: "POS Nation Cannabis POS Guide", url: "https://posnation.com/blog/cannabis-pos-system" }
     ]
   },
   Sales: {
@@ -229,9 +197,6 @@ const topicDetails: { [key: string]: { icon: React.JSX.Element; title: string; d
       "Daily Sales Targets: Assign per-role or per-location goals.",
       "Sales Reporting: Use Bleaum dashboards to view top SKUs.",
       "Inventory Feedback Loop: Inform reordering and placement based on sales data."
-    ],
-    resources: [
-      { label: "MJBizDaily Sales Tips", url: "https://mjbizdaily.com/retail-sales-tips/" }
     ]
   },
   Security: {
@@ -245,25 +210,19 @@ const topicDetails: { [key: string]: { icon: React.JSX.Element; title: string; d
       "Alarm + Panic System: Ensure staff are trained in silent triggers.",
       "Cybersecurity: Restrict POS access to whitelisted IPs.",
       "Audit & Escalation SOP: Incident logs, theft investigations, and termination flow."
-    ],
-    resources: [
-      { label: "NCIA Security Resources", url: "https://thecannabisindustry.org/resource/security/" }
     ]
   },
   Staffing: {
     icon: <UsersIcon className="w-6 h-6 text-blue-500" />,
     title: "Staffing",
-    description: "Hire, train, and retain a high-performing cannabis retail team.",
+    description: "Hire, train, and retain a high-performing retail team.",
     details: [
-      "Hiring & Onboarding Templates: From budtender to GM, what to teach and when.",
+      "Hiring & Onboarding Templates: From associate to GM, what to teach and when.",
       "Ongoing Training Schedule: Skill-building sessions by month or quarter.",
       "Performance Reviews & Shift Feedback: Track growth, spot burnout, and reward excellence.",
-      "Role Definitions: Budtender, inventory associate, shift lead, manager.",
+      "Role Definitions: Associate, inventory associate, shift lead, manager.",
       "Training Program: 1-day POS crash course, 7-day shadowing, monthly refreshers.",
       "Scheduling & Coverage: Use fixed templates or flex models."
-    ],
-    resources: [
-      { label: "Vangst Cannabis Staffing", url: "https://www.vangst.com/" }
     ]
   }
 };

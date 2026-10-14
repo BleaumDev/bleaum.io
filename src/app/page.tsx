@@ -48,8 +48,8 @@ export default function Home() {
   const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.8])
 
   const heroMessages = [
+    "Your business in a box: POS, inventory, ordering and delivery on one real-time platform.",
     "Trusted by 300+ retailers and specialty retailers.",
-    "98% of teams say Bleaum saves them hours every week.",
     "Built by operators, for operators—no more clunky POS.",
   ]
   const [currentMessage, setCurrentMessage] = useState(0)
@@ -124,7 +124,7 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
               >
-                Where Retail Runs{" "}
+                Run your whole business from{" "}
                 <motion.span
                   className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent"
                   animate={{
@@ -133,7 +133,7 @@ export default function Home() {
                   transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
                   style={{ backgroundSize: "200% 200%" }}
                 >
-                  Smart
+                  one hand.
                 </motion.span>
               </motion.h1>
               
@@ -217,7 +217,7 @@ export default function Home() {
               >
                 {[
                   { number: "300+", label: "Retailers" },
-                  { number: "98%", label: "Satisfaction" },
+                  { number: "1", label: "Platform" },
                   { number: "24/7", label: "Support" },
                 ].map((stat: { number: string; label: string }, index: number) => (
                   <motion.div
@@ -345,13 +345,13 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
-                Our Professional{" "}
+                Explore the{" "}
                 <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                  Expertise
+                  platform
                 </span>
               </h2>
               <p className="text-lg sm:text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed px-4">
-                Explore our gallery of successful projects and see how we elevate businesses through strategic solutions
+                See what you can run with Bleaum, from point of sale to delivery
               </p>
             </motion.div>
 
@@ -428,7 +428,7 @@ export default function Home() {
                     alt: "Human Support Staff Assisting Customer",
                     title: "Human Support",
                     description: "Real people, real solutions",
-                    href: "/company/support",
+                    href: "/support",
                   },
                   {
                     src:"/marketing/realtime.png",
@@ -442,7 +442,7 @@ export default function Home() {
                     alt: "Secure & Compliant Platform",
                     title: "Secure & Compliant",
                     description: "Enterprise-grade security",
-                    href: "/operations/automated-compilance",
+                    href: "/operations/automated-compliance",
                   },
                   {
                     src: "/marketing/4.png",
@@ -542,7 +542,7 @@ export default function Home() {
                   icon: <Shield className="w-6 h-6 sm:w-8 sm:h-8" />,
                   title: "Compliance Ready",
                   description: "Stay audit-ready with built-in compliance tools",
-                  features: ["Metrc integration", "Audit trails", "Staff permissions"],
+                  features: ["State reporting integrations", "Audit trails", "Staff permissions"],
                 },
                 {
                   icon: <Users className="w-6 h-6 sm:w-8 sm:h-8" />,
@@ -678,10 +678,10 @@ export default function Home() {
                     </div>
                     <div className="space-y-2 sm:space-y-3">
                       {[
-                        { name: "Blue Dream 1/8oz", stock: 24, status: "good" },
-                        { name: "OG Kush Pre-rolls", stock: 12, status: "good" },
-                        { name: "Sativa Gummies", stock: 3, status: "low" },
-                        { name: "CBD Tincture", stock: 18, status: "good" },
+                        { name: "Canvas Tote", stock: 24, status: "good" },
+                        { name: "Ceramic Mug", stock: 12, status: "good" },
+                        { name: "Leather Wallet", stock: 3, status: "low" },
+                        { name: "Candle Set", stock: 18, status: "good" },
                       ].map((product: { name: string; stock: number; status: string }, idx: number) => (
                         <div key={idx} className="flex justify-between items-center">
                           <span className="text-blue-100 text-xs sm:text-sm truncate flex-1 mr-2">{product.name}</span>
@@ -733,9 +733,9 @@ export default function Home() {
                     <div className="text-white font-semibold mb-2 sm:mb-3 text-sm sm:text-base">Active Deliveries</div>
                     <div className="space-y-2">
                       {[
-                        { driver: "AJ", orders: 3, eta: "15 min" },
-                        { driver: "Perry", orders: 2, eta: "8 min" },
-                        { driver: "Andrew", orders: 4, eta: "22 min" },
+                        { driver: "Alex", orders: 3, eta: "15 min" },
+                        { driver: "Sam", orders: 2, eta: "8 min" },
+                        { driver: "Jordan", orders: 4, eta: "22 min" },
                       ].map((delivery: { driver: string; orders: number; eta: string }, idx: number) => (
                         <div key={idx} className="flex justify-between items-center text-xs sm:text-sm">
                           <span className="text-blue-100">{delivery.driver}</span>
@@ -790,7 +790,7 @@ export default function Home() {
                 <div className="bg-gradient-to-br from-blue-900/40 to-blue-800/20 backdrop-blur-xl border border-blue-700/30 rounded-xl sm:rounded-2xl p-4 sm:p-6">
                   <Quote className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400 mb-3 sm:mb-4" />
                   <p className="text-blue-200 italic text-base sm:text-lg leading-relaxed">
-                    "We went from chaos to clockwork overnight. Our delivery times improved by 40%."
+                    "We went from chaos to clockwork overnight."
                   </p>
                   <div className="mt-3 sm:mt-4 text-blue-400 font-semibold text-sm sm:text-base">— Collin, Park Social</div>
                 </div>
@@ -965,7 +965,6 @@ export default function Home() {
                     "Automatic tax compliance calculations",
                     "Multiple delivery method options",
                     "Digital receipt storage and retrieval",
-                    "Environmental impact reduction",
                   ].map((feature: string, index: number) => (
                     <motion.div
                       key={feature}
@@ -1016,9 +1015,9 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {[
                 {
-                  title: "POS Onboard in 24 hours",
+                  title: "Fast POS onboarding",
                   icon: <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-white-400" />,
-                  description: "Get up and running fast with our streamlined setup process",
+                  description: "Get up and running quickly with a streamlined setup process",
                 },
                 {
                   title: "Multi-location ready",
@@ -1036,14 +1035,14 @@ export default function Home() {
                   description: "Human help when you need it, not chatbots",
                 },
                 {
-                  title: "Fully compliant, always",
+                  title: "Built for compliance",
                   icon: <ShieldCheck className="w-6 h-6 sm:w-8 sm:h-8 text-white-400" />,
-                  description: "Stay audit-ready 24/7 with built-in compliance tools",
+                  description: "Stay audit-ready with built-in compliance tools",
                 },
                 {
-                  title: "Transparent pricing",
+                  title: "Clear pricing",
                   icon: <Target className="w-6 h-6 sm:w-8 sm:h-8 text-white-400" />,
-                  description: "No hidden fees, no surprises, just honest pricing",
+                  description: "Straightforward pricing, explained up front",
                 },
               ].map((feature: { title: string; icon: React.JSX.Element; description: string }, index: number) => (
                 <motion.div
@@ -1169,9 +1168,9 @@ export default function Home() {
               viewport={{ once: true }}
             >
               {[
-                { number: "300+", label: "Happy Retailers", icon: <Users className="w-5 h-5 sm:w-6 sm:h-6" /> },
-                { number: "50%", label: "Time Saved", icon: <Clock className="w-5 h-5 sm:w-6 sm:h-6" /> },
-                { number: "99.9%", label: "Uptime", icon: <Shield className="w-5 h-5 sm:w-6 sm:h-6" /> },
+                { number: "300+", label: "Retailers", icon: <Users className="w-5 h-5 sm:w-6 sm:h-6" /> },
+                { number: "Live", label: "Inventory", icon: <Clock className="w-5 h-5 sm:w-6 sm:h-6" /> },
+                { number: "1", label: "Platform", icon: <Shield className="w-5 h-5 sm:w-6 sm:h-6" /> },
                 { number: "24/7", label: "Support", icon: <Headphones className="w-5 h-5 sm:w-6 sm:h-6" /> },
               ].map((stat: { number: string; label: string; icon: React.JSX.Element }, index: number) => (
                 <motion.div
@@ -1218,12 +1217,12 @@ export default function Home() {
               {[
                 {
                   title: "State Integrations",
-                  description: "Metrc, BioTrack & state compliance systems",
+                  description: "State tracking and reporting integrations",
                   icon: <Link2 className="w-6 h-6 sm:w-8 sm:h-8 text-white-400" />,
                 },
                 {
                   title: "Data Security",
-                  description: "Encrypted, backed-up, and SOC 2 compliant",
+                  description: "Encrypted and backed up",
                   icon: <Lock className="w-6 h-6 sm:w-8 sm:h-8 text-white-400" />,
                 },
                 {
@@ -1271,25 +1270,25 @@ export default function Home() {
                 <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Serve</span>
               </h2>
               <p className="text-lg sm:text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed px-4">
-                Specialized solutions for regulated and high-compliance retail environments
+                Solutions for retail, wholesale and regulated markets
               </p>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
               {[
                 {
-                  title: "Cannabis Retail & Delivery",
-                  description: "Complete seed-to-sale tracking with state compliance",
+                  title: "Retail & Specialty Stores",
+                  description: "POS, inventory and ordering for stores of any size",
                   icon: <ShoppingCart className="w-8 h-8 sm:w-12 sm:h-12 text-blue-400" />,
                 },
                 {
-                  title: "Pharmacies & Wellness",
-                  description: "Secure handling of controlled substances and patient data",
+                  title: "Wholesale & Distribution",
+                  description: "Orders, inventory and delivery in one place",
                   icon: <Shield className="w-8 h-8 sm:w-12 sm:h-12 text-blue-400" />,
                 },
                 {
-                  title: "High-Compliance Retail",
-                  description: "Any retail environment requiring detailed tracking and reporting",
+                  title: "Regulated Markets",
+                  description: "Detailed tracking and reporting for regulated products",
                   icon: <Building2 className="w-8 h-8 sm:w-12 sm:h-12 text-blue-400" />,
                 },
               ].map((industry: { title: string; description: string; icon: React.JSX.Element }, index: number) => (
@@ -1358,7 +1357,7 @@ export default function Home() {
             >
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">Ready to Transform Your Business?</h2>
               <p className="text-base sm:text-lg text-blue-100 mb-4 sm:mb-6 leading-relaxed max-w-xl mx-auto">
-                Join 300+ retailers who've already made the switch. See the difference in just 24 hours.
+                Join 300+ retailers who've already made the switch. See Bleaum in action with a live demo.
               </p>
 
               <motion.div

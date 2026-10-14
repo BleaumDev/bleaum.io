@@ -23,12 +23,12 @@ const monoFont = Space_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s - Bleaum',
-    default: 'Bleaum',
+    template: '%s | Bleaum',
+    default: 'Bleaum | Your business in a box',
   },
-  metadataBase: new URL("https://your-website-url.com"),
+  metadataBase: new URL("https://bleaum.io"),
   description:
-    "Empowering businesses with innovative solutions for growth and success.",
+    "Bleaum is your business in a box: POS, invoicing, inventory, ordering, delivery and AI on one real-time platform.",
 };
 
 export const viewport: Viewport = {

@@ -49,7 +49,7 @@ export default function BleaumMarketingPage() {
       title: "Loyalty Programs That Stick",
       description: "Keep customers coming back with rewards they actually want—and you can actually afford.",
       icon: <Heart className="w-12 h-12 text-blue-400" />,
-      quote: "Our regulars spend 40% more since we launched loyalty.",
+      quote: "Our regulars spend more since we launched loyalty.",
       features: ["Points & rewards system", "VIP tiers", "Birthday & anniversary perks"],
       highlight: "Built-In"
     },
@@ -299,59 +299,8 @@ export default function BleaumMarketingPage() {
           <div className="p-6 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors duration-300 flex flex-col gap-3">
             <ShoppingCart className="w-8 h-8 text-blue-400 mb-2" />
             <h3 className="font-bold text-white mb-1">Syncs with Your Website & Storefront</h3>
-            <p className="text-gray-300 text-sm">Every campaign works across your online menu, ecommerce, and in-store checkout—automatically.</p>
+            <p className="text-gray-300 text-sm">Every campaign works across your online store, ecommerce, and in-store checkout—automatically.</p>
           </div>
-        </div>
-      </motion.section>
-
-      {/* Success Metrics Section */}
-      <motion.section 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="w-full max-w-6xl mx-auto mb-20 p-8 sm:p-10 md:p-12 bg-gradient-to-r from-blue-600/20 via-blue-500/20 to-cyan-600/20 backdrop-filter backdrop-blur-lg rounded-2xl shadow-2xl border border-white/10 relative z-10"
-      >
-        <div className="flex justify-center mb-8">
-          <TrendingUp className="w-16 h-16 text-blue-400" />
-        </div>
-        <h2 className="text-3xl md:text-4xl font-bold mb-8 text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300 text-center">
-          See What Success Looks Like
-        </h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 text-center">
-          {[
-            {
-              metric: "40%",
-              description: "Average increase in repeat customers",
-              icon: <Users className="w-8 h-8 text-blue-400" />
-            },
-            {
-              metric: "2.3x",
-              description: "Higher push notification open rates vs industry average",
-              icon: <MessageSquare className="w-8 h-8 text-blue-400" />
-            },
-            {
-              metric: "24 hours",
-              description: "To set up your first campaign",
-              icon: <RocketIcon className="w-8 h-8 text-blue-400" />
-            }
-          ].map((stat, index) => (
-            <motion.div
-              key={stat.metric}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-              viewport={{ once: true }}
-              className="group"
-            >
-              <div className="flex justify-center mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                {stat.icon}
-              </div>
-              <div className="text-4xl font-bold text-blue-400 mb-2">{stat.metric}</div>
-              <p className="text-gray-300">{stat.description}</p>
-            </motion.div>
-          ))}
         </div>
       </motion.section>
 
@@ -401,7 +350,7 @@ export default function BleaumMarketingPage() {
           Ready to Build Real Loyalty?
         </h2>
         <p className="text-lg mb-10 leading-relaxed max-w-2xl mx-auto">
-          Hundreds of retailers use Bleaum to turn one-time buyers into regulars. See how it could work for you in just 24 hours.
+          300+ retailers use Bleaum to turn one-time buyers into regulars. See how it could work for you in a live demo.
         </p>
         <Link href="/demo">
           <button className={buttonVariants({ 

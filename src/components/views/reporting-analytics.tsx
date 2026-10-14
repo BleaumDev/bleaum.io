@@ -38,7 +38,6 @@ export default function BleaumReportingPage() {
       title: "AI-Powered Insights",
       description: "Get smart alerts, trend predictions, and AI-written summaries that actually help you make decisions.",
       icon: <BrainIcon className="w-12 h-12 text-blue-400" />,
-      quote: "The AI caught a pricing issue we missed for weeks.",
       features: ["Spot anomalies automatically", "Surface profitable segments", "AI-written report summaries"],
       highlight: "Coming Soon",
       isNew: true
@@ -63,7 +62,6 @@ export default function BleaumReportingPage() {
       title: "Automated Compliance Reports",
       description: "Never miss a deadline. Set it once, get reports delivered on schedule—formatted for compliance.",
       icon: <RefreshCwIcon className="w-12 h-12 text-blue-400" />,
-      quote: "Audit prep went from days to minutes.",
       features: ["Scheduled reports", "One-click CSV exports", "Compliance-ready formats"],
       highlight: "Coming Soon!"
     }
@@ -252,10 +250,10 @@ export default function BleaumReportingPage() {
           <Quote className="w-16 h-16 text-blue-400" />
         </div>
         <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
-          Real Results from Real Shops
+          Real Results from Real Retailers
         </h2>
         <p className="text-lg text-gray-300 mb-6 leading-relaxed italic max-w-2xl mx-auto">
-          "Before Bleaum, I was flying blind. Now I know exactly which products to push, when to staff up, and where my money's going. Our profit margins improved 15% in the first quarter just from better data."
+          "Before Bleaum, I was flying blind. Now I know exactly which products to push, when to staff up, and where my money's going."
         </p>
         <p className="text-blue-300 font-semibold">
           — Perry Jones, Centered by Design

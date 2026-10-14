@@ -12,6 +12,8 @@ export default function DemoPage() {
     state: '',
     numberOfLocations: '',
     howHear: '',
+    industry: '',
+    devices: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -39,6 +41,8 @@ export default function DemoPage() {
           state: '',
           numberOfLocations: '',
           howHear: '',
+          industry: '',
+          devices: '',
         });
       } else {
         alert(`Failed to send demo request: ${data.message}`);
@@ -49,7 +53,11 @@ export default function DemoPage() {
   };
 
   const states = [
-    'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+    'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming', 'District of Columbia'
+  ];
+
+  const provinces = [
+    'Alberta', 'British Columbia', 'Manitoba', 'New Brunswick', 'Newfoundland and Labrador', 'Northwest Territories', 'Nova Scotia', 'Nunavut', 'Ontario', 'Prince Edward Island', 'Quebec', 'Saskatchewan', 'Yukon'
   ];
 
   return (
@@ -59,7 +67,7 @@ export default function DemoPage() {
           Is Your Retail Shop Ready for a Serious Upgrade?
         </h2>
         <p className="text-muted-foreground text-base sm:text-lg px-4">
-          Book a walkthrough of the system that&apos;s setting the new standard in retail.
+          Book a walkthrough of the platform built for how retail really runs.
         </p>
       </div>
 
@@ -121,7 +129,7 @@ export default function DemoPage() {
             />
           </div>
           <div>
-            <label htmlFor="state" className="block text-sm font-medium text-foreground">State</label>
+            <label htmlFor="state" className="block text-sm font-medium text-foreground">State / Province</label>
             <select
               name="state"
               id="state"
@@ -129,10 +137,18 @@ export default function DemoPage() {
               onChange={handleChange}
               className="mt-1 block w-full border border-border rounded-md shadow-sm p-2 bg-background text-foreground"
             >
-              <option value="">Select a state</option>
-              {states.map((state) => (
-                <option key={state} value={state}>{state}</option>
-              ))}
+              <option value="">Select a state or province</option>
+              <optgroup label="United States">
+                {states.map((state) => (
+                  <option key={state} value={state}>{state}</option>
+                ))}
+              </optgroup>
+              <optgroup label="Canada">
+                {provinces.map((province) => (
+                  <option key={province} value={province}>{province}</option>
+                ))}
+              </optgroup>
+              <option value="Other">Other</option>
             </select>
           </div>
           <div>
@@ -153,6 +169,28 @@ export default function DemoPage() {
               name="howHear"
               id="howHear"
               value={formData.howHear}
+              onChange={handleChange}
+              className="mt-1 block w-full border border-border rounded-md shadow-sm p-2 bg-background text-foreground"
+            />
+          </div>
+          <div>
+            <label htmlFor="industry" className="block text-sm font-medium text-foreground">Industry (optional)</label>
+            <input
+              type="text"
+              name="industry"
+              id="industry"
+              value={formData.industry}
+              onChange={handleChange}
+              className="mt-1 block w-full border border-border rounded-md shadow-sm p-2 bg-background text-foreground"
+            />
+          </div>
+          <div>
+            <label htmlFor="devices" className="block text-sm font-medium text-foreground">Devices you use (optional)</label>
+            <input
+              type="text"
+              name="devices"
+              id="devices"
+              value={formData.devices}
               onChange={handleChange}
               className="mt-1 block w-full border border-border rounded-md shadow-sm p-2 bg-background text-foreground"
             />

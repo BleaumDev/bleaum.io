@@ -40,6 +40,8 @@ ${formData.businessType ? `Business Type: ${formData.businessType}` : ''}
 ${formData.businessDescription ? `Business Description: ${formData.businessDescription}` : ''}
 ${formData.state ? `State: ${formData.state}` : ''}
 ${formData.numberOfLocations ? `Number of Locations: ${formData.numberOfLocations}` : ''}
+${formData.industry ? `Industry: ${formData.industry}` : ''}
+${formData.devices ? `Devices: ${formData.devices}` : ''}
 ${formData.howHear ? `How they heard about us: ${formData.howHear}` : ''}`,
       html: `<h2>New Demo Request</h2>
 <p><strong>From:</strong> ${formData.firstName} ${formData.lastName} (${formData.email})</p>
@@ -51,6 +53,8 @@ ${formData.businessType ? `<p><strong>Business Type:</strong> ${formData.busines
 ${formData.businessDescription ? `<p><strong>Business Description:</strong> ${formData.businessDescription}</p>` : ''}
 ${formData.state ? `<p><strong>State:</strong> ${formData.state}</p>` : ''}
 ${formData.numberOfLocations ? `<p><strong>Number of Locations:</strong> ${formData.numberOfLocations}</p>` : ''}
+${formData.industry ? `<p><strong>Industry:</strong> ${formData.industry}</p>` : ''}
+${formData.devices ? `<p><strong>Devices:</strong> ${formData.devices}</p>` : ''}
 ${formData.howHear ? `<p><strong>How they heard about us:</strong> ${formData.howHear}</p>` : ''}`
     };
 

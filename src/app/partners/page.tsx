@@ -1,4 +1,12 @@
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Partners",
+  description:
+    "Partner with Bleaum. Learn how to become an integration or technology partner.",
+};
+
 
 export default function PartnersPage() {
   return (

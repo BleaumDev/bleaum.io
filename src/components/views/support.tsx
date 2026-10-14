@@ -29,7 +29,7 @@ export default function SupportPage() {
       icon: Mail,
       title: 'Email us',
       description: 'Send us a detailed message',
-      href: 'mailto:commms@bleaum.io',
+      href: 'mailto:comms@bleaum.io',
       gradient: 'from-purple-500 to-pink-500',
     },
    

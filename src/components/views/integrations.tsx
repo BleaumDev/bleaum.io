@@ -27,220 +27,189 @@ import { buttonVariants } from "@/components/ui/button";
 import { useState } from "react";
 
 export default function BleaumIntegrationsPage() {
-  const integrationCategories = [
-    {
-      title: "Accounting & Finance",
-      description: "Keep your books clean without the manual work",
-      icon: <BriefcaseIcon className="w-8 h-8 text-blue-400" />,
-      integrations: ["Merchant Club USA","Mercco","QuickBooks (Coming Soon)", "Aeropay"],
-      highlight: "Auto-sync sales data"
-    },
-    {
-      title: "Analytics & Insights", 
-      description: "See what's working, what's not, and what's next",
-      icon: <BarChart2Icon className="w-8 h-8 text-blue-400" />,
-      integrations: ["Google Analytics", "AI-powered reporting (Coming soon)"],
-      highlight: "Real-time dashboards"
-    },
-    {
-      title: "Inventory & Stock Control",
-      description: "Keep your inventory up to date",
-      icon: <LeafIcon className="w-8 h-8 text-blue-400" />,
-      integrations: ["GrowFlow", "Lightspeed", "Treez", "Weave", "Indica online", "Cova"],
-      highlight: "Live sync with full visibilty across the channels"
-    },
-    {
-      title: "Compliance & Traceability",
-      description: "Stay compliant without the stress",
-      icon: <ShieldCheckIcon className="w-8 h-8 text-blue-400" />,
-      integrations: ["METRC", "IDScan", "BioTrack"],
-      highlight: "Automatic reporting"
-    },
-    {
-      title: "Ecommerce ",
-      description: "List once, sell everywhere",
-      icon: <ShoppingCartIcon className="w-8 h-8 text-blue-400" />,
-      integrations: ["Leafly", "Weedmaps"],
-      highlight: "Multi-channel inventory"
-    },
-    {
-      title: "Marketing & Loyalty",
-      description: "Keep customers coming back",
-      icon: <MegaphoneIcon className="w-8 h-8 text-blue-400" />,
-      integrations: ["Springbig", "Bleackleaf", "Built-in marketing & loyalty tools with AI (coming soon)"],
-      highlight: "Automated campaigns"
-    },
- 
-  ];
-
-  // --- Integration Partners Data ---
+  // group: "general" tools work for any retailer; "regulated" are for regulated retail
   const integrationPartners = [
     // Compliance & Traceability
-    { 
-      name: "METRC", 
-      category: "TRACEABILITY", 
-      description: "METRC seed-to-sale tracking system ensures complete compliance with state cannabis regulations and inventory management.",
-      logo: "/integrations/metrc.png",
-      logoAlt: "METRC Logo",
-      status: "Active"
+    {
+      name: "State Traceability",
+      category: "TRACEABILITY",
+      description: "State traceability integration: inventory, sales and delivery events are reported to the state tracking systems you are required to use.",
+      logo: "",
+      logoAlt: "",
+      status: "Active",
+      group: "regulated"
     },
-    { 
-      name: "BioTrack", 
-      category: "TRACEABILITY", 
-      description: "BioTrack provides comprehensive seed-to-sale tracking and compliance solutions for cannabis businesses.",
-      logo: "/integrations/biotrack.png",
-      logoAlt: "BioTrack Logo",
-      status: "Active"
-    },
-    { 
-      name: "IDScan", 
-      category: "ID VERIFICATION", 
-      description: "IDScan provides secure ID verification and customer check-in solutions for cannabis retail locations.",
+    {
+      name: "IDScan",
+      category: "ID VERIFICATION",
+      description: "IDScan provides secure ID verification and customer check-in solutions for age-restricted retail locations.",
       logo: "/integrations/idscan.png",
       logoAlt: "IDScan Logo",
-      status: "Active"
+      status: "Active",
+      group: "regulated"
     },
-    
+
     // Accounting & Finance
-    { 
-      name: "QuickBooks", 
-      category: "ACCOUNTING", 
-      description: "QuickBooks integration for seamless financial management and automated bookkeeping for your cannabis business.",
+    {
+      name: "QuickBooks",
+      category: "ACCOUNTING",
+      description: "QuickBooks integration for seamless financial management and automated bookkeeping for your business.",
       logo: "/integrations/quickbooks.png",
       logoAlt: "QuickBooks Logo",
-      status: "Coming Soon"
+      status: "Coming Soon",
+      group: "general"
     },
-    { 
-      name: "Merchant Club USA", 
-      category: "PAYMENTS", 
-      description: "Merchant Club USA provides secure payment processing solutions specifically designed for cannabis businesses.",
+    {
+      name: "Merchant Club USA",
+      category: "PAYMENTS",
+      description: "Merchant Club USA provides secure payment processing solutions designed for regulated retail businesses.",
       logo: "/integrations/MERCHANT.png",
       logoAlt: "Merchant Club USA Logo",
-      status: "Active"
+      status: "Active",
+      group: "regulated"
     },
-    { 
-      name: "Aeropay", 
-      category: "PAYMENTS", 
-      description: "Aeropay offers digital payment solutions that help cannabis businesses accept secure, compliant transactions.",
+    {
+      name: "Aeropay",
+      category: "PAYMENTS",
+      description: "Aeropay offers digital payment solutions that help retailers accept secure, bank-based transactions.",
       logo: "/integrations/aeropay.png",
       logoAlt: "Aeropay Logo",
-      status: "Active"
+      status: "Active",
+      group: "regulated"
     },
-    
+
     // Inventory & POS
-    { 
-      name: "GrowFlow", 
-      category: "INVENTORY", 
-      description: "GrowFlow provides comprehensive inventory management and cultivation tracking for cannabis operations.",
+    {
+      name: "GrowFlow",
+      category: "INVENTORY",
+      description: "GrowFlow provides inventory management and production tracking for regulated operations.",
       logo: "/integrations/growflow1.png",
       logoAlt: "GrowFlow Logo",
-      status: "Active"
+      status: "Active",
+      group: "regulated"
     },
-    { 
-      name: "Lightspeed", 
-      category: "POINT OF SALE", 
-      description: "Lightspeed retail POS system integration for streamlined cannabis retail operations and inventory management.",
+    {
+      name: "Lightspeed",
+      category: "POINT OF SALE",
+      description: "Lightspeed retail POS system integration for streamlined retail operations and inventory management.",
       logo: "/integrations/lightspeed.png",
       logoAlt: "Lightspeed Logo",
-      status: "Active"
+      status: "Active",
+      group: "general"
     },
-    { 
-      name: "Treez", 
-      category: "POINT OF SALE", 
-      description: "Treez is a comprehensive cannabis retail platform offering POS, inventory, and compliance management.",
+    {
+      name: "Treez",
+      category: "POINT OF SALE",
+      description: "Treez is a retail platform offering POS, inventory, and compliance management.",
       logo: "/integrations/treez.png",
       logoAlt: "Treez Logo",
-      status: "Active"
+      status: "Active",
+      group: "regulated"
     },
-    { 
-      name: "Cova", 
-      category: "POINT OF SALE", 
-      description: "Cova provides cannabis retail software with POS, inventory management, and compliance reporting features.",
+    {
+      name: "Cova",
+      category: "POINT OF SALE",
+      description: "Cova provides retail software with POS, inventory management, and compliance reporting features.",
       logo: "/integrations/cova.png",
       logoAlt: "Cova Logo",
-      status: "Active"
+      status: "Active",
+      group: "regulated"
     },
-    { 
-      name: "Indica Online", 
-      category: "POINT OF SALE", 
-      description: "Indica Online offers cannabis retail software with integrated POS, inventory, and customer management tools.",
+    {
+      name: "Indica Online",
+      category: "POINT OF SALE",
+      description: "Indica Online offers retail software with integrated POS, inventory, and customer management tools.",
       logo: "/integrations/indicaonlinr.png",
       logoAlt: "Indica Online Logo",
-      status: "Active"
+      status: "Active",
+      group: "regulated"
     },
-    { 
-      name: "Weave", 
-      category: "CUSTOMER MANAGEMENT", 
-      description: "Weave provides customer communication and business management tools for cannabis retailers.",
+    {
+      name: "Weave",
+      category: "CUSTOMER MANAGEMENT",
+      description: "Weave provides customer communication and business management tools for retailers.",
       logo: "/integrations/weave.png",
       logoAlt: "Weave Logo",
-      status: "Active"
+      status: "Active",
+      group: "regulated"
     },
-    
+
     // Ecommerce & Marketplaces
-    { 
-      name: "Leafly", 
-      category: "MARKETPLACE", 
-      description: "Leafly is the world's largest cannabis marketplace, connecting consumers with cannabis retailers and brands.",
+    {
+      name: "Leafly",
+      category: "MARKETPLACE",
+      description: "Leafly is an online marketplace connecting consumers with local retailers and brands.",
       logo: "/integrations/leafly.png",
       logoAlt: "Leafly Logo",
-      status: "Active"
+      status: "Active",
+      group: "regulated"
     },
-    { 
-      name: "Weedmaps", 
-      category: "MARKETPLACE", 
-      description: "Weedmaps is a leading cannabis discovery platform that connects consumers with local dispensaries and delivery services.",
+    {
+      name: "Weedmaps",
+      category: "MARKETPLACE",
+      description: "Weedmaps is a discovery platform that connects consumers with local retailers and delivery services.",
       logo: "/integrations/weedmaps.png",
       logoAlt: "Weedmaps Logo",
-      status: "Active"
+      status: "Active",
+      group: "regulated"
     },
-    
+
     // Marketing & Loyalty
-    { 
-      name: "Springbig", 
-      category: "LOYALTY", 
-      description: "Springbig provides customer loyalty and marketing automation platform designed specifically for cannabis retailers.",
+    {
+      name: "Springbig",
+      category: "LOYALTY",
+      description: "Springbig provides a customer loyalty and marketing automation platform for retailers.",
       logo: "/integrations/springbig.png",
       logoAlt: "Springbig Logo",
-      status: "Active"
+      status: "Active",
+      group: "regulated"
     },
-    { 
-      name: "Blackleaf", 
-      category: "MARKETING", 
-      description: "Blackleaf offers comprehensive marketing and customer engagement tools for cannabis businesses.",
+    {
+      name: "Blackleaf",
+      category: "MARKETING",
+      description: "Blackleaf offers marketing and customer engagement tools for retailers.",
       logo: "/integrations/blackleaf.png",
       logoAlt: "Blackleaf Logo",
-      status: "Active"
+      status: "Active",
+      group: "regulated"
     },
-    { 
-      name: "Green Dispensary Marketing", 
-      category: "MARKETING", 
-      description: "GREEN Dispensary is a leading cannabis retail partner providing marketing and customer engagement solutions.",
+    {
+      name: "Green Dispensary Marketing",
+      category: "MARKETING",
+      description: "GREEN Dispensary is a retail partner providing marketing and customer engagement solutions.",
       logo: "/integrations/greendispensary.jpg",
       logoAlt: "GREEN Dispensary Logo",
-      status: "Active"
+      status: "Active",
+      group: "regulated"
     },
-    
+
     // Analytics
-    { 
-      name: "Google Analytics", 
-      category: "ANALYTICS", 
-      description: "Google Analytics integration provides comprehensive web analytics and customer behavior insights for your cannabis business.",
+    {
+      name: "Google Analytics",
+      category: "ANALYTICS",
+      description: "Google Analytics integration provides comprehensive web analytics and customer behavior insights for your business.",
       logo: "/integrations/googleanalytics.png",
       logoAlt: "Google Analytics Logo",
-      status: "Active"
+      status: "Active",
+      group: "general"
     },
-    
+
     // Coming Soon
-    { 
-      name: "AI Reporting", 
-      category: "ANALYTICS", 
-      description: "Advanced AI-powered reporting and insights platform to help you understand your business performance and growth opportunities.",
+    {
+      name: "Bleaum AI Reporting",
+      category: "ANALYTICS",
+      description: "Advanced AI-powered reporting and insights from Bleaum to help you understand your business performance and growth opportunities.",
       logo: "/integrations/aireporting.png",
-      logoAlt: "AI Reporting Logo",
+      logoAlt: "Bleaum AI Reporting Logo",
       status: "Coming Soon",
-      isComingSoon: true
+      isComingSoon: true,
+      group: "general"
     }
+  ];
+
+  const partnerGroups = [
+    { id: "general", title: "General integrations" },
+    { id: "regulated", title: "Regulated retail integrations" },
   ];
 
   // Extract unique categories for sidebar
@@ -330,62 +299,78 @@ export default function BleaumIntegrationsPage() {
           Partnerships
         </h2>
         <p className="text-base sm:text-xl text-gray-300 mb-8 sm:mb-10 max-w-3xl mx-auto leading-relaxed">
-          We've partnered with industry leaders to deliver seamless integrations that power your retail business operations.
+          Seamless integrations that power your retail business operations. Bleaum is a member of Google for Startups, Microsoft for Startups and AWS.
         </p>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6 max-w-6xl mx-auto">
-          {[
-            { name: "METRC", logo: "/integrations/metrc.png", category: "Compliance" },
-            { name: "BioTrack", logo: "/integrations/biotrack.png", category: "Compliance" },
-            { name: "QuickBooks", logo: "/integrations/quickbooks.png", category: "Accounting" },
-            { name: "Lightspeed", logo: "/integrations/lightspeed.png", category: "POS" },
-            { name: "Treez", logo: "/integrations/treez.png", category: "POS" },
-            { name: "Cova", logo: "/integrations/cova.png", category: "POS" },
-            { name: "Indica Online", logo: "/integrations/indicaonlinr.png", category: "POS" },
-            { name: "GrowFlow", logo: "/integrations/growflow1.png", category: "Inventory" },
-            { name: "Weave", logo: "/integrations/weave.png", category: "CRM" },
-            { name: "Leafly", logo: "/integrations/leafly.png", category: "Marketplace" },
-            { name: "Weedmaps", logo: "/integrations/weedmaps.png", category: "Marketplace" },
-            { name: "Springbig", logo: "/integrations/springbig.png", category: "Loyalty" },
-            { name: "Blackleaf", logo: "/integrations/blackleaf.png", category: "Marketing" },
-            { name: "Google Analytics", logo: "/integrations/googleanalytics.png", category: "Analytics" },
-            { name: "Merchant Club", logo: "/integrations/MERCHANT.png", category: "Payments" },
-            { name: "Aeropay", logo: "/integrations/aeropay.png", category: "Payments" },
-            { name: "IDScan", logo: "/integrations/idscan.png", category: "Verification" },
-            { name: "AI Reporting", logo: "/integrations/aireporting.png", category: "Analytics" },
-            { name: "GREEN Dispensary Marketing", logo: "/integrations/greendispensary.jpg", category: "Marketing" },
-            { name: "Microsoft Azure", logo: "/integrations/azure.jpg", category: "Partners" },
-            { name: "Google", logo: "/integrations/google.jpg", category: "Startups" },
-            
-            { name: "Microsoft", logo: "/integrations/microsoft.png", category: "Startups" },
-            { name: "AWS", logo: "/integrations/AWS1.jpg", category: "Partners" }
-          ].map((partner, index) => (
-            <motion.div
-              key={partner.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
-              viewport={{ once: true }}
-              className="flex flex-col items-center p-4 bg-white/5 rounded-xl border border-white/10 hover:border-white/20 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 group"
-            >
-              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/10 rounded-lg flex items-center justify-center p-2 mb-3 group-hover:bg-white/20 transition-colors duration-300">
-                <Image
-                  src={partner.logo}
-                  alt={`${partner.name} Logo`}
-                  width={64}
-                  height={64}
-                  className="w-full h-full object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300"
-                />
-              </div>
-              <h3 className="text-sm sm:text-base font-semibold text-white mb-1 text-center group-hover:text-blue-300 transition-colors duration-300">
-                {partner.name}
-              </h3>
-              <span className="text-xs text-blue-300 bg-blue-600/20 px-2 py-1 rounded-full">
-                {partner.category}
-              </span>
-            </motion.div>
-          ))}
-        </div>
+        {[
+          {
+            title: "General integrations",
+            items: [
+              { name: "QuickBooks", logo: "/integrations/quickbooks.png", category: "Coming Soon" },
+              { name: "Lightspeed", logo: "/integrations/lightspeed.png", category: "POS" },
+              { name: "Google Analytics", logo: "/integrations/googleanalytics.png", category: "Analytics" },
+            ],
+          },
+          {
+            title: "Regulated retail integrations",
+            items: [
+              { name: "Treez", logo: "/integrations/treez.png", category: "POS" },
+              { name: "Cova", logo: "/integrations/cova.png", category: "POS" },
+              { name: "Indica Online", logo: "/integrations/indicaonlinr.png", category: "POS" },
+              { name: "GrowFlow", logo: "/integrations/growflow1.png", category: "Inventory" },
+              { name: "Weave", logo: "/integrations/weave.png", category: "CRM" },
+              { name: "Leafly", logo: "/integrations/leafly.png", category: "Marketplace" },
+              { name: "Weedmaps", logo: "/integrations/weedmaps.png", category: "Marketplace" },
+              { name: "Springbig", logo: "/integrations/springbig.png", category: "Loyalty" },
+              { name: "Blackleaf", logo: "/integrations/blackleaf.png", category: "Marketing" },
+              { name: "Merchant Club", logo: "/integrations/MERCHANT.png", category: "Payments" },
+              { name: "Aeropay", logo: "/integrations/aeropay.png", category: "Payments" },
+              { name: "IDScan", logo: "/integrations/idscan.png", category: "Verification" },
+              { name: "GREEN Dispensary Marketing", logo: "/integrations/greendispensary.jpg", category: "Marketing" },
+            ],
+          },
+          {
+            title: "Programs and memberships",
+            items: [
+              { name: "Google", logo: "/integrations/google.jpg", category: "Google for Startups" },
+              { name: "Microsoft", logo: "/integrations/microsoft.png", category: "Microsoft for Startups" },
+              { name: "AWS", logo: "/integrations/AWS1.jpg", category: "Cloud" },
+              { name: "Microsoft Azure", logo: "/integrations/azure.jpg", category: "Cloud" },
+            ],
+          },
+        ].map((group) => (
+          <div key={group.title} className="mb-8 last:mb-0">
+            <h3 className="text-lg sm:text-2xl font-semibold text-gray-100 mb-4 sm:mb-6">{group.title}</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6 max-w-6xl mx-auto">
+              {group.items.map((partner, index) => (
+                <motion.div
+                  key={partner.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  viewport={{ once: true }}
+                  className="flex flex-col items-center p-4 bg-white/5 rounded-xl border border-white/10 hover:border-white/20 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 group"
+                >
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/10 rounded-lg flex items-center justify-center p-2 mb-3 group-hover:bg-white/20 transition-colors duration-300">
+                    <Image
+                      src={partner.logo}
+                      alt={`${partner.name} Logo`}
+                      width={64}
+                      height={64}
+                      className="w-full h-full object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                    />
+                  </div>
+                  <h3 className="text-sm sm:text-base font-semibold text-white mb-1 text-center group-hover:text-blue-300 transition-colors duration-300">
+                    {partner.name}
+                  </h3>
+                  <span className="text-xs text-blue-300 bg-blue-600/20 px-2 py-1 rounded-full">
+                    {partner.category}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        ))}
       </motion.section>
 
       {/* Integration Partners Section (new sidebar + filterable cards) */}
@@ -415,8 +400,14 @@ export default function BleaumIntegrationsPage() {
         </aside>
         {/* Main grid for integration cards and CTA */}
         <main className="flex-1 w-full">
+          {partnerGroups.map((group) => {
+            const items = filteredPartners.filter((p) => p.group === group.id);
+            if (!items.length) return null;
+            return (
+          <div key={group.id} className="mb-10 last:mb-0">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-100 mb-4 sm:mb-6">{group.title}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-            {filteredPartners.map((integration, index) => (
+            {items.map((integration) => (
               <div
                 key={integration.name}
                 className="flex flex-col justify-between h-full p-6 sm:p-8 bg-white/5 backdrop-filter backdrop-blur-lg rounded-xl border border-white/10 hover:border-white/20 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 group"
@@ -479,6 +470,9 @@ export default function BleaumIntegrationsPage() {
               </div>
             ))}
           </div>
+          </div>
+            );
+          })}
           {/* Integration Request CTA */}
           {/* <div className="text-center mt-12">
             <div className="p-6 sm:p-8 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-xl border border-white/10 max-w-2xl mx-auto">
@@ -488,7 +482,7 @@ export default function BleaumIntegrationsPage() {
               <p className="text-gray-300 mb-6 text-base">
                 We're always adding new integrations. Let us know what you need and we'll prioritize it.
               </p>
-              <Link href="/contact">
+              <Link href="/support">
                 <button className={buttonVariants({ 
                   variant: "outline", 
                   size: "lg",
@@ -514,7 +508,7 @@ export default function BleaumIntegrationsPage() {
           Native when you want it. Integrated when you need it.
         </h2>
         <p className="text-base sm:text-xl text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto">
-        With native integrations to Metrc, BioTrack, and a suite of third-party tools, we help you move faster, stay compliant, and reduce manual tasks that eat up time and create errors.
+        With native integrations to state tracking and reporting systems and a suite of third-party tools, we help you move faster, stay compliant, and reduce manual tasks that eat up time and create errors.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto mb-6 sm:mb-8">
           <div className="p-4 sm:p-6 bg-white/5 rounded-xl border border-white/10">
@@ -528,7 +522,7 @@ export default function BleaumIntegrationsPage() {
             <p className="text-gray-300 text-xs sm:text-base">Keep your favorite tools and connect them effortlessly with real-time data flow.</p>
           </div>
         </div>
-        <Link href="/contact">
+        <Link href="/support">
           <button className={buttonVariants({ 
             variant: "secondary", 
             size: "lg", 
@@ -558,15 +552,15 @@ export default function BleaumIntegrationsPage() {
             <li className="flex items-start gap-2 sm:gap-4">
               <CheckCircle2 className="w-6 h-6 sm:w-7 sm:h-7 text-cyan-400 mt-1 flex-shrink-0" />
               <div>
-                <span className="font-semibold text-white text-sm sm:text-base">Seed-to-sale compliance</span>
-                <div className="text-gray-300 text-xs sm:text-base">We sync directly with Metrc & BioTrack, ensuring all inventory, sales, and delivery events are reported in real time.</div>
+                <span className="font-semibold text-white text-sm sm:text-base">Full traceability</span>
+                <div className="text-gray-300 text-xs sm:text-base">We sync directly with state tracking and reporting systems, ensuring all inventory, sales, and delivery events are reported in real time.</div>
               </div>
             </li>
             <li className="flex items-start gap-2 sm:gap-4">
               <CheckCircle2 className="w-6 h-6 sm:w-7 sm:h-7 text-cyan-400 mt-1 flex-shrink-0" />
               <div>
                 <span className="font-semibold text-white text-sm sm:text-base">Connected ecosystem</span>
-                <div className="text-gray-300 text-xs sm:text-base">We integrate with tools like QuickBooks, Springbig, Google Analytics, Leafly, Weedmaps, IDScan, and others—so your data flows where it needs to.</div>
+                <div className="text-gray-300 text-xs sm:text-base">We integrate with analytics, loyalty, ID verification, marketplace and payment tools, and others—so your data flows where it needs to.</div>
               </div>
             </li>
             <li className="flex items-start gap-2 sm:gap-4">

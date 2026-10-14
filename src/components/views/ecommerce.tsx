@@ -110,13 +110,13 @@ export default function Home() {
           {[
             {
               title: "SEO-Native Web & Mobile Storefronts",
-              description: "No iFrames. No embeds. Just your brand, your domain, and full search visibility. Unlike competitors who use embedded menus that can't be crawled by Google, Bleaum provides a fully native, SEO-optimized web portal.",
+              description: "No iFrames. No embeds. Just your brand, your domain, and full search visibility. Unlike competitors who use embedded storefronts that can't be crawled by Google, Bleaum provides a fully native, SEO-optimized web portal.",
               quote: "Our products actually show up in Google searches now.",
               icon: <Globe className="w-12 h-12 text-blue-400" />
             },
             {
               title: "Real-Time POS Integration",
-              description: "No bridges. No manual syncing. Every eCommerce order automatically syncs with inventory, delivery dispatch, Metrc compliance, and payments.",
+              description: "No bridges. No manual syncing. Every eCommerce order automatically syncs with inventory, delivery dispatch, state compliance reporting, and payments.",
               quote: "Everything just works together. No more double-entry.",
               icon: <RefreshCw className="w-12 h-12 text-blue-400" />
             },
@@ -129,7 +129,7 @@ export default function Home() {
             {
               title: "Built-In Loyalty & Engagement",
               description: "QR code rewards, tiered loyalty programs, BOGOs, bundles, push notifications, and referral tracking — all in one system.",
-              quote: "Customer retention went up 40% with the loyalty features.",
+              quote: "The loyalty features keep our customers coming back.",
               icon: <Star className="w-12 h-12 text-blue-400" />
             }
           ].map((feature, index) => (
@@ -177,7 +177,7 @@ export default function Home() {
                   {
                     feature: "SEO-friendly native web store",
                     bleaum: "Yes — Google-crawlable",
-                    competitors: "Embedded menus only"
+                    competitors: "Embedded storefronts only"
                   },
                   {
                     feature: "Fully branded mobile app",
@@ -393,7 +393,7 @@ export default function Home() {
         </h2>
         <ul className="list-none space-y-4 text-lg text-gray-300 max-w-2xl mx-auto">
           {[ 
-            "Metrc, BioTrack & state integrations",
+            "State tracking and reporting integrations",
             "Encrypted + backed-up data",
             "Full audit trails & staff permissions",
             "PCI DSS compliant payments",
@@ -430,13 +430,13 @@ export default function Home() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-lg text-gray-300 max-w-4xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} viewport={{ once: true }} className="flex items-center justify-center space-x-2 p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors duration-300">
-             <ShoppingCart className="w-5 h-5 text-blue-400"/><span>Cannabis Retail & Delivery</span>
+             <ShoppingCart className="w-5 h-5 text-blue-400"/><span>Retail & Specialty Stores</span>
           </motion.div>
            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} viewport={{ once: true }} className="flex items-center justify-center space-x-2 p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors duration-300">
-            <MessageSquare className="w-5 h-5 text-blue-400"/> <span>Pharmacies & Wellness Retail</span>
+            <MessageSquare className="w-5 h-5 text-blue-400"/> <span>Wholesale & Distribution</span>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} viewport={{ once: true }} className="flex items-center justify-center space-x-2 p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors duration-300">
-            <Building2 className="w-5 h-5 text-blue-400"/><span>High-Compliance General Retail</span>
+            <Building2 className="w-5 h-5 text-blue-400"/><span>Regulated Markets</span>
           </motion.div>
         </div>
       </motion.section> */}
@@ -457,9 +457,7 @@ export default function Home() {
         </h2>
         <div className="flex flex-wrap justify-center gap-6 text-lg font-medium text-gray-300">
           {[
-            "QuickBooks",
-            "Weedmaps",
-            "Leafly",
+            "QuickBooks (coming soon)",
             "Custom API Access"
           ].map((item, index) => (
              <motion.span
@@ -545,7 +543,7 @@ export default function Home() {
           <motion.div
             className="flex gap-8"
             animate={{
-              x: [0, -100 * 7] // Adjust based on number of testimonials
+              x: [0, -352 * 4] // one set: 4 cards x (w-80 + gap-8)
             }}
             transition={{
               x: {
@@ -556,8 +554,8 @@ export default function Home() {
               },
             }}
           >
-            {/* Duplicate testimonials for seamless loop */}
-            {[
+            {/* Listed once, rendered twice for the seamless loop */}
+            {[0, 1].flatMap(() => [
               {
                 quote: "Our products actually show up in Google searches now. The SEO-native storefront was a game changer.",
                 author: "Casey, Oklahoma",
@@ -565,11 +563,11 @@ export default function Home() {
               },
               {
                 quote: "Having our own branded app made us feel like a real tech company. Customers love it.",
-                author: "Abigail, California,", 
+                author: "Abigail, California",
                 company: "Park Social"
               },
               {
-                quote: "The loyalty program doubled our repeat customers. Everything syncs perfectly with our POS.",
+                quote: "Everything syncs perfectly with our POS.",
                 author: "AJ, Oklahoma",
                 company: "Happy Root"
               },
@@ -578,28 +576,7 @@ export default function Home() {
                 author: "Will, Oklahoma",
                 company: "Gold Leaf"
               },
-              // Duplicated testimonials for endless loop effect
-              {
-                quote: "Our products actually show up in Google searches now. The SEO-native storefront was a game changer.",
-                author: "Samantha, Michigan",
-                company: "Peoples Place"
-              },
-              {
-                quote: "Having our own branded app made us feel like a real tech company. Customers love it.",
-                author: "Abigail, California,", 
-                company: "Park Social"
-              },
-              {
-                quote: "The loyalty program doubled our repeat customers. Everything syncs perfectly with our POS.",
-                author: "AJ, Oklahoma",
-                company: "Happy Root"
-              },
-              {
-                quote: "Real-time inventory sync means no more overselling online. It just works.",
-                author: "Will, Oklahoma",
-                company: "Gold Leaf"
-              },
-            ].map((testimonial, index) => (
+            ]).map((testimonial, index) => (
               <div
                 key={index}
                 className="flex-shrink-0 w-80 p-6 bg-white/5 backdrop-filter backdrop-blur-lg rounded-xl border border-white/10 hover:border-white/20 transition-all duration-300"
@@ -651,9 +628,9 @@ export default function Home() {
           <div className="relative">
             <select name="businessType" value={formData.businessType} onChange={handleChange} className="appearance-none w-full rounded-lg border border-slate-300 bg-white/80 px-3 sm:px-4 py-2.5 sm:py-3 text-slate-900 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-cyan-400 pr-10" required>
               <option value="">What type of business are you:</option>
-              <option value="Marketing">Marketing</option>
-              <option value="Ecommerce">Ecommerce</option>
-              <option value="Delivery">Delivery</option>
+              <option value="Retail">Retail</option>
+              <option value="Wholesale">Wholesale</option>
+              <option value="Distribution">Distribution</option>
               <option value="Other">Other</option>
             </select>
             <label htmlFor="business-description" className="block mt-4 mb-1 text-white text-sm sm:text-base font-medium">Describe your business</label>

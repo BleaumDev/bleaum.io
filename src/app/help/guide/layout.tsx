@@ -1,4 +1,10 @@
 import { ReactNode } from 'react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Help Guide',
+  description: 'Step-by-step help for using the Bleaum POS.',
+};
 
 export default function HelpGuideLayout({ children }: { children: ReactNode }) {
   return (
