@@ -11,7 +11,7 @@ export default function PosHelpGuidePage() {
           {/* POS Help Guide Section */}
           <section id="pos-help-guide" className="mb-16">
             <h1 className="text-5xl font-extrabold mb-10 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300 drop-shadow-lg">POS Help Guide</h1>
-            {/* <Image src="/poshelpguide.jpg" alt="POS Help Guide" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" /> */}
+            {/* <Image src="/help/poshelpguide.jpg" alt="POS Help Guide" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" /> */}
             
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-100 mb-4">Side Settings Panel (Spinning Gear Icon)</h2>
@@ -29,7 +29,7 @@ export default function PosHelpGuidePage() {
               <h2 className="text-3xl font-bold mb-3 text-blue-400 drop-shadow-sm tracking-tight">Queue Tab</h2>
               <p className="text-gray-300 mb-4 leading-relaxed">Manage customers entering your shop with three main actions:</p>
               <div className="flex justify-center">
-                <Image src="/addtoqueue.jpg" alt="Add to Queue" width={600} height={300} className="rounded-xl shadow-lg my-6 transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+                <Image src="/help/addtoqueue.jpg" alt="Add to Queue" width={600} height={300} className="rounded-xl shadow-lg my-6 transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
               </div>
             </div>
 
@@ -38,7 +38,7 @@ export default function PosHelpGuidePage() {
               <h2 className="text-3xl font-bold mb-3 text-blue-400 drop-shadow-sm tracking-tight">Add Customer</h2>
               <p className="text-gray-300 mb-4 leading-relaxed">Upload customer medical ID or driver&apos;s license manually, scan ID, or upload images.</p>
               <div className="flex justify-center">
-                <Image src="/addcustomer.jpg" alt="Add Customer" width={600} height={300} className="rounded-xl shadow-lg my-6 transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+                <Image src="/help/addcustomer.jpg" alt="Add Customer" width={600} height={300} className="rounded-xl shadow-lg my-6 transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
               </div>
             </div>
 
@@ -47,7 +47,7 @@ export default function PosHelpGuidePage() {
               <h2 className="text-3xl font-bold mb-3 text-blue-400 drop-shadow-sm tracking-tight">Customer Queue</h2>
               <p className="text-gray-300 leading-relaxed">Manage customers entering your shop with three main actions:</p>
               <div className="flex justify-center">
-                <Image src="/customerqueue.jpg" alt="Customer Queue" width={600} height={300} className="rounded-xl shadow-lg my-6 transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+                <Image src="/help/customerqueue.jpg" alt="Customer Queue" width={600} height={300} className="rounded-xl shadow-lg my-6 transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
               </div>
             </div>
 
@@ -109,7 +109,7 @@ export default function PosHelpGuidePage() {
                   </ul>
                 </div>
               </div>
-              <Image src="/appearancesetting.jpg" alt="Appearance Settings" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+              <Image src="/help/appearancesetting.jpg" alt="Appearance Settings" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
             </div>
 
             {/* Quick Summary */}

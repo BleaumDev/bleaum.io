@@ -201,7 +201,7 @@ export function Logo() {
   return (
     <Link href="/" className="flex items-center">
       <Image
-        src="/bleaum White.png"
+        src="/brand/bleaum-white.png"
         alt="Bleaum Logo"
         width={90}
         height={16}

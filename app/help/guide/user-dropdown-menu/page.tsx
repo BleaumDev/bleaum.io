@@ -18,14 +18,14 @@ export default function UserDropdownMenuPage() {
               <h2 className="text-3xl font-bold mb-3 text-blue-400 drop-shadow-sm tracking-tight">Clock In / Clock Out</h2>
               <p className="text-gray-300 mb-4 leading-relaxed">PIN-based clocking ensures secure and accurate time tracking.</p>
               <div className="flex justify-center">
-                <Image src="/clockin.jpg" alt="Clock In" width={350} height={200} className="rounded-xl shadow-lg my-6 transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+                <Image src="/help/clockin.jpg" alt="Clock In" width={350} height={200} className="rounded-xl shadow-lg my-6 transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
               </div>
             </div>
 
             {/* Profile Section */}
             <div id="profile-section" className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-100 mb-4">Profile Section</h2>
-              <Image src="/profilsection.jpg" alt="Profile Section" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+              <Image src="/help/profilsection.jpg" alt="Profile Section" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
               <p className="text-gray-300 mb-4">Inside Profile, there are three tabs:</p>
 
               <div className="space-y-6">
@@ -40,7 +40,7 @@ export default function UserDropdownMenuPage() {
 
                 <div>
                   <h3 className="text-xl font-semibold text-gray-100 mb-2">PIN Settings</h3>
-                  <Image src="/personalpin.jpg" alt="Personal PIN settings" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+                  <Image src="/help/personalpin.jpg" alt="Personal PIN settings" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
                   <ul className="list-disc list-inside text-gray-300 space-y-2">
                     <li>Set or change your PIN used for Clock In/Out and order processing.</li>
                     <li>How:
@@ -54,7 +54,7 @@ export default function UserDropdownMenuPage() {
 
                 <div>
                   <h3 className="text-xl font-semibold text-gray-100 mb-2">QR Code</h3>
-                  <Image src="/qrcode%20.jpg" alt="QR Code" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+                  <Image src="/help/qrcode.jpg" alt="QR Code" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
                   <ul className="list-disc list-inside text-gray-300 space-y-2">
                     <li>Generate a new QR code tied to your profile.</li>
                     <li>Print your QR code if desired.</li>
@@ -72,7 +72,7 @@ export default function UserDropdownMenuPage() {
             {/* Share Mode Section */}
             <div id="share-mode" className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-100 mb-4">Turn on Share Mode</h2>
-              <Image src="/turnonsharemode.jpg" alt="Turn on Share Mode" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+              <Image src="/help/turnonsharemode.jpg" alt="Turn on Share Mode" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
               
               <div className="space-y-4">
                 <div>
@@ -95,7 +95,7 @@ export default function UserDropdownMenuPage() {
             {/* Logout Section */}
             <div id="logout" className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-100 mb-4">Logout</h2>
-              <Image src="/logout.jpg" alt="Logout option in dropdown" width={300} height={200} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+              <Image src="/help/logout.jpg" alt="Logout option in dropdown" width={300} height={200} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
               <ul className="list-disc list-inside text-gray-300 space-y-2">
                 <li>Click Logout to immediately sign out of the platform.</li>
                 <li>You will be redirected to the login page.</li>

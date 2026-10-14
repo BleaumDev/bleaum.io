@@ -11,7 +11,7 @@ export default function ActionIconsPage() {
           {/* Action Icons Section */}
           <section id="action-icons" className="mb-16">
             <h1 className="text-5xl font-extrabold mb-10 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300 drop-shadow-lg">Action Icons</h1>
-            <Image src="/bolt.jpg" alt="Lightning bolt, bell, and chat icons" width={400} height={100} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+            <Image src="/help/bolt.jpg" alt="Lightning bolt, bell, and chat icons" width={400} height={100} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
             <p className="text-gray-300 mb-6">Directly below the user&apos;s name, you&apos;ll see three action icons. Each one gives quick access to important real-time tools.</p>
 
             {/* Lightning Bolt Icon Section */}

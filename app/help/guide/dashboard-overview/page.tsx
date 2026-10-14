@@ -16,7 +16,7 @@ export default function DashboardOverviewPage() {
             {/* Top Section */}
             <div id="top-section" className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-100 mb-4">Top Section: Welcome & Quick Overview</h2>
-              <Image src="/dashboard.jpg" alt="Dashboard top section with welcome message and summaries" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+              <Image src="/help/dashboard.jpg" alt="Dashboard top section with welcome message and summaries" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
               <ul className="list-disc list-inside text-gray-300 space-y-2">
                 <li>Welcome Message: A quick greeting with user personalization.</li>
                 <li>Due Tasks Summary: View any pending tasks directly on login.</li>
@@ -27,7 +27,7 @@ export default function DashboardOverviewPage() {
             {/* Middle Section: Interactive Graphs */}
             <div id="interactive-graphs" className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-100 mb-4">Middle Section: Interactive Graphs</h2>
-              <Image src="/dashboardmidsection.jpg" alt="Dashboard middle section with charts and quick links" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+              <Image src="/help/dashboardmidsection.jpg" alt="Dashboard middle section with charts and quick links" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
               <div className="overflow-x-auto">
                 <table className="min-w-full">
                   <thead>

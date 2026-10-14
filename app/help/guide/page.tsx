@@ -9,7 +9,7 @@ export default function HelpGuidePage() {
           {/* Side Settings Panel Section */}
           <section className="mb-16">
             <h1 className="text-5xl font-extrabold mb-10 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300 drop-shadow-lg">POS Help Guide</h1>
-            {/* <Image src="/poshelpguide.jpg" alt="POS Help Guide" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" /> */}
+            {/* <Image src="/help/poshelpguide.jpg" alt="POS Help Guide" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" /> */}
             
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-100 mb-4">Side Settings Panel (Spinning Gear Icon)</h2>
@@ -26,21 +26,21 @@ export default function HelpGuidePage() {
             <div className="mb-16 pb-12 border-b border-slate-700/40">
               <h2 className="text-3xl font-bold mb-3 text-blue-400 drop-shadow-sm tracking-tight">Queue Tab</h2>
               <p className="text-gray-300 mb-4 leading-relaxed">Manage customers entering your shop with three main actions:</p>
-              <Image src="/addtoqueue.jpg" alt="Add to Queue" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+              <Image src="/help/addtoqueue.jpg" alt="Add to Queue" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
             </div>
 
             {/* Add Customer Section */}
             <div className="mb-16 pb-12 border-b border-slate-700/40">
               <h2 className="text-3xl font-bold mb-3 text-blue-400 drop-shadow-sm tracking-tight">Add Customer</h2>
               <p className="text-gray-300 mb-4 leading-relaxed">Upload customer medical ID or driver&apos;s license manually, scan ID, or upload images.</p>
-              <Image src="/addcustomer.jpg" alt="Add Customer" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+              <Image src="/help/addcustomer.jpg" alt="Add Customer" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
             </div>
 
             {/* Customer Queue Section */}
             <div className="mb-16 pb-12 border-b border-slate-700/40">
               <h2 className="text-3xl font-bold mb-3 text-blue-400 drop-shadow-sm tracking-tight">Customer Queue</h2>
               <p className="text-gray-300 leading-relaxed">Manage customers entering your shop with three main actions:</p>
-              <Image src="/customerqueue.jpg" alt="Customer Queue" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+              <Image src="/help/customerqueue.jpg" alt="Customer Queue" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
             </div>
 
             {/* Activity Tab Section */}
@@ -129,7 +129,7 @@ export default function HelpGuidePage() {
                   </ul>
                 </div>
               </div>
-              <Image src="/appearancesetting.jpg" alt="Appearance Settings" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+              <Image src="/help/appearancesetting.jpg" alt="Appearance Settings" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
             </div>
 
             {/* Quick Summary */}
@@ -149,14 +149,14 @@ export default function HelpGuidePage() {
               <h2 className="text-3xl font-bold mb-3 text-blue-400 drop-shadow-sm tracking-tight">Clock In / Clock Out</h2>
               <p className="text-gray-300 mb-4 leading-relaxed">PIN-based clocking ensures secure and accurate time tracking.</p>
               <div className="flex justify-center">
-                <Image src="/clockin.jpg" alt="Clock In" width={350} height={200} className="rounded-xl shadow-lg my-6 transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+                <Image src="/help/clockin.jpg" alt="Clock In" width={350} height={200} className="rounded-xl shadow-lg my-6 transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
               </div>
             </div>
 
             {/* Profile Section */}
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-100 mb-4">Profile Section</h2>
-              <Image src="/profilsection.jpg" alt="Profile Section" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+              <Image src="/help/profilsection.jpg" alt="Profile Section" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
               <p className="text-gray-300 mb-4">Inside Profile, there are three tabs:</p>
 
               <div className="space-y-6">
@@ -171,7 +171,7 @@ export default function HelpGuidePage() {
 
                 <div>
                   <h3 className="text-xl font-semibold text-gray-100 mb-2">PIN Settings</h3>
-                  <Image src="/personalpin.jpg" alt="Personal PIN settings" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+                  <Image src="/help/personalpin.jpg" alt="Personal PIN settings" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
                   <ul className="list-disc list-inside text-gray-300 space-y-2">
                     <li>Set or change your PIN used for Clock In/Out and order processing.</li>
                     <li>How:
@@ -185,7 +185,7 @@ export default function HelpGuidePage() {
 
                 <div>
                   <h3 className="text-xl font-semibold text-gray-100 mb-2">QR Code</h3>
-                  <Image src="/qrcode%20.jpg" alt="QR Code" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+                  <Image src="/help/qrcode.jpg" alt="QR Code" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
                   <ul className="list-disc list-inside text-gray-300 space-y-2">
                     <li>Generate a new QR code tied to your profile.</li>
                     <li>Print your QR code if desired.</li>
@@ -203,7 +203,7 @@ export default function HelpGuidePage() {
             {/* Share Mode Section */}
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-100 mb-4">Turn on Share Mode</h2>
-              <Image src="/turnonsharemode.jpg" alt="Turn on Share Mode" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+              <Image src="/help/turnonsharemode.jpg" alt="Turn on Share Mode" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
               
               <div className="space-y-4">
                 <div>
@@ -226,7 +226,7 @@ export default function HelpGuidePage() {
             {/* Logout Section */}
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-100 mb-4">Logout</h2>
-              <Image src="/logout.jpg" alt="Logout option in dropdown" width={300} height={200} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+              <Image src="/help/logout.jpg" alt="Logout option in dropdown" width={300} height={200} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
               <ul className="list-disc list-inside text-gray-300 space-y-2">
                 <li>Click Logout to immediately sign out of the platform.</li>
                 <li>You will be redirected to the login page.</li>
@@ -243,7 +243,7 @@ export default function HelpGuidePage() {
           {/* Action Icons Section */}
           <section className="mb-16">
             <h1 className="text-5xl font-extrabold mb-10 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300 drop-shadow-lg">Action Icons</h1>
-            <Image src="/bolt.jpg" alt="Lightning bolt, bell, and chat icons" width={400} height={100} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+            <Image src="/help/bolt.jpg" alt="Lightning bolt, bell, and chat icons" width={400} height={100} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
             <p className="text-gray-300 mb-6">Directly below the user&apos;s name, you&apos;ll see three action icons. Each one gives quick access to important real-time tools.</p>
 
             {/* Lightning Bolt Icon Section */}
@@ -324,7 +324,7 @@ export default function HelpGuidePage() {
             {/* Top Section */}
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-100 mb-4">Top Section: Welcome & Quick Overview</h2>
-              <Image src="/dashboard.jpg" alt="Dashboard top section with welcome message and summaries" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+              <Image src="/help/dashboard.jpg" alt="Dashboard top section with welcome message and summaries" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
               <ul className="list-disc list-inside text-gray-300 space-y-2">
                 <li>Welcome Message: A quick greeting with user personalization.</li>
                 <li>Due Tasks Summary: View any pending tasks directly on login.</li>
@@ -335,7 +335,7 @@ export default function HelpGuidePage() {
             {/* Middle Section: Interactive Graphs */}
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-100 mb-4">Middle Section: Interactive Graphs</h2>
-              <Image src="/dashboardmidsection.jpg" alt="Dashboard middle section with charts and quick links" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+              <Image src="/help/dashboardmidsection.jpg" alt="Dashboard middle section with charts and quick links" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
               <div className="overflow-x-auto">
                 <table className="min-w-full">
                   <thead>
@@ -453,7 +453,7 @@ export default function HelpGuidePage() {
             {/* POS (Point of Sale) Subsection */}
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-100 mb-4">1. POS (Point of Sale)</h2>
-              <Image src="/processorder.jpg" alt="POS tabs" width={600} height={150} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+              <Image src="/help/processorder.jpg" alt="POS tabs" width={600} height={150} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
               <p className="text-gray-300 mb-4">The POS page has four tabs to manage all customer orders and transactions:</p>
               <div className="overflow-x-auto mb-6">
                 <table className="min-w-full">
@@ -487,8 +487,8 @@ export default function HelpGuidePage() {
               {/* Add Customers Subsection (within POS) */}
               <div className="mb-6">
                 <h3 className="text-xl font-semibold text-gray-100 mb-2">➔ Add Customers</h3>
-                <Image src="/addcustomer1.jpg" alt="Select Customer and Add buttons" width={600} height={100} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
-                <Image src="/addcustomer2.jpg" alt="Add Customer modal" width={600} height={400} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+                <Image src="/help/addcustomer1.jpg" alt="Select Customer and Add buttons" width={600} height={100} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+                <Image src="/help/addcustomer2.jpg" alt="Add Customer modal" width={600} height={400} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
                 <ul className="list-disc list-inside text-gray-300 space-y-2">
                   <li>Add Button (&quot;Add&quot;): Create a new customer profile from scratch.</li>
                   <li>Customer Search Dropdown: Search customers by:
@@ -508,7 +508,7 @@ export default function HelpGuidePage() {
               {/* Line Items Section (within POS) */}
               <div className="mb-6">
                 <h3 className="text-xl font-semibold text-gray-100 mb-2">➔ Line Items Section (Product Selection)</h3>
-                <Image src="/scanandmanage.jpg" alt="Scan Receipt Barcode and Manage Cart Items buttons" width={600} height={100} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+                <Image src="/help/scanandmanage.jpg" alt="Scan Receipt Barcode and Manage Cart Items buttons" width={600} height={100} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
                 <p className="text-gray-300 mb-2">Two Ways to Add Products:</p>
                 <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
                   <li>Scan the Product Barcode, or</li>
@@ -564,7 +564,7 @@ export default function HelpGuidePage() {
               {/* Order Summary & Checkout (within POS) */}
               <div className="mb-6">
                 <h3 className="text-xl font-semibold text-gray-100 mb-2">➔ Order Summary & Checkout</h3>
-                <Image src="/ordersummaryandcheckout.jpg" alt="Order Summary and Checkout" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
+                <Image src="/help/ordersummaryandcheckout.jpg" alt="Order Summary and Checkout" width={600} height={300} className="rounded-xl shadow-lg my-6 mx-auto transition-transform duration-300 hover:scale-105 hover:shadow-2xl" />
                 <h4 className="text-lg font-semibold text-gray-200 mb-2">Top Summary Actions:</h4>
                 <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
                   <li>Miscellaneous Charge: Add any extra charge.</li>

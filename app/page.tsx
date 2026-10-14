@@ -92,7 +92,7 @@ export default function Home() {
           {/* Background image for hero section */}
           <div className="absolute inset-0 z-0">
             <img
-              src="/background.png"
+              src="/marketing/background.png"
               alt="Background"
               className="w-full h-full object-cover opacity-60 blur-sm scale-105"
               style={{ filter: 'blur(2px)', objectPosition: 'center' }}
@@ -310,7 +310,7 @@ export default function Home() {
               <div
                 className="relative w-full aspect-[16/9] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex items-center justify-center cursor-pointer group"
                 onClick={() => window.location.href = '/demo'}
-                style={{ backgroundImage: 'url(/IMAGE.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}
+                style={{ backgroundImage: 'url(/marketing/IMAGE.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}
               >
                 <div className="absolute inset-0 bg-black/30 backdrop-blur" />
                 <motion.button
@@ -396,63 +396,63 @@ export default function Home() {
               >
                 {[
                   {
-                    src: "/2.png",
+                    src: "/marketing/2.png",
                     alt: "pos",
                     title: "All-in-One POS System",
                     description: "Complete point-of-sale solution",
                     href: "/grow/point-of-sale",
                   },
                   {
-                    src: "/delivery.png",
+                    src: "/marketing/delivery.png",
                     alt: "Last Mile Delivery Solutions",
                     title: "Last Mile Delivery",
                     description: "Smart routing & tracking",
                     href: "/grow/delivery",
                   },
                   {
-                    src: "/bleaumpay.png",
+                    src: "/marketing/bleaumpay.png",
                     alt: "Bleaum Pay",
                     title: "Bleaum Pay",
                     description: "One Payment Platform. Fully Covered",
                     href: "/grow/payments",
                   },
                   {
-                    src: "/3.png",
+                    src: "/marketing/3.png",
                     alt: "Branded Mobile App Screenshot",
                     title: "Branded Mobile App",
                     description: "iOS & Android app ",
                     href: "/grow/ecommerce",
                   },
                   {
-                    src: "/5.png",
+                    src: "/marketing/5.png",
                     alt: "Human Support Staff Assisting Customer",
                     title: "Human Support",
                     description: "Real people, real solutions",
                     href: "/company/support",
                   },
                   {
-                    src:"/realtime.png",
+                    src:"/marketing/realtime.png",
                     alt: "Multi-Location Management",
                     title: "Multi-Location Ready",
                     description: "Scale across multiple locations",
                     href: "/grow/point-of-sale",
                   },
                   {
-                    src: "/7.png",
+                    src: "/marketing/7.png",
                     alt: "Secure & Compliant Platform",
                     title: "Secure & Compliant",
                     description: "Enterprise-grade security",
                     href: "/operations/automated-compilance",
                   },
                   {
-                    src: "/4.png",
+                    src: "/marketing/4.png",
                     alt: "Smart Receipts Drag and Drop Graphic",
                     title: "Smart Receipts",
                     description: "Dynamic receipts for every order",
                     href: "/grow/point-of-sale",
                   },
                   {
-                    src:"/inventory.png",
+                    src:"/marketing/inventory.png",
                     alt: "Real-Time Inventory Tracking",
                     title: "Real-Time Inventory",
                     description: "Live inventory management",
@@ -1106,7 +1106,7 @@ export default function Home() {
                   </blockquote>
                   <div className="flex items-center gap-3 sm:gap-4">
                     <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center overflow-hidden">
-                      <img src="/6.png" alt="Antonio Panella" className="object-cover w-full h-full" />
+                      <img src="/marketing/6.png" alt="Antonio Panella" className="object-cover w-full h-full" />
                     </div>
                     <div>
                       <div className="text-white font-bold text-sm sm:text-base">Antonio Panella</div>

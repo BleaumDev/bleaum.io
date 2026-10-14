@@ -80,7 +80,7 @@ export default function BleaumIntegrationsPage() {
       name: "METRC", 
       category: "TRACEABILITY", 
       description: "METRC seed-to-sale tracking system ensures complete compliance with state cannabis regulations and inventory management.",
-      logo: "/metrc.png",
+      logo: "/integrations/metrc.png",
       logoAlt: "METRC Logo",
       status: "Active"
     },
@@ -88,7 +88,7 @@ export default function BleaumIntegrationsPage() {
       name: "BioTrack", 
       category: "TRACEABILITY", 
       description: "BioTrack provides comprehensive seed-to-sale tracking and compliance solutions for cannabis businesses.",
-      logo: "/biotrack.png",
+      logo: "/integrations/biotrack.png",
       logoAlt: "BioTrack Logo",
       status: "Active"
     },
@@ -96,7 +96,7 @@ export default function BleaumIntegrationsPage() {
       name: "IDScan", 
       category: "ID VERIFICATION", 
       description: "IDScan provides secure ID verification and customer check-in solutions for cannabis retail locations.",
-      logo: "/idscan.png",
+      logo: "/integrations/idscan.png",
       logoAlt: "IDScan Logo",
       status: "Active"
     },
@@ -106,7 +106,7 @@ export default function BleaumIntegrationsPage() {
       name: "QuickBooks", 
       category: "ACCOUNTING", 
       description: "QuickBooks integration for seamless financial management and automated bookkeeping for your cannabis business.",
-      logo: "/quickbooks.png",
+      logo: "/integrations/quickbooks.png",
       logoAlt: "QuickBooks Logo",
       status: "Coming Soon"
     },
@@ -114,7 +114,7 @@ export default function BleaumIntegrationsPage() {
       name: "Merchant Club USA", 
       category: "PAYMENTS", 
       description: "Merchant Club USA provides secure payment processing solutions specifically designed for cannabis businesses.",
-      logo: "/MERCHANT.png",
+      logo: "/integrations/MERCHANT.png",
       logoAlt: "Merchant Club USA Logo",
       status: "Active"
     },
@@ -122,7 +122,7 @@ export default function BleaumIntegrationsPage() {
       name: "Aeropay", 
       category: "PAYMENTS", 
       description: "Aeropay offers digital payment solutions that help cannabis businesses accept secure, compliant transactions.",
-      logo: "/aeropay.png",
+      logo: "/integrations/aeropay.png",
       logoAlt: "Aeropay Logo",
       status: "Active"
     },
@@ -132,7 +132,7 @@ export default function BleaumIntegrationsPage() {
       name: "GrowFlow", 
       category: "INVENTORY", 
       description: "GrowFlow provides comprehensive inventory management and cultivation tracking for cannabis operations.",
-      logo: "/growflow1.png",
+      logo: "/integrations/growflow1.png",
       logoAlt: "GrowFlow Logo",
       status: "Active"
     },
@@ -140,7 +140,7 @@ export default function BleaumIntegrationsPage() {
       name: "Lightspeed", 
       category: "POINT OF SALE", 
       description: "Lightspeed retail POS system integration for streamlined cannabis retail operations and inventory management.",
-      logo: "/lightspeed.png",
+      logo: "/integrations/lightspeed.png",
       logoAlt: "Lightspeed Logo",
       status: "Active"
     },
@@ -148,7 +148,7 @@ export default function BleaumIntegrationsPage() {
       name: "Treez", 
       category: "POINT OF SALE", 
       description: "Treez is a comprehensive cannabis retail platform offering POS, inventory, and compliance management.",
-      logo: "/treez.png",
+      logo: "/integrations/treez.png",
       logoAlt: "Treez Logo",
       status: "Active"
     },
@@ -156,7 +156,7 @@ export default function BleaumIntegrationsPage() {
       name: "Cova", 
       category: "POINT OF SALE", 
       description: "Cova provides cannabis retail software with POS, inventory management, and compliance reporting features.",
-      logo: "/cova.png",
+      logo: "/integrations/cova.png",
       logoAlt: "Cova Logo",
       status: "Active"
     },
@@ -164,7 +164,7 @@ export default function BleaumIntegrationsPage() {
       name: "Indica Online", 
       category: "POINT OF SALE", 
       description: "Indica Online offers cannabis retail software with integrated POS, inventory, and customer management tools.",
-      logo: "/indicaonlinr.png",
+      logo: "/integrations/indicaonlinr.png",
       logoAlt: "Indica Online Logo",
       status: "Active"
     },
@@ -172,7 +172,7 @@ export default function BleaumIntegrationsPage() {
       name: "Weave", 
       category: "CUSTOMER MANAGEMENT", 
       description: "Weave provides customer communication and business management tools for cannabis retailers.",
-      logo: "/weave.png",
+      logo: "/integrations/weave.png",
       logoAlt: "Weave Logo",
       status: "Active"
     },
@@ -182,7 +182,7 @@ export default function BleaumIntegrationsPage() {
       name: "Leafly", 
       category: "MARKETPLACE", 
       description: "Leafly is the world's largest cannabis marketplace, connecting consumers with cannabis retailers and brands.",
-      logo: "/leafly.png",
+      logo: "/integrations/leafly.png",
       logoAlt: "Leafly Logo",
       status: "Active"
     },
@@ -190,7 +190,7 @@ export default function BleaumIntegrationsPage() {
       name: "Weedmaps", 
       category: "MARKETPLACE", 
       description: "Weedmaps is a leading cannabis discovery platform that connects consumers with local dispensaries and delivery services.",
-      logo: "/weedmaps.png",
+      logo: "/integrations/weedmaps.png",
       logoAlt: "Weedmaps Logo",
       status: "Active"
     },
@@ -200,7 +200,7 @@ export default function BleaumIntegrationsPage() {
       name: "Springbig", 
       category: "LOYALTY", 
       description: "Springbig provides customer loyalty and marketing automation platform designed specifically for cannabis retailers.",
-      logo: "/springbig.png",
+      logo: "/integrations/springbig.png",
       logoAlt: "Springbig Logo",
       status: "Active"
     },
@@ -208,7 +208,7 @@ export default function BleaumIntegrationsPage() {
       name: "Blackleaf", 
       category: "MARKETING", 
       description: "Blackleaf offers comprehensive marketing and customer engagement tools for cannabis businesses.",
-      logo: "/blackleaf.png",
+      logo: "/integrations/blackleaf.png",
       logoAlt: "Blackleaf Logo",
       status: "Active"
     },
@@ -216,7 +216,7 @@ export default function BleaumIntegrationsPage() {
       name: "Green Dispensary Marketing", 
       category: "MARKETING", 
       description: "GREEN Dispensary is a leading cannabis retail partner providing marketing and customer engagement solutions.",
-      logo: "/greendispensary.jpg",
+      logo: "/integrations/greendispensary.jpg",
       logoAlt: "GREEN Dispensary Logo",
       status: "Active"
     },
@@ -226,7 +226,7 @@ export default function BleaumIntegrationsPage() {
       name: "Google Analytics", 
       category: "ANALYTICS", 
       description: "Google Analytics integration provides comprehensive web analytics and customer behavior insights for your cannabis business.",
-      logo: "/googleanalytics.png",
+      logo: "/integrations/googleanalytics.png",
       logoAlt: "Google Analytics Logo",
       status: "Active"
     },
@@ -236,7 +236,7 @@ export default function BleaumIntegrationsPage() {
       name: "AI Reporting", 
       category: "ANALYTICS", 
       description: "Advanced AI-powered reporting and insights platform to help you understand your business performance and growth opportunities.",
-      logo: "/aireporting.png",
+      logo: "/integrations/aireporting.png",
       logoAlt: "AI Reporting Logo",
       status: "Coming Soon",
       isComingSoon: true
@@ -335,30 +335,30 @@ export default function BleaumIntegrationsPage() {
         
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6 max-w-6xl mx-auto">
           {[
-            { name: "METRC", logo: "/metrc.png", category: "Compliance" },
-            { name: "BioTrack", logo: "/biotrack.png", category: "Compliance" },
-            { name: "QuickBooks", logo: "/quickbooks.png", category: "Accounting" },
-            { name: "Lightspeed", logo: "/lightspeed.png", category: "POS" },
-            { name: "Treez", logo: "/treez.png", category: "POS" },
-            { name: "Cova", logo: "/cova.png", category: "POS" },
-            { name: "Indica Online", logo: "/indicaonlinr.png", category: "POS" },
-            { name: "GrowFlow", logo: "/growflow1.png", category: "Inventory" },
-            { name: "Weave", logo: "/weave.png", category: "CRM" },
-            { name: "Leafly", logo: "/leafly.png", category: "Marketplace" },
-            { name: "Weedmaps", logo: "/weedmaps.png", category: "Marketplace" },
-            { name: "Springbig", logo: "/springbig.png", category: "Loyalty" },
-            { name: "Blackleaf", logo: "/blackleaf.png", category: "Marketing" },
-            { name: "Google Analytics", logo: "/googleanalytics.png", category: "Analytics" },
-            { name: "Merchant Club", logo: "/MERCHANT.png", category: "Payments" },
-            { name: "Aeropay", logo: "/aeropay.png", category: "Payments" },
-            { name: "IDScan", logo: "/idscan.png", category: "Verification" },
-            { name: "AI Reporting", logo: "/aireporting.png", category: "Analytics" },
-            { name: "GREEN Dispensary Marketing", logo: "/greendispensary.jpg", category: "Marketing" },
-            { name: "Microsoft Azure", logo: "/azure.jpg", category: "Partners" },
-            { name: "Google", logo: "/google.jpg", category: "Startups" },
+            { name: "METRC", logo: "/integrations/metrc.png", category: "Compliance" },
+            { name: "BioTrack", logo: "/integrations/biotrack.png", category: "Compliance" },
+            { name: "QuickBooks", logo: "/integrations/quickbooks.png", category: "Accounting" },
+            { name: "Lightspeed", logo: "/integrations/lightspeed.png", category: "POS" },
+            { name: "Treez", logo: "/integrations/treez.png", category: "POS" },
+            { name: "Cova", logo: "/integrations/cova.png", category: "POS" },
+            { name: "Indica Online", logo: "/integrations/indicaonlinr.png", category: "POS" },
+            { name: "GrowFlow", logo: "/integrations/growflow1.png", category: "Inventory" },
+            { name: "Weave", logo: "/integrations/weave.png", category: "CRM" },
+            { name: "Leafly", logo: "/integrations/leafly.png", category: "Marketplace" },
+            { name: "Weedmaps", logo: "/integrations/weedmaps.png", category: "Marketplace" },
+            { name: "Springbig", logo: "/integrations/springbig.png", category: "Loyalty" },
+            { name: "Blackleaf", logo: "/integrations/blackleaf.png", category: "Marketing" },
+            { name: "Google Analytics", logo: "/integrations/googleanalytics.png", category: "Analytics" },
+            { name: "Merchant Club", logo: "/integrations/MERCHANT.png", category: "Payments" },
+            { name: "Aeropay", logo: "/integrations/aeropay.png", category: "Payments" },
+            { name: "IDScan", logo: "/integrations/idscan.png", category: "Verification" },
+            { name: "AI Reporting", logo: "/integrations/aireporting.png", category: "Analytics" },
+            { name: "GREEN Dispensary Marketing", logo: "/integrations/greendispensary.jpg", category: "Marketing" },
+            { name: "Microsoft Azure", logo: "/integrations/azure.jpg", category: "Partners" },
+            { name: "Google", logo: "/integrations/google.jpg", category: "Startups" },
             
-            { name: "Microsoft", logo: "/microsoft.png", category: "Startups" },
-            { name: "AWS", logo: "/AWS1.jpg", category: "Partners" }
+            { name: "Microsoft", logo: "/integrations/microsoft.png", category: "Startups" },
+            { name: "AWS", logo: "/integrations/AWS1.jpg", category: "Partners" }
           ].map((partner, index) => (
             <motion.div
               key={partner.name}
