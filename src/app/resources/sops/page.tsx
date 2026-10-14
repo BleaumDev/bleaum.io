@@ -23,7 +23,7 @@ const guides = [
 ];
 
 // Add details for each topic
-const topicDetails: { [key: string]: { icon: JSX.Element; title: string; description?: string; details: string[]; resources?: { label: string; url: string }[] } } = {
+const topicDetails: { [key: string]: { icon: React.JSX.Element; title: string; description?: string; details: string[]; resources?: { label: string; url: string }[] } } = {
   Compliance: {
     icon: <ShieldCheckIcon className="w-6 h-6 text-blue-500" />,
     title: "Compliance",

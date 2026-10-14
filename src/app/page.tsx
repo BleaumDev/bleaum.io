@@ -33,7 +33,7 @@ import {
   CreditCard,
 } from "lucide-react"
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
-import { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Head from "next/head"
 
@@ -550,7 +550,7 @@ export default function Home() {
                   description: "Empower your team with role-based access and training",
                   features: ["User roles", "Training modules", "Performance tracking"],
                 },
-              ].map((feature: { icon: JSX.Element; title: string; description: string; features: string[]; src?: string; alt?: string }, index: number) => (
+              ].map((feature: { icon: React.JSX.Element; title: string; description: string; features: string[]; src?: string; alt?: string }, index: number) => (
                 <motion.div
                   key={feature.title}
                   className="group relative"
@@ -1045,7 +1045,7 @@ export default function Home() {
                   icon: <Target className="w-6 h-6 sm:w-8 sm:h-8 text-white-400" />,
                   description: "No hidden fees, no surprises, just honest pricing",
                 },
-              ].map((feature: { title: string; icon: JSX.Element; description: string }, index: number) => (
+              ].map((feature: { title: string; icon: React.JSX.Element; description: string }, index: number) => (
                 <motion.div
                   key={feature.title}
                   className="group relative"
@@ -1139,7 +1139,7 @@ export default function Home() {
                     title: "Our Values",
                     description: "Transparency, reliability, and genuine care for our customers' success",
                   },
-                ].map((item: { icon: JSX.Element; title: string; description: string }, index: number) => (
+                ].map((item: { icon: React.JSX.Element; title: string; description: string }, index: number) => (
                   <motion.div
                     key={item.title}
                     className="flex gap-3 sm:gap-4"
@@ -1173,7 +1173,7 @@ export default function Home() {
                 { number: "50%", label: "Time Saved", icon: <Clock className="w-5 h-5 sm:w-6 sm:h-6" /> },
                 { number: "99.9%", label: "Uptime", icon: <Shield className="w-5 h-5 sm:w-6 sm:h-6" /> },
                 { number: "24/7", label: "Support", icon: <Headphones className="w-5 h-5 sm:w-6 sm:h-6" /> },
-              ].map((stat: { number: string; label: string; icon: JSX.Element }, index: number) => (
+              ].map((stat: { number: string; label: string; icon: React.JSX.Element }, index: number) => (
                 <motion.div
                   key={stat.label}
                   className="text-center bg-gradient-to-br from-blue-900/40 to-blue-800/20 backdrop-blur-xl border border-blue-700/30 rounded-xl sm:rounded-2xl p-4 sm:p-6"
@@ -1231,7 +1231,7 @@ export default function Home() {
                   description: "Full audit trails & granular staff permissions",
                   icon: <ScrollText className="w-6 h-6 sm:w-8 sm:h-8 text-white-400" />,
                 },
-              ].map((feature: { title: string; description: string; icon: JSX.Element }, index: number) => (
+              ].map((feature: { title: string; description: string; icon: React.JSX.Element }, index: number) => (
                 <motion.div
                   key={feature.title}
                   className="group relative"
@@ -1292,7 +1292,7 @@ export default function Home() {
                   description: "Any retail environment requiring detailed tracking and reporting",
                   icon: <Building2 className="w-8 h-8 sm:w-12 sm:h-12 text-blue-400" />,
                 },
-              ].map((industry: { title: string; description: string; icon: JSX.Element }, index: number) => (
+              ].map((industry: { title: string; description: string; icon: React.JSX.Element }, index: number) => (
                 <motion.div
                   key={industry.title}
                   className="group relative"
