@@ -199,10 +199,10 @@ export function Logo() {
   return (
     <Link href="/" className="flex items-center">
       <Image
-        src="/brand/bleaum-white.png"
+        src="/brand/bleaum-lockup-on-dark.svg"
         alt="Bleaum Logo"
-        width={90}
-        height={16}
+        width={108}
+        height={40}
         priority
         className="flex-shrink-0 -mt-1"
       />

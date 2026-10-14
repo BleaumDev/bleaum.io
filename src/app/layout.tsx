@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { ThemeProvider } from "@/components/contexts/theme-provider";
-import { Navbar } from "@/components/navbar";
+import { SiteHeader, SiteFooter } from "@/components/site-chrome";
 import { Space_Mono, Space_Grotesk } from "next/font/google";
-import { Footer } from "@/components/footer";
 import "@/styles/globals.css";
 import Script from 'next/script';
 import AnalyticsTracker from "@/components/AnalyticsTracker";
@@ -70,11 +69,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          <main className="sm:container mx-auto w-[90vw] h-auto scroll-smooth">
+          <SiteHeader />
+          <main id="main" className="sm:container mx-auto w-[90vw] h-auto scroll-smooth">
             {children}
           </main>
-          <Footer />
+          <SiteFooter />
           <AnalyticsTracker />
           <Script
             strategy="afterInteractive"

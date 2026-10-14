@@ -66,10 +66,10 @@ export function Footer() {
           <div className="mb-8 md:mb-0 lg:w-1/2">
             <div className="mb-6">
               <Image 
-                src="/brand/bleaum-white.png"
+                src="/brand/bleaum-lockup-on-dark.svg"
                 alt="Bleaum Logo"
                 width={130}
-                height={35}
+                height={48}
                 className="w-[130px]"
                 priority
               />
