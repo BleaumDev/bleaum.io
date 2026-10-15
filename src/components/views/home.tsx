@@ -1,17 +1,14 @@
 import type { CSSProperties, ReactNode } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { DemoLink, RevealOnScroll } from "./home-client"
+import { DemoLink } from "./home-client"
+import { HomeFx } from "./home-fx"
 import * as ui from "./home-ui"
 import * as c from "./home-content"
 import { Bloom } from "./bloom"
 
-// Marks an element for the scroll reveal; `i` staggers siblings. `cls` is the element's own classes.
-const rv = (i = 0, cls = "") => ({
-  "data-reveal": "",
-  className: `${ui.reveal} ${cls}`,
-  style: { transitionDelay: `${i * 70}ms` } as CSSProperties,
-})
+// Marks an element for the scroll reveal in home-fx.tsx. `cls` is the element's own classes.
+const rv = (cls = "") => ({ "data-fx": "reveal", className: cls })
 // Staggers the entrance animation of hero items.
 const rise = (i: number) => ({ style: { animationDelay: `${i * 90}ms` } as CSSProperties })
 
@@ -21,7 +18,7 @@ function DotMark({ small }: { small?: boolean }) {
 
 function Head({ id, title, subtitle, kicker }: { id: string; title: string; subtitle?: string; kicker?: string }) {
   return (
-    <div {...rv(0, "max-w-[60ch]")}>
+    <div {...rv("max-w-[60ch]")}>
       {kicker && <p className={`${ui.kicker} text-h-accent`}>{kicker}</p>}
       <h2 id={id} className={ui.h2}>{title}</h2>
       {subtitle && <p className="mt-2.5 text-[1.25rem] leading-[1.5] text-h-muted">{subtitle}</p>}
@@ -31,7 +28,7 @@ function Head({ id, title, subtitle, kicker }: { id: string; title: string; subt
 
 function Ticks({ items }: { items: string[] }) {
   return (
-    <ul className="mt-[18px]">
+    <ul data-fx="stagger" className="mt-[18px]">
       {items.map((t) => (
         <li key={t} className="relative py-[7px] pl-7 before:absolute before:left-1 before:top-4 before:size-2.5 before:rounded-full before:bg-copper-400">
           {t}
@@ -110,7 +107,7 @@ function Split({ kicker, title, text, bullets, quote, more, panel, flip }: Split
         )}
         <Quote quote={quote} />
       </div>
-      <div {...rv(1)}>{panel}</div>
+      <div {...rv()}>{panel}</div>
     </div>
   )
 }
@@ -128,12 +125,12 @@ export default function HomeView() {
   const { hero } = c
   return (
     <div data-page="home" className={ui.root}>
-      <RevealOnScroll />
+      <HomeFx />
 
       {/* Hero */}
-      <section className={`relative overflow-hidden text-white ${ui.heroBg}`} aria-labelledby="hero-h">
+      <section data-fx="hero" className={`relative overflow-hidden text-white ${ui.heroBg}`} aria-labelledby="hero-h">
         <Bloom />
-        <div className={`${ui.wrap} relative grid items-center gap-12 py-hero lg:grid-cols-[7fr_5fr] [&>*]:min-w-0`}>
+        <div data-fx="drift" className={`${ui.wrap} relative grid items-center gap-12 py-hero lg:grid-cols-[7fr_5fr] [&>*]:min-w-0`}>
           <div>
             <p {...rise(0)} className={`${ui.kicker} text-copper-400 animate-rise`}>{hero.kicker}</p>
             <h1 id="hero-h" {...rise(1)} className={`${ui.h1} animate-rise`}>
@@ -149,9 +146,10 @@ export default function HomeView() {
               </Link>
             </div>
           </div>
+          <div data-fx="tilt" {...rise(2)} className="w-[min(100%,340px)] animate-rise justify-self-center">
           <div
-            {...rise(2)}
-            className="w-[min(100%,340px)] animate-rise justify-self-center rounded-[34px] bg-navy-950 p-3.5 text-fog-100 shadow-[inset_0_0_0_1.5px_rgba(255,255,255,.22),0_40px_100px_-30px_rgba(223,151,112,.45)]"
+            data-fx="phone"
+            className="rounded-[34px] bg-navy-950 p-3.5 text-fog-100 shadow-[inset_0_0_0_1.5px_rgba(255,255,255,.22),0_40px_100px_-30px_rgba(223,151,112,.45)]"
             role="img"
             aria-label={hero.pos.alt}
           >
@@ -162,7 +160,7 @@ export default function HomeView() {
                 </span>
               ))}
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div data-fx="pos-items" className="grid grid-cols-2 gap-2">
               {hero.pos.items.map((it) => (
                 <div
                   key={it.name}
@@ -181,10 +179,11 @@ export default function HomeView() {
                 </div>
               ))}
             </div>
-            <div className="mt-3 flex justify-between rounded-xl bg-copper-400 px-3.5 py-[13px] text-[.875rem] font-semibold text-navy-900">
+            <div data-fx="pos-cart" className="mt-3 flex justify-between rounded-xl bg-copper-400 px-3.5 py-[13px] text-[.875rem] font-semibold text-navy-900">
               <span>{hero.pos.cart.label}</span>
               <span>{hero.pos.cart.total}</span>
             </div>
+          </div>
           </div>
         </div>
       </section>
@@ -194,8 +193,8 @@ export default function HomeView() {
         <div className={ui.wrap}>
           <Head id="prod-h" title={c.products.title} subtitle={c.products.subtitle} />
           <ul className={grid3}>
-            {c.products.items.map((p, i) => (
-              <li key={p.title} {...rv(i % 3)}>
+            {c.products.items.map((p) => (
+              <li key={p.title} {...rv()}>
                 <Link
                   className={`group flex h-full flex-col gap-2 rounded-card border border-h-line bg-h-surface p-6 ${ui.lift}`}
                   href={p.href}
@@ -235,7 +234,7 @@ export default function HomeView() {
                       ))}
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody data-fx="stagger">
                     {c.inventory.rows.map((r) => (
                       <tr key={r.name} className="transition-colors duration-200 hover:bg-white/[.04]">
                         <td className="border-b border-white/[.07] px-1.5 py-[11px]">{r.name}</td>
@@ -263,7 +262,7 @@ export default function HomeView() {
                   ))}
                 </div>
                 {/* Numbered steps joined by copper dot trails */}
-                <ol className="mt-[18px] [counter-reset:s]">
+                <ol data-fx="stagger" className="mt-[18px] [counter-reset:s]">
                   {c.delivery.steps.map((s) => (
                     <li
                       key={s.title}
@@ -307,7 +306,7 @@ export default function HomeView() {
                 <div className={visHead}>
                   <span>{c.receipts.complianceTitle}</span>
                 </div>
-                <ul className="px-1.5 py-1 text-[.9375rem] text-fog-300">
+                <ul data-fx="stagger" className="px-1.5 py-1 text-[.9375rem] text-fog-300">
                   {c.receipts.compliance.map((t) => (
                     <li key={t} className="py-1">
                       <span className="mr-2 text-copper-400" aria-hidden="true">✓</span>
@@ -327,7 +326,7 @@ export default function HomeView() {
           <Head id="video-h" title={c.video.title} subtitle={c.video.subtitle} />
           <Link
             href="/demo"
-            {...rv(1, "group relative mt-10 block aspect-video overflow-hidden rounded-card bg-navy-900 shadow-[0_0_0_1px_var(--h-line),0_30px_70px_-40px_rgba(11,30,49,.7)]")}
+            {...rv("group relative mt-10 block aspect-video overflow-hidden rounded-card bg-navy-900 shadow-[0_0_0_1px_var(--h-line),0_30px_70px_-40px_rgba(11,30,49,.7)]")}
           >
             <Image
               src={c.video.poster}
@@ -354,8 +353,8 @@ export default function HomeView() {
         <div className={ui.wrap}>
           <Head id="gallery-h" title={c.gallery.title} subtitle={c.gallery.subtitle} />
           <ul className={grid3}>
-            {c.gallery.items.map((it, i) => (
-              <li key={it.title} {...rv(i % 3)}>
+            {c.gallery.items.map((it) => (
+              <li key={it.title} {...rv()}>
                 <Link
                   href={it.href}
                   className={`group flex h-full flex-col overflow-hidden rounded-card border border-h-line bg-h-surface ${ui.lift}`}
@@ -388,8 +387,8 @@ export default function HomeView() {
         <div className={ui.wrap}>
           <Head id="why-h" title={c.why.title} subtitle={c.why.subtitle} />
           <ul className="mt-10 grid gap-x-10 border-t border-h-line md:grid-cols-2 lg:grid-cols-3">
-            {c.why.items.map((r, i) => (
-              <li key={r.title} {...rv(i % 3, "border-b border-h-line py-6")}>
+            {c.why.items.map((r) => (
+              <li key={r.title} {...rv("border-b border-h-line py-6")}>
                 <h3 className={ui.h3}>{r.title}</h3>
                 <p className="mt-1.5 text-h-muted">{r.description}</p>
               </li>
@@ -403,7 +402,7 @@ export default function HomeView() {
         <div className={ui.wrap}>
           <Head id="about-h" title={c.about.title} subtitle={c.about.subtitle} />
           <div className="mt-10 grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
-            <figure {...rv(0, "rounded-card bg-h-surface p-7 shadow-[inset_0_0_0_1.5px_var(--h-line)]")}>
+            <figure {...rv("rounded-card bg-h-surface p-7 shadow-[inset_0_0_0_1.5px_var(--h-line)]")}>
               <blockquote className="font-display text-quote font-medium leading-[1.45] tracking-[-.01em]">
                 <p>“{c.about.quote}”</p>
               </blockquote>
@@ -422,8 +421,8 @@ export default function HomeView() {
               </figcaption>
             </figure>
             <ul className="grid gap-7">
-              {c.about.values.map((v, i) => (
-                <li key={v.title} {...rv(i, "flex gap-4")}>
+              {c.about.values.map((v) => (
+                <li key={v.title} {...rv("flex gap-4")}>
                   <DotMark small />
                   <div>
                     <h3 className={ui.h3}>{v.title}</h3>
@@ -434,9 +433,9 @@ export default function HomeView() {
             </ul>
           </div>
           <ul className="mt-14 grid grid-cols-2 gap-x-6 md:grid-cols-4">
-            {c.about.stats.map((s, i) => (
-              <li key={s.label} {...rv(i, "border-t border-h-line py-5")}>
-                <b className="block font-display text-[2rem] font-medium leading-[1.1] text-h-accent">{s.number}</b>
+            {c.about.stats.map((s) => (
+              <li key={s.label} {...rv("border-t border-h-line py-5")}>
+                <b data-fx="count" className="block font-display text-[2rem] font-medium leading-[1.1] text-h-accent">{s.number}</b>
                 <span className="text-[.9375rem] text-h-muted">{s.label}</span>
               </li>
             ))}
@@ -449,8 +448,8 @@ export default function HomeView() {
         <div className={ui.wrap}>
           <Head id="trust-h" kicker={c.trust.kicker} title={c.trust.title} subtitle={c.trust.text} />
           <ul className="mt-10 grid gap-8 md:grid-cols-3">
-            {c.trust.pillars.map((p, i) => (
-              <li key={p.title} {...rv(i)}>
+            {c.trust.pillars.map((p) => (
+              <li key={p.title} {...rv()}>
                 <DotMark />
                 <h3 className={ui.h3}>{p.title}</h3>
                 <p className="mt-2 text-h-muted">{p.description}</p>
@@ -458,8 +457,8 @@ export default function HomeView() {
             ))}
           </ul>
           <ul className="mt-12 grid border-t border-h-line md:grid-cols-3 md:gap-8 md:border-t-0">
-            {c.trust.industries.map((ind, i) => (
-              <li key={ind.title} {...rv(i, "border-b border-h-line py-[18px] md:border-b-0 md:border-t")}>
+            {c.trust.industries.map((ind) => (
+              <li key={ind.title} {...rv("border-b border-h-line py-[18px] md:border-b-0 md:border-t")}>
                 <b className={`${ui.label} text-[1.25rem]`}>{ind.title}</b>
                 <span className="mt-1 block text-h-muted">{ind.description}</span>
               </li>
@@ -473,8 +472,8 @@ export default function HomeView() {
         <div className={ui.wrap}>
           <Head id="testimonials-h" title={c.testimonials.title} subtitle={c.testimonials.subtitle} />
           <ul className="mt-10 grid gap-4 md:grid-cols-2">
-            {c.testimonials.items.map((t, i) => (
-              <li key={t.name} {...rv(i % 2)}>
+            {c.testimonials.items.map((t) => (
+              <li key={t.name} {...rv()}>
                 <figure className="flex h-full flex-col gap-4 rounded-card border border-h-line bg-h-surface p-6 transition-[border-color,transform] duration-250 ease-soft hover:-translate-y-[3px] hover:border-copper-400">
                   <span className="tracking-[3px] text-copper-400" role="img" aria-label={`${t.rating} out of 5 stars`}>
                     {"★".repeat(t.rating)}
@@ -504,7 +503,7 @@ export default function HomeView() {
 
       {/* Contact band */}
       <section className="bg-h-surface2 py-band" aria-labelledby="contact-h">
-        <div {...rv(0, `${ui.wrap} flex flex-wrap items-center justify-between gap-6`)}>
+        <div {...rv(`${ui.wrap} flex flex-wrap items-center justify-between gap-6`)}>
           <div>
             <h2 id="contact-h" className={ui.h2}>{c.contact.title}</h2>
             <p className="mt-2 max-w-[52ch] text-h-muted">{c.contact.text}</p>
@@ -524,7 +523,7 @@ export default function HomeView() {
       <section className={`relative overflow-hidden py-pad text-white ${ui.ctaBg}`} aria-labelledby="cta-h">
         <Bloom cta />
         <div className={ui.wrap}>
-          <div {...rv(0, "relative max-w-[60ch]")}>
+          <div {...rv("relative max-w-[60ch]")}>
             <h2 id="cta-h" className={`${ui.heading} text-h2 font-normal`}>{c.cta.title}</h2>
             <p className="mt-3 text-[1.25rem] text-fog-200">{c.cta.text}</p>
             <div className={`${ui.actions} mt-7`}>
