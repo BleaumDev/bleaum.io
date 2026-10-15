@@ -33,6 +33,7 @@ export function Bloom({ cta }: { cta?: boolean }) {
     <svg
       className={`${bloomBase} ${cta ? "right-[-12%] w-[min(46vw,520px)] opacity-60" : "right-[-6%] w-[min(58vw,720px)] max-md:right-[-55%] max-md:w-[130vw] max-md:opacity-[.35]"}`}
       viewBox="0 0 760 760"
+      data-fx={cta ? "cta-bloom" : undefined}
       aria-hidden="true"
     >
       {cta ? CTA_DOTS : HERO_DOTS}

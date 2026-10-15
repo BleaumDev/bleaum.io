@@ -9,18 +9,20 @@ import { Bloom } from "./bloom"
 
 // Marks an element for the scroll reveal in home-fx.tsx. `cls` is the element's own classes.
 const rv = (cls = "") => ({ "data-fx": "reveal", className: cls })
+// Same, but the block slides in from one side (-1 left, 1 right) on wide screens.
+const slide = (dir: number) => ({ "data-fx": "slide", "data-dir": dir })
 // Staggers the entrance animation of hero items.
 const rise = (i: number) => ({ style: { animationDelay: `${i * 90}ms` } as CSSProperties })
 
 function DotMark({ small }: { small?: boolean }) {
-  return <span className={small ? ui.dotmarkSm : ui.dotmark} aria-hidden="true" />
+  return <span data-fx="dot" className={small ? ui.dotmarkSm : ui.dotmark} aria-hidden="true" />
 }
 
 function Head({ id, title, subtitle, kicker }: { id: string; title: string; subtitle?: string; kicker?: string }) {
   return (
     <div {...rv("max-w-[60ch]")}>
       {kicker && <p className={`${ui.kicker} text-h-accent`}>{kicker}</p>}
-      <h2 id={id} className={ui.h2}>{title}</h2>
+      <h2 id={id} data-fx="words" className={ui.h2}>{title}</h2>
       {subtitle && <p className="mt-2.5 text-[1.25rem] leading-[1.5] text-h-muted">{subtitle}</p>}
     </div>
   )
@@ -51,7 +53,7 @@ function Quote({ quote }: { quote: c.Quote }) {
 
 function Tiles({ items, three }: { items: { big: string; small: string }[]; three?: boolean }) {
   return (
-    <div className={`mb-1 grid gap-2 ${three ? "grid-cols-3" : "grid-cols-2"}`}>
+    <div data-fx="stagger" className={`mb-1 grid gap-2 ${three ? "grid-cols-3" : "grid-cols-2"}`}>
       {items.map((t) => (
         <div key={t.big} className="rounded-xl bg-white/[.06] px-2 py-3 text-center transition-colors duration-200 hover:bg-white/10">
           <b className="block font-display text-[1.25rem] font-medium leading-[1.2]">{t.big}</b>
@@ -92,9 +94,9 @@ type SplitProps = {
 function Split({ kicker, title, text, bullets, quote, more, panel, flip }: SplitProps) {
   return (
     <div className={`mt-pad grid items-center gap-10 first:mt-0 lg:grid-cols-2 lg:gap-[72px] [&>*]:min-w-0 ${flip ? flipRow : ""}`}>
-      <div {...rv()}>
+      <div {...slide(flip ? 1 : -1)}>
         <p className={`${ui.kicker} text-h-accent`}>{kicker}</p>
-        <h2 className={ui.h2}>{title}</h2>
+        <h2 data-fx="words" className={ui.h2}>{title}</h2>
         <p className="mt-3 text-h-muted">{text}</p>
         <Ticks items={bullets} />
         {more && (
@@ -107,7 +109,7 @@ function Split({ kicker, title, text, bullets, quote, more, panel, flip }: Split
         )}
         <Quote quote={quote} />
       </div>
-      <div {...rv()}>{panel}</div>
+      <div {...slide(flip ? -1 : 1)}>{panel}</div>
     </div>
   )
 }
@@ -194,7 +196,7 @@ export default function HomeView() {
           <Head id="prod-h" title={c.products.title} subtitle={c.products.subtitle} />
           <ul className={grid3}>
             {c.products.items.map((p) => (
-              <li key={p.title} {...rv()}>
+              <li key={p.title} data-card {...rv()}>
                 <Link
                   className={`group flex h-full flex-col gap-2 rounded-card border border-h-line bg-h-surface p-6 ${ui.lift}`}
                   href={p.href}
@@ -240,7 +242,7 @@ export default function HomeView() {
                         <td className="border-b border-white/[.07] px-1.5 py-[11px]">{r.name}</td>
                         <td className="border-b border-white/[.07] px-1.5 py-[11px]">{r.onHand}</td>
                         <td className="border-b border-white/[.07] px-1.5 py-[11px] text-right">
-                          <span className={`${chip} ${r.low ? "bg-copper-400 text-navy-900" : "bg-white/10 text-fog-100"}`}>
+                          <span data-fx="chip" className={`${chip} ${r.low ? "bg-copper-400 text-navy-900" : "bg-white/10 text-fog-100"}`}>
                             {r.low ? c.inventory.lowStock : c.inventory.inStock}
                           </span>
                         </td>
@@ -326,6 +328,7 @@ export default function HomeView() {
           <Head id="video-h" title={c.video.title} subtitle={c.video.subtitle} />
           <Link
             href="/demo"
+            data-clip
             {...rv("group relative mt-10 block aspect-video overflow-hidden rounded-card bg-navy-900 shadow-[0_0_0_1px_var(--h-line),0_30px_70px_-40px_rgba(11,30,49,.7)]")}
           >
             <Image
@@ -336,6 +339,9 @@ export default function HomeView() {
               className="object-cover transition-transform duration-600 ease-soft group-hover:scale-[1.03]"
             />
             <span className="absolute inset-0 bg-navy-950/45 backdrop-blur-[8px]" />
+            <span className="absolute inset-0 grid place-items-center" aria-hidden="true">
+              <span data-fx="ping" className="aspect-square w-[clamp(64px,9vw,96px)] rounded-full bg-copper-400" />
+            </span>
             <span
               className="absolute left-1/2 top-1/2 grid aspect-square w-[clamp(64px,9vw,96px)] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-copper-400 shadow-[0_0_0_8px_rgba(223,151,112,.3)] transition-[transform,box-shadow] duration-300 ease-soft before:ml-[6%] before:border-y-[.6em] before:border-l-[1em] before:border-y-transparent before:border-l-navy-900 before:text-[clamp(1rem,2.4vw,1.5rem)] group-hover:scale-[1.08] group-hover:shadow-[0_0_0_14px_rgba(223,151,112,.25)]"
               aria-hidden="true"
@@ -354,12 +360,12 @@ export default function HomeView() {
           <Head id="gallery-h" title={c.gallery.title} subtitle={c.gallery.subtitle} />
           <ul className={grid3}>
             {c.gallery.items.map((it) => (
-              <li key={it.title} {...rv()}>
+              <li key={it.title} data-card {...rv()}>
                 <Link
                   href={it.href}
                   className={`group flex h-full flex-col overflow-hidden rounded-card border border-h-line bg-h-surface ${ui.lift}`}
                 >
-                  <div className="relative block aspect-[16/10] overflow-hidden bg-navy-900">
+                  <div data-wipe className="relative block aspect-[16/10] overflow-hidden bg-navy-900">
                     <Image
                       src={it.src}
                       alt={it.alt}
@@ -404,7 +410,7 @@ export default function HomeView() {
           <div className="mt-10 grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
             <figure {...rv("rounded-card bg-h-surface p-7 shadow-[inset_0_0_0_1.5px_var(--h-line)]")}>
               <blockquote className="font-display text-quote font-medium leading-[1.45] tracking-[-.01em]">
-                <p>“{c.about.quote}”</p>
+                <p data-fx="scrub-words">“{c.about.quote}”</p>
               </blockquote>
               <figcaption className="mt-6 flex items-center gap-3.5">
                 <Image
@@ -473,9 +479,9 @@ export default function HomeView() {
           <Head id="testimonials-h" title={c.testimonials.title} subtitle={c.testimonials.subtitle} />
           <ul className="mt-10 grid gap-4 md:grid-cols-2">
             {c.testimonials.items.map((t) => (
-              <li key={t.name} {...rv()}>
+              <li key={t.name} data-card {...rv()}>
                 <figure className="flex h-full flex-col gap-4 rounded-card border border-h-line bg-h-surface p-6 transition-[border-color,transform] duration-250 ease-soft hover:-translate-y-[3px] hover:border-copper-400">
-                  <span className="tracking-[3px] text-copper-400" role="img" aria-label={`${t.rating} out of 5 stars`}>
+                  <span data-fx="stars" className="tracking-[3px] text-copper-400" role="img" aria-label={`${t.rating} out of 5 stars`}>
                     {"★".repeat(t.rating)}
                   </span>
                   <blockquote className="flex-1 text-[1.125rem] leading-[1.55]">
@@ -505,7 +511,7 @@ export default function HomeView() {
       <section className="bg-h-surface2 py-band" aria-labelledby="contact-h">
         <div {...rv(`${ui.wrap} flex flex-wrap items-center justify-between gap-6`)}>
           <div>
-            <h2 id="contact-h" className={ui.h2}>{c.contact.title}</h2>
+            <h2 id="contact-h" data-fx="words" className={ui.h2}>{c.contact.title}</h2>
             <p className="mt-2 max-w-[52ch] text-h-muted">{c.contact.text}</p>
           </div>
           <div className={ui.actions}>
@@ -524,7 +530,7 @@ export default function HomeView() {
         <Bloom cta />
         <div className={ui.wrap}>
           <div {...rv("relative max-w-[60ch]")}>
-            <h2 id="cta-h" className={`${ui.heading} text-h2 font-normal`}>{c.cta.title}</h2>
+            <h2 id="cta-h" data-fx="words" className={`${ui.heading} text-h2 font-normal`}>{c.cta.title}</h2>
             <p className="mt-3 text-[1.25rem] text-fog-200">{c.cta.text}</p>
             <div className={`${ui.actions} mt-7`}>
               <DemoLink className={`${ui.btnCopper} ${ui.stack}`}>{c.cta.primary}</DemoLink>
