@@ -43,7 +43,7 @@ export default function RootLayout({
   // console.log('Environment variables loaded:', process.env);
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="motion-safe:scroll-smooth">
       <head>
         <link
           rel="stylesheet"

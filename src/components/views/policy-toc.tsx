@@ -51,10 +51,12 @@ export function PolicyToc({ items }: { items: [id: string, label: string][] }) {
   // The marker slides to the active item, and the list scrolls to keep that item in the middle.
   useEffect(() => {
     const place = (d: number) => {
-      const li = list.current!.querySelector<HTMLElement>(`[data-id="${active}"]`)
-      if (!li) return
+      // The refs are already null when the page unmounts but the ResizeObserver still fires once more.
+      const box = nav.current
+      const li = list.current?.querySelector<HTMLElement>(`[data-id="${active}"]`)
+      if (!box || !li) return
       gsap.to(marker.current, { y: li.offsetTop, height: li.offsetHeight, opacity: 1, duration: d, ease: "power3.out", overwrite: true })
-      gsap.to(nav.current, { scrollTo: { y: li.offsetTop - (nav.current!.clientHeight - li.offsetHeight) / 2 }, duration: d, ease: "power3.out" })
+      gsap.to(box, { scrollTo: { y: li.offsetTop - (box.clientHeight - li.offsetHeight) / 2 }, duration: d, ease: "power3.out" })
     }
     place(placed.current && !reduced() ? 0.45 : 0)
     placed.current = true
