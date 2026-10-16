@@ -1,22 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import { ThemeProvider } from "@/components/contexts/theme-provider";
 import { HomeHeader, HomeFooter } from "@/components/home-chrome";
-import { Space_Mono, Space_Grotesk } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import "@/styles/globals.css";
 import Script from 'next/script';
 import AnalyticsTracker from "@/components/AnalyticsTracker";
+import ScrollToTop from "@/components/ScrollToTop";
 import { GA_TRACKING_ID } from "@/lib/analytics";
 
 const sansFont = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-geist-sans",
-  display: "swap",
-  weight: "400",
-});
-
-const monoFont = Space_Mono({
-  subsets: ["latin"],
-  variable: "--font-geist-mono",
   display: "swap",
   weight: "400",
 });
@@ -64,6 +58,7 @@ export default function RootLayout({
           </main>
           <HomeFooter />
           <AnalyticsTracker />
+          <ScrollToTop />
           <Script
             strategy="afterInteractive"
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
