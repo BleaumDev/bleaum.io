@@ -72,7 +72,7 @@ function Brand() {
   )
 }
 
-export function HomeHeader() {
+export function SiteHeader() {
   const root = useRef<HTMLElement>(null)
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -232,7 +232,7 @@ export function HomeHeader() {
 
 const socialIcons = { LinkedIn: LinkedinIcon, Twitter: TwitterIcon, Instagram: InstagramIcon }
 
-export function HomeFooter() {
+export function SiteFooter() {
   return (
     <div className={ui.root}>
       <footer className="bg-navy-950 py-14 text-fog-300">

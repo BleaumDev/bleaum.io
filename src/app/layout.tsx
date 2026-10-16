@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { ThemeProvider } from "@/components/contexts/theme-provider";
-import { HomeHeader, HomeFooter } from "@/components/home-chrome";
+import { SiteHeader, SiteFooter } from "@/components/site-chrome";
 import { Space_Grotesk } from "next/font/google";
 import "@/styles/globals.css";
 import Script from 'next/script';
@@ -52,11 +52,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <HomeHeader />
+          <SiteHeader />
           <main id="main" className="sm:container mx-auto w-[90vw] h-auto scroll-smooth">
             {children}
           </main>
-          <HomeFooter />
+          <SiteFooter />
           <AnalyticsTracker />
           <ScrollToTop />
           <Script
