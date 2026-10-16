@@ -154,11 +154,11 @@ export default function PrivacyPage() {
           <h2 id="location-specific-schedules">Location-Specific Schedules</h2>
           <p>Refer to the following schedules if you are located in:</p>
           <ul>
-            <li>Schedule A – California Residents</li>
-            <li>Schedule B – Virginia Residents</li>
-            <li>Schedule C – Colorado Residents</li>
-            <li>Schedule D – Connecticut Residents</li>
-            <li>Schedule E – Canada Residents</li>
+            <li>Schedule A - California Residents</li>
+            <li>Schedule B - Virginia Residents</li>
+            <li>Schedule C - Colorado Residents</li>
+            <li>Schedule D - Connecticut Residents</li>
+            <li>Schedule E - Canada Residents</li>
           </ul>
 
           <h2 id="schedule-a">Schedule A: For California Residents (CCPA Compliance)</h2>
