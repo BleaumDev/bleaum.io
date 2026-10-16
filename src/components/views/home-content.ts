@@ -269,13 +269,6 @@ export const nav = {
     { title: "Careers", text: "Join our team", href: "/company/careers" },
     { title: "Support", text: "Chat, call or email our team", href: "/support" },
   ],
-  compact: [
-    { text: "Product", href: "/#products" },
-    { text: "Integrations", href: "/operations/integrations" },
-    { text: "Industries", href: "/resources/industries" },
-    { text: "Help Center", href: "/help/guide" },
-    { text: "About", href: "/company/about" },
-  ],
   signIn: "Sign in",
   demo: "Book a demo",
 }

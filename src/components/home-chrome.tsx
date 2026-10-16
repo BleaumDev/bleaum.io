@@ -2,8 +2,8 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useRef } from "react"
-import { InstagramIcon, LinkedinIcon, TwitterIcon } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
+import { InstagramIcon, LinkedinIcon, MenuIcon, TwitterIcon, XIcon } from "lucide-react"
 import { DemoLink } from "@/components/views/home-client"
 import { footer, nav } from "@/components/views/home-content"
 import * as ui from "@/components/views/home-ui"
@@ -17,7 +17,9 @@ const summary = `${navLink} flex cursor-pointer list-none items-center gap-2 gro
 // Small dropdowns float under their button; the Product mega panel hangs from the header edge.
 const panel =
   "absolute left-[-16px] top-[calc(100%+24px)] z-40 grid w-[340px] max-w-[calc(100vw-32px)] animate-menu-in gap-1 rounded-card border border-white/10 border-t-copper-400/60 bg-navy-950 p-2 text-white shadow-[0_30px_60px_-30px_rgba(0,0,0,.7)]"
-const footLink = "text-fog-300 transition-colors duration-200 hover:text-white hover:underline hover:decoration-copper-400 hover:underline-offset-4"
+// Same trigger inside the mobile panel: full-width row with the chevron on the right.
+const mobileSummary = `${summary} justify-between border-b border-b-white/10 py-3.5 text-base`
+const footLink ="text-fog-300 transition-colors duration-200 hover:text-white hover:underline hover:decoration-copper-400 hover:underline-offset-4"
 
 // Mini halftone bloom (the brand mark's motif): dots swell and brighten when the row is hovered.
 const bloomDots = ["size-[3px]", "size-1", "size-[3px]", "size-1", "size-[7px]", "size-1", "size-[3px]", "size-1", "size-[3px]"]
@@ -62,15 +64,17 @@ function MenuLinks({ links }: { links: MenuLink[] }) {
 
 function Brand() {
   return (
-    <Link className="flex items-center gap-1 text-white" href="/" aria-label="Bleaum home">
+    <Link className="flex items-center gap-1.5" href="/" aria-label="Bleaum home">
       <Image src="/brand/bleaum-dots.svg" alt="" width={30} height={30} className="size-[30px]" priority />
-      <span className="-mt-1 font-display text-2xl font-normal leading-none tracking-[.02em]">bleaum</span>
+      {/* Wordmark vector lifted from bleaum-lockup-on-dark.svg so the header matches the logo exactly. */}
+      <Image src="/brand/bleaum-wordmark.svg" alt="" width={79} height={16} className="h-4 w-auto max-sm:h-3.5" priority />
     </Link>
   )
 }
 
 export function HomeHeader() {
   const root = useRef<HTMLElement>(null)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   // Menus: one open at a time, close on outside click, link click or Escape.
   useEffect(() => {
@@ -80,19 +84,31 @@ export function HomeHeader() {
       const t = e.target as Element
       closeExcept(t.closest("details"))
       if (t.closest("details a")) closeExcept()
+      // composedPath, not closest(): React swaps the button icon on toggle, so `t` is already detached here.
+      const inMobile = e.composedPath().some((n) => n instanceof Element && n.matches("#mobile-menu, [aria-controls=mobile-menu]"))
+      if (!inMobile) setMobileOpen(false)
     }
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && closeExcept()
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return
+      closeExcept()
+      setMobileOpen(false)
+    }
     const onToggle = (e: Event) => {
       const d = e.target as HTMLDetailsElement
       if (d.open) closeExcept(d)
     }
+    // Growing past the mobile breakpoint puts the desktop nav back; drop the panel state with it.
+    const desktop = matchMedia("(min-width: 1024px)")
+    const onResize = () => desktop.matches && setMobileOpen(false)
     document.addEventListener("click", onClick)
     document.addEventListener("keydown", onKey)
+    desktop.addEventListener("change", onResize)
     root.current!.addEventListener("toggle", onToggle, true)
     const el = root.current!
     return () => {
       document.removeEventListener("click", onClick)
       document.removeEventListener("keydown", onKey)
+      desktop.removeEventListener("change", onResize)
       el.removeEventListener("toggle", onToggle, true)
     }
   }, [])
@@ -119,9 +135,9 @@ export function HomeHeader() {
             </nav>
           </div>
         </div>
-        <div className={`${ui.wrap} flex min-h-[76px] flex-wrap items-center gap-x-9 gap-y-3 py-3 max-md:gap-x-4 max-md:gap-y-2`}>
+        <div className={`${ui.wrap} flex min-h-16 items-center gap-x-3 py-3 lg:min-h-[76px] lg:gap-x-6 xl:gap-x-9`}>
           <Brand />
-          <nav className="mr-auto flex items-center gap-7 max-md:hidden" aria-label="Main">
+          <nav className="mr-auto flex items-center gap-5 max-lg:hidden xl:gap-7" aria-label="Main">
             {/* No `relative` here: the panel positions against the header and spans its full width. */}
             <details className="group">
               <summary className={summary}>Product</summary>
@@ -159,16 +175,56 @@ export function HomeHeader() {
               </div>
             </details>
           </nav>
-          <div className="flex items-center gap-2.5">
-            <Link className={`${ui.btnQuietOnDark} max-md:hidden`} href={nav.signInHref}>{nav.signIn}</Link>
-            <DemoLink className={`${ui.btnCopper} max-md:ml-auto max-md:min-h-10 max-md:px-3.5 max-md:py-2`}>{nav.demo}</DemoLink>
+          <div className="flex items-center gap-2 max-lg:ml-auto sm:gap-2.5">
+            <Link className={`${ui.btnQuietOnDark} max-lg:hidden`} href={nav.signInHref}>{nav.signIn}</Link>
+            <DemoLink className={`${ui.btnCopper} max-lg:min-h-10 max-lg:px-3.5 max-lg:py-2 max-sm:px-3 max-sm:text-sm`}>{nav.demo}</DemoLink>
+            <button
+              type="button"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
+              onClick={() => setMobileOpen((o) => !o)}
+              className="inline-flex size-10 cursor-pointer items-center justify-center rounded-ctl text-white shadow-[inset_0_0_0_1.5px_rgba(255,255,255,.3)] transition-shadow duration-200 hover:shadow-[inset_0_0_0_1.5px_#fff] lg:hidden"
+            >
+              {mobileOpen ? <XIcon size={20} aria-hidden="true" /> : <MenuIcon size={20} aria-hidden="true" />}
+            </button>
           </div>
-          <nav className="hidden w-full gap-[22px] overflow-x-auto [scrollbar-width:none] max-md:order-3 max-md:flex" aria-label="Main (compact)">
-            {nav.compact.map((l) => (
-              <Link key={l.text} href={l.href} className={navLink}>{l.text}</Link>
-            ))}
-          </nav>
         </div>
+        {mobileOpen && (
+          <nav
+            id="mobile-menu"
+            aria-label="Main (mobile)"
+            onClick={(e) => (e.target as Element).closest("a") && setMobileOpen(false)}
+            className="absolute inset-x-0 top-full z-40 max-h-[75dvh] animate-menu-in overflow-y-auto overscroll-contain border-t border-t-copper-400/50 bg-navy-950 shadow-[0_40px_60px_-30px_rgba(0,0,0,.7)] lg:hidden"
+          >
+            <div className={`${ui.wrap} py-2`}>
+              <details className="group">
+                <summary className={mobileSummary}>Product</summary>
+                <div className="grid gap-4 py-3 md:grid-cols-2">
+                  {nav.product.map((g) => (
+                    <div key={g.heading}>
+                      <h3 className="mb-2 px-2.5 font-body text-[.75rem] font-semibold uppercase leading-[normal] tracking-[.08em] text-copper-400">{g.heading}</h3>
+                      <div className="grid gap-1">
+                        <MenuLinks links={g.links} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </details>
+              <Link href="/operations/integrations" className={`${mobileSummary} after:hidden`}>Integrations</Link>
+              <Link href={nav.industries.href} className={`${mobileSummary} after:hidden`}>{nav.industries.text}</Link>
+              <details className="group">
+                <summary className={mobileSummary}>Resources</summary>
+                <div className="grid gap-1 py-3 md:grid-cols-2"><MenuLinks links={nav.resources} /></div>
+              </details>
+              <details className="group">
+                <summary className={mobileSummary}>Company</summary>
+                <div className="grid gap-1 py-3 md:grid-cols-2"><MenuLinks links={nav.company} /></div>
+              </details>
+              <Link className={`${ui.btnQuietOnDark} my-4 w-full sm:hidden`} href={nav.signInHref}>{nav.signIn}</Link>
+            </div>
+          </nav>
+        )}
       </header>
     </div>
   )
