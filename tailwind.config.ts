@@ -91,21 +91,11 @@ const config = {
         regular: ["var(--font-geist-sans)"],
       },
       keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
         rise: { from: { opacity: "0", transform: "translateY(18px)" } },
         grow: { from: { transform: "scale(0)" } },
         "menu-in": { from: { opacity: "0", transform: "translateY(-6px)" } },
       },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
         rise: "rise .7s cubic-bezier(.2, .7, .2, 1) both",
         grow: "grow .8s cubic-bezier(.2, .8, .2, 1) both",
         "menu-in": "menu-in .18s cubic-bezier(.2, .7, .2, 1) both",
