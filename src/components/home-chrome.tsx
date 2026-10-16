@@ -221,7 +221,7 @@ export function HomeHeader() {
                 <summary className={mobileSummary}>Company</summary>
                 <div className="grid gap-1 py-3 md:grid-cols-2"><MenuLinks links={nav.company} /></div>
               </details>
-              <Link className={`${ui.btnQuietOnDark} my-4 w-full sm:hidden`} href={nav.signInHref}>{nav.signIn}</Link>
+              <Link className={`${ui.btnQuietOnDark} my-4 w-full`} href={nav.signInHref}>{nav.signIn}</Link>
             </div>
           </nav>
         )}

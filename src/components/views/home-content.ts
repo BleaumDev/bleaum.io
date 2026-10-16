@@ -233,7 +233,6 @@ export const nav = {
   utility: [
     { text: "Help Center", href: "/help/guide" },
     { text: "Support", href: "/support" },
-    { text: "Sign in", href: "https://ops.pos.bleaum.io/" },
   ],
   product: [
     {
