@@ -1,54 +1,27 @@
-// import { defineConfig } from "eslint/config";
-// import { defineConfig } from "eslint/config";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename); // Fixed: was **dirname, should be __dirname
-
-const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
-});
-
-export default [
-    {
-        ignores: [
-            // Build outputs
-            "out/**",
-            ".next/**",
-            "dist/**",
-            "build/**",
-            
-            // Dependencies
-            "node_modules/**",
-            
-            // Cache directories
-            ".cache/**",
-            ".vercel/**",
-            ".netlify/**",
-            
-            // Generated files
-            "*.config.js",
-            "*.config.mjs",
-            "*.config.ts",
-            
-            // Other common ignores
-            "coverage/**",
-            ".env*",
-            "*.log",
-            ".DS_Store",
-        ]
+export default defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  globalIgnores([
+    ".next/**",
+    "out/**",
+    "build/**",
+    "dist/**",
+    "coverage/**",
+    "next-env.d.ts",
+    "node_modules/**",
+    "*.config.js",
+    "*.config.mjs",
+    "*.config.ts",
+  ]),
+  {
+    rules: {
+      "react/no-unescaped-entities": "warn",
+      "@typescript-eslint/no-unused-vars": "warn",
+      "react-hooks/set-state-in-effect": "warn",
     },
-    ...compat.extends("next/core-web-vitals", "next/typescript"),
-    {
-        rules: {
-            // Optional: Disable specific rules that are causing issues
-            "react/no-unescaped-entities": "warn", // Changed from error to warning
-            "@typescript-eslint/no-unused-vars": "warn", // Changed from error to warning
-        }
-    }
-];
+  },
+]);

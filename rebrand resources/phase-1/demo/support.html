@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact support | Bleaum Help Center</title>
+<meta name="description" content="Phase 1 rebrand demo for the Bleaum Help Center.">
+<meta name="theme-color" content="#0B1E31">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+    <div class="wrap top-in">
+      <a class="brand" href="home-a.html" aria-label="Bleaum Help Center home">
+        <img class="mark" src="assets/bleaum-mark.svg" alt="" width="30" height="30">
+        <span class="brand-word">bleaum</span>
+        <span class="brand-sub">Help Center</span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="guides.html">Guides</a>
+        <a href="start.html">Get started</a>
+        <a href="downloads.html">Downloads</a>
+        <a href="home-a.html#news">What's new</a>
+      </nav>
+      <a class="btn btn-copper" href="support.html">Contact support</a>
+    </div>
+  </header>
+
+<main id="main" tabindex="-1">
+    <section class="hub-head tight" aria-labelledby="support-h">
+      <div class="wrap">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="home-a.html">Help Center</a> / Support</nav>
+        <div class="hub-top">
+          <div>
+            <h1 id="support-h">Contact support</h1>
+            <p>Chat is the fastest way to reach us. Open a ticket when you need to share details or want a written record.</p>
+          </div>
+        </div>
+        <div class="demo-flag">Demo page with sample content</div>
+      </div>
+    </section>
+    <div class="wrap sup">
+      <div>
+        <section class="panel" aria-labelledby="chat-h">
+          <h2 id="chat-h">Chat with support</h2>
+          <p>Talk to our team without leaving this page. Have your store name ready.</p>
+          <a class="btn" href="support.html" data-note="Demo only: this would open the chat window.">Start a chat</a>
+        </section>
+        <section class="panel panel-soft" aria-labelledby="try-h">
+          <h2 id="try-h">Try these first</h2>
+          <ul class="links">
+            <li><a href="article.html#article-close">Close a register at the end of the day</a></li>
+            <li><a href="downloads.html#downloads-printer">Fix a printer that is not printing</a></li>
+            <li><a href="downloads.html">Download the POS app</a></li>
+            <li><a href="start.html">Set up a new store</a></li>
+          </ul>
+        </section>
+      </div>
+      <section class="panel" id="support-ticket" aria-labelledby="ticket-h">
+        <h2 id="ticket-h">Open a ticket</h2>
+        <p>Tell us what you were doing, what you expected and what happened instead.</p>
+        <form class="form" id="ticket">
+          <div class="two">
+            <div class="field"><label for="t-name">Your name</label><input id="t-name" name="name" autocomplete="name" required></div>
+            <div class="field"><label for="t-email">Email</label><input id="t-email" name="email" type="email" autocomplete="email" required></div>
+          </div>
+          <div class="two">
+            <div class="field"><label for="t-store">Store name</label><input id="t-store" name="store" required></div>
+            <div class="field"><label for="t-topic">Topic</label>
+              <select id="t-topic" name="topic" required>
+                <option value="">Choose a topic</option>
+                <option>Checkout and orders</option>
+                <option>Cash management</option>
+                <option>Hardware and printing</option>
+                <option>Online ordering and delivery</option>
+                <option>Payments</option>
+                <option>Account and access</option>
+                <option>Something else</option>
+              </select>
+            </div>
+          </div>
+          <div class="field"><label for="t-msg">What happened?</label><textarea id="t-msg" name="message" required></textarea><small>Include the order number or screen name if you have one.</small></div>
+          <div><button class="btn" type="submit">Send ticket</button></div>
+        </form>
+        <div class="done-msg" id="ticket-done" role="status" hidden>
+          <h2>Ticket sent</h2>
+          <p>We will reply to <b id="done-email"></b>. You can close this page.</p>
+          <p><a href="home-a.html">Back to the Help Center</a></p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+<footer class="foot">
+    <div class="wrap">
+      <div class="foot-in">
+        <div>
+          <a class="brand" href="home-a.html" aria-label="Bleaum Help Center home">
+            <img class="mark" src="assets/bleaum-mark.svg" alt="" width="30" height="30">
+            <span class="brand-word">bleaum</span>
+          </a>
+          <p>Your business in a box.</p>
+        </div>
+        <div>
+          <h3>Guides</h3>
+          <ul>
+            <li><a href="guides.html#counter">Point of sale</a></li>
+            <li><a href="guides.html#office">Back office</a></li>
+            <li><a href="guides.html#online">Online &amp; delivery</a></li>
+            <li><a href="downloads.html">Downloads and printers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Support</h3>
+          <ul>
+            <li><a href="support.html">Chat with support</a></li>
+            <li><a href="support.html#support-ticket">Open a ticket</a></li>
+            <li><a href="start.html">Setup checklist</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Bleaum</h3>
+          <ul>
+            <li><a href="https://bleaum.io">bleaum.io</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="https://ops.pos.bleaum.io/">Sign in to Bleaum</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="legal">
+        <span>© <span id="year"></span> Bleaum. All rights reserved.</span>
+        <span>Phase 1 demo</span>
+      </div>
+    </div>
+  </footer>
+<nav class="vbar" aria-label="Design options">
+    <span>Home</span><a href="home-a.html">A</a><a href="home-b.html">B</a><a href="home-c.html">C</a><a href="home-d.html">D</a>
+    <i></i><span>Guides</span><a href="guides.html">A</a><a href="guides-b.html">B</a><a href="guides-c.html">C</a>
+    <i></i><a href="index.html">All</a>
+  </nav>
+<p class="note" id="note" role="status"></p>
+<script src="assets/app.js"></script>
+</body>
+</html>
