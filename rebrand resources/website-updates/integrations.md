@@ -1,7 +1,7 @@
 # Integrations
 
 - **URL path:** `/operations/integrations`
-- **Changes:** 8 (High 5, Medium 2, Low 1)
+- **Changes:** 10 (High 7, Medium 2, Low 1)
 - **Source:** `Bleaum_Website_Update_Sheet (1).xlsx`, tab "Find & Replace". Row # matches the sheet.
 
 Update the **Status** column as work moves: `To do` → `In progress` → `Done` or `Skipped`.
@@ -16,3 +16,5 @@ Update the **Status** column as work moves: `To do` → `In progress` → `Done`
 | 94 | High | Wording | To do | "METRC seed-to-sale tracking ... cannabis regulations"; "BioTrack ... cannabis businesses" | Neutral: "State traceability integration" |  |
 | 95 | Medium | Technical | To do | "Become an integration partner? Let's talk" links to /contact | Check the /contact page exists and works |  |
 | 96 | Low | Verify | To do | Diana, Doctor Greens quote | Confirm permission |  |
+| 131 | High | Decision | Done | Merchant Club USA listed under "Regulated retail integrations" and in the integration catalog | Remove Merchant Club USA from the page | Requested 2026-10-23. |
+| 132 | High | Decision | Done | "Programs and memberships" shows Google, Microsoft, AWS, Microsoft Azure | Add NVIDIA ("NVIDIA Inception Program") and Claude ("Claude for Startups") tiles with their brand logos | Requested 2026-10-23. Logo-use permission per #91 still applies. |

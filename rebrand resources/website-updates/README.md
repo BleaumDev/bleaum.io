@@ -24,7 +24,7 @@ Page-by-page change list for the Bleaum website rebrand (remove cannabis-specifi
 | [Reporting](reporting.md) | `/operations/reporting-analytics` | 4 | 1 | 1 | 2 |
 | [Compliance](compliance.md) | `/operations/automated-compilance` | 9 | 6 | 1 | 2 |
 | [Inventory](inventory.md) | `/operations/inventory-management` | 8 | 4 | 2 | 2 |
-| [Integrations](integrations.md) | `/operations/integrations` | 8 | 5 | 2 | 1 |
+| [Integrations](integrations.md) | `/operations/integrations` | 10 | 7 | 2 | 1 |
 | [Industries](industries.md) | `/resources/Industries` | 6 | 3 | 1 | 2 |
 | [About](about.md) | `/company/about` | 6 | 1 | 2 | 3 |
 | [Support](support.md) | `/company/support` | 1 | 1 | 0 | 0 |
@@ -35,7 +35,7 @@ Page-by-page change list for the Bleaum website rebrand (remove cannabis-specifi
 | [SOPs](sops.md) | `/resources/sops` | 1 | 0 | 1 | 0 |
 | [Blog](blog.md) | `/blog` | 5 | 2 | 2 | 1 |
 | [Top nav](top-nav.md) | `/product` | 1 | 1 | 0 | 0 |
-| **Total** | | **130** | **63** | **38** | **29** |
+| **Total** | | **132** | **65** | **38** | **29** |
 
 Also see [not-yet-reviewed.md](not-yet-reviewed.md).
 
@@ -45,7 +45,7 @@ Also see [not-yet-reviewed.md](not-yet-reviewed.md).
 |---|---|
 | Wording | 50 |
 | Typo | 8 |
-| Decision | 13 |
+| Decision | 15 |
 | Verify | 37 |
 | Legal review | 7 |
 | Keep | 3 |

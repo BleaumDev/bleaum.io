@@ -176,7 +176,6 @@ export function SiteHeader() {
             </details>
           </nav>
           <div className="flex items-center gap-2 max-lg:ml-auto sm:gap-2.5">
-            <Link className={`${ui.btnQuietOnDark} max-lg:hidden`} href={nav.signInHref}>{nav.signIn}</Link>
             <DemoLink className={`${ui.btnCopper} max-lg:min-h-10 max-lg:px-3.5 max-lg:py-2 max-sm:px-3 max-sm:text-sm`}>{nav.demo}</DemoLink>
             <button
               type="button"
@@ -221,7 +220,6 @@ export function SiteHeader() {
                 <summary className={mobileSummary}>Company</summary>
                 <div className="grid gap-1 py-3 md:grid-cols-2"><MenuLinks links={nav.company} /></div>
               </details>
-              <Link className={`${ui.btnQuietOnDark} my-4 w-full`} href={nav.signInHref}>{nav.signIn}</Link>
             </div>
           </nav>
         )}

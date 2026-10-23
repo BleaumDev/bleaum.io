@@ -229,7 +229,6 @@ export const cta = {
 // Header and footer links from index.html, pointed at the real routes.
 export const nav = {
   tagline: "Your business in a box.",
-  signInHref: "https://ops.pos.bleaum.io/",
   utility: [
     { text: "Help Center", href: "/help/guide" },
     { text: "Support", href: "/support" },
@@ -268,7 +267,6 @@ export const nav = {
     { title: "Careers", text: "Join our team", href: "/company/careers" },
     { title: "Support", text: "Chat, call or email our team", href: "/support" },
   ],
-  signIn: "Sign in",
   demo: "Book a demo",
 }
 

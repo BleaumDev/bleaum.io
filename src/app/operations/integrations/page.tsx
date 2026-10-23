@@ -41,7 +41,6 @@ const tileGroups: { title: string; items: Tile[] }[] = [
       { name: "Weedmaps", logo: "/integrations/weedmaps.png", category: "Marketplace" },
       { name: "Springbig", logo: "/integrations/springbig.png", category: "Loyalty" },
       { name: "Blackleaf", logo: "/integrations/blackleaf.png", category: "Marketing" },
-      { name: "Merchant Club", logo: "/integrations/MERCHANT.png", category: "Payments" },
       { name: "Aeropay", logo: "/integrations/aeropay.png", category: "Payments" },
       { name: "IDScan", logo: "/integrations/idscan.png", category: "Verification" },
       { name: "GREEN Dispensary Marketing", logo: "/integrations/greendispensary.jpg", category: "Marketing" },
@@ -54,6 +53,8 @@ const tileGroups: { title: string; items: Tile[] }[] = [
       { name: "Microsoft", logo: "/integrations/microsoft.png", category: "Microsoft for Startups" },
       { name: "AWS", logo: "/integrations/AWS1.jpg", category: "Cloud" },
       { name: "Microsoft Azure", logo: "/integrations/azure.jpg", category: "Cloud" },
+      { name: "NVIDIA", logo: "/integrations/nvidia.svg", category: "NVIDIA Inception Program" },
+      { name: "Claude", logo: "/integrations/claude.svg", category: "Claude for Startups" },
     ],
   },
 ]
@@ -94,15 +95,6 @@ const partners: Partner[] = [
     logoAlt: "QuickBooks Logo",
     status: "Coming Soon",
     group: "general",
-  },
-  {
-    name: "Merchant Club USA",
-    category: "PAYMENTS",
-    description: "Merchant Club USA provides secure payment processing solutions designed for regulated retail businesses.",
-    logo: "/integrations/MERCHANT.png",
-    logoAlt: "Merchant Club USA Logo",
-    status: "Active",
-    group: "regulated",
   },
   {
     name: "Aeropay",
