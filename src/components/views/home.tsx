@@ -365,16 +365,10 @@ export default function HomeView() {
                   href={it.href}
                   className={`group flex h-full flex-col overflow-hidden rounded-card border border-h-line bg-h-surface ${ui.lift}`}
                 >
-                  <div data-wipe className="relative block aspect-[16/10] overflow-hidden bg-navy-900">
-                    <Image
-                      src={it.src}
-                      alt={it.alt}
-                      fill
-                      sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
-                      className="object-cover transition-transform duration-500 ease-soft group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col gap-1.5 px-6 pb-[22px] pt-5">
+                  <div className="flex flex-1 flex-col gap-1.5 p-6">
+                    <span className="mb-3.5 grid size-11 place-items-center rounded-ctl bg-h-surface2 text-h-accent">
+                      <it.icon className="size-5" aria-hidden="true" />
+                    </span>
                     <h3 className={ui.h3}>{it.title}</h3>
                     <p className="flex-1 text-[.9375rem] text-h-muted">{it.description}</p>
                     <span className="font-semibold text-h-accent transition-transform duration-250 ease-soft group-hover:translate-x-1.5" aria-hidden="true">
