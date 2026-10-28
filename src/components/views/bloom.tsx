@@ -36,7 +36,7 @@ export function Bloom({ cta }: { cta?: boolean }) {
       data-fx={cta ? "cta-bloom" : undefined}
       aria-hidden="true"
     >
-      {cta ? CTA_DOTS : HERO_DOTS}
+      {cta ? CTA_DOTS : <g data-fx="bloom">{HERO_DOTS}</g>}
     </svg>
   )
 }

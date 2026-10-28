@@ -13,7 +13,7 @@ const once = (trigger: Element, start = "top 88%") => ({ trigger, start, once: t
 
 // Scroll and pointer motion for the Home page. The markup stays on the server page; this only finds its hooks:
 // data-fx = reveal, slide (+ data-dir), stagger, chip, dot, words, scrub-words, stars, count, hero, drift, tilt, phone,
-// pos-items, pos-cart, ping, cta-bloom; data-clip, data-wipe, data-card. Skipped for prefers-reduced-motion,
+// pos-items, pos-cart, ping, cta-bloom, bloom, magnet, progress; data-clip, data-wipe, data-card. Skipped for prefers-reduced-motion,
 // and with no JS everything stays visible.
 export function HomeFx() {
   useEffect(() => {
@@ -58,6 +58,9 @@ export function HomeFx() {
             }),
         }),
       )
+
+      // Thin copper bar along the top edge fills as the page scrolls.
+      gsap.fromTo(fx("progress"), { scaleX: 0 }, { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.3 } })
 
       // Rating stars pop in one by one.
       fx("stars").forEach((el) =>
@@ -160,7 +163,47 @@ export function HomeFx() {
         off.push(() => (area.removeEventListener("pointermove", move), area.removeEventListener("pointerleave", leave)))
       }
       lean(fx("tilt")[0], fx("hero")[0], 14, 10)
-      all("[data-card]").forEach((el) => lean(el, el, 8, 8))
+
+      // Cards also hand the pointer position to their CSS spotlight (--mx / --my).
+      all("[data-card]").forEach((el) => {
+        lean(el, el, 8, 8)
+        const spot = (e: PointerEvent) => {
+          const r = el.getBoundingClientRect()
+          el.style.setProperty("--mx", `${e.clientX - r.left}px`)
+          el.style.setProperty("--my", `${e.clientY - r.top}px`)
+        }
+        el.addEventListener("pointermove", spot)
+        off.push(() => el.removeEventListener("pointermove", spot))
+      })
+
+      // The hero dot field drifts against the pointer for depth.
+      const hero = fx("hero")[0]
+      const bx = gsap.quickTo(fx("bloom")[0], "x", { duration: 1.2, ease: "power3.out" })
+      const by = gsap.quickTo(fx("bloom")[0], "y", { duration: 1.2, ease: "power3.out" })
+      const drift = (e: PointerEvent) => (bx((e.clientX / innerWidth - 0.5) * -60), by((e.clientY / innerHeight - 0.5) * -60))
+      const settle = () => (bx(0), by(0))
+      hero.addEventListener("pointermove", drift)
+      hero.addEventListener("pointerleave", settle)
+      off.push(() => (hero.removeEventListener("pointermove", drift), hero.removeEventListener("pointerleave", settle)))
+
+      // Hero and CTA buttons pull toward the pointer. GSAP owns their transform, so CSS stops transitioning it.
+      fx("magnet")
+        .flatMap((box) => [...box.children] as HTMLElement[])
+        .forEach((btn) => {
+          btn.style.transitionProperty = "filter,box-shadow"
+          const x = gsap.quickTo(btn, "x", { duration: 0.5, ease: "power3.out" })
+          const y = gsap.quickTo(btn, "y", { duration: 0.5, ease: "power3.out" })
+          // The rect already includes the current pull, so subtract it to aim at the button's resting center.
+          const pull = (e: PointerEvent) => {
+            const r = btn.getBoundingClientRect()
+            x((e.clientX - (r.left + r.width / 2 - (gsap.getProperty(btn, "x") as number))) * 0.3)
+            y((e.clientY - (r.top + r.height / 2 - (gsap.getProperty(btn, "y") as number))) * 0.3)
+          }
+          const release = () => (x(0), y(0))
+          btn.addEventListener("pointermove", pull)
+          btn.addEventListener("pointerleave", release)
+          off.push(() => (btn.removeEventListener("pointermove", pull), btn.removeEventListener("pointerleave", release), (btn.style.transitionProperty = "")))
+        })
       return () => off.forEach((f) => f())
     })
 

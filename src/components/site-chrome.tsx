@@ -220,9 +220,9 @@ function DesktopNav() {
       }}
       onBlur={(e) => zone.current!.contains(e.relatedTarget) || setActive(null)}
     >
-      {trigger("product", "Product")}
       {plain("/operations/integrations", "Integrations")}
       {plain(nav.industries.href, nav.industries.text)}
+      {trigger("product", "Product")}
       {trigger("resources", "Resources")}
       {trigger("company", "Company")}
       <div
@@ -268,6 +268,24 @@ function DesktopNav() {
 
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const bar = useRef<HTMLDivElement>(null)
+
+  // Slides away on scroll down, returns on any scroll up so the nav is always one flick away.
+  // Stays put near the top, while the mobile menu is open or while keyboard focus is inside it
+  // (:focus-visible, not :focus-within, because a mouse click leaves focus on the link/button for good).
+  useEffect(() => {
+    const el = bar.current!
+    let last = scrollY
+    const onScroll = () => {
+      const dy = scrollY - last
+      if (Math.abs(dy) < 6) return
+      last = scrollY
+      const keep = scrollY < el.offsetHeight || el.querySelector(":focus-visible, #mobile-menu")
+      el.toggleAttribute("data-hidden", dy > 0 && !keep)
+    }
+    addEventListener("scroll", onScroll, { passive: true })
+    return () => removeEventListener("scroll", onScroll)
+  }, [])
 
   // Mobile panel: close on outside click, link click or Escape.
   useEffect(() => {
@@ -291,7 +309,11 @@ export function SiteHeader() {
   }, [])
 
   return (
-    <div className={ui.root}>
+    <div
+      ref={bar}
+      onFocus={() => bar.current?.removeAttribute("data-hidden")}
+      className={`${ui.root} sticky top-0 z-50 transition-transform duration-300 ease-soft data-[hidden]:-translate-y-full motion-reduce:transition-none`}
+    >
       <a className="absolute left-4 top-[-60px] z-[60] rounded-chip bg-copper-400 px-3.5 py-2 text-navy-900 focus:top-3" href="#main">
         Skip to content
       </a>
@@ -351,6 +373,8 @@ export function SiteHeader() {
             className="absolute inset-x-0 top-full z-40 max-h-[75dvh] animate-menu-in overflow-y-auto overscroll-contain border-t border-t-copper-400/50 bg-navy-950 shadow-[0_40px_60px_-30px_rgba(0,0,0,.7)] lg:hidden"
           >
             <div className={`${ui.wrap} py-2`}>
+              <Link href="/operations/integrations" className={`${mobileSummary} after:hidden`}>Integrations</Link>
+              <Link href={nav.industries.href} className={`${mobileSummary} after:hidden`}>{nav.industries.text}</Link>
               <details className="group">
                 <summary className={mobileSummary}>Product</summary>
                 <div className="grid gap-4 py-3 md:grid-cols-2">
@@ -364,8 +388,6 @@ export function SiteHeader() {
                   ))}
                 </div>
               </details>
-              <Link href="/operations/integrations" className={`${mobileSummary} after:hidden`}>Integrations</Link>
-              <Link href={nav.industries.href} className={`${mobileSummary} after:hidden`}>{nav.industries.text}</Link>
               <details className="group">
                 <summary className={mobileSummary}>Resources</summary>
                 <div className="grid gap-1 py-3 md:grid-cols-2"><MenuLinks links={nav.resources} /></div>

@@ -119,6 +119,10 @@ const initials = (name: string) => {
   return words.length > 1 ? words.map((w) => w[0]).join("") : name.slice(0, 2)
 }
 
+// Copper spotlight that follows the pointer inside a card; home-fx.tsx feeds --mx / --my.
+const glow =
+  "relative isolate before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:opacity-0 before:transition-opacity before:duration-300 before:bg-[radial-gradient(260px_circle_at_var(--mx,50%)_var(--my,50%),rgba(223,151,112,.18),transparent)] hover:before:opacity-100"
+
 const section = "py-pad"
 const alt = "bg-h-surface2"
 const grid3 = "mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
@@ -128,6 +132,7 @@ export default function HomeView() {
   return (
     <div data-page="home" className={ui.root}>
       <HomeFx />
+      <div data-fx="progress" className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left scale-x-0 bg-copper-400" aria-hidden="true" />
 
       {/* Hero */}
       <section data-fx="hero" className={`relative overflow-hidden text-white ${ui.heroBg}`} aria-labelledby="hero-h">
@@ -141,7 +146,7 @@ export default function HomeView() {
               {hero.titleLine2}
             </h1>
             <p {...rise(2)} className="mt-5 max-w-[44ch] text-[1.25rem] leading-[1.5] text-fog-200 animate-rise">{hero.lede}</p>
-            <div {...rise(3)} className={`${ui.actions} mt-8 animate-rise`}>
+            <div {...rise(3)} data-fx="magnet" className={`${ui.actions} mt-8 animate-rise`}>
               <DemoLink className={`${ui.btnCopper} ${ui.stack}`}>{hero.primaryCta}</DemoLink>
               <Link href={hero.secondaryHref} className={`${ui.btnGhost} ${ui.stack}`}>
                 {hero.secondaryCta}
@@ -198,7 +203,7 @@ export default function HomeView() {
             {c.products.items.map((p) => (
               <li key={p.title} data-card {...rv()}>
                 <Link
-                  className={`group flex h-full flex-col gap-2 rounded-card border border-h-line bg-h-surface p-6 ${ui.lift}`}
+                  className={`group flex h-full flex-col gap-2 rounded-card border border-h-line bg-h-surface p-6 ${glow} ${ui.lift}`}
                   href={p.href}
                 >
                   <DotMark />
@@ -363,7 +368,7 @@ export default function HomeView() {
               <li key={it.title} data-card {...rv()}>
                 <Link
                   href={it.href}
-                  className={`group flex h-full flex-col overflow-hidden rounded-card border border-h-line bg-h-surface ${ui.lift}`}
+                  className={`group flex h-full flex-col overflow-hidden rounded-card border border-h-line bg-h-surface ${glow} ${ui.lift}`}
                 >
                   <div className="flex flex-1 flex-col gap-1.5 p-6">
                     <span className="mb-3.5 grid size-11 place-items-center rounded-ctl bg-h-surface2 text-h-accent">
@@ -474,7 +479,7 @@ export default function HomeView() {
           <ul className="mt-10 grid gap-4 md:grid-cols-2">
             {c.testimonials.items.map((t) => (
               <li key={t.name} data-card {...rv()}>
-                <figure className="flex h-full flex-col gap-4 rounded-card border border-h-line bg-h-surface p-6 transition-[border-color,transform] duration-250 ease-soft hover:-translate-y-[3px] hover:border-copper-400">
+                <figure className={`${glow} flex h-full flex-col gap-4 rounded-card border border-h-line bg-h-surface p-6 transition-[border-color,transform] duration-250 ease-soft hover:-translate-y-[3px] hover:border-copper-400`}>
                   <span data-fx="stars" className="tracking-[3px] text-copper-400" role="img" aria-label={`${t.rating} out of 5 stars`}>
                     {"★".repeat(t.rating)}
                   </span>
@@ -526,7 +531,7 @@ export default function HomeView() {
           <div {...rv("relative max-w-[60ch]")}>
             <h2 id="cta-h" data-fx="words" className={`${ui.heading} text-h2 font-normal`}>{c.cta.title}</h2>
             <p className="mt-3 text-[1.25rem] text-fog-200">{c.cta.text}</p>
-            <div className={`${ui.actions} mt-7`}>
+            <div data-fx="magnet" className={`${ui.actions} mt-7`}>
               <DemoLink className={`${ui.btnCopper} ${ui.stack}`}>{c.cta.primary}</DemoLink>
               <Link href={c.cta.secondary.href} className={`${ui.btnGhost} ${ui.stack}`}>
                 {c.cta.secondary.text}
