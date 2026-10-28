@@ -74,8 +74,8 @@ const config = {
         h2: "clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem)",
         quote: "clamp(1.25rem, 1rem + 1vw, 1.5rem)",
       },
-      transitionTimingFunction: { soft: "cubic-bezier(.2, .7, .2, 1)" },
-      transitionDuration: { 250: "250ms", 600: "600ms" },
+      transitionTimingFunction: { soft: "cubic-bezier(.2, .7, .2, 1)", expo: "cubic-bezier(.16, 1, .3, 1)", quart: "cubic-bezier(.165, .84, .44, 1)" },
+      transitionDuration: { 250: "250ms", 400: "400ms", 600: "600ms", 800: "800ms" },
       borderRadius: {
         card: "18px",
         ctl: "10px",

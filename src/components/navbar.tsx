@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ShoppingCartIcon, GlobeIcon, GiftIcon, CreditCardIcon, TruckIcon, BarChart2Icon, ShieldCheckIcon, BoxesIcon, PlugIcon, BookOpenIcon, LandmarkIcon, UsersIcon, InfoIcon, BriefcaseIcon, LifeBuoyIcon, HelpCircleIcon, MessageSquareIcon, PrinterIcon, Code2Icon, Building2Icon } from "lucide-react";
+import { ShoppingCartIcon, GlobeIcon, GiftIcon, CreditCardIcon, TruckIcon, BarChart2Icon, ShieldCheckIcon, BoxesIcon, PlugIcon, BookOpenIcon, UsersIcon, InfoIcon, LifeBuoyIcon, Building2Icon } from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import Anchor from "./anchor";

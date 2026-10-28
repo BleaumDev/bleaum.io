@@ -3,6 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
+import gsap from "gsap"
 import { InstagramIcon, LinkedinIcon, MenuIcon, TwitterIcon, XIcon } from "lucide-react"
 import { DemoLink } from "@/components/views/home-client"
 import { footer, nav } from "@/components/views/home-content"
@@ -14,9 +15,6 @@ type MenuLink = { title: string; text: string; href: string }
 const navLink =
   "whitespace-nowrap border-b-2 border-transparent py-1.5 text-[.9375rem] font-medium text-fog-300 transition-[color,border-color] duration-200 hover:border-copper-400 hover:text-white"
 const summary = `${navLink} flex cursor-pointer list-none items-center gap-2 group-open:border-copper-400 group-open:text-white [&::-webkit-details-marker]:hidden after:size-1.5 after:-translate-y-0.5 after:rotate-45 after:border-current after:[border-width:0_1.5px_1.5px_0] after:transition-transform after:duration-200 after:ease-soft group-open:after:translate-y-px group-open:after:rotate-[225deg]`
-// Small dropdowns float under their button; the Product mega panel hangs from the header edge.
-const panel =
-  "absolute left-[-16px] top-[calc(100%+24px)] z-40 grid w-[340px] max-w-[calc(100vw-32px)] animate-menu-in gap-1 rounded-card border border-white/10 border-t-copper-400/60 bg-navy-950 p-2 text-white shadow-[0_30px_60px_-30px_rgba(0,0,0,.7)]"
 // Same trigger inside the mobile panel: full-width row with the chevron on the right.
 const mobileSummary = `${summary} justify-between border-b border-b-white/10 py-3.5 text-base`
 const footLink ="text-fog-300 transition-colors duration-200 hover:text-white hover:underline hover:decoration-copper-400 hover:underline-offset-4"
@@ -72,44 +70,223 @@ function Brand() {
   )
 }
 
+// Desktop nav motion (GSAP, same feel as clay.com): expo-out everywhere, open slow and soft, close fast.
+const ease = "expo.out"
+const dur = { in: 0.3, out: 0.2, morph: 0.4 }
+const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches
+const MENUS = ["product", "resources", "company"] as const
+type Menu = (typeof MENUS)[number]
+
+// Label that rolls up and out while a copy rolls in from below. CSS only: slower in (.8s) than out (.7s).
+const roll = "block transition-transform duration-700 ease-expo group-hover/nav:duration-800 motion-reduce:transition-none"
+const item =
+  "group/nav whitespace-nowrap border-b-2 border-transparent py-1.5 text-[.9375rem] font-medium text-fog-300 transition-[color,border-color] duration-200 hover:border-copper-400 hover:text-white aria-expanded:border-copper-400 aria-expanded:text-white"
+
+function Roll({ children }: { children: string }) {
+  return (
+    <span className="relative block overflow-hidden">
+      <span className={`${roll} group-hover/nav:-translate-y-full`}>{children}</span>
+      <span aria-hidden="true" className={`${roll} absolute inset-0 translate-y-full group-hover/nav:translate-y-0`}>{children}</span>
+    </span>
+  )
+}
+
+function DesktopNav() {
+  const [active, setActive] = useState<Menu | null>(null)
+  const zone = useRef<HTMLElement>(null)
+  const pos = useRef<HTMLDivElement>(null)
+  const card = useRef<HTMLDivElement>(null)
+  const body = useRef<HTMLDivElement>(null)
+  const arrow = useRef<HTMLSpanElement>(null)
+  const btns = useRef<Partial<Record<Menu, HTMLButtonElement | null>>>({})
+  const shown = useRef<Menu | null>(null)
+  const openT = useRef(0)
+  const closeT = useRef(0)
+
+  // Hover intent: open after 80ms, close 150ms after the pointer leaves nav + panel (they share one hover zone).
+  const hover = (menu: Menu | null) => {
+    clearTimeout(closeT.current)
+    clearTimeout(openT.current)
+    openT.current = window.setTimeout(() => setActive(menu), 80)
+  }
+  const leave = () => {
+    clearTimeout(openT.current)
+    closeT.current = window.setTimeout(() => setActive(null), 150)
+  }
+
+  // One panel for every menu: it opens from nothing, closes faster, and when you move to another menu it
+  // changes height, the arrow slides to the new item and the new links nudge in from the side you came from.
+  useEffect(() => {
+    const was = shown.current
+    shown.current = active
+    const p = pos.current!
+    const c = card.current!
+    const b = body.current!
+    const a = arrow.current!
+    const blocks = [...b.querySelectorAll<HTMLElement>("[data-menu]")]
+    const calm = reduced()
+    const prevH = b.offsetHeight
+    gsap.killTweensOf([c, b, a, ...blocks])
+
+    if (!active) {
+      if (was) {
+        gsap.to(c, {
+          opacity: 0, y: calm ? 0 : -8, scale: calm ? 1 : 0.98,
+          duration: calm ? 0.1 : dur.out, ease: "power2.inOut",
+          onComplete: () => { gsap.set(p, { display: "none" }) },
+        })
+      }
+      return
+    }
+
+    blocks.forEach((m) => { m.style.display = m.dataset.menu === active ? "" : "none" })
+    gsap.set(b, { clearProps: "height" })
+    gsap.set(p, { display: "block" })
+    const t = btns.current[active]!.getBoundingClientRect()
+    const x = t.left + t.width / 2 - p.getBoundingClientRect().left
+
+    if (!was) {
+      gsap.set(a, { x })
+      gsap.fromTo(c, calm ? { opacity: 0 } : { opacity: 0, y: -8, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: calm ? 0.15 : dur.in, ease })
+      return
+    }
+
+    gsap.set(c, { opacity: 1, y: 0, scale: 1 })
+    if (calm) return void gsap.set(a, { x })
+    const dir = MENUS.indexOf(active) > MENUS.indexOf(was) ? 1 : -1
+    gsap.fromTo(b, { height: prevH }, { height: b.offsetHeight, duration: dur.morph, ease, clearProps: "height" })
+    gsap.to(a, { x, duration: dur.morph, ease })
+    gsap.fromTo(blocks.find((m) => m.dataset.menu === active)!, { opacity: 0, x: 8 * dir }, { opacity: 1, x: 0, duration: dur.morph, ease })
+  }, [active])
+
+  // Escape closes and hands focus back to the trigger; a click anywhere outside closes (touch screens never "leave").
+  useEffect(() => {
+    const els = [pos.current, card.current, body.current, arrow.current]
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape" || !shown.current) return
+      if (zone.current!.contains(document.activeElement)) btns.current[shown.current]?.focus()
+      setActive(null)
+    }
+    const onClick = (e: MouseEvent) => zone.current!.contains(e.target as Node) || setActive(null)
+    document.addEventListener("keydown", onKey)
+    document.addEventListener("click", onClick)
+    return () => {
+      document.removeEventListener("keydown", onKey)
+      document.removeEventListener("click", onClick)
+      clearTimeout(openT.current)
+      clearTimeout(closeT.current)
+      gsap.killTweensOf(els)
+    }
+  }, [])
+
+  const trigger = (menu: Menu, label: string) => (
+    <button
+      type="button"
+      ref={(el) => { btns.current[menu] = el }}
+      aria-haspopup="true"
+      aria-expanded={active === menu}
+      aria-controls="nav-panel"
+      className={item}
+      onMouseEnter={() => hover(menu)}
+      onClick={() => setActive(menu)}
+      onKeyDown={(e) => {
+        if (e.key !== "ArrowDown") return
+        e.preventDefault()
+        setActive(menu)
+        requestAnimationFrame(() => body.current!.querySelector<HTMLElement>(`[data-menu=${menu}] a`)?.focus())
+      }}
+    >
+      <Roll>{label}</Roll>
+    </button>
+  )
+  const plain = (href: string, label: string) => (
+    <Link href={href} className={item} onMouseEnter={() => hover(null)}>
+      <Roll>{label}</Roll>
+    </Link>
+  )
+
+  return (
+    // No `relative` here: the panel positions against the header and spans its full width.
+    // `self-stretch` runs the hover zone down to the row's padding, where the panel's invisible bridge takes over.
+    <nav
+      ref={zone}
+      aria-label="Main"
+      className="mr-auto flex items-center gap-5 self-stretch max-lg:hidden xl:gap-7"
+      onMouseEnter={() => clearTimeout(closeT.current)}
+      onMouseLeave={leave}
+      // Keyboard: tabbing to any other top-level item, or out of the nav, closes the open panel.
+      onFocus={(e) => {
+        if (!pos.current!.contains(e.target) && e.target !== btns.current[shown.current!]) setActive(null)
+      }}
+      onBlur={(e) => zone.current!.contains(e.relatedTarget) || setActive(null)}
+    >
+      {trigger("product", "Product")}
+      {plain("/operations/integrations", "Integrations")}
+      {plain(nav.industries.href, nav.industries.text)}
+      {trigger("resources", "Resources")}
+      {trigger("company", "Company")}
+      <div
+        ref={pos}
+        id="nav-panel"
+        className="absolute inset-x-0 top-full z-40 hidden before:absolute before:inset-x-0 before:-top-3 before:h-3"
+        onClick={(e) => (e.target as Element).closest("a") && setActive(null)}
+      >
+        <div ref={card} className="relative origin-top border-t border-t-copper-400/50 bg-navy-950 text-white shadow-[0_40px_60px_-30px_rgba(0,0,0,.7)]">
+          <div ref={body} className="relative overflow-hidden">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-0 right-0 w-3/5 bg-[radial-gradient(circle,rgba(223,151,112,.5)_1.4px,transparent_1.9px)] bg-[length:16px_16px] [mask-image:radial-gradient(ellipse_at_100%_100%,#000,transparent_70%)] [-webkit-mask-image:radial-gradient(ellipse_at_100%_100%,#000,transparent_70%)]"
+            />
+            <div data-menu="product" className={`${ui.wrap} relative grid gap-x-10 py-8 md:grid-cols-2`}>
+              {nav.product.map((g) => (
+                <div key={g.heading}>
+                  <h3 className="mb-3 flex items-center gap-3 px-2.5 font-body text-[.75rem] font-semibold uppercase leading-[normal] tracking-[.08em] text-copper-400 after:h-[3px] after:flex-1 after:bg-[radial-gradient(circle,rgba(223,151,112,.6)_1px,transparent_1.5px)] after:bg-[length:8px_3px]">
+                    {g.heading}
+                  </h3>
+                  <div className="grid gap-1">
+                    <MenuLinks links={g.links} />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div data-menu="resources" className={`${ui.wrap} relative grid gap-1 py-8 md:grid-cols-2 md:gap-x-10`}>
+              <MenuLinks links={nav.resources} />
+            </div>
+            <div data-menu="company" className={`${ui.wrap} relative grid gap-1 py-8 md:grid-cols-2 md:gap-x-10`}>
+              <MenuLinks links={nav.company} />
+            </div>
+          </div>
+          {/* Notch on the panel's top edge; slides under whichever nav item is open. */}
+          <span ref={arrow} aria-hidden="true" className="pointer-events-none absolute -top-px left-0 size-0">
+            <i className="absolute left-0 top-0 size-3 -translate-x-1/2 -translate-y-1/2 rotate-45 border-l border-t border-copper-400/50 bg-navy-950" />
+          </span>
+        </div>
+      </div>
+    </nav>
+  )
+}
+
 export function SiteHeader() {
-  const root = useRef<HTMLElement>(null)
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  // Menus: one open at a time, close on outside click, link click or Escape.
+  // Mobile panel: close on outside click, link click or Escape.
   useEffect(() => {
-    const menus = [...root.current!.querySelectorAll("details")]
-    const closeExcept = (keep?: Element | null) => menus.forEach((m) => { if (m !== keep) m.open = false })
     const onClick = (e: MouseEvent) => {
-      const t = e.target as Element
-      closeExcept(t.closest("details"))
-      if (t.closest("details a")) closeExcept()
-      // composedPath, not closest(): React swaps the button icon on toggle, so `t` is already detached here.
+      // composedPath, not closest(): React swaps the button icon on toggle, so e.target is already detached here.
       const inMobile = e.composedPath().some((n) => n instanceof Element && n.matches("#mobile-menu, [aria-controls=mobile-menu]"))
       if (!inMobile) setMobileOpen(false)
     }
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key !== "Escape") return
-      closeExcept()
-      setMobileOpen(false)
-    }
-    const onToggle = (e: Event) => {
-      const d = e.target as HTMLDetailsElement
-      if (d.open) closeExcept(d)
-    }
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMobileOpen(false)
     // Growing past the mobile breakpoint puts the desktop nav back; drop the panel state with it.
     const desktop = matchMedia("(min-width: 1024px)")
     const onResize = () => desktop.matches && setMobileOpen(false)
     document.addEventListener("click", onClick)
     document.addEventListener("keydown", onKey)
     desktop.addEventListener("change", onResize)
-    root.current!.addEventListener("toggle", onToggle, true)
-    const el = root.current!
     return () => {
       document.removeEventListener("click", onClick)
       document.removeEventListener("keydown", onKey)
       desktop.removeEventListener("change", onResize)
-      el.removeEventListener("toggle", onToggle, true)
     }
   }, [])
 
@@ -118,7 +295,7 @@ export function SiteHeader() {
       <a className="absolute left-4 top-[-60px] z-[60] rounded-chip bg-copper-400 px-3.5 py-2 text-navy-900 focus:top-3" href="#main">
         Skip to content
       </a>
-      <header className="relative z-30 bg-navy-900 text-white" ref={root}>
+      <header className="relative z-30 bg-navy-900 text-white">
         <div className="bg-navy-950 text-[.8125rem] text-fog-300">
           <div className={`${ui.wrap} flex min-h-10 items-center justify-between gap-4 max-md:justify-end`}>
             <span className="max-md:hidden">{nav.tagline}</span>
@@ -137,46 +314,23 @@ export function SiteHeader() {
         </div>
         <div className={`${ui.wrap} flex min-h-16 items-center gap-x-3 py-3 lg:min-h-[76px] lg:gap-x-6 xl:gap-x-9`}>
           <Brand />
-          <nav className="mr-auto flex items-center gap-5 max-lg:hidden xl:gap-7" aria-label="Main">
-            {/* No `relative` here: the panel positions against the header and spans its full width. */}
-            <details className="group">
-              <summary className={summary}>Product</summary>
-              <div className="absolute inset-x-0 top-full z-40 animate-menu-in overflow-hidden border-t border-t-copper-400/50 bg-navy-950 shadow-[0_40px_60px_-30px_rgba(0,0,0,.7)]">
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-y-0 right-0 w-3/5 bg-[radial-gradient(circle,rgba(223,151,112,.5)_1.4px,transparent_1.9px)] bg-[length:16px_16px] [mask-image:radial-gradient(ellipse_at_100%_100%,#000,transparent_70%)] [-webkit-mask-image:radial-gradient(ellipse_at_100%_100%,#000,transparent_70%)]"
-                />
-                <div className={`${ui.wrap} relative grid gap-x-10 py-8 md:grid-cols-2`}>
-                  {nav.product.map((g) => (
-                    <div key={g.heading}>
-                      <h3 className="mb-3 flex items-center gap-3 px-2.5 font-body text-[.75rem] font-semibold uppercase leading-[normal] tracking-[.08em] text-copper-400 after:h-[3px] after:flex-1 after:bg-[radial-gradient(circle,rgba(223,151,112,.6)_1px,transparent_1.5px)] after:bg-[length:8px_3px]">
-                        {g.heading}
-                      </h3>
-                      <div className="grid gap-1">
-                        <MenuLinks links={g.links} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </details>
-            <Link href="/operations/integrations" className={navLink}>Integrations</Link>
-            <Link href={nav.industries.href} className={navLink}>{nav.industries.text}</Link>
-            <details className="group relative">
-              <summary className={summary}>Resources</summary>
-              <div className={panel}>
-                <MenuLinks links={nav.resources} />
-              </div>
-            </details>
-            <details className="group relative">
-              <summary className={summary}>Company</summary>
-              <div className={panel}>
-                <MenuLinks links={nav.company} />
-              </div>
-            </details>
-          </nav>
+          <DesktopNav />
           <div className="flex items-center gap-2 max-lg:ml-auto sm:gap-2.5">
-            <DemoLink className={`${ui.btnCopper} max-lg:min-h-10 max-lg:px-3.5 max-lg:py-2 max-sm:px-3 max-sm:text-sm`}>{nav.demo}</DemoLink>
+            <DemoLink className={`${ui.btnCopper} group gap-2 max-lg:min-h-10 max-lg:px-3.5 max-lg:py-2 max-sm:px-3 max-sm:text-sm`}>
+              {nav.demo}
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                className="size-4 transition-transform duration-400 ease-quart group-hover:translate-x-[3px] max-sm:hidden motion-reduce:transition-none"
+              >
+                <path d="M3 8h10M9 4l4 4-4 4" />
+              </svg>
+            </DemoLink>
             <button
               type="button"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
