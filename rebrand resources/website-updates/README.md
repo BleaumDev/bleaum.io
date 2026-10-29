@@ -15,7 +15,7 @@ Page-by-page change list for the Bleaum website rebrand (remove cannabis-specifi
 | Page | URL path | Changes | High | Medium | Low |
 |---|---|---|---|---|---|
 | [All pages](all-pages.md) | all | 18 | 13 | 4 | 1 |
-| [Home](home.md) | `/` | 12 | 7 | 2 | 3 |
+| [Home](home.md) | `/` | 16 | 9 | 4 | 3 |
 | [Point of Sale](point-of-sale.md) | `/grow/point-of-sale` | 9 | 4 | 5 | 0 |
 | [Ecommerce](ecommerce.md) | `/grow/ecommerce` | 8 | 3 | 3 | 2 |
 | [Marketing](marketing.md) | `/grow/marketing` | 6 | 1 | 4 | 1 |
@@ -35,9 +35,9 @@ Page-by-page change list for the Bleaum website rebrand (remove cannabis-specifi
 | [SOPs](sops.md) | `/resources/sops` | 1 | 0 | 1 | 0 |
 | [Blog](blog.md) | `/blog` | 5 | 2 | 2 | 1 |
 | [Top nav](top-nav.md) | `/product` | 1 | 1 | 0 | 0 |
-| **Total** | | **132** | **65** | **38** | **29** |
+| **Total** | | **136** | **67** | **40** | **29** |
 
-Also see [not-yet-reviewed.md](not-yet-reviewed.md).
+Also see [not-yet-reviewed.md](not-yet-reviewed.md) and [ai-marketing.md](ai-marketing.md) (AI section copy, rows #133 to #136).
 
 ## By type
 
@@ -45,8 +45,8 @@ Also see [not-yet-reviewed.md](not-yet-reviewed.md).
 |---|---|
 | Wording | 50 |
 | Typo | 8 |
-| Decision | 15 |
-| Verify | 37 |
+| Decision | 18 |
+| Verify | 38 |
 | Legal review | 7 |
 | Keep | 3 |
 | Technical | 12 |

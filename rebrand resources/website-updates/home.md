@@ -1,7 +1,7 @@
 # Home
 
 - **URL path:** `/`
-- **Changes:** 12 (High 7, Medium 2, Low 3)
+- **Changes:** 16 (High 9, Medium 4, Low 3)
 - **Source:** `Bleaum_Website_Update_Sheet (1).xlsx`, tab "Find & Replace". Row # matches the sheet.
 
 Update the **Status** column as work moves: `To do` → `In progress` → `Done` or `Skipped`.
@@ -20,3 +20,7 @@ Update the **Status** column as work moves: `To do` → `In progress` → `Done`
 | 28 | Medium | Verify | To do | "POS onboard in 24 hours", "Transparent pricing, no hidden fees" | Verify, or soften |  |
 | 29 | Low | Verify | To do | "Environmental impact reduction" (Receipts) | Remove unless substantiated |  |
 | 30 | High | Verify | To do | Customer quotes (AJ/Happy Root, Collin/Park Social, Hugo/Go Green, Cam/Project Releaf, Perry Jones) | Permission and wording check; "delivery times improved by 40%" needs support |  |
+| 133 | High | Decision | Done | No AI section on Home beyond the "and AI" in the hero line | Add a "Bleaum AI" section: title "AI built into the box.", three assistants (Customer Live; Insights and Reporting Coming soon) | Requested 2026-10-29. Exact copy in [ai-marketing.md](ai-marketing.md). Only features the site already shows. |
+| 134 | Medium | Decision | Done | No plain statement of what "AI" means for Bleaum | Add "What is AI, really?" table, no competitor names | Requested 2026-10-29. Copy in ai-marketing.md. |
+| 135 | Medium | Decision | Done | No FAQ on Home | Add three questions, answers reuse approved Home wording | Requested 2026-10-29. Copy in ai-marketing.md. |
+| 136 | High | Verify | To do | "Live" chip on the Customer Assistant | Confirm Smart Customer Intelligence and upsell suggestions are live. If not, set to "Coming soon" | Rests on the Point of Sale page, which shows no Coming Soon tag. |

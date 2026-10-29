@@ -219,6 +219,64 @@ export default function HomeView() {
         </div>
       </section>
 
+      {/* Bleaum AI: assistants, comparison, FAQ */}
+      <section className={`home-dk ${section}`} id="ai" aria-labelledby="ai-h">
+        <div className={ui.wrap}>
+          <Head id="ai-h" kicker={c.ai.kicker} title={c.ai.title} subtitle={c.ai.subtitle} />
+          <ul className={grid3}>
+            {c.ai.assistants.map((a) => (
+              <li key={a.title} data-card {...rv()}>
+                <div className={`flex h-full flex-col gap-2 rounded-card border border-h-line bg-h-surface p-6 ${glow} ${ui.lift}`}>
+                  <DotMark />
+                  <h3 className={ui.h3}>{a.title}</h3>
+                  <p className="flex-1 text-[.9375rem] text-h-muted">{a.description}</p>
+                  <span className={`${chip} self-start ${a.live ? "bg-copper-400 text-navy-900" : "bg-h-surface2 text-h-muted"}`}>
+                    {a.live ? c.ai.live : c.ai.soon}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-pad grid gap-12 lg:grid-cols-2 lg:gap-[72px] [&>*]:min-w-0">
+            <div {...rv()}>
+              <h3 className={`${ui.h2} mb-6`}>{c.ai.compare.title}</h3>
+              <table className="w-full border-collapse text-left text-[.9375rem]">
+                <thead>
+                  <tr>
+                    {c.ai.compare.headers.map((h, i) => (
+                      <th key={h} scope="col" className={`border-b border-h-line px-3 py-2.5 font-medium ${i ? "text-h-accent" : "text-h-muted"}`}>
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {c.ai.compare.rows.map(([market, bleaum]) => (
+                    <tr key={market}>
+                      <td className="border-b border-h-line px-3 py-3 align-top text-h-muted">{market}</td>
+                      <td className="border-b border-h-line px-3 py-3 align-top font-medium">{bleaum}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div {...rv()}>
+              <h3 className={`${ui.h2} mb-6`}>{c.ai.faq.title}</h3>
+              {c.ai.faq.items.map((f) => (
+                <details key={f.q} className="group border-b border-h-line first:border-t">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-display text-[1.0625rem] font-medium [&::-webkit-details-marker]:hidden">
+                    {f.q}
+                    <span className="text-h-accent transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
+                  </summary>
+                  <p className="pb-4 text-h-muted">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Inventory, delivery, online store, receipts */}
       <section className={`${section} ${alt}`} aria-label="Inventory, delivery, online store and receipts">
         <div className={ui.wrap}>

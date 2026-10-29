@@ -55,6 +55,44 @@ export const products = {
   ],
 }
 
+// Follows website-updates/ai-marketing.md (#133 to #136). Change that file first, then this.
+export const ai = {
+  kicker: "Bleaum AI",
+  title: "AI built into the box.",
+  subtitle: "Bleaum AI runs on the same real-time platform as your POS, inventory and delivery.",
+  assistants: [
+    { title: "Customer Assistant", description: "Shows purchase history, preferences and loyalty status at the counter, with smart upsell suggestions.", live: true },
+    { title: "Insights Assistant", description: "Smart alerts, trend predictions and automatic spotting of anything unusual.", live: false },
+    { title: "Reporting Assistant", description: "Plain-language summaries of your reports, written for you.", live: false },
+  ],
+  live: "Live",
+  soon: "Coming soon",
+  compare: {
+    title: "What is AI, really?",
+    headers: ["What the market calls AI", "What Bleaum means by AI"],
+    rows: [
+      ["A chatbot bolted on", "AI on the same real-time platform as sales, stock and delivery"],
+      ["A dashboard you still have to read", "Alerts and summaries written for you (coming soon)"],
+      ["One module that talks to nothing", "Nine products on one real-time record"],
+      ["A tool built for something else, then adapted", "Built by operators, for regulated retail"],
+    ],
+  },
+  faq: {
+    title: "Questions, answered.",
+    items: [
+      {
+        q: "What is Bleaum AI?",
+        a: "AI features built into the Bleaum platform, next to POS, inventory and delivery. Today that includes smart customer insights at the counter. Smart alerts and AI-written report summaries are coming soon.",
+      },
+      {
+        q: "How is Bleaum different?",
+        a: "Bleaum puts POS, payments, inventory, delivery and reporting on one real-time record, so a sale, a transfer and a delivery all agree.",
+      },
+      { q: "How do I see it in action?", a: "Book a demo and we will walk through your setup with you." },
+    ],
+  },
+}
+
 export const inventory = {
   kicker: "Inventory",
   title: "Know what is on the shelf, in every store.",
