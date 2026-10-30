@@ -5,6 +5,7 @@ import {
   GiftIcon,
   HeartPulseIcon,
   LayersIcon,
+  LeafIcon,
   LockIcon,
   MonitorIcon,
   PillIcon,
@@ -13,6 +14,7 @@ import {
   ShirtIcon,
   ShoppingCartIcon,
   SparklesIcon,
+  StethoscopeIcon,
   StoreIcon,
   TruckIcon,
   WineIcon,
@@ -31,10 +33,12 @@ type Icon = ComponentType<{ className?: string }>
 
 // Copy is unchanged from the old page; website-updates/industries.md #97, #98 and #100 are already applied.
 // #99 (which regulated verticals to keep) and #101 (short descriptions for each vertical) wait on the business,
-// so the lists below stay as they were.
+// so the lists below stay as they were, except #137 (Medical MJ and Recreational MJ added to Regulated Industries).
 const regulated: [Icon, string][] = [
   [PillIcon, "Pharmaceutical Outlets"],
   [WineIcon, "Liquor Stores"],
+  [StethoscopeIcon, "Medical MJ"],
+  [LeafIcon, "Recreational MJ"],
 ]
 
 const retail: [Icon, string][] = [
