@@ -109,8 +109,107 @@ const Backup = () => (
   </Art>
 )
 
+// "Explore the platform" cards, in the order of gallery.items.
+const Pos = () => (
+  <Art>
+    <rect x="20" y="6" width="80" height="48" rx="6" />
+    <path {...D} d="M30 18h22M30 28h22M68 18h22M68 28h22" />
+    <rect x="30" y="38" width="60" height="9" rx="4.5" className={`${pop} ${solid}`} />
+    <path d="M60 54v10M44 66h32" />
+  </Art>
+)
+
+const Delivery = () => (
+  <Art>
+    <path {...D} d="M6 28h12M10 38h8M6 48h12" className={acc} />
+    <path d="M26 20h46v34H26zM72 30h18l12 12v12H72z" />
+    {[44, 88].map((x) => (
+      <circle key={x} cx={x} cy="58" r="7" className={`${pop} ${solid}`} />
+    ))}
+  </Art>
+)
+
+const Pay = () => (
+  <Art>
+    <rect x="14" y="14" width="72" height="46" rx="8" />
+    <path d="M14 28h72" />
+    <rect x="24" y="38" width="14" height="10" rx="2" className={solid} />
+    <path {...D} d="M46 44h24" />
+    <g className={pop}>
+      <circle cx="92" cy="58" r="13" className={solid} />
+      <path {...D} d="M85 58l5 5 9-11" className="stroke-navy-900" />
+    </g>
+  </Art>
+)
+
+const App = () => (
+  <Art>
+    <rect x="38" y="4" width="44" height="72" rx="8" />
+    <path d="M54 10h12" />
+    <rect x="46" y="22" width="12" height="12" rx="3" />
+    <rect x="62" y="22" width="12" height="12" rx="3" />
+    <rect x="46" y="40" width="12" height="12" rx="3" />
+    <rect x="62" y="40" width="12" height="12" rx="3" className={`${pop} ${solid}`} />
+    <path {...D} d="M50 64h20" />
+    <circle cx="20" cy="26" r="3" className={solid} />
+    <circle cx="102" cy="52" r="4" className={solid} />
+  </Art>
+)
+
+const Support = () => (
+  <Art>
+    <path {...D} d="M30 46v-4a30 30 0 0 1 60 0v4" className={acc} />
+    <rect x="22" y="42" width="14" height="22" rx="5" />
+    <rect x="84" y="42" width="14" height="22" rx="5" />
+    <path d="M91 64c0 8-10 10-22 10" />
+    <circle cx="64" cy="74" r="4" className={`${pop} ${solid}`} />
+  </Art>
+)
+
+const Locations = () => (
+  <Art>
+    <path {...D} d="M60 14c-10 0-18 8-18 17 0 13 18 29 18 29s18-16 18-29c0-9-8-17-18-17z" />
+    <circle cx="60" cy="31" r="6" className={`${pop} ${solid}`} />
+    <path d="M22 56h24M74 56h24M26 24l16 4M94 24l-16 4" strokeDasharray="0.01 6" className="stroke-copper-400" />
+    {[[16, 56], [104, 56], [20, 22], [100, 22]].map(([x, y]) => (
+      <circle key={x + y} cx={x} cy={y} r="5" />
+    ))}
+  </Art>
+)
+
+const Shield = () => (
+  <Art>
+    <path {...D} d="M60 8l32 10v20c0 18-14 30-32 36-18-6-32-18-32-36V18z" />
+    <path {...D} d="M46 38l10 10 18-20" className={`${pop} ${acc}`} />
+    <circle cx="14" cy="26" r="2.5" className={solid} />
+    <circle cx="106" cy="26" r="2.5" className={solid} />
+  </Art>
+)
+
+const Receipt = () => (
+  <Art>
+    <path {...D} d="M34 6h52v62l-8-5-9 5-9-5-9 5-9-5-8 5z" />
+    <path {...D} d="M44 20h32M44 30h32M44 40h18" />
+    <rect x="44" y="48" width="32" height="6" rx="3" className={`${pop} ${solid}`} />
+    <path d="M100 11l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" className={`${pop} ${solid}`} />
+  </Art>
+)
+
+const Stock = () => (
+  <Art>
+    <path {...D} d="M60 8l32 14-32 14-32-14z" />
+    <path d="M28 22v30l32 16V36M92 22v30L60 68" />
+    <path d="M44 15l32 14" className={acc} />
+    <g className={pop}>
+      <circle cx="102" cy="14" r="9" className="stroke-copper-400" />
+      <circle cx="102" cy="14" r="4" className={solid} />
+    </g>
+  </Art>
+)
+
 const ai = [Customer, Insights, Report]
 const trust = [Sync, Audit, Backup]
+const gallery = [Pos, Delivery, Pay, App, Support, Locations, Shield, Receipt, Stock]
 
 // Pick a spot by its position in the content list.
 export function AiArt({ i }: { i: number }) {
@@ -119,5 +218,9 @@ export function AiArt({ i }: { i: number }) {
 }
 export function TrustArt({ i }: { i: number }) {
   const A = trust[i]
+  return <A />
+}
+export function GalleryArt({ i }: { i: number }) {
+  const A = gallery[i]
   return <A />
 }

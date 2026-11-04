@@ -2,18 +2,6 @@
 // index.html does not have (video, gallery, mobile app, receipts, about, testimonials) keep their old copy.
 // Wording that the files in `rebrand resources/website-updates/` set must change there first.
 
-import {
-  CreditCardIcon,
-  HeadsetIcon,
-  MapPinnedIcon,
-  PackageIcon,
-  ReceiptIcon,
-  ScanBarcodeIcon,
-  ShieldCheckIcon,
-  SmartphoneIcon,
-  TruckIcon,
-} from "lucide-react"
-
 export type Quote = { text: string; who: string }
 export type Card = { title: string; description: string }
 
@@ -191,15 +179,15 @@ export const gallery = {
   title: "Explore the platform",
   subtitle: "See what you can run with Bleaum, from point of sale to delivery",
   items: [
-    { icon: ScanBarcodeIcon, title: "All-in-One POS System", description: "Complete point-of-sale solution", href: "/grow/point-of-sale" },
-    { icon: TruckIcon, title: "Last Mile Delivery", description: "Smart routing & tracking", href: "/grow/delivery" },
-    { icon: CreditCardIcon, title: "Bleaum Pay", description: "One Payment Platform. Fully Covered", href: "/grow/payments" },
-    { icon: SmartphoneIcon, title: "Branded Mobile App", description: "iOS & Android app", href: "/grow/ecommerce" },
-    { icon: HeadsetIcon, title: "Human Support", description: "Real people, real solutions", href: "/support" },
-    { icon: MapPinnedIcon, title: "Multi-Location Ready", description: "Scale across multiple locations", href: "/grow/point-of-sale" },
-    { icon: ShieldCheckIcon, title: "Secure & Compliant", description: "Enterprise-grade security", href: "/operations/automated-compliance" },
-    { icon: ReceiptIcon, title: "Smart Receipts", description: "Dynamic receipts for every order", href: "/grow/point-of-sale" },
-    { icon: PackageIcon, title: "Real-Time Inventory", description: "Live inventory management", href: "/operations/inventory-management" },
+    { title: "All-in-One POS System", description: "Complete point-of-sale solution", href: "/grow/point-of-sale" },
+    { title: "Last Mile Delivery", description: "Smart routing & tracking", href: "/grow/delivery" },
+    { title: "Bleaum Pay", description: "One Payment Platform. Fully Covered", href: "/grow/payments" },
+    { title: "Branded Mobile App", description: "iOS & Android app", href: "/grow/ecommerce" },
+    { title: "Human Support", description: "Real people, real solutions", href: "/support" },
+    { title: "Multi-Location Ready", description: "Scale across multiple locations", href: "/grow/point-of-sale" },
+    { title: "Secure & Compliant", description: "Enterprise-grade security", href: "/operations/automated-compliance" },
+    { title: "Smart Receipts", description: "Dynamic receipts for every order", href: "/grow/point-of-sale" },
+    { title: "Real-Time Inventory", description: "Live inventory management", href: "/operations/inventory-management" },
   ],
 }
 

@@ -6,7 +6,7 @@ import { HomeFx } from "./home-fx"
 import * as ui from "./home-ui"
 import * as c from "./home-content"
 import { Bloom } from "./bloom"
-import { AiArt, TrustArt } from "./home-art"
+import { AiArt, GalleryArt, TrustArt } from "./home-art"
 
 // Marks an element for the scroll reveal in home-fx.tsx. `cls` is the element's own classes.
 const rv = (cls = "") => ({ "data-fx": "reveal", className: cls })
@@ -423,16 +423,17 @@ export default function HomeView() {
         <div className={ui.wrap}>
           <Head id="gallery-h" title={c.gallery.title} subtitle={c.gallery.subtitle} />
           <ul className={grid3}>
-            {c.gallery.items.map((it) => (
+            {c.gallery.items.map((it, i) => (
               <li key={it.title} data-card {...rv()}>
                 <Link
                   href={it.href}
                   className={`group flex h-full flex-col overflow-hidden rounded-card border border-h-line bg-h-surface ${glow} ${ui.lift}`}
                 >
+                  {/* Illustration band: copper dots fade out toward the middle so the drawing stays clean. */}
+                  <div className="relative isolate grid h-40 place-items-center border-b border-h-line bg-h-surface2 before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle,rgba(223,151,112,.4)_1px,transparent_1.6px)] before:bg-[length:14px_14px] before:[mask-image:radial-gradient(ellipse_at_center,transparent_30%,#000_95%)] before:[-webkit-mask-image:radial-gradient(ellipse_at_center,transparent_30%,#000_95%)] [&>svg]:mb-0 [&>svg]:h-24 [&>svg]:w-36">
+                    <GalleryArt i={i} />
+                  </div>
                   <div className="flex flex-1 flex-col gap-1.5 p-6">
-                    <span className="mb-3.5 grid size-11 place-items-center rounded-ctl bg-h-surface2 text-h-accent">
-                      <it.icon className="size-5" aria-hidden="true" />
-                    </span>
                     <h3 className={ui.h3}>{it.title}</h3>
                     <p className="flex-1 text-[.9375rem] text-h-muted">{it.description}</p>
                     <span className="font-semibold text-h-accent transition-transform duration-250 ease-soft group-hover:translate-x-1.5" aria-hidden="true">
