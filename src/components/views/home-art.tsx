@@ -207,8 +207,80 @@ const Stock = () => (
   </Art>
 )
 
+// "Why teams choose Bleaum" rows, in the order of why.items.
+const Setup = () => (
+  <Art>
+    <rect x="14" y="8" width="14" height="14" rx="4" />
+    <path {...D} d="M17 15l3 3 5-6M38 15h58" />
+    <rect x="14" y="30" width="14" height="14" rx="4" />
+    <path {...D} d="M17 37l3 3 5-6M38 37h44" />
+    <g className={pop}>
+      <rect x="14" y="52" width="14" height="14" rx="4" className={solid} />
+      <path d="M17 59l3 3 5-6" className="stroke-navy-900" />
+    </g>
+    <path {...D} d="M38 59h50" className={acc} />
+  </Art>
+)
+
+const OneSystem = () => (
+  <Art>
+    <path {...D} d="M26 20l24 15M94 20l-24 15M26 60l24-15M94 60l-24-15" />
+    {[[20, 16], [100, 16], [20, 64], [100, 64]].map(([x, y]) => (
+      <circle key={x + y} cx={x} cy={y} r="6" />
+    ))}
+    <circle cx="60" cy="40" r="10" className={`${pop} ${solid}`} />
+  </Art>
+)
+
+const Devices = () => (
+  <Art>
+    <rect x="8" y="14" width="52" height="36" rx="4" />
+    <path {...D} d="M34 50v8M24 60h20" />
+    <rect x="68" y="26" width="28" height="38" rx="4" />
+    <rect x="100" y="36" width="14" height="28" rx="3" />
+    <circle cx="34" cy="32" r="4" className={`${pop} ${solid}`} />
+    <circle cx="82" cy="45" r="3.5" className={`${pop} ${solid}`} />
+    <circle cx="107" cy="50" r="2.5" className={`${pop} ${solid}`} />
+  </Art>
+)
+
+const People = () => (
+  <Art>
+    <circle cx="22" cy="50" r="9" className={`${pop} ${solid}`} />
+    <path {...D} d="M8 76c0-8 6-12 14-12s14 4 14 12" className={acc} />
+    <rect x="40" y="8" width="70" height="36" rx="10" />
+    <path d="M54 44v10l10-10" />
+    <path {...D} d="M52 20h46M52 30h28" />
+  </Art>
+)
+
+const Regulated = () => (
+  <Art>
+    <path {...D} d="M16 30l6-18h60l6 18zM22 30v38h60V30" />
+    <path d="M44 68V48h16v20" />
+    <g className={pop}>
+      <path d="M98 36l14 5v10c0 9-6 15-14 18-8-3-14-9-14-18V41z" className={solid} />
+      <path {...D} d="M92 52l4 4 8-9" className="stroke-navy-900" />
+    </g>
+  </Art>
+)
+
+const Pricing = () => (
+  <Art>
+    <rect x="24" y="6" width="64" height="68" rx="8" />
+    <path {...D} d="M36 20h20M36 30h40" />
+    <rect x="36" y="40" width="28" height="8" rx="4" className={solid} />
+    <path {...D} d="M36 62c4-8 6-8 8 0s6 8 10 0 6-4 10-2" className={acc} />
+    <g className={pop}>
+      <circle cx="98" cy="48" r="12" className={solid} />
+      <circle cx="98" cy="48" r="6" className="stroke-navy-900" />
+    </g>
+  </Art>
+)
+
 const ai = [Customer, Insights, Report]
 const trust = [Sync, Audit, Backup]
+const why = [Setup, OneSystem, Devices, People, Regulated, Pricing]
 const gallery = [Pos, Delivery, Pay, App, Support, Locations, Shield, Receipt, Stock]
 
 // Pick a spot by its position in the content list.
@@ -222,5 +294,9 @@ export function TrustArt({ i }: { i: number }) {
 }
 export function GalleryArt({ i }: { i: number }) {
   const A = gallery[i]
+  return <A />
+}
+export function WhyArt({ i }: { i: number }) {
+  const A = why[i]
   return <A />
 }

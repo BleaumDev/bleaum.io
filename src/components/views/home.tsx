@@ -6,7 +6,7 @@ import { HomeFx } from "./home-fx"
 import * as ui from "./home-ui"
 import * as c from "./home-content"
 import { Bloom } from "./bloom"
-import { AiArt, GalleryArt, TrustArt } from "./home-art"
+import { AiArt, GalleryArt, TrustArt, WhyArt } from "./home-art"
 
 // Marks an element for the scroll reveal in home-fx.tsx. `cls` is the element's own classes.
 const rv = (cls = "") => ({ "data-fx": "reveal", className: cls })
@@ -452,9 +452,10 @@ export default function HomeView() {
         <div className={ui.wrap}>
           <Head id="why-h" title={c.why.title} subtitle={c.why.subtitle} />
           <ul className="mt-10 grid gap-x-10 border-t border-h-line md:grid-cols-2 lg:grid-cols-3">
-            {c.why.items.map((r) => (
-              <li key={r.title} {...rv("border-b border-h-line py-6")}>
-                <h3 className={ui.h3}>{r.title}</h3>
+            {c.why.items.map((r, i) => (
+              <li key={r.title} {...rv("group border-b border-h-line py-7")}>
+                <WhyArt i={i} />
+                <h3 className={`${ui.h3} mt-3`}>{r.title}</h3>
                 <p className="mt-1.5 text-h-muted">{r.description}</p>
               </li>
             ))}
