@@ -6,6 +6,7 @@ import { HomeFx } from "./home-fx"
 import * as ui from "./home-ui"
 import * as c from "./home-content"
 import { Bloom } from "./bloom"
+import { AiArt, TrustArt } from "./home-art"
 
 // Marks an element for the scroll reveal in home-fx.tsx. `cls` is the element's own classes.
 const rv = (cls = "") => ({ "data-fx": "reveal", className: cls })
@@ -224,10 +225,10 @@ export default function HomeView() {
         <div className={ui.wrap}>
           <Head id="ai-h" kicker={c.ai.kicker} title={c.ai.title} subtitle={c.ai.subtitle} />
           <ul className={grid3}>
-            {c.ai.assistants.map((a) => (
+            {c.ai.assistants.map((a, i) => (
               <li key={a.title} data-card {...rv()}>
-                <div className={`flex h-full flex-col gap-2 rounded-card border border-h-line bg-h-surface p-6 ${glow} ${ui.lift}`}>
-                  <DotMark />
+                <div className={`group flex h-full flex-col gap-2 rounded-card border border-h-line bg-h-surface p-6 ${glow} ${ui.lift}`}>
+                  <AiArt i={i} />
                   <h3 className={ui.h3}>{a.title}</h3>
                   <p className="flex-1 text-[.9375rem] text-h-muted">{a.description}</p>
                   <span className={`${chip} self-start ${a.live ? "bg-copper-400 text-navy-900" : "bg-h-surface2 text-h-muted"}`}>
@@ -511,9 +512,9 @@ export default function HomeView() {
         <div className={ui.wrap}>
           <Head id="trust-h" kicker={c.trust.kicker} title={c.trust.title} subtitle={c.trust.text} />
           <ul className="mt-10 grid gap-8 md:grid-cols-3">
-            {c.trust.pillars.map((p) => (
-              <li key={p.title} {...rv()}>
-                <DotMark />
+            {c.trust.pillars.map((p, i) => (
+              <li key={p.title} {...rv("group")}>
+                <TrustArt i={i} />
                 <h3 className={ui.h3}>{p.title}</h3>
                 <p className="mt-2 text-h-muted">{p.description}</p>
               </li>

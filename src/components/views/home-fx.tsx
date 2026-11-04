@@ -12,7 +12,7 @@ const fx = (name: string) => all(`[data-fx=${name}]`)
 const once = (trigger: Element, start = "top 88%") => ({ trigger, start, once: true })
 
 // Scroll and pointer motion for the Home page. The markup stays on the server page; this only finds its hooks:
-// data-fx = reveal, slide (+ data-dir), stagger, chip, dot, words, scrub-words, stars, count, hero, drift, tilt, phone,
+// data-fx = reveal, slide (+ data-dir), stagger, chip, dot, draw, words, scrub-words, stars, count, hero, drift, tilt, phone,
 // pos-items, pos-cart, ping, cta-bloom, bloom, magnet, progress; data-clip, data-wipe, data-card. Skipped for prefers-reduced-motion,
 // and with no JS everything stays visible.
 export function HomeFx() {
@@ -84,6 +84,17 @@ export function HomeFx() {
       )
       fx("chip").forEach((el) =>
         gsap.from(el, { scale: 0.5, opacity: 0, duration: 0.5, delay: 0.4, ease: "back.out(2.5)", scrollTrigger: once(el, "top 92%") }),
+      )
+
+      // Line-art spots (home-art.tsx) draw their paths one after another. Without this they just show fully drawn.
+      fx("draw").forEach((el) =>
+        gsap.from(el.querySelectorAll("[data-draw]"), {
+          strokeDashoffset: 1.05,
+          duration: 0.9,
+          stagger: 0.15,
+          ease: "power2.inOut",
+          scrollTrigger: once(el, "top 92%"),
+        }),
       )
 
       // Gallery images unwrap top to bottom; the video frame opens up as it arrives.
