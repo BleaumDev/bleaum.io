@@ -27,6 +27,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#020917",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
@@ -37,7 +38,7 @@ export default function RootLayout({
   // console.log('Environment variables loaded:', process.env);
 
   return (
-    <html lang="en" suppressHydrationWarning className="motion-safe:scroll-smooth">
+    <html lang="en" suppressHydrationWarning className="dark motion-safe:scroll-smooth">
       <head>
         <link
           rel="stylesheet"
@@ -48,8 +49,8 @@ export default function RootLayout({
       <body className={sansFont.className + " bg-[#020917] min-h-screen flex flex-col"}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          forcedTheme="dark"
+          enableSystem={false}
           disableTransitionOnChange
         >
           <SiteHeader />
