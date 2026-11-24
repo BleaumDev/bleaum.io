@@ -13,7 +13,7 @@ const once = (trigger: Element, start = "top 88%") => ({ trigger, start, once: t
 
 // Scroll and pointer motion for the Home page. The markup stays on the server page; this only finds its hooks:
 // data-fx = reveal, slide (+ data-dir), stagger, chip, dot, draw, words, scrub-words, stars, count, hero, drift, tilt, phone,
-// pos-items, pos-cart, ping, cta-bloom, bloom, magnet, progress; data-clip, data-wipe, data-card. Skipped for prefers-reduced-motion,
+// pos-items, pos-cart, ping, cta-bloom, bloom, magnet, progress; data-wipe, data-card. Skipped for prefers-reduced-motion,
 // and with no JS everything stays visible.
 export function HomeFx() {
   useEffect(() => {
@@ -97,19 +97,12 @@ export function HomeFx() {
         }),
       )
 
-      // Gallery images unwrap top to bottom; the video frame opens up as it arrives.
+      // Gallery images unwrap top to bottom.
       all("[data-wipe]").forEach((el) =>
         gsap.fromTo(
           el,
           { clipPath: "inset(0 0 100% 0)" },
           { clipPath: "inset(0 0 0% 0)", duration: 0.9, ease: "power3.inOut", scrollTrigger: once(el, "top 90%") },
-        ),
-      )
-      all("[data-clip]").forEach((el) =>
-        gsap.fromTo(
-          el,
-          { clipPath: "inset(12% 10% round 28px)" },
-          { clipPath: "inset(0% 0% round 0px)", ease: "none", scrollTrigger: { trigger: el, start: "top 92%", end: "top 35%", scrub: true } },
         ),
       )
       gsap.fromTo(fx("ping"), { scale: 1, opacity: 0.5 }, { scale: 1.9, opacity: 0, duration: 1.8, ease: "power1.out", repeat: -1 })

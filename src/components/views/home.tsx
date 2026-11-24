@@ -392,7 +392,6 @@ export default function HomeView() {
           <Head id="video-h" title={c.video.title} subtitle={c.video.subtitle} />
           <Link
             href="/demo"
-            data-clip
             {...rv("group relative mt-10 block aspect-video overflow-hidden rounded-card bg-navy-900 shadow-[0_0_0_1px_var(--h-line),0_30px_70px_-40px_rgba(11,30,49,.7)]")}
           >
             <Image
@@ -400,7 +399,7 @@ export default function HomeView() {
               alt=""
               fill
               sizes="(min-width: 1200px) 1136px, 100vw"
-              className="object-cover transition-transform duration-600 ease-soft group-hover:scale-[1.03]"
+              className="object-cover"
             />
             <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(7,19,33,.6),transparent_38%)]" />
             <span className="absolute inset-0 grid place-items-center" aria-hidden="true">
