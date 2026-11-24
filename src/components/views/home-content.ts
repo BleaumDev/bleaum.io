@@ -268,7 +268,6 @@ export const cta = {
 export const nav = {
   tagline: "Your business in a box.",
   utility: [
-    { text: "Help Center", href: "/help/guide" },
     { text: "Support", href: "/support" },
   ],
   product: [
@@ -296,7 +295,6 @@ export const nav = {
   industries: { text: "Industries", href: "/resources/industries" },
   resources: [
     { title: "Blog", text: "Insights, news and updates", href: "/blog" },
-    { title: "Help Center", text: "Guides and setup help for every product", href: "/help/guide" },
     { title: "SOPs", text: "Standard operating procedures", href: "/resources/sops" },
     { title: "Refer a business", text: "Earn rewards for referrals", href: "/resources/refer" },
   ],
