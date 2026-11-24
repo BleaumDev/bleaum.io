@@ -6,7 +6,7 @@ import {
   CreditCardIcon,
   GlobeIcon,
   PackageIcon,
-  QuoteIcon,
+  // QuoteIcon, REVIEWS HIDDEN (website-updates/all-pages.md #15)
   RefreshCwIcon,
   ShieldIcon,
   SmartphoneIcon,
@@ -93,6 +93,7 @@ const scale = [
   "Real-time POS sync",
 ]
 
+/* REVIEWS HIDDEN (website-updates/all-pages.md #15)
 const testimonials = [
   {
     quote: "Our products actually show up in Google searches now. The SEO-native storefront was a game changer.",
@@ -111,7 +112,7 @@ const testimonials = [
     company: "Gold Leaf",
   },
 ]
-
+ */
 const tick = <CheckIcon className="mt-1 size-4 shrink-0 text-h-accent" aria-hidden="true" />
 const tickDk = <CheckIcon className="mt-1 size-4 shrink-0 text-copper-400" aria-hidden="true" />
 const dot = <span className={ui.dotmark} aria-hidden="true" />
@@ -344,7 +345,7 @@ export default function EcommercePage() {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* REVIEWS HIDDEN (website-updates/all-pages.md #15)
       <section className="bg-h-surface2 py-pad" aria-labelledby="customers-h">
         <div className={ui.wrap}>
           <div {...ui.rv()}>
@@ -376,7 +377,7 @@ export default function EcommercePage() {
             ))}
           </ul>
         </div>
-      </section>
+      </section> */}
 
       {/* Talk to us */}
       <section id="talk" className={`relative overflow-hidden py-pad text-white ${ui.ctaBg}`} aria-labelledby="talk-h">

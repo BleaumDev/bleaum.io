@@ -10,7 +10,7 @@ import {
   EyeIcon,
   LayersIcon,
   PackageIcon,
-  QuoteIcon,
+  // QuoteIcon, REVIEWS HIDDEN (website-updates/all-pages.md #15)
   ShieldCheckIcon,
   ShieldIcon,
   ZapIcon,
@@ -93,6 +93,7 @@ const overview: { icon: Icon; label: string; value: string }[] = [
   { icon: CheckSquareIcon, label: "Audit Ready", value: "Built in" },
 ]
 
+/* REVIEWS HIDDEN (website-updates/all-pages.md #15)
 const stories: { quote: string; author: string; company: string; metric: string }[] = [
   {
     quote: "Inventory counts went from our most dreaded task to something we barely think about. It just works.",
@@ -107,7 +108,7 @@ const stories: { quote: string; author: string; company: string; metric: string 
     metric: "6 locations unified",
   },
 ]
-
+ */
 const tick = <CheckIcon className="mt-1 size-4 shrink-0 text-h-accent" aria-hidden="true" />
 
 // Icon chip: navy with a copper icon and a faint copper ring.
@@ -177,6 +178,7 @@ export default function InventoryManagementPage() {
               Count during the day. Catch problems early. Stay compliant without the stress. Finally, inventory
               management that works with your schedule, not against it.
             </p>
+            {/* REVIEWS HIDDEN (website-updates/all-pages.md #15)
             <figure className="mt-6 max-w-[52ch] animate-rise border-l-2 border-copper-400 pl-4 [animation-delay:180ms]">
               <blockquote className="text-fog-200">
                 &ldquo;We used to spend hours after close just counting. Now, we do it live, and I actually trust the
@@ -186,7 +188,7 @@ export default function InventoryManagementPage() {
                 <span className="font-semibold text-fog-200">Cam</span>
                 <span className="block">Project Releaf</span>
               </figcaption>
-            </figure>
+            </figure> */}
             <div className={`${ui.actions} mt-8 animate-rise [animation-delay:270ms]`}>
               <DemoLink className={`${ui.btnCopper} ${ui.stack} gap-2`}>
                 See 20-Minute Inventory in Action
@@ -304,7 +306,7 @@ export default function InventoryManagementPage() {
         </div>
       </section>
 
-      {/* Success stories */}
+      {/* REVIEWS HIDDEN (website-updates/all-pages.md #15)
       <section className="bg-h-surface2 py-pad" aria-labelledby="story-h">
         <div className={ui.wrap}>
           <div {...ui.rv(0, "max-w-[60ch]")}>
@@ -329,7 +331,7 @@ export default function InventoryManagementPage() {
             ))}
           </ul>
         </div>
-      </section>
+      </section> */}
 
       {/* Call to action */}
       <section className={`relative overflow-hidden py-pad text-white ${ui.ctaBg}`} aria-labelledby="cta-h">

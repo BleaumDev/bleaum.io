@@ -11,7 +11,7 @@ import {
   HeadphonesIcon,
   HeartIcon,
   PackageIcon,
-  QuoteIcon,
+  // QuoteIcon, REVIEWS HIDDEN (website-updates/all-pages.md #15)
   ShieldCheckIcon,
   ShieldIcon,
   TargetIcon,
@@ -111,6 +111,7 @@ const connected: { icon: Icon; name: string }[] = [
   { icon: BuildingIcon, name: "Multi-Location" },
 ]
 
+/* REVIEWS HIDDEN (website-updates/all-pages.md #15)
 const stories: { quote: string; author: string; company: string; metric: string }[] = [
   {
     quote: "Training went from days to hours. New staff are confident on day one.",
@@ -131,7 +132,7 @@ const stories: { quote: string; author: string; company: string; metric: string 
     metric: "Audit-ready",
   },
 ]
-
+ */
 const tick = <CheckIcon className="mt-1 size-4 shrink-0 text-h-accent" aria-hidden="true" />
 
 // Icon chip: navy with a copper icon and a faint copper ring.
@@ -346,7 +347,7 @@ export default function PointOfSalePage() {
         </div>
       </section>
 
-      {/* Success stories */}
+      {/* REVIEWS HIDDEN (website-updates/all-pages.md #15)
       <section className="bg-h-surface2 py-pad" aria-labelledby="story-h">
         <div className={ui.wrap}>
           <div {...ui.rv(0, "max-w-[60ch]")}>
@@ -371,7 +372,7 @@ export default function PointOfSalePage() {
             ))}
           </ul>
         </div>
-      </section>
+      </section> */}
 
       {/* Call to action */}
       <section className={`relative overflow-hidden py-pad text-white ${ui.ctaBg}`} aria-labelledby="cta-h">

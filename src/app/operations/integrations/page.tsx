@@ -2,7 +2,7 @@ import type { ComponentType } from "react"
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRightIcon, CircleCheckIcon, LinkIcon, QuoteIcon, ZapIcon } from "lucide-react"
+import { ArrowRightIcon, CircleCheckIcon, LinkIcon, /* QuoteIcon, REVIEWS HIDDEN (website-updates/all-pages.md #15) */ ZapIcon } from "lucide-react"
 import { Bloom } from "@/components/views/bloom"
 import { DemoLink, RevealOnScroll } from "@/components/views/home-client"
 import * as ui from "@/components/views/home-ui"
@@ -289,6 +289,7 @@ export default function IntegrationsPage() {
               </DemoLink>
             </div>
           </div>
+          {/* REVIEWS HIDDEN (website-updates/all-pages.md #15)
           <figure className="animate-rise rounded-card border border-white/20 bg-navy-950/90 p-6 shadow-[0_24px_48px_-24px_rgba(0,0,0,.7)] backdrop-blur-md [animation-delay:200ms] sm:p-8">
             <QuoteIcon className="size-8 text-copper-400" aria-hidden="true" />
             <blockquote className="mt-4 font-display text-[1.0625rem] font-medium leading-[1.5]">
@@ -296,7 +297,7 @@ export default function IntegrationsPage() {
               flows. Our accountant is happy, and so am I.&quot;
             </blockquote>
             <figcaption className="mt-4 text-[.9375rem] font-semibold text-copper-400">— Diana, Doctor Greens</figcaption>
-          </figure>
+          </figure> */}
         </div>
       </section>
 

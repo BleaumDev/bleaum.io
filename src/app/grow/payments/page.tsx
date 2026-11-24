@@ -211,6 +211,7 @@ export default function PaymentsPage() {
             <p className={`${ui.h3} mt-4 max-w-[28ch] animate-rise text-copper-400 [animation-delay:90ms]`}>
               One Payment Platform. Every Business. Fully Covered
             </p>
+            {/* REVIEWS HIDDEN (website-updates/all-pages.md #15)
             <figure className="mt-6 max-w-[52ch] animate-rise border-l-2 border-copper-400 pl-4 [animation-delay:180ms]">
               <blockquote className="text-[1.125rem] text-fog-200">
                 &ldquo;From regulated retail to everyday retail, wellness, and services — Bleaum Pay delivers a complete
@@ -218,7 +219,7 @@ export default function PaymentsPage() {
                 expectations.&rdquo;
               </blockquote>
               <figcaption className="mt-2 text-[.9375rem] text-fog-200/70">— Collin, Park Social</figcaption>
-            </figure>
+            </figure> */}
             <div className={`${ui.actions} mt-8 animate-rise [animation-delay:270ms]`}>
               <DemoLink className={`${ui.btnCopper} ${ui.stack} gap-2`}>
                 Get a Demo of Bleaum Pay

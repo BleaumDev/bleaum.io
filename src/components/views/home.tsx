@@ -41,6 +41,7 @@ function Ticks({ items }: { items: string[] }) {
   )
 }
 
+/* REVIEWS HIDDEN (website-updates/all-pages.md #15)
 function Quote({ quote }: { quote: c.Quote }) {
   return (
     <figure className="mt-6 rounded-ctl bg-h-surface px-5 py-[18px] shadow-[inset_0_0_0_1.5px_var(--h-line)]">
@@ -51,7 +52,7 @@ function Quote({ quote }: { quote: c.Quote }) {
     </figure>
   )
 }
-
+ */
 function Tiles({ items, three }: { items: { big: string; small: string }[]; three?: boolean }) {
   return (
     <div data-fx="stagger" className={`mb-1 grid gap-2 ${three ? "grid-cols-3" : "grid-cols-2"}`}>
@@ -92,7 +93,7 @@ type SplitProps = {
 }
 
 // Text beside a navy "screen", as in the Phase-2 index.
-function Split({ kicker, title, text, bullets, quote, more, panel, flip }: SplitProps) {
+function Split({ kicker, title, text, bullets, more, panel, flip }: SplitProps) {
   return (
     <div className={`mt-pad grid items-center gap-10 first:mt-0 lg:grid-cols-2 lg:gap-[72px] [&>*]:min-w-0 ${flip ? flipRow : ""}`}>
       <div {...slide(flip ? 1 : -1)}>
@@ -108,18 +109,19 @@ function Split({ kicker, title, text, bullets, quote, more, panel, flip }: Split
             {more.text}
           </Link>
         )}
-        <Quote quote={quote} />
+        {/* REVIEWS HIDDEN (website-updates/all-pages.md #15) <Quote quote={quote} /> */}
       </div>
       <div {...slide(flip ? -1 : 1)}>{panel}</div>
     </div>
   )
 }
 
+/* REVIEWS HIDDEN (website-updates/all-pages.md #15)
 const initials = (name: string) => {
   const words = name.split(" ")
   return words.length > 1 ? words.map((w) => w[0]).join("") : name.slice(0, 2)
 }
-
+ */
 // Copper spotlight that follows the pointer inside a card; home-fx.tsx feeds --mx / --my.
 const glow =
   "relative isolate before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:opacity-0 before:transition-opacity before:duration-300 before:bg-[radial-gradient(260px_circle_at_var(--mx,50%)_var(--my,50%),rgba(223,151,112,.18),transparent)] hover:before:opacity-100"
@@ -532,7 +534,7 @@ export default function HomeView() {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* REVIEWS HIDDEN (website-updates/all-pages.md #15)
       <section className={section} id="testimonials" aria-labelledby="testimonials-h">
         <div className={ui.wrap}>
           <Head id="testimonials-h" title={c.testimonials.title} subtitle={c.testimonials.subtitle} />
@@ -564,7 +566,7 @@ export default function HomeView() {
             ))}
           </ul>
         </div>
-      </section>
+      </section> */}
 
       {/* Contact band */}
       <section className="bg-h-surface2 py-band" aria-labelledby="contact-h">

@@ -8,7 +8,7 @@ import {
   ClockIcon,
   GlobeIcon,
   LineChartIcon,
-  QuoteIcon,
+  // QuoteIcon, REVIEWS HIDDEN (website-updates/all-pages.md #15)
   RefreshCwIcon,
   TargetIcon,
   TrendingUpIcon,
@@ -227,7 +227,7 @@ export default function ReportingAnalyticsPage() {
         </div>
       </section>
 
-      {/* Success story */}
+      {/* REVIEWS HIDDEN (website-updates/all-pages.md #15)
       <section className="py-pad" aria-labelledby="story-h">
         <div className={ui.wrap}>
           <div {...ui.rv(0, "max-w-[60ch]")}>
@@ -248,7 +248,7 @@ export default function ReportingAnalyticsPage() {
             </figcaption>
           </figure>
         </div>
-      </section>
+      </section> */}
 
       {/* Access control. home-dk equals the page background in dark mode, so the gradient keeps the band apart. */}
       <section className={`home-dk py-pad ${ui.heroBg}`} aria-labelledby="acc-h">

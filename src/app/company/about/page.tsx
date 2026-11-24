@@ -122,7 +122,7 @@ export default function AboutPage() {
         </ul>
       </section>
 
-      {/* Testimonial */}
+      {/* REVIEWS HIDDEN (website-updates/all-pages.md #15)
       <section className="home-dk py-pad" aria-labelledby="results-h">
         <div className={`${ui.wrap} grid items-start gap-10 lg:grid-cols-[5fr_7fr] lg:gap-20`}>
           <div {...ui.rv()}>
@@ -153,7 +153,7 @@ export default function AboutPage() {
             </figcaption>
           </figure>
         </div>
-      </section>
+      </section> */}
 
       {/* Looking ahead, community */}
       <section className="py-pad" aria-label="Looking ahead">
