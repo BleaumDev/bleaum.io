@@ -1,12 +1,16 @@
 import type { ReactNode } from "react"
-import { H, P, PANELS, W, floorM, fold, leftM, pts, rightM } from "./hero-iso"
+import { ShoppingBag, Store, Truck } from "lucide-react"
+import { BOX, H, P, THUMB, TILL, TOKEN, VAN, W, doors, flaps, floorM, fold, leftM, pts, rightM, thumb } from "./hero-iso"
 import { hero } from "./home-content"
 
-// Home hero illustration: "your business in a box", run "from one hand". A copper box unfolds into a lit shop, and a
-// hand holds the POS. The scene itself is wordless; the only text is the approved POS copy (home-content hero.pos).
+// Home hero illustration: "your business in a box", run "from one hand". A copper box unfolds into a lit shop. A hand
+// comes up in front of it, places an order on the phone and leaves; the shop packs the order and the van takes it away.
+// The scene itself is wordless; the only text is the POS copy on the phone (home-content hero.pos).
 // Server-rendered in its finished, open state. hero-scene-fx.ts finds the data-s hooks and brings it to life.
 
 const s = (name: string) => ({ "data-s": name })
+// Parts the story brings in later: hidden from the first paint, shown only when there is no motion or no script.
+const LATER = "opacity-0 motion-reduce:opacity-100 [@media(scripting:none)]:opacity-100"
 const line = { strokeLinecap: "round", strokeLinejoin: "round", fill: "none" } as const
 
 // Isometric cuboid: three visible faces.
@@ -90,9 +94,70 @@ const Tote = ({ x, z, color }: { x: number; z: number; color: string }) => (
   </g>
 )
 
+// The four products on the phone, flat, in a 48 x 40 box. Same order as home-content hero.pos.items.
+const GOODS = [
+  <g key="tote">
+    <path d="M17 15c0-13 14-13 14 0" stroke="#DF9770" strokeWidth={2.6} {...line} />
+    <path d="M11 14h26l2 24H9z" fill="#DF9770" />
+    <g transform="translate(24 26)" fill="#0B1E31" fillOpacity={0.5}><Mark r={8} gap={3.4} dot={1.5} /></g>
+  </g>,
+  <g key="mug">
+    <path d="M32 14c10-1 10 13 0 12" stroke="#B7C4D2" strokeWidth={3} {...line} />
+    <path d="M12 7h21v23a7 7 0 0 1-7 7h-7a7 7 0 0 1-7-7z" fill="#EAF0F6" />
+    <path d="M12 7h21v5H12z" fill="#DF9770" />
+  </g>,
+  <g key="wallet">
+    <rect x={6} y={9} width={36} height={27} rx={4} fill="#8A4E2E" />
+    <path d="M6 18v-5a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v5z" fill="#A4572C" />
+    <rect x={31} y={19} width={11} height={9} rx={4.5} fill="#DF9770" />
+  </g>,
+  <g key="candles">
+    {[[8, 20, 10], [20, 12, 10], [32, 24, 9]].map(([x, y, w]) => (
+      <g key={x}>
+        <path d={`M${x + w / 2} ${y}c-3.6-3-2.6-6.5 0-10 2.6 3.5 3.6 7 0 10z`} fill="#FFD9A8" />
+        <path d={`M${x} ${y}h${w}v${37 - y}h-${w}z`} fill="#FBE7DA" />
+      </g>
+    ))}
+  </g>,
+]
+const Good = ({ i, className }: { i: number; className: string }) => (
+  <svg viewBox="0 0 48 40" className={className} aria-hidden="true">{GOODS[i]}</svg>
+)
+
+// The carton an order is packed in. Items drop in between its back flaps and its front walls.
+function Carton() {
+  const { x, y, w, h } = BOX
+  const [X, Y] = [x + w, y + w]
+  const f = flaps(0)
+  const [a, b] = [x + w * 0.36, x + w * 0.64]
+  const flap = (i: number, fill: string) => <polygon {...s("flap")} points={f[i]} fill={fill} stroke={fill} strokeWidth={0.6} strokeLinejoin="round" />
+  return (
+    <g {...s("parcel")} className={LATER}>
+      <polygon points={pts([x - 3, y + 4, 0], [X + 2, y + 4, 0], [X + 2, Y + 8, 0], [x - 3, Y + 8, 0])} fill="#071321" fillOpacity={0.3} />
+      <polygon points={pts([x, y, h], [X, y, h], [X, Y, h], [x, Y, h])} fill="#6E3B20" />
+      {flap(0, "#DCA07C")}
+      {flap(1, "#EAB592")}
+      <g {...s("drop")} opacity={0}><Mug x={76} z={70} f={["#FFFFFF", "#D5DFE9"]} /></g>
+      <g {...s("drop")} opacity={0}><Tote x={104} z={54} color="#DF9770" /></g>
+      <polygon points={pts([x, Y, 0], [X, Y, 0], [X, Y, h], [x, Y, h])} fill={kraft[1]} />
+      <polygon points={pts([X, y, 0], [X, Y, 0], [X, Y, h], [X, y, h])} fill={kraft[2]} />
+      {flap(2, "#DDA07B")}
+      {flap(3, kraft[0])}
+      <g {...s("seal")}>
+        <polygon points={pts([a, y, h], [b, y, h], [b, Y, h], [a, Y, h])} fill={parcelTape} />
+        <polygon points={pts([a, Y, h], [b, Y, h], [b, Y, h - 9], [a, Y, h - 9])} fill={parcelTape} />
+        <g transform={leftM(X, Y, 12)}>
+          <rect x={6} y={-8} width={20} height={15} rx={1.5} fill="#FFFFFF" />
+          <path d="M9-3.5h9M9 0h13M9 3.5h6" stroke="#A9B8C8" strokeWidth={1.6} {...line} />
+        </g>
+      </g>
+    </g>
+  )
+}
+
 // Delivery van facing right-down, parked on the fallen right wall. Origin: rear corner at (vx, vy).
-const [vx, vy] = [238, 74]
-const vs = vy + 46 // the side we see
+const { x: vx, y: vy } = VAN
+const vs = vy + VAN.d // the side we see
 function Wheel({ x }: { x: number }) {
   return (
     <g transform={rightM(x, vs + 0.5, 10)}>
@@ -107,6 +172,11 @@ function Wheel({ x }: { x: number }) {
 function Van() {
   return (
     <g {...s("van")}>
+      <polygon {...s("door")} points={doors(0)[1]} fill="#DCE5EE" />
+      {[0, 1, 2].map((i) => {
+        const [cx, cy] = P(vx - 4, vs - 8, 8)
+        return <circle key={i} {...s("puff")} cx={cx} cy={cy} r={7} fill="#DCE3EB" opacity={0} />
+      })}
       <polygon points={pts([vx - 2, vy + 4, 0], [vx + 122, vy + 4, 0], [vx + 122, vs + 14, 0], [vx - 2, vs + 14, 0])} fill="#071321" fillOpacity={0.35} />
       <Box x={vx} y={vy} z={9} w={74} d={46} h={56} f={["#FFFFFF", "#EAF0F6", "#B9C7D6"]} />
       <g transform={rightM(vx, vs, 9)}>
@@ -147,7 +217,8 @@ const strA = P(0, W, H - 2)
 const strB = P(W, 0, H - 2)
 const strM = [330, 284] as const
 const BULBS = curve(strA, strM, strB, 9)
-const ORDER = curve([166, 392], [214, 178], P(112, 116, 96), 12)
+// The order hangs where the phone's check mark was, then arcs to the counter screen.
+const ORDER = curve(TOKEN, [TOKEN[0] + 34, TOKEN[1] - 190], TILL, 9)
 
 // Scalloped awning over the right-hand wall: 8 stripes from (x, 0, H-6) down to (x, 24, H-22).
 const STRIPES = Array.from({ length: 8 }, (_, i) => {
@@ -185,7 +256,7 @@ function Scene() {
       <g fill="#DF9770" {...s("road")}>
         {Array.from({ length: 13 }, (_, i) => {
           const [x, y] = P(412 + i * 18, 100)
-          return <circle key={i} cx={x} cy={y} r={3 - i * 0.15} fillOpacity={1 - i * 0.07} />
+          return <circle key={i} {...s("dash")} cx={x} cy={y} r={3 - i * 0.15} fillOpacity={1 - i * 0.07} />
         })}
       </g>
 
@@ -240,14 +311,14 @@ function Scene() {
         ))}
         <Mug x={40} z={70} f={["#FFFFFF", "#D5DFE9"]} />
         <Mug x={58} z={70} f={["#F2B48F", "#C47D56"]} />
-        <Mug x={76} z={70} f={["#FFFFFF", "#D5DFE9"]} />
+        <g {...s("stock")}><Mug x={76} z={70} f={["#FFFFFF", "#D5DFE9"]} /></g>
         <Candle x={100} y={10} z={70} h={13} />
         <Candle x={114} y={10} z={70} h={19} />
         <Candle x={128} y={10} z={70} h={10} />
         <g {...s("pop")}><Box x={142} y={5} z={70} w={26} d={12} h={5} f={["#8A4E2E", "#6E3B20", "#5A2F19"]} /><Box x={143} y={5} z={75} w={24} d={12} h={5} f={["#A4572C", "#8A4E2E", "#6E3B20"]} /></g>
         <g {...s("pop")}><Box x={34} y={5} z={24} w={22} d={12} h={5} f={["#A4572C", "#8A4E2E", "#6E3B20"]} /><Box x={35} y={5} z={29} w={20} d={12} h={5} f={["#8A4E2E", "#6E3B20", "#5A2F19"]} /></g>
         <g {...s("pop")}><Tote x={72} z={54} color="#EAF0F6" /></g>
-        <g {...s("pop")}><g {...s("tote")}><Tote x={104} z={54} color="#DF9770" /></g></g>
+        <g {...s("pop")}><g {...s("stock")}><Tote x={104} z={54} color="#DF9770" /></g></g>
         <g {...s("pop")}><Tote x={136} z={54} color="#EAF0F6" /></g>
         <g {...s("awning")}>
           {STRIPES.map((t) => (
@@ -269,13 +340,13 @@ function Scene() {
           <Candle x={70} y={122} z={47} h={9} />
           <Box x={104} y={110} z={47} w={14} d={12} h={5} f={["#A9B8C8", "#71869C", "#53687F"]} />
           <g transform={rightM(0, 117, 0)}>
-            <rect x={84} y={-94} width={54} height={42} rx={5} fill="#071321" stroke="#A9B8C8" strokeWidth={2} />
+            <rect {...s("till")} x={84} y={-94} width={54} height={42} rx={5} fill="#071321" stroke="#A9B8C8" strokeWidth={2} />
             <path d="M90-87h18" stroke="#53687F" strokeWidth={3} {...line} />
             {[90, 112].map((x) => [-81, -71].map((y) => <rect key={`${x}${y}`} x={x} y={y} width={20} height={7} rx={2} fill="#1C4B70" />))}
             <rect {...s("pay")} x={90} y={-61} width={42} height={6} rx={3} fill="#DF9770" />
           </g>
           <g transform={rightM(0, 118, 0)} clipPath="url(#hs-slot)">
-            <path {...s("receipt")} d="M144-56v-24l3 2 3-2 3 2 3-2v24z" fill="#FFFFFF" />
+            <path {...s("receipt")} className={LATER} d="M144-56v-24l3 2 3-2 3 2 3-2v24z" fill="#FFFFFF" />
           </g>
           <Box x={142} y={110} z={47} w={17} d={16} h={9} f={["#53687F", "#3B5068", "#2A3D52"]} />
         </g>
@@ -309,11 +380,9 @@ function Scene() {
         <g transform={floorM(304, 168)} stroke="#0B1E31" strokeOpacity={0.5} strokeWidth={3.4} {...line}><path d="M-12 14V-10m-6 6 6-7 6 7M10 14V-10m-6 6 6-7 6 7M-20 20h38" /></g>
       </g>
       <g {...s("pop")}><Parcel x={212} y={18} w={30} h={26} /><Parcel x={216} y={22} z={26} w={20} h={16} /></g>
-      <g {...s("parcel")}><Parcel x={206} y={88} w={20} h={18} /></g>
+      <g {...s("van")}><polygon {...s("door")} points={doors(0)[0]} fill="#B9C7D6" /></g>
+      <Carton />
       <Van />
-
-      {/* Order travelling from the hand to the counter */}
-      <g fill="#FFE2C6">{ORDER.map(([x, y]) => <circle key={x} {...s("order")} cx={x} cy={y} r={4.4} opacity={0} />)}</g>
 
       {/* String lights */}
       <path d={`M${strA.join(" ")}Q${strM.join(" ")} ${strB.join(" ")}`} stroke="#0B1E31" strokeWidth={1.6} {...line} {...s("wire")} />
@@ -323,6 +392,27 @@ function Scene() {
           <circle cx={x} cy={y + 6} r={4} fill="#FFE2C6" />
         </g>
       ))}
+
+      {/* The order: a check mark on its way to the counter, then a ticket over it with the two items to pack */}
+      <g fill="#FFE2C6">{ORDER.map(([x, y]) => <circle key={x} {...s("order")} cx={x} cy={y} r={4.4} opacity={0} />)}</g>
+      <g {...s("token")} opacity={0}>
+        <circle cx={TOKEN[0]} cy={TOKEN[1]} r={40} fill="#DF9770" />
+        <path d={`M${TOKEN[0] - 17} ${TOKEN[1] + 2}l12 12 22-27`} stroke="#0B1E31" strokeWidth={7} {...line} />
+      </g>
+      <g transform={`translate(${TILL[0]} ${TILL[1] - 26})`}>
+        <g {...s("ticket")} opacity={0}>
+          <path d="M-96-70H2a12 12 0 0 1 12 12v36a12 12 0 0 1-12 12H-4L0 0-24-10H-96a12 12 0 0 1-12-12v-36a12 12 0 0 1 12-12z" fill="#0B1E31" stroke="#DF9770" strokeWidth={2.5} strokeLinejoin="round" />
+          {[1, 0].map((g, i) => (
+            <g key={g} transform={`translate(${i ? -44 : -100} -62)`}>
+              {GOODS[g]}
+              <g {...s("packed")}>
+                <circle cx={40} cy={35} r={10} fill="#FFE2C6" />
+                <path d="M35.5 35.5l3 3 6-7" stroke="#0B1E31" strokeWidth={2.8} {...line} />
+              </g>
+            </g>
+          ))}
+        </g>
+      </g>
 
       {/* Dots rising out of the box */}
       <g fill="#DF9770">
@@ -335,21 +425,22 @@ function Scene() {
 }
 
 const skin = { base: "#DF9770", light: "#EDB592", shade: "#B9714A", palm: "#CB855D" }
-const handSvg = "pointer-events-none absolute -left-[50px] top-0 h-[720px] w-[350px] max-w-none"
+const handSvg = "pointer-events-none absolute -left-[50px] top-0 h-[780px] w-[370px] max-w-none"
 
-// The hand, in pixels of the 232 x 376 phone it holds. The back goes under the phone, the front over it.
+// The hand, in pixels of the 232 x 404 phone it holds. The back goes under the phone, the front over it.
 function HandBack() {
   return (
-    <svg viewBox="-50 0 350 720" className={handSvg} aria-hidden="true">
-      <path d="M4 250C-8 322 8 392 50 432C62 444 66 458 66 480V720H208V500C208 480 214 472 226 462C252 442 274 418 278 384L270 330L226 290Z" fill={skin.palm} />
-      <path d="M40 420C84 448 132 440 168 412" stroke={skin.shade} strokeWidth={3} strokeOpacity={0.5} {...line} />
+    <svg viewBox="-50 0 370 780" className={handSvg} aria-hidden="true">
+      <path d="M4 278C-8 350 8 420 50 460C62 472 66 486 66 508V780H208V528C208 508 214 500 226 490C252 470 274 446 278 412L268 352L226 318Z" fill={skin.palm} />
+      <path d="M40 448C84 476 132 468 168 440" stroke={skin.shade} strokeWidth={3} strokeOpacity={0.5} {...line} />
     </svg>
   )
 }
 function HandFront() {
+  const t = thumb(THUMB.x, THUMB.y)
   return (
-    <svg viewBox="-50 0 350 720" className={handSvg} aria-hidden="true">
-      {[[152, 38, 17], [191, 39, 19], [231, 37, 17], [269, 32, 12]].map(([y, h, w]) => {
+    <svg viewBox="-50 0 370 780" className={handSvg} aria-hidden="true">
+      {[[180, 38, 17], [219, 39, 19], [259, 37, 17], [297, 32, 12]].map(([y, h, w]) => {
         const r = h / 2
         return (
           <g key={y} transform={`rotate(-7 0 ${y + r})`}>
@@ -359,58 +450,106 @@ function HandFront() {
           </g>
         )
       })}
-      <g {...s("thumb")}>
-        <path d="M196 520C198 474 240 436 232 374C229 346 221 322 208 304C194 287 192 266 205 255C219 244 239 252 251 269C275 302 291 340 285 384C280 420 254 442 228 462C214 473 208 490 208 520Z" fill={skin.base} />
-        <path d="M196 520C198 474 240 436 232 374C229 346 221 322 208 304" stroke={skin.shade} strokeWidth={3} strokeOpacity={0.7} {...line} />
-        <path d="M249 300q9 1 14-5M256 313q8 1 13-4" stroke={skin.shade} strokeWidth={2.4} strokeOpacity={0.6} {...line} />
-        <path d="M205 266C212 257 226 260 233 270C228 279 217 284 209 284C203 280 201 272 205 266Z" fill={skin.light} />
-      </g>
-      <path d="M46 486Q137 462 228 486V720H46Z" fill="#17405F" />
-      <path d="M46 486Q137 462 228 486V500Q137 476 46 500Z" fill="#EAF0F6" />
-      <path d="M78 520V720M112 513V720" stroke="#0F2F4C" strokeWidth={3} {...line} />
-      <circle {...s("tap")} cx={184} cy={264} r={16} fill="none" stroke="#FFE2C6" strokeWidth={3} opacity={0} />
+      <circle {...s("tap")} r={16} fill="#FFE2C6" fillOpacity={0.25} stroke="#FFE2C6" strokeWidth={3} opacity={0} />
+      <path {...s("thumb-shadow")} d={t.body} fill="#030A13" fillOpacity={0.35} transform="translate(-9 9)" />
+      <path {...s("thumb")} d={t.body} fill={skin.base} />
+      <path {...s("thumb-edge")} d={t.edge} stroke={skin.shade} strokeWidth={3} strokeOpacity={0.7} {...line} />
+      <g {...s("thumb-crease")} transform={t.crease}><path d="M-4 8q5 6 1 13M7 7q5 6 1 12" stroke={skin.shade} strokeWidth={2.4} strokeOpacity={0.6} {...line} /></g>
+      <g {...s("thumb-nail")} transform={t.nail}><path d="M-13-8C-6-13 12-12 14 0C12 12-6 13-13 8C-10 3-10-3-13-8Z" fill={skin.light} /></g>
+      <path d="M46 512Q140 488 240 514V780H46Z" fill="#17405F" />
+      <path d="M46 512Q140 488 240 514V528Q140 502 46 526Z" fill="#EAF0F6" />
+      <path d="M78 548V780M112 541V780" stroke="#0F2F4C" strokeWidth={3} {...line} />
     </svg>
   )
 }
 
+const panel = "rounded-xl bg-white/[.06]"
+
+// A phone version of the POS "Process" screen: order type, products, cart bar; then the order sheet and the check mark
+// that hero-scene-fx.ts brings in. At rest it shows two items picked.
 function Phone() {
   const { pos } = hero
   return (
     <div
-      className="relative flex h-[376px] w-[232px] flex-col rounded-[34px] bg-navy-950 p-3 text-fog-100 shadow-[inset_0_0_0_1.5px_rgba(255,255,255,.28),0_30px_70px_-20px_rgba(3,10,19,.9)]"
+      className="relative h-[404px] w-[232px] rounded-[36px] bg-navy-950 p-2 text-fog-100 shadow-[inset_0_0_0_1.5px_rgba(255,255,255,.28),0_30px_70px_-20px_rgba(3,10,19,.9)]"
       role="img"
       aria-label={pos.alt}
     >
-      <span className="mx-auto mb-2.5 mt-0.5 block h-1.5 w-14 rounded-full bg-white/[.14]" />
-      <div className="mb-2.5 flex justify-between text-[.6875rem]">
-        {pos.tabs.map((t, i) => (
-          <span key={t} className={`rounded-full px-2 py-1 ${i === 0 ? "bg-white/[.12] text-white" : "text-fog-300"}`}>
-            {t}
+      <div className="relative flex h-full flex-col gap-2 overflow-hidden rounded-[28px] bg-[#0A1A2B] p-2.5">
+        <span className="mx-auto block h-1.5 w-14 shrink-0 rounded-full bg-white/[.14]" />
+        <div className="flex h-6 shrink-0 items-center justify-between text-[.6875rem]">
+          {pos.tabs.map((t, i) => (
+            <span key={t} className={`rounded-full px-2 py-1 ${i === 0 ? "bg-white/[.12] text-white" : "text-fog-300"}`}>
+              {t}
+            </span>
+          ))}
+        </div>
+        <div className="flex h-8 shrink-0 gap-1 rounded-full bg-white/[.06] p-1 text-fog-300">
+          {[Store, ShoppingBag].map((Icon, i) => (
+            <span key={i} className="grid w-12 place-items-center"><Icon className="size-3.5" /></span>
+          ))}
+          <span className="flex flex-1 items-center justify-center gap-1.5 rounded-full bg-copper-400 text-[.6875rem] font-semibold text-navy-900">
+            <Truck className="size-3.5" />
+            {pos.type}
           </span>
-        ))}
-      </div>
-      <div data-fx="pos-items" className="grid flex-1 grid-cols-2 gap-2">
-        {pos.items.map((it) => (
-          <div
-            key={it.name}
-            className="relative flex flex-col justify-end gap-0.5 rounded-xl bg-white/[.06] p-2.5 text-[.75rem] leading-[1.4] before:absolute before:inset-x-2.5 before:top-2.5 before:h-[38px] before:bg-[radial-gradient(circle,rgba(223,151,112,.55)_1.4px,transparent_1.9px)] before:bg-[length:8px_8px] before:[mask-image:linear-gradient(#000,transparent)] before:[-webkit-mask-image:linear-gradient(#000,transparent)]"
-          >
-            <b className="font-semibold">{it.name}</b>
-            <i className="not-italic text-fog-300">
-              {it.price}
-              {it.low && (
-                <>
-                  {" · "}
-                  <span className="whitespace-nowrap font-semibold text-copper-400">Low stock</span>
-                </>
+        </div>
+        {/* The two ordered items sit in the bottom row, where a thumb can reach */}
+        <div className="grid flex-1 grid-cols-2 grid-rows-2 gap-2">
+          {pos.items.map((it, i) => (
+            <div key={it.name} {...s(i < 2 ? "tile" : "tile-idle")} className={`relative flex flex-col justify-end overflow-hidden p-1.5 text-[.6875rem] leading-[1.4] ${panel} ${i < 2 ? "order-last" : ""}`}>
+              <Good i={i} className="absolute left-2 top-2 h-9 w-11" />
+              <b className="font-semibold">{it.name}</b>
+              <i className="not-italic text-fog-300">
+                {it.price}
+                {it.low && (
+                  <>
+                    {" · "}
+                    <span className="whitespace-nowrap font-semibold text-copper-400">Low stock</span>
+                  </>
+                )}
+              </i>
+              {i < 2 && (
+                <span {...s("picked")} className="absolute inset-0 rounded-xl bg-copper-400/[.12] ring-2 ring-inset ring-copper-400">
+                  <svg viewBox="0 0 20 20" className="absolute right-1.5 top-1.5 size-5">
+                    <circle cx={10} cy={10} r={10} fill="#DF9770" />
+                    <path d="M5.5 10.5l3 3 6-7" stroke="#0B1E31" strokeWidth={2.4} {...line} />
+                  </svg>
+                </span>
               )}
-            </i>
+            </div>
+          ))}
+        </div>
+        <div {...s("cart")} className="flex h-[42px] shrink-0 items-center justify-between rounded-xl bg-copper-400 px-3.5 text-[.8125rem] font-semibold text-navy-900">
+          <span>{pos.cart.label}</span>
+          <span>{pos.cart.total}</span>
+        </div>
+
+        <span {...s("scrim")} className="invisible absolute inset-0 bg-navy-950/60" />
+        <div {...s("sheet")} className="invisible absolute inset-x-0 bottom-0 flex flex-col gap-2 rounded-t-[22px] bg-navy-800 p-2.5 text-[.75rem] shadow-[0_-12px_30px_rgba(3,10,19,.5)]">
+          <span className="mx-auto mb-0.5 block h-1 w-9 rounded-full bg-white/20" />
+          {pos.items.slice(0, 2).map((it, i) => (
+            <div key={it.name} className={`flex items-center gap-2 p-2 ${panel}`}>
+              <Good i={i} className="h-7 w-[34px]" />
+              <b className="flex-1 font-semibold">{it.name}</b>
+              <span className="text-fog-300">{it.price}</span>
+            </div>
+          ))}
+          <div className="flex items-center gap-2 px-2 py-1 text-fog-300">
+            <Truck className="size-3.5" />
+            {pos.type}
+            <b className="ml-auto text-[.9375rem] font-semibold text-white">{pos.cart.total}</b>
           </div>
-        ))}
-      </div>
-      <div data-fx="pos-cart" className="mt-2.5 flex justify-between rounded-xl bg-copper-400 px-3.5 py-3 text-[.8125rem] font-semibold text-navy-900">
-        <span>{pos.cart.label}</span>
-        <span>{pos.cart.total}</span>
+          <div {...s("confirm")} className="grid h-[44px] place-items-center rounded-xl bg-copper-400 text-[.8125rem] font-semibold text-navy-900">
+            {pos.confirm}
+          </div>
+        </div>
+        <div {...s("done")} className="invisible absolute inset-0 grid place-items-center bg-navy-800">
+          <svg viewBox="-108 -194 216 388" className="h-full w-full" aria-hidden="true">
+            <g fill="#DF9770" fillOpacity={0.4}><Mark r={104} gap={13} dot={5.6} name="burst" /></g>
+            <circle {...s("seal-ring")} r={40} fill="#DF9770" />
+            <path {...s("check")} pathLength={1} strokeDasharray="1 2" d="M-17 2l12 12 22-27" stroke="#0B1E31" strokeWidth={7} {...line} />
+          </svg>
+        </div>
       </div>
     </div>
   )
@@ -418,19 +557,19 @@ function Phone() {
 
 export function HeroScene() {
   return (
-    <div data-fx="scene" className="relative lg:-mt-10 lg:mb-6">
-      <div {...s("stage")} className="animate-rise [animation-delay:350ms] max-lg:-mx-3 lg:-mr-[14%] lg:ml-[6%] xl:ml-[12%]">
+    <div data-fx="scene" className="relative max-lg:pb-16 lg:-mt-10 lg:mb-6">
+      <div {...s("stage")} className="animate-rise [animation-delay:350ms] max-lg:-mx-3 lg:-mr-[11%] lg:ml-[2%]">
         <Scene />
       </div>
-      {/* In front of the box: below it on small screens, at its left on wide ones. The section crops the arm. */}
-      <div
-        {...s("hand")}
-        className="animate-rise [animation-delay:550ms] max-lg:-mt-[12%] max-lg:mb-2 max-lg:flex max-lg:justify-center lg:absolute lg:-left-4 lg:top-[30%] lg:origin-top-left lg:scale-[.8] xl:left-0 xl:scale-100"
-      >
-        <div data-fx="phone" className="relative w-[232px]">
-          <HandBack />
-          <Phone />
-          <HandFront />
+      {/* In front of the shop, cropped by the section's bottom edge, which it rises from. Without motion it rests at the side. */}
+      <div className="pointer-events-none absolute left-[40%] top-0 -ml-[116px] origin-top scale-[.86] sm:top-[20%] sm:scale-100 lg:left-[44%] lg:top-[16%] lg:scale-[.8] xl:top-[20%] xl:scale-100 motion-reduce:lg:left-0 motion-reduce:lg:ml-0">
+        <div {...s("hand")} className={LATER}>
+          <div data-fx="phone" className="relative w-[232px]">
+            <span className="absolute -inset-x-64 -inset-y-32 bg-[radial-gradient(closest-side,rgba(3,10,19,.72),transparent)]" />
+            <HandBack />
+            <Phone />
+            <HandFront />
+          </div>
         </div>
       </div>
     </div>

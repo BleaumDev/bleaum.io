@@ -22,6 +22,9 @@ export const hero = {
       { name: "Candle Set", price: "$18.00" },
     ],
     cart: { label: "2 items in cart", total: "$38.00" },
+    // Button and order-type labels exactly as the POS app shows them.
+    type: "Delivery",
+    confirm: "Complete Order",
     alt: "Sample Bleaum POS screen with four items and a cart total of $38.00",
   },
 }

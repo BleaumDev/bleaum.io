@@ -159,9 +159,7 @@ export default function HomeView() {
               </Link>
             </div>
           </div>
-          <div data-fx="tilt">
-            <HeroScene />
-          </div>
+          <HeroScene />
         </div>
       </section>
 

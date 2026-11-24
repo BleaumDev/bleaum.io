@@ -13,8 +13,8 @@ const fx = (name: string) => all(`[data-fx=${name}]`)
 const once = (trigger: Element, start = "top 88%") => ({ trigger, start, once: true })
 
 // Scroll and pointer motion for the Home page. The markup stays on the server page; this only finds its hooks:
-// data-fx = scene (hero-scene-fx.ts), reveal, slide (+ data-dir), stagger, chip, dot, draw, words, scrub-words, stars, count, hero, drift, tilt, phone,
-// pos-items, pos-cart, ping, cta-bloom, bloom, magnet, progress; data-wipe, data-card. Skipped for prefers-reduced-motion,
+// data-fx = scene (hero-scene-fx.ts), reveal, slide (+ data-dir), stagger, chip, dot, draw, words, scrub-words, stars, count, hero, drift, phone,
+// ping, cta-bloom, bloom, magnet, progress; data-wipe, data-card. Skipped for prefers-reduced-motion,
 // and with no JS everything stays visible.
 export function HomeFx() {
   useEffect(() => {
@@ -137,11 +137,7 @@ export function HomeFx() {
 
       heroScene(fx("scene")[0], fx("bloom")[0])
 
-      // Phone items pop in after the hero text, then the phone floats and the hero drifts as it scrolls away.
-      gsap
-        .timeline({ delay: 0.5 })
-        .from(fx("pos-items")[0].children, { opacity: 0, scale: 0.9, y: 14, duration: 0.5, stagger: 0.07, ease: "back.out(1.6)" })
-        .from(fx("pos-cart"), { opacity: 0, y: 16, duration: 0.4, ease: "power2.out" }, "-=0.2")
+      // The phone floats and the hero drifts as it scrolls away.
       gsap.to(fx("phone"), { y: -8, duration: 2.4, ease: "sine.inOut", yoyo: true, repeat: -1 })
       gsap.to(fx("drift"), {
         y: 70,
@@ -152,7 +148,7 @@ export function HomeFx() {
       return () => counted.forEach(([el, text]) => (el.textContent = text))
     })
 
-    // Mouse only (touch has no hover): the hero phone and every card lean toward the pointer.
+    // Mouse only (touch has no hover): every card leans toward the pointer. The hero art does not; it stays in place.
     mm.add("(prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)", () => {
       const off: (() => void)[] = []
       const lean = (el: HTMLElement, area: HTMLElement, rotY: number, rotX: number) => {
@@ -169,8 +165,6 @@ export function HomeFx() {
         area.addEventListener("pointerleave", leave)
         off.push(() => (area.removeEventListener("pointermove", move), area.removeEventListener("pointerleave", leave)))
       }
-      lean(fx("tilt")[0], fx("hero")[0], 8, 6)
-
       // Cards also hand the pointer position to their CSS spotlight (--mx / --my).
       all("[data-card]").forEach((el) => {
         lean(el, el, 8, 8)
@@ -187,10 +181,8 @@ export function HomeFx() {
       const hero = fx("hero")[0]
       const bx = gsap.quickTo(fx("bloom")[0], "x", { duration: 1.2, ease: "power3.out" })
       const by = gsap.quickTo(fx("bloom")[0], "y", { duration: 1.2, ease: "power3.out" })
-      // The hand sits closer, so it moves the other way and the box appears behind it.
-      const px = gsap.quickTo(fx("phone")[0], "x", { duration: 0.9, ease: "power3.out" })
-      const drift = (e: PointerEvent) => (bx((e.clientX / innerWidth - 0.5) * -60), by((e.clientY / innerHeight - 0.5) * -60), px((e.clientX / innerWidth - 0.5) * 36))
-      const settle = () => (bx(0), by(0), px(0))
+      const drift = (e: PointerEvent) => (bx((e.clientX / innerWidth - 0.5) * -60), by((e.clientY / innerHeight - 0.5) * -60))
+      const settle = () => (bx(0), by(0))
       hero.addEventListener("pointermove", drift)
       hero.addEventListener("pointerleave", settle)
       off.push(() => (hero.removeEventListener("pointermove", drift), hero.removeEventListener("pointerleave", settle)))

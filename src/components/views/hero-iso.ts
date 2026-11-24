@@ -1,4 +1,4 @@
-// Isometric geometry shared by the Home hero art (hero-scene.tsx draws it, hero-scene-fx.ts folds the box).
+// Geometry shared by the Home hero art: hero-scene.tsx draws the resting state, hero-scene-fx.ts moves the same parts.
 // x runs right-down, y runs left-down, z runs up. Numbers are scene units in the svg viewBox.
 
 type V = [number, number, number]
@@ -55,4 +55,59 @@ export function fold(wall: number, flap: number) {
     const outside = (b[0] - a[0]) * (d[1] - a[1]) - (b[1] - a[1]) * (d[0] - a[0]) < 0
     return { id, points: pts(...q), fill: PANELS[id][outside ? 1 : 0] }
   })
+}
+
+// Where an order hangs when the phone leaves (behind its check mark), and the counter screen it flies to.
+export const TOKEN = [258, 314] as const
+export const TILL = P(111, 117, 74)
+
+// The carton an order is packed in: where it stands, how big it is.
+export const BOX = { x: 128, y: 148, w: 36, h: 27 }
+
+// Its four top flaps, back two first. `open`: 0 shut, 1 folded out.
+export function flaps(open: number) {
+  const { x, y, w, h } = BOX
+  const [i, u] = [(Math.cos(open * 2.3) * w) / 2, (Math.sin(open * 2.3) * w) / 2 + h]
+  const [X, Y] = [x + w, y + w]
+  return [
+    pts([x, y, h], [x, Y, h], [x + i, Y, u], [x + i, y, u]),
+    pts([x, y, h], [X, y, h], [X, y + i, u], [x, y + i, u]),
+    pts([X, y, h], [X, Y, h], [X - i, Y, u], [X - i, y, u]),
+    pts([x, Y, h], [X, Y, h], [X, Y - i, u], [x, Y - i, u]),
+  ]
+}
+
+// The van's rear corner, and its two rear doors (far, near). `open`: 0 shut, 1 swung out.
+export const VAN = { x: 238, y: 74, d: 46 }
+export function doors(open: number) {
+  const { x, y, d } = VAN
+  const [s, c] = [Math.sin(open * 1.9) * 22, Math.cos(open * 1.9) * 22]
+  return [[y, c], [y + d, -c]].map(([hinge, run]) => pts([x, hinge, 11], [x - s, hinge + run, 11], [x - s, hinge + run, 60], [x, hinge, 60]))
+}
+
+// The thumb, in phone pixels: a tapered limb from the wrist to a tip at (x, y). It bows outward when the tip is close.
+const [WX, WY, REACH] = [188, 522, 250]
+export const THUMB = { x: 234, y: 318 }
+export function thumb(x: number, y: number) {
+  const [dx, dy] = [x - WX, y - WY]
+  const d = Math.hypot(dx, dy)
+  const bow = Math.sqrt(Math.max(0, REACH * REACH - d * d)) * 0.85
+  const [cx, cy] = [(WX + x) / 2 - (dy / d) * bow, (WY + y) / 2 + (dx / d) * bow]
+  const n = 22
+  const spine = Array.from({ length: n + 1 }, (_, i) => {
+    const t = i / n
+    const [px, py] = [(1 - t) ** 2 * WX + 2 * (1 - t) * t * cx + t * t * x, (1 - t) ** 2 * WY + 2 * (1 - t) * t * cy + t * t * y]
+    const a = Math.atan2((1 - t) * (cy - WY) + t * (y - cy), (1 - t) * (cx - WX) + t * (x - cx))
+    const r = 20 + 15 * Math.sin(Math.PI * (0.05 + 0.82 * t)) - 5 * t
+    return { px, py, a, r }
+  })
+  const side = (k: number) => spine.map(({ px, py, a, r }) => `${(px - Math.sin(a) * r * k).toFixed(1)} ${(py + Math.cos(a) * r * k).toFixed(1)}`)
+  const [inner, outer] = [side(-1), side(1).reverse()]
+  const at = (i: number) => `translate(${spine[i].px.toFixed(1)} ${spine[i].py.toFixed(1)}) rotate(${((spine[i].a * 180) / Math.PI).toFixed(1)})`
+  return {
+    body: `M${inner.join("L")}A${spine[n].r} ${spine[n].r} 0 0 1 ${outer.join("L")}Z`,
+    edge: `M${inner.slice(0, 17).join("L")}`,
+    nail: at(n),
+    crease: at(14),
+  }
 }
