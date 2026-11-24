@@ -65,7 +65,7 @@ function Brand() {
     <Link className="flex items-center gap-1.5" href="/" aria-label="Bleaum home">
       <Image src="/brand/bleaum-dots.svg" alt="" width={30} height={30} className="size-[30px]" priority />
       {/* Wordmark vector lifted from bleaum-lockup-on-dark.svg so the header matches the logo exactly. */}
-      <Image src="/brand/bleaum-wordmark.svg" alt="" width={79} height={16} className="h-4 w-auto max-sm:h-3.5" priority />
+      <Image src="/brand/bleaum-wordmark.svg" alt="" width={79} height={16} className="h-4 w-[4.9375rem] max-sm:h-3.5 max-sm:w-[4.3125rem]" priority />
     </Link>
   )
 }
