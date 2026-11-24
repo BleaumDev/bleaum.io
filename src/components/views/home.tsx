@@ -402,7 +402,7 @@ export default function HomeView() {
               sizes="(min-width: 1200px) 1136px, 100vw"
               className="object-cover transition-transform duration-600 ease-soft group-hover:scale-[1.03]"
             />
-            <span className="absolute inset-0 bg-navy-950/45 backdrop-blur-[8px]" />
+            <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(7,19,33,.6),transparent_38%)]" />
             <span className="absolute inset-0 grid place-items-center" aria-hidden="true">
               <span data-fx="ping" className="aspect-square w-[clamp(64px,9vw,96px)] rounded-full bg-copper-400" />
             </span>
@@ -410,7 +410,7 @@ export default function HomeView() {
               className="absolute left-1/2 top-1/2 grid aspect-square w-[clamp(64px,9vw,96px)] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-copper-400 shadow-[0_0_0_8px_rgba(223,151,112,.3)] transition-[transform,box-shadow] duration-300 ease-soft before:ml-[6%] before:border-y-[.6em] before:border-l-[1em] before:border-y-transparent before:border-l-navy-900 before:text-[clamp(1rem,2.4vw,1.5rem)] group-hover:scale-[1.08] group-hover:shadow-[0_0_0_14px_rgba(223,151,112,.25)]"
               aria-hidden="true"
             />
-            <span className="absolute inset-x-4 bottom-4 max-w-[420px] rounded-ctl bg-navy-950/[.72] px-4 py-3 text-white max-[479px]:inset-x-2.5 max-[479px]:bottom-2.5">
+            <span className="absolute inset-x-4 bottom-4 max-w-[420px] rounded-ctl bg-navy-950/[.94] px-4 py-3 text-white max-[479px]:inset-x-0 max-[479px]:bottom-0 max-[479px]:rounded-none max-[479px]:py-1.5">
               <b className={`${ui.label} block text-[1.0625rem]`}>{c.video.caption}</b>
               <span className="text-[.875rem] text-fog-300">{c.video.captionText}</span>
             </span>

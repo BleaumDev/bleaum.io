@@ -170,7 +170,7 @@ export const receipts = {
 export const video = {
   title: "See Bleaum in Action",
   subtitle: "Watch how we transform retail operations from chaos to clockwork",
-  poster: "/marketing/IMAGE.png",
+  poster: "/marketing/pos-dashboard.webp",
   caption: "Platform Demo",
   captionText: "See how Bleaum streamlines retail operations",
 }
