@@ -6,6 +6,7 @@ import { HomeFx } from "./home-fx"
 import * as ui from "./home-ui"
 import * as c from "./home-content"
 import { Bloom } from "./bloom"
+import { HeroScene } from "./hero-scene"
 import { AiArt, GalleryArt, TrustArt, WhyArt } from "./home-art"
 
 // Marks an element for the scroll reveal in home-fx.tsx. `cls` is the element's own classes.
@@ -139,8 +140,10 @@ export default function HomeView() {
 
       {/* Hero */}
       <section data-fx="hero" className={`relative overflow-hidden text-white ${ui.heroBg}`} aria-labelledby="hero-h">
-        <Bloom />
-        <div data-fx="drift" className={`${ui.wrap} relative grid items-center gap-12 py-hero lg:grid-cols-[7fr_5fr] [&>*]:min-w-0`}>
+        <div className="absolute inset-0 origin-[78%_50%] lg:-translate-x-[5%] lg:-translate-y-[5%] lg:scale-[1.16]">
+          <Bloom />
+        </div>
+        <div data-fx="drift" className={`${ui.wrap} relative grid items-center gap-12 py-hero lg:grid-cols-[6fr_5fr] xl:grid-cols-[4fr_5fr] [&>*]:min-w-0`}>
           <div>
             <p {...rise(0)} className={`${ui.kicker} text-copper-400 animate-rise`}>{hero.kicker}</p>
             <h1 id="hero-h" {...rise(1)} className={`${ui.h1} animate-rise`}>
@@ -156,44 +159,8 @@ export default function HomeView() {
               </Link>
             </div>
           </div>
-          <div data-fx="tilt" {...rise(2)} className="w-[min(100%,340px)] animate-rise justify-self-center">
-          <div
-            data-fx="phone"
-            className="rounded-[34px] bg-navy-950 p-3.5 text-fog-100 shadow-[inset_0_0_0_1.5px_rgba(255,255,255,.22),0_40px_100px_-30px_rgba(223,151,112,.45)]"
-            role="img"
-            aria-label={hero.pos.alt}
-          >
-            <div className="mb-3 flex gap-1 text-[.75rem]">
-              {hero.pos.tabs.map((t, i) => (
-                <span key={t} className={`rounded-full px-2.5 py-1.5 ${i === 0 ? "bg-white/[.12] text-white" : "text-fog-300"}`}>
-                  {t}
-                </span>
-              ))}
-            </div>
-            <div data-fx="pos-items" className="grid grid-cols-2 gap-2">
-              {hero.pos.items.map((it) => (
-                <div
-                  key={it.name}
-                  className="relative flex min-h-24 flex-col justify-end gap-0.5 rounded-xl bg-white/[.06] p-2.5 text-[.8125rem] transition-colors duration-200 before:absolute before:inset-x-2.5 before:top-2.5 before:h-[38px] before:bg-[radial-gradient(circle,rgba(223,151,112,.55)_1.4px,transparent_1.9px)] before:bg-[length:8px_8px] before:[mask-image:linear-gradient(#000,transparent)] before:[-webkit-mask-image:linear-gradient(#000,transparent)] hover:bg-white/10"
-                >
-                  <b className="font-semibold">{it.name}</b>
-                  <i className="not-italic text-fog-300">
-                    {it.price}
-                    {it.low && (
-                      <>
-                        {" · "}
-                        <span className="font-semibold text-copper-400">Low stock</span>
-                      </>
-                    )}
-                  </i>
-                </div>
-              ))}
-            </div>
-            <div data-fx="pos-cart" className="mt-3 flex justify-between rounded-xl bg-copper-400 px-3.5 py-[13px] text-[.875rem] font-semibold text-navy-900">
-              <span>{hero.pos.cart.label}</span>
-              <span>{hero.pos.cart.total}</span>
-            </div>
-          </div>
+          <div data-fx="tilt">
+            <HeroScene />
           </div>
         </div>
       </section>
