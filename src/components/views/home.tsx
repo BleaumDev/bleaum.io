@@ -6,7 +6,7 @@ import { HomeFx } from "./home-fx"
 import * as ui from "./home-ui"
 import * as c from "./home-content"
 import { Bloom } from "./bloom"
-import { HeroScene } from "./hero-scene"
+import { HeroScene } from "./hero-animation/hero-scene"
 import { AiArt, GalleryArt, TrustArt, WhyArt } from "./home-art"
 
 // Marks an element for the scroll reveal in home-fx.tsx. `cls` is the element's own classes.

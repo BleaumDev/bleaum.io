@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { SplitText } from "gsap/SplitText"
-import { heroScene } from "./hero-scene-fx"
+import { heroScene } from "./hero-animation/hero-scene-fx"
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
@@ -13,7 +13,7 @@ const fx = (name: string) => all(`[data-fx=${name}]`)
 const once = (trigger: Element, start = "top 88%") => ({ trigger, start, once: true })
 
 // Scroll and pointer motion for the Home page. The markup stays on the server page; this only finds its hooks:
-// data-fx = scene (hero-scene-fx.ts), reveal, slide (+ data-dir), stagger, chip, dot, draw, words, scrub-words, stars, count, hero, drift, phone,
+// data-fx = scene (hero-animation/hero-scene-fx.ts), reveal, slide (+ data-dir), stagger, chip, dot, draw, words, scrub-words, stars, count, hero, drift, tablet,
 // ping, cta-bloom, bloom, magnet, progress; data-wipe, data-card. Skipped for prefers-reduced-motion,
 // and with no JS everything stays visible.
 export function HomeFx() {
@@ -137,8 +137,8 @@ export function HomeFx() {
 
       heroScene(fx("scene")[0], fx("bloom")[0])
 
-      // The phone floats and the hero drifts as it scrolls away.
-      gsap.to(fx("phone"), { y: -8, duration: 2.4, ease: "sine.inOut", yoyo: true, repeat: -1 })
+      // The tablet floats and the hero drifts as it scrolls away.
+      gsap.to(fx("tablet"), { y: -8, duration: 2.4, ease: "sine.inOut", yoyo: true, repeat: -1 })
       gsap.to(fx("drift"), {
         y: 70,
         ease: "none",

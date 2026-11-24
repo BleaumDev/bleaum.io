@@ -57,8 +57,8 @@ export function fold(wall: number, flap: number) {
   })
 }
 
-// Where an order hangs when the phone leaves (behind its check mark), and the counter screen it flies to.
-export const TOKEN = [258, 314] as const
+// Where an order hangs when the tablet leaves (behind its check mark, the tablet's center), and the counter screen it flies to.
+export const TOKEN = [330, 396] as const
 export const TILL = P(111, 117, 74)
 
 // Where the two ordered items stand on the shelves (x, y, z).
@@ -87,31 +87,4 @@ export function doors(open: number) {
   const { x, y, d } = VAN
   const [s, c] = [Math.sin(open * 1.9) * 22, Math.cos(open * 1.9) * 22]
   return [[y, c], [y + d, -c]].map(([hinge, run]) => pts([x, hinge, 11], [x - s, hinge + run, 11], [x - s, hinge + run, 60], [x, hinge, 60]))
-}
-
-// The thumb, in phone pixels: a tapered limb from the wrist to a tip at (x, y). It bows outward when the tip is close.
-const [WX, WY, REACH] = [188, 522, 250]
-export const THUMB = { x: 234, y: 318 }
-export function thumb(x: number, y: number) {
-  const [dx, dy] = [x - WX, y - WY]
-  const d = Math.hypot(dx, dy)
-  const bow = Math.sqrt(Math.max(0, REACH * REACH - d * d)) * 0.85
-  const [cx, cy] = [(WX + x) / 2 - (dy / d) * bow, (WY + y) / 2 + (dx / d) * bow]
-  const n = 22
-  const spine = Array.from({ length: n + 1 }, (_, i) => {
-    const t = i / n
-    const [px, py] = [(1 - t) ** 2 * WX + 2 * (1 - t) * t * cx + t * t * x, (1 - t) ** 2 * WY + 2 * (1 - t) * t * cy + t * t * y]
-    const a = Math.atan2((1 - t) * (cy - WY) + t * (y - cy), (1 - t) * (cx - WX) + t * (x - cx))
-    const r = 20 + 15 * Math.sin(Math.PI * (0.05 + 0.82 * t)) - 5 * t
-    return { px, py, a, r }
-  })
-  const side = (k: number) => spine.map(({ px, py, a, r }) => `${(px - Math.sin(a) * r * k).toFixed(1)} ${(py + Math.cos(a) * r * k).toFixed(1)}`)
-  const [inner, outer] = [side(-1), side(1).reverse()]
-  const at = (i: number) => `translate(${spine[i].px.toFixed(1)} ${spine[i].py.toFixed(1)}) rotate(${((spine[i].a * 180) / Math.PI).toFixed(1)})`
-  return {
-    body: `M${inner.join("L")}A${spine[n].r} ${spine[n].r} 0 0 1 ${outer.join("L")}Z`,
-    edge: `M${inner.slice(0, 17).join("L")}`,
-    nail: at(n),
-    crease: at(14),
-  }
 }

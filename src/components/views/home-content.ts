@@ -23,8 +23,18 @@ export const hero = {
       { name: "Allergy Relief", price: "$18.00" },
     ],
     cart: { label: "2 items in cart", total: "$38.00" },
-    // Button and order-type labels exactly as the POS app shows them.
+    // The cart while the order is being placed: empty, then with the first item.
+    filling: [
+      { label: "0 items in cart", total: "$0.00" },
+      { label: "1 item in cart", total: "$24.00" },
+    ],
+    // Labels exactly as the POS app's tablet screen shows them.
     type: "Delivery",
+    customer: "Customer",
+    address: "Delivery Address",
+    discounts: { label: "0 Discounts applied", total: "$0.00" },
+    subtotal: "Subtotal",
+    total: "Total",
     confirm: "Complete Order",
     alt: "Sample Bleaum POS screen with four items and a cart total of $38.00",
   },

@@ -1,12 +1,12 @@
-import type { ReactNode } from "react"
-import { ShoppingBag, Store, Truck } from "lucide-react"
-import { BAG, H, P, STOCK, THUMB, TILL, TOKEN, VAN, W, bag, doors, floorM, fold, leftM, pts, rightM, thumb } from "./hero-iso"
-import { hero } from "./home-content"
+import type { CSSProperties, ReactNode } from "react"
+import { Box as BoxIcon, Camera, ChevronDown, Filter, IdCard, MapPin, Monitor, Pencil, QrCode, RotateCcw, Search, ShoppingCart, Tag, User, X } from "lucide-react"
+import { BAG, H, P, STOCK, TILL, TOKEN, VAN, W, bag, doors, floorM, fold, leftM, pts, rightM } from "./hero-iso"
+import { hero } from "../home-content"
 
-// Home hero illustration: "your business in a box", run "from one hand". A copper box unfolds into a lit pharmacy. A
-// hand comes up in front of it, places an order on the phone and leaves; the shop bags the order and the van takes it away.
+// Home hero illustration: "your business in a box". A copper box unfolds into a lit pharmacy. A tablet running the POS
+// comes up in front of it, takes an order and leaves; the shop bags the order and the van takes it away.
 // Pharmacy only: cannabis products, leaves and signage stay out (website-updates/home.md #20, #24, #138).
-// The scene itself is wordless; the only text is the POS copy on the phone (home-content hero.pos).
+// The scene itself is wordless; the only text is the POS copy on the tablet (home-content hero.pos).
 // Server-rendered in its finished, open state. hero-scene-fx.ts finds the data-s hooks and brings it to life.
 
 const s = (name: string) => ({ "data-s": name })
@@ -166,7 +166,7 @@ const SHELVES: { z: number; row: ReactNode[] }[] = [
   },
 ]
 
-// The four products on the phone, flat, in a 48 x 40 box. Same order as home-content hero.pos.items.
+// The four products on the tablet, flat, in a 48 x 40 box. Same order as home-content hero.pos.items.
 const GOODS = [
   <g key="vitamin">
     <rect x={15} y={1} width={18} height={8} rx={2} fill="#DF9770" />
@@ -200,8 +200,8 @@ const GOODS = [
     {[18, 26, 34].map((y) => [30, 39].map((x) => <circle key={`${x}${y}`} cx={x} cy={y} r={3} fill="#F6F8FB" />))}
   </g>,
 ]
-const Good = ({ i, className }: { i: number; className: string }) => (
-  <svg viewBox="0 0 48 40" className={className} aria-hidden="true">{GOODS[i]}</svg>
+const Good = ({ i, className, name }: { i: number; className: string; name?: string }) => (
+  <svg viewBox="0 0 48 40" className={className} aria-hidden="true" {...(name && s(name))}>{GOODS[i]}</svg>
 )
 
 // The paper bag an order is packed in. Items drop in between its back and its front.
@@ -294,7 +294,7 @@ const curve = (a: readonly number[], b: readonly number[], c: readonly number[],
     return [0, 1].map((k) => +((1 - t) ** 2 * a[k] + 2 * (1 - t) * t * b[k] + t * t * c[k]).toFixed(1))
   })
 
-// The order hangs where the phone's check mark was, then arcs to the counter screen.
+// The order hangs where the tablet's check mark was, then arcs to the counter screen.
 const ORDER = curve(TOKEN, [TOKEN[0] + 34, TOKEN[1] - 190], TILL, 9)
 
 // The dots that fill the cross sign: biggest in the middle, like the mark.
@@ -480,7 +480,7 @@ function Scene() {
       <Van />
 
       {/* The order: a check mark on its way to the counter, then a ticket over it with the two items to pack */}
-      <g fill="#FFE2C6">{ORDER.map(([x, y]) => <circle key={x} {...s("order")} cx={x} cy={y} r={4.4} opacity={0} />)}</g>
+      <g fill="#FFE2C6">{ORDER.map(([x, y], i) => <circle key={i} {...s("order")} cx={x} cy={y} r={4.4} opacity={0} />)}</g>
       <g {...s("token")} opacity={0}>
         <circle cx={TOKEN[0]} cy={TOKEN[1]} r={40} fill="#DF9770" />
         <path d={`M${TOKEN[0] - 17} ${TOKEN[1] + 2}l12 12 22-27`} stroke="#0B1E31" strokeWidth={7} {...line} />
@@ -510,132 +510,155 @@ function Scene() {
   )
 }
 
-const skin = { base: "#DF9770", light: "#EDB592", shade: "#B9714A", palm: "#CB855D" }
-const handSvg = "pointer-events-none absolute -left-[50px] top-0 h-[780px] w-[370px] max-w-none"
+// Spreads out under a tap, clipped by whatever was tapped.
+const Ripple = () => <span {...s("ripple")} className="pointer-events-none absolute left-1/2 top-1/2 -ml-[110px] -mt-[110px] size-[220px] rounded-full bg-white/50 opacity-0" />
 
-// The hand, in pixels of the 232 x 404 phone it holds. The back goes under the phone, the front over it.
-function HandBack() {
+const glass = "border border-blue-400/30 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-100"
+const field = "border border-white/20 bg-[#00152B]"
+
+// One product, as the POS product grid shows it.
+function Card({ i, name, price, low, children }: { i: number; name?: string; price?: string; low?: boolean; children?: ReactNode }) {
   return (
-    <svg viewBox="-50 0 370 780" className={handSvg} aria-hidden="true">
-      <path d="M4 278C-8 350 8 420 50 460C62 472 66 486 66 508V780H208V528C208 508 214 500 226 490C252 470 274 446 278 412L268 352L226 318Z" fill={skin.palm} />
-      <path d="M40 448C84 476 132 468 168 440" stroke={skin.shade} strokeWidth={3} strokeOpacity={0.5} {...line} />
-    </svg>
-  )
-}
-function HandFront() {
-  const t = thumb(THUMB.x, THUMB.y)
-  return (
-    <svg viewBox="-50 0 370 780" className={handSvg} aria-hidden="true">
-      {[[180, 38, 17], [219, 39, 19], [259, 37, 17], [297, 32, 12]].map(([y, h, w]) => {
-        const r = h / 2
-        return (
-          <g key={y} transform={`rotate(-7 0 ${y + r})`}>
-            <path d={`M0 ${y}C-17 ${y + 3} -17 ${y + h - 3} 0 ${y + h}H${w - r}A${r} ${r} 0 0 0 ${w - r} ${y}Z`} fill={skin.base} />
-            <path d={`M-8 ${y + h - 4}Q-2 ${y + h} ${w - r + 2} ${y + h - 1}`} stroke={skin.shade} strokeWidth={3} strokeOpacity={0.6} {...line} />
-            <path d={`M${w - 9} ${y + 8}q4 ${r - 8} 0 ${h - 18}`} stroke={skin.light} strokeWidth={3} {...line} />
-          </g>
-        )
-      })}
-      <circle {...s("tap")} r={16} fill="#FFE2C6" fillOpacity={0.25} stroke="#FFE2C6" strokeWidth={3} opacity={0} />
-      <path {...s("thumb-shadow")} d={t.body} fill="#030A13" fillOpacity={0.35} transform="translate(-9 9)" />
-      <path {...s("thumb")} d={t.body} fill={skin.base} />
-      <path {...s("thumb-edge")} d={t.edge} stroke={skin.shade} strokeWidth={3} strokeOpacity={0.7} {...line} />
-      <g {...s("thumb-crease")} transform={t.crease}><path d="M-4 8q5 6 1 13M7 7q5 6 1 12" stroke={skin.shade} strokeWidth={2.4} strokeOpacity={0.6} {...line} /></g>
-      <g {...s("thumb-nail")} transform={t.nail}><path d="M-13-8C-6-13 12-12 14 0C12 12-6 13-13 8C-10 3-10-3-13-8Z" fill={skin.light} /></g>
-      <path d="M46 512Q140 488 240 514V780H46Z" fill="#17405F" />
-      <path d="M46 512Q140 488 240 514V528Q140 502 46 526Z" fill="#EAF0F6" />
-      <path d="M78 548V780M112 541V780" stroke="#0F2F4C" strokeWidth={3} {...line} />
-    </svg>
+    <div className={`relative h-[112px] overflow-hidden rounded-xl border-[1.5px] bg-[linear-gradient(145deg,#1a2540,#243055_50%,#1c2a42)] shadow-md ${low ? "border-[#E1A31E]/60" : "border-[#228B22]/60"}`}>
+      <Good i={i} className="absolute left-1/2 top-2.5 -ml-[38px] h-[63px] w-[76px]" />
+      {name && (
+        <div className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgba(0,0,0,.92),rgba(0,0,0,.6)_60%,transparent)] px-2 pb-1.5 pt-7 leading-tight">
+          <b className="block text-[.71875rem] font-bold">{name}</b>
+          <b className="block text-[.8125rem] font-bold">{price}</b>
+        </div>
+      )}
+      {low && <span className="absolute left-1.5 top-1.5 rounded-full bg-[#CA8A04] px-2 py-0.5 text-[.5625rem] font-bold leading-[1.4] text-white">Low stock</span>}
+      {children}
+    </div>
   )
 }
 
-const panel = "rounded-xl bg-white/[.06]"
-
-// A phone version of the POS "Process" screen: order type, products, cart bar; then the order sheet and the check mark
-// that hero-scene-fx.ts brings in. At rest it shows two items picked.
-function Phone() {
+// The POS app's tablet screen: order tabs and type on top, product grid, then customer, cart, totals and Complete Order.
+// Same layout, colors and labels as the app. At rest it shows two items in the cart.
+function Screen() {
   const { pos } = hero
   return (
-    <div
-      className="relative h-[404px] w-[232px] rounded-[36px] bg-navy-950 p-2 text-fog-100 shadow-[inset_0_0_0_1.5px_rgba(255,255,255,.28),0_30px_70px_-20px_rgba(3,10,19,.9)]"
-      role="img"
-      aria-label={pos.alt}
-    >
-      <div className="relative flex h-full flex-col gap-2 overflow-hidden rounded-[28px] bg-[#0A1A2B] p-2.5">
-        <span className="mx-auto block h-1.5 w-14 shrink-0 rounded-full bg-white/[.14]" />
-        <div className="flex h-6 shrink-0 items-center justify-between text-[.6875rem]">
+    <div {...s("screen")} className="relative flex h-full flex-col overflow-hidden rounded-[14px] bg-[#071529] text-white">
+      <div className="flex h-10 shrink-0 items-center gap-2 border-b border-blue-400/20 px-2 text-[.6875rem]">
+        <div className="flex items-center gap-0.5 rounded-xl bg-white/5 p-0.5">
           {pos.tabs.map((t, i) => (
-            <span key={t} className={`rounded-full px-2 py-1 ${i === 0 ? "bg-white/[.12] text-white" : "text-fog-300"}`}>
+            <span key={t} className={`rounded-full px-2 py-1 leading-[1.4] ${i === 0 ? `${glass} px-2.5 font-bold` : "font-medium text-blue-200/70"}`}>
               {t}
             </span>
           ))}
         </div>
-        <div className="flex h-8 shrink-0 gap-1 rounded-full bg-white/[.06] p-1 text-fog-300">
-          {[Store, ShoppingBag].map((Icon, i) => (
-            <span key={i} className="grid w-12 place-items-center"><Icon className="size-3.5" /></span>
-          ))}
-          <span className="flex flex-1 items-center justify-center gap-1.5 rounded-full bg-copper-400 text-[.6875rem] font-semibold text-navy-900">
-            <Truck className="size-3.5" />
-            {pos.type}
+        <span className="h-5 w-px bg-blue-400/20" />
+        <span className={`flex h-[26px] items-center gap-3 rounded-full pl-3 pr-2 font-medium ${glass}`}>
+          {pos.type}
+          <ChevronDown className="size-3 text-blue-400" />
+        </span>
+        <span className="flex-1" />
+        {[Monitor, IdCard, User, RotateCcw].map((Icon, i) => (
+          <span key={i} className={`grid size-[26px] place-items-center rounded-full ${i === 0 ? "border border-green-400/50 bg-green-400/10 text-green-300" : i === 3 ? "border border-red-400/40 bg-red-500/15 text-red-300" : glass}`}>
+            <Icon className="size-3.5" />
           </span>
-        </div>
-        {/* The two ordered items sit in the bottom row, where a thumb can reach */}
-        <div className="grid flex-1 grid-cols-2 grid-rows-2 gap-2">
-          {pos.items.map((it, i) => (
-            <div key={it.name} {...s(i < 2 ? "tile" : "tile-idle")} className={`relative flex flex-col justify-end overflow-hidden p-1.5 text-[.6875rem] leading-[1.4] ${panel} ${i < 2 ? "order-last" : ""}`}>
-              <Good i={i} className="absolute left-2 top-2 h-9 w-11" />
-              <b className="font-semibold">{it.name}</b>
-              <i className="not-italic text-fog-300">
-                {it.price}
-                {it.low && (
-                  <>
-                    {" · "}
-                    <span className="whitespace-nowrap font-semibold text-copper-400">Low stock</span>
-                  </>
-                )}
-              </i>
-              {i < 2 && (
-                <span {...s("picked")} className="absolute inset-0 rounded-xl bg-copper-400/[.12] ring-2 ring-inset ring-copper-400">
-                  <svg viewBox="0 0 20 20" className="absolute right-1.5 top-1.5 size-5">
-                    <circle cx={10} cy={10} r={10} fill="#DF9770" />
-                    <path d="M5.5 10.5l3 3 6-7" stroke="#0B1E31" strokeWidth={2.4} {...line} />
-                  </svg>
-                </span>
-              )}
-            </div>
-          ))}
-        </div>
-        <div {...s("cart")} className="flex h-[42px] shrink-0 items-center justify-between rounded-xl bg-copper-400 px-3.5 text-[.8125rem] font-semibold text-navy-900">
-          <span>{pos.cart.label}</span>
-          <span>{pos.cart.total}</span>
+        ))}
+      </div>
+
+      <div className="flex min-h-0 flex-1 gap-2 p-2">
+        <div className="flex min-w-0 flex-1 flex-col gap-2 overflow-hidden rounded-lg bg-[#00152A] p-2">
+          <div className="flex h-7 shrink-0 gap-1.5">
+            <span className={`flex items-center rounded-lg p-0.5 ${field}`}>
+              {[BoxIcon, QrCode].map((Icon, i) => (
+                <span key={i} className={`grid h-full w-7 place-items-center rounded-md ${i === 0 ? "bg-[#038FDE]" : "text-white/70"}`}><Icon className="size-3.5" /></span>
+              ))}
+            </span>
+            <span className={`flex flex-1 items-center rounded-lg px-2 text-white/50 ${field}`}><Search className="size-3.5" /></span>
+            {[Camera, Filter].map((Icon, i) => (
+              <span key={i} className={`grid w-7 place-items-center rounded-lg ${field}`}><Icon className="size-3.5" /></span>
+            ))}
+          </div>
+          <div className="grid grid-cols-2 gap-1.5">
+            {pos.items.map((it, i) => (
+              <div key={it.name} {...(i < 2 && s("tile"))}>
+                <Card i={i} {...it}>{i < 2 && <Ripple />}</Card>
+              </div>
+            ))}
+            {/* The next row, cut off by the edge of the list */}
+            <Card i={3} />
+            <Card i={0} />
+          </div>
         </div>
 
-        <span {...s("scrim")} className="invisible absolute inset-0 bg-navy-950/60" />
-        <div {...s("sheet")} className="invisible absolute inset-x-0 bottom-0 flex flex-col gap-2 rounded-t-[22px] bg-navy-800 p-2.5 text-[.75rem] shadow-[0_-12px_30px_rgba(3,10,19,.5)]">
-          <span className="mx-auto mb-0.5 block h-1 w-9 rounded-full bg-white/20" />
-          {pos.items.slice(0, 2).map((it, i) => (
-            <div key={it.name} className={`flex items-center gap-2 p-2 ${panel}`}>
-              <Good i={i} className="h-7 w-[34px]" />
-              <b className="flex-1 font-semibold">{it.name}</b>
-              <span className="text-fog-300">{it.price}</span>
+        <div className="flex w-[208px] shrink-0 flex-col gap-2 rounded-lg bg-[#00152A] p-2.5 text-[.6875rem]">
+          <div className="flex h-9 items-center gap-2 rounded-xl border border-[#0190DD]/30 bg-[#001D3D] px-2">
+            <span className="grid size-6 place-items-center rounded-full bg-[#0190DD]/20 text-[#0190DD]"><User className="size-3.5" /></span>
+            <b className="flex-1 text-[.75rem] font-semibold">{pos.customer}</b>
+            <X className="size-3.5 opacity-70" />
+          </div>
+          <div className="flex h-8 items-center gap-2 rounded-xl border-[1.5px] border-[#0190DD]/60 bg-[#0190DD]/[.12] px-2.5">
+            <MapPin className="size-3.5 text-[#0190DD]" />
+            <b className="flex-1 font-bold">{pos.address}</b>
+            <Pencil className="size-3 opacity-60" />
+          </div>
+          <div {...s("cart")} className="flex h-9 items-center gap-2 rounded-xl bg-[#0190DD] px-2.5">
+            <ShoppingCart className="size-4" />
+            <b {...s("count")} className="flex-1 font-semibold">{pos.cart.label}</b>
+            <b {...s("sum")} className="text-[.8125rem] font-bold">{pos.cart.total}</b>
+          </div>
+          <div className="flex h-8 items-center gap-2 rounded-xl bg-[#8B5CF6]/85 px-2.5">
+            <Tag className="size-3.5" />
+            <b className="flex-1 text-[.65625rem] font-semibold">{pos.discounts.label}</b>
+            <b className="font-bold">{pos.discounts.total}</b>
+          </div>
+          <div className="rounded-xl bg-white/[.04] px-2.5 py-2">
+            <div className="flex justify-between pb-1.5">
+              <span className="text-white/70">{pos.subtotal}</span>
+              <b {...s("sum")} className="font-semibold">{pos.cart.total}</b>
             </div>
-          ))}
-          <div className="flex items-center gap-2 px-2 py-1 text-fog-300">
-            <Truck className="size-3.5" />
-            {pos.type}
-            <b className="ml-auto text-[.9375rem] font-semibold text-white">{pos.cart.total}</b>
+            <div className="flex justify-between border-t border-white/[.12] pt-1.5 text-[.875rem] font-bold">
+              <span>{pos.total}</span>
+              <b {...s("sum")} className="font-bold">{pos.cart.total}</b>
+            </div>
           </div>
-          <div {...s("confirm")} className="grid h-[44px] place-items-center rounded-xl bg-copper-400 text-[.8125rem] font-semibold text-navy-900">
-            {pos.confirm}
+          <div {...s("confirm")} className="relative mt-auto grid h-11 place-items-center overflow-hidden rounded-2xl bg-gradient-to-br from-[#038FDE] to-violet-500 text-[.8125rem] font-bold shadow-lg shadow-[#038FDE]/30">
+            <span {...s("label")}>{pos.confirm}</span>
+            <svg {...s("spin")} viewBox="0 0 24 24" className="absolute left-1/2 top-1/2 -ml-2.5 -mt-2.5 size-5 opacity-0" aria-hidden="true">
+              <circle cx={12} cy={12} r={9} stroke="#fff" strokeOpacity={0.3} strokeWidth={3} fill="none" />
+              <path d="M12 3a9 9 0 0 1 9 9" stroke="#fff" strokeWidth={3} {...line} />
+            </svg>
+            <Ripple />
           </div>
         </div>
-        <div {...s("done")} className="invisible absolute inset-0 grid place-items-center bg-navy-800">
-          <svg viewBox="-108 -194 216 388" className="h-full w-full" aria-hidden="true">
-            <g fill="#DF9770" fillOpacity={0.4}><Mark r={104} gap={13} dot={5.6} name="burst" /></g>
-            <circle {...s("seal-ring")} r={40} fill="#DF9770" />
-            <path {...s("check")} pathLength={1} strokeDasharray="1 2" d="M-17 2l12 12 22-27" stroke="#0B1E31" strokeWidth={7} {...line} />
-          </svg>
-        </div>
+      </div>
+
+      {/* Items on their way to the cart, the payment going through, and the finger's touch point */}
+      {[0, 1].map((i) => <Good key={i} i={i} name="fly" className="absolute left-0 top-0 -ml-[38px] -mt-[32px] h-[63px] w-[76px] opacity-0" />)}
+      <div {...s("done")} className="invisible absolute inset-0 grid place-items-center bg-navy-800">
+        <svg viewBox="-270 -190 540 380" className="h-full w-full" aria-hidden="true">
+          <g fill="#DF9770" fillOpacity={0.4}><Mark r={168} gap={16} dot={6.6} name="burst" /></g>
+          <circle {...s("seal-ring")} r={40} fill="#DF9770" />
+          <path {...s("check")} pathLength={1} strokeDasharray="1 2" d="M-17 2l12 12 22-27" stroke="#0B1E31" strokeWidth={7} {...line} />
+        </svg>
+      </div>
+      <div {...s("touch")} className="absolute left-0 top-0 -ml-[17px] -mt-[17px] size-[34px] opacity-0">
+        <span {...s("ring")} className="absolute inset-0 rounded-full border-[3px] border-white opacity-0" />
+        <span {...s("finger")} className="absolute inset-0 rounded-full border-2 border-white/90 bg-white/30 shadow-[0_4px_14px_rgba(0,0,0,.45)]" />
+      </div>
+    </div>
+  )
+}
+
+// The tablet itself: metal rim, black bezel, camera, buttons on the top edge, a streak of light on the glass.
+function Tablet() {
+  return (
+    <div
+      className="relative h-[412px] w-[572px] rounded-[30px] bg-[linear-gradient(165deg,#E4EAF0,#97A4B2_30%,#5C6977_70%,#8593A2)] p-[3px] shadow-[0_2px_0_#78868F,0_5px_0_#39434E,0_44px_70px_-18px_rgba(3,10,19,.95)]"
+      role="img"
+      aria-label={hero.pos.alt}
+    >
+      <span className="absolute -top-[2.5px] right-12 h-[3px] w-11 rounded-t-[3px] bg-[#9AA7B4]" />
+      <span className="absolute -top-[2.5px] left-14 h-[3px] w-7 rounded-t-[3px] bg-[#B4BFCA]" />
+      <span className="absolute -top-[2.5px] left-[90px] h-[3px] w-7 rounded-t-[3px] bg-[#B4BFCA]" />
+      <div className="relative h-full overflow-hidden rounded-[27px] bg-[#04070C] p-[13px] shadow-[inset_0_0_0_1.5px_rgba(0,0,0,.9),inset_0_0_0_2.5px_rgba(255,255,255,.07)]">
+        <span className="absolute left-1/2 top-[4px] -ml-[3px] size-[6px] rounded-full bg-[#101B29] shadow-[inset_0_0_0_1px_#26364A]" />
+        <Screen />
+        <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,rgba(255,255,255,.09),rgba(255,255,255,.025)_26%,transparent_26.3%,transparent_62%,rgba(255,255,255,.035)_62.3%,transparent_74%)]" />
       </div>
     </div>
   )
@@ -643,18 +666,21 @@ function Phone() {
 
 export function HeroScene() {
   return (
-    <div data-fx="scene" className="relative max-lg:pb-16 lg:-mt-10 lg:mb-6">
-      <div {...s("stage")} className="animate-rise [animation-delay:350ms] max-lg:-mx-3 lg:-mr-[11%] lg:ml-[2%]">
-        <Scene />
-      </div>
-      {/* In front of the shop, cropped by the section's bottom edge, which it rises from. Without motion it rests at the side. */}
-      <div className="pointer-events-none absolute left-[40%] top-0 -ml-[116px] origin-top scale-[.86] sm:top-[20%] sm:scale-100 lg:left-[44%] lg:top-[16%] lg:scale-[.8] xl:top-[20%] xl:scale-100 motion-reduce:lg:left-0 motion-reduce:lg:ml-0">
-        <div {...s("hand")} className={LATER}>
-          <div data-fx="phone" className="relative w-[232px]">
-            <span className="absolute -inset-x-64 -inset-y-32 motion-reduce:hidden bg-[radial-gradient(closest-side,rgba(3,10,19,.72),transparent)]" />
-            <HandBack />
-            <Phone />
-            <HandFront />
+    <div data-fx="scene" className="max-lg:pb-16 lg:-mt-10 lg:mb-6">
+      <div className="relative max-lg:-mx-3 lg:-mr-[11%] lg:ml-[2%]">
+        <div {...s("stage")} className="animate-rise [animation-delay:350ms]">
+          <Scene />
+        </div>
+        {/* In front of the shop, centered on TOKEN, cropped by the section's bottom edge, which it rises from. Without motion it rests smaller, at the side. */}
+        <div
+          className="pointer-events-none absolute left-[--x] top-[--y] size-0 scale-[.56] min-[380px]:scale-[.64] sm:scale-100 md:scale-[1.2] lg:scale-[.72] xl:scale-100 motion-reduce:left-[20%] motion-reduce:top-[84%] motion-reduce:!scale-[.28] motion-reduce:sm:!scale-[.46]"
+          style={{ "--x": `${(TOKEN[0] / 660) * 100}%`, "--y": `${(TOKEN[1] / 570) * 100}%` } as CSSProperties}
+        >
+          <div {...s("tablet")} className={`absolute -left-[286px] -top-[206px] ${LATER}`}>
+            <div data-fx="tablet" className="relative">
+              <span className="absolute -inset-x-28 -inset-y-24 bg-[radial-gradient(closest-side,rgba(3,10,19,.7),transparent)] motion-reduce:hidden" />
+              <Tablet />
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { BAG, P, STOCK, THUMB, TILL, TOKEN, bag, doors, fold, thumb } from "./hero-iso"
+import { BAG, P, STOCK, TILL, TOKEN, bag, doors, fold } from "./hero-iso"
+import { hero } from "../home-content"
 
 // Screen offset for a move of `d` scene units along the scene's x axis (the way the van faces).
 const along = (d: number) => ({ x: d * 0.866, y: d * 0.5 })
@@ -8,18 +9,18 @@ const along = (d: number) => ({ x: d * 0.866, y: d * 0.5 })
 const AWAY = 900 // px below its place: past the section's bottom edge at every width
 
 // Brings the Home hero art (hero-scene.tsx) to life: the box unfolds once, then one sale plays on repeat.
-// Hand rises -> two taps -> order sheet -> confirm -> hand leaves -> order reaches the counter -> bag packed -> loaded -> van leaves -> restock -> van returns.
+// Tablet rises -> two products tapped into the cart -> Complete Order -> tablet leaves -> order reaches the counter -> bag packed -> loaded -> van leaves -> restock -> van returns.
 // Runs inside home-fx's reduced-motion gsap.matchMedia, which reverts every tween made here.
 export function heroScene(root: HTMLElement, bloom: Element) {
-  const q = (name: string) => [...root.querySelectorAll<SVGElement>(`[data-s=${name}]`)]
+  const q = <T extends Element = SVGElement>(name: string) => [...root.querySelectorAll<T>(`[data-s=${name}]`)]
   const svg = root.querySelector("svg")!
   const panels = [...root.querySelectorAll("[data-panel]")]
 
   // Only fold from closed if the art is still hidden by its CSS entrance delay; a late script must not snap an open box shut.
   const early = +getComputedStyle(q("stage")[0]).opacity < 0.05
   const intro = gsap.timeline()
-  // The hand is hidden by CSS on load, so moving it below the section and showing it in one step never flashes it.
-  gsap.set(q("hand"), { y: AWAY, opacity: 1 })
+  // The tablet is hidden by CSS on load, so moving it below the section and showing it in one step never flashes it.
+  gsap.set(q("tablet"), { y: AWAY, opacity: 1, transformPerspective: 1500 })
   if (early) {
     const box = { wall: 0, flap: 0 }
     const draw = () =>
@@ -65,24 +66,24 @@ export function heroScene(root: HTMLElement, bloom: Element) {
 
   const story = gsap.timeline({ repeat: -1, repeatDelay: 1, delay: early ? intro.duration() + 0.3 : 1.5, defaults: { immediateRender: false } })
 
-  const tip = { ...THUMB, lift: 1 }
-  const drawThumb = () => {
-    const t = thumb(tip.x, tip.y)
-    q("thumb")[0].setAttribute("d", t.body)
-    q("thumb-edge")[0].setAttribute("d", t.edge)
-    q("thumb-nail")[0].setAttribute("transform", t.nail)
-    q("thumb-crease")[0].setAttribute("transform", t.crease)
-    q("thumb-shadow")[0].setAttribute("d", t.body)
-    q("thumb-shadow")[0].setAttribute("transform", `translate(${-3 - 7 * tip.lift} ${3 + 8 * tip.lift})`)
+  const screen = q<HTMLElement>("screen")[0]
+  // A spot on an element, in screen pixels. Offsets ignore transforms, so the tablet's scale and tilt do not matter.
+  const spot = (el: HTMLElement, u = 0.5, v = 0.5) => {
+    let [x, y] = [el.offsetWidth * u, el.offsetHeight * v]
+    for (let e = el; e !== screen; e = e.offsetParent as HTMLElement) [x, y] = [x + e.offsetLeft, y + e.offsetTop]
+    return [x, y]
   }
-  const reach = (x: number, y: number, at: number, duration = 0.36) => story.to(tip, { x, y, duration, ease: "power2.inOut", onUpdate: drawThumb }, at)
-  // Thumb goes to a spot on the phone (px), presses, and `el` gives under it.
-  const tap = (x: number, y: number, at: number, el: Element) =>
-    reach(x, y, at)
-      .to(tip, { lift: 0, duration: 0.12, repeat: 1, yoyo: true, ease: "sine.inOut", onUpdate: drawThumb }, at + 0.3)
-      .set(q("tap"), { attr: { cx: x, cy: y } }, at + 0.36)
-      .fromTo(q("tap"), { attr: { r: 6 }, opacity: 1 }, { attr: { r: 34 }, opacity: 0, duration: 0.6, ease: "power2.out" }, at + 0.38)
-      .to(el, { scale: 0.94, duration: 0.11, repeat: 1, yoyo: true, ease: "sine.inOut" }, at + 0.32)
+  // The touch point glides to `el` and presses: the element gives, a ripple fills it, a ring spreads, the tablet rocks a little.
+  const tap = (el: HTMLElement, at: number) => {
+    const [x, y] = spot(el)
+    story
+      .to(q("touch"), { x, y, duration: 0.5, ease: "power2.inOut" }, at)
+      .to(q("finger"), { scale: 0.68, backgroundColor: "rgba(255,255,255,.75)", duration: 0.12, repeat: 1, yoyo: true, ease: "power2.out" }, at + 0.5)
+      .fromTo(q("ring"), { scale: 0.7, opacity: 0.95 }, { scale: 2.5, opacity: 0, duration: 0.65, ease: "power2.out" }, at + 0.58)
+      .to(el, { scale: 0.93, duration: 0.12, repeat: 1, yoyo: true, ease: "power1.inOut" }, at + 0.5)
+      .fromTo(el.querySelector("[data-s=ripple]"), { scale: 0, opacity: 0.75 }, { scale: 1, opacity: 0, duration: 0.7, ease: "power2.out" }, at + 0.56)
+      .to(q("tablet"), { rotationY: (x / screen.offsetWidth - 0.5) * 7, rotationX: (0.5 - y / screen.offsetHeight) * 6, duration: 0.14, repeat: 1, yoyo: true, ease: "sine.inOut" }, at + 0.5)
+  }
   // A jump in the scene, from one offset to another.
   const hop = (el: Element | Element[], [x0, y0]: number[], [x1, y1]: number[], rise: number, duration: number, at: number) =>
     story
@@ -98,45 +99,63 @@ export function heroScene(root: HTMLElement, bloom: Element) {
   const ground = { svgOrigin: P(...mid).join(" ") }
   // From a shelf spot down into the open bag.
   const into = ([x, y, z]: readonly [number, number, number]) => [P(...mid)[0] - P(x, y)[0], P(...mid, BAG.h)[1] + 18 - P(x, y, z)[1]]
-  const [tub, vial] = q("tile")
+  const tiles = q<HTMLElement>("tile")
+  const [cart] = q<HTMLElement>("cart")
+  const [confirm] = q<HTMLElement>("confirm")
   const burst = q("burst").flatMap((g) => [...g.children])
   const [vialDrop, tubDrop] = q("drop")
   const [vialStock, tubStock] = q("stock")
 
   // Every fromTo names the same properties on both sides: GSAP applies from-only ones on the first loop and then not again.
 
-  // 1. The hand comes up in front of the shop and places an order
+  // 1. The tablet comes up in front of the shop and takes an order
+  const bill = ({ label, total }: { label: string; total: string }, at: number) =>
+    story.set(q("count"), { textContent: label }, at).set(q("sum"), { textContent: total }, at)
+  const [endX, endY] = spot(confirm)
   story
-    .set([q("picked"), q("parcel"), q("receipt"), q("seal"), q("token"), q("ticket")].flat(), { opacity: 0 }, 0)
-    .set([q("scrim"), q("sheet"), q("done")].flat(), { autoAlpha: 0 }, 0)
-    .set(q("cart"), { y: 64 }, 0)
+    .set([q("parcel"), q("receipt"), q("seal"), q("token"), q("ticket"), q("spin"), q("fly")].flat(), { opacity: 0 }, 0)
+    .set(q("done"), { autoAlpha: 0 }, 0)
+    .set(q("label"), { opacity: 1 }, 0)
+    .set(confirm, { y: 70, opacity: 0 }, 0)
+    .set(q("touch"), { x: 300, y: 330, opacity: 0 }, 0)
     .set([q("seal-ring"), burst].flat(), { scale: 0, transformOrigin: "50% 50%" }, 0)
     .set(q("check"), { strokeDashoffset: 1.05 }, 0)
-    .fromTo(q("hand"), { y: AWAY, rotation: 9, transformOrigin: "50% 100%" }, { y: 0, rotation: 0, duration: 1.2, ease: "power3.out" }, 0)
-  tap(178, 298, 1.1, vial)
-  tap(90, 294, 1.75, tub)
+  bill(hero.pos.filling[0], 0)
   story
-    .to(q("hand"), { rotation: -4, duration: 0.4, ease: "sine.inOut", repeat: 1, yoyo: true, repeatDelay: 0.1 }, 1.65)
-    .fromTo(q("picked")[1], { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2.5)" }, 1.5)
-    .fromTo(q("picked")[0], { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2.5)" }, 2.15)
-    .fromTo(q("cart"), { y: 64 }, { y: 0, duration: 0.45, ease: "back.out(1.5)" }, 2.25)
-  tap(158, 370, 2.75, q("cart")[0])
+    .fromTo(q("tablet"), { y: AWAY, rotation: 5, rotationX: -32, rotationY: 0 }, { y: 0, rotation: 0, rotationX: 0, rotationY: 0, duration: 1.3, ease: "power3.out" }, 0)
+    .to(q("touch"), { opacity: 1, duration: 0.25 }, 1)
+  // Tap a product and it flies into the cart.
+  const add = (i: number, at: number) => {
+    tap(tiles[i], at)
+    const [from, to] = [spot(tiles[i], 0.5, 0.36), spot(cart, 0.1)]
+    const fly = q("fly")[i]
+    story.set(fly, { opacity: 1, scale: 1, transformOrigin: "50% 50%" }, at + 0.66)
+    hop(fly, from, to, 34, 0.6, at + 0.66)
+    story
+      .to(fly, { scale: 0.25, duration: 0.6, ease: "power2.in" }, at + 0.66)
+      .set(fly, { opacity: 0 }, at + 1.26)
+      .fromTo(cart, { scale: 1.06, backgroundColor: "#5CC4FF" }, { scale: 1, backgroundColor: "#0190DD", duration: 0.45, ease: "power2.out" }, at + 1.26)
+  }
+  add(0, 1.05)
+  bill(hero.pos.filling[1], 2.31)
+  story.fromTo(confirm, { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "back.out(1.5)" }, 2.31)
+  add(1, 1.95)
+  bill(hero.pos.cart, 3.21)
+  tap(confirm, 3.15)
   story
-    .to(q("scrim"), { autoAlpha: 1, duration: 0.3 }, 3.15)
-    .fromTo(q("sheet"), { yPercent: 104, autoAlpha: 1 }, { yPercent: 0, autoAlpha: 1, duration: 0.5, ease: "power3.out" }, 3.15)
-  reach(224, 330, 3.25)
-  tap(150, 368, 4, q("confirm")[0])
-  story
-    .fromTo(q("done"), { clipPath: "circle(0px at 142px 360px)", autoAlpha: 1 }, { clipPath: "circle(440px at 142px 360px)", autoAlpha: 1, duration: 0.5, ease: "power2.inOut" }, 4.4)
-    .fromTo(burst, { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.5, ease: "back.out(2)", stagger: { amount: 0.5, from: "center" } }, 4.6)
-    .fromTo(q("seal-ring"), { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.5, ease: "back.out(2.2)" }, 4.65)
-    .fromTo(q("check"), { strokeDashoffset: 1.05 }, { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" }, 4.85)
-  reach(THUMB.x, THUMB.y, 4.5, 0.5)
+    .to(q("label"), { opacity: 0, duration: 0.15 }, 3.85)
+    .to(q("spin"), { opacity: 1, duration: 0.15 }, 3.85)
+    .fromTo(q("spin"), { rotation: 0, transformOrigin: "50% 50%" }, { rotation: 540, duration: 0.8, ease: "none" }, 3.85)
+    .to(q("touch"), { opacity: 0, duration: 0.2 }, 3.82)
+    .fromTo(q("done"), { clipPath: `circle(0px at ${endX}px ${endY}px)`, autoAlpha: 1 }, { clipPath: `circle(640px at ${endX}px ${endY}px)`, autoAlpha: 1, duration: 0.55, ease: "power2.inOut" }, 4.5)
+    .fromTo(burst, { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.5, ease: "back.out(2)", stagger: { amount: 0.5, from: "center" } }, 4.7)
+    .fromTo(q("seal-ring"), { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.5, ease: "back.out(2.2)" }, 4.75)
+    .fromTo(q("check"), { strokeDashoffset: 1.05 }, { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" }, 4.95)
 
-  // 2. The phone leaves; the check mark stays behind and drops into the counter screen
+  // 2. The tablet leaves; the check mark stays behind and drops into the counter screen
   story
     .set(q("token"), { opacity: 1, x: 0, y: 0, scale: 1 }, 5.7)
-    .to(q("hand"), { y: AWAY, rotation: 6, duration: 0.95, ease: "power2.in" }, 5.7)
+    .to(q("tablet"), { y: AWAY, rotation: -4, rotationX: -26, duration: 0.95, ease: "power2.in" }, 5.7)
   hop(q("token"), [0, 0], [TILL[0] - TOKEN[0], TILL[1] - TOKEN[1]], 90, 0.8, 6.55)
   story
     .to(q("token"), { scale: 0.62, transformOrigin: "50% 50%", duration: 0.35, ease: "power2.out" }, 6.5)
