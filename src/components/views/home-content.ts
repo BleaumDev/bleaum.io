@@ -16,10 +16,11 @@ export const hero = {
   pos: {
     tabs: ["Process", "Orders", "Returns", "Notes"],
     items: [
-      { name: "Canvas Tote", price: "$24.00" },
-      { name: "Ceramic Mug", price: "$14.00" },
-      { name: "Leather Wallet", price: "$48.00", low: true },
-      { name: "Candle Set", price: "$18.00" },
+      // Names follow website-updates/home.md #138.
+      { name: "Vitamin D3", price: "$24.00" },
+      { name: "Pain Relief", price: "$14.00" },
+      { name: "Cough Syrup", price: "$48.00", low: true },
+      { name: "Allergy Relief", price: "$18.00" },
     ],
     cart: { label: "2 items in cart", total: "$38.00" },
     // Button and order-type labels exactly as the POS app shows them.
@@ -96,14 +97,14 @@ export const inventory = {
   ],
   more: { text: "Explore inventory", href: "/operations/inventory-management" },
   quote: { text: "With Bleaum, we don't wait until close to count—we count while we sell. It's a game changer.", who: "AJ, Happy Root" },
-  visAlt: "Sample inventory table: Leather Wallet is low on stock",
+  visAlt: "Sample inventory table: Cough Syrup is low on stock",
   visHead: ["Inventory", "Main street store"],
   columns: ["Item", "On hand", "Status"],
   rows: [
-    { name: "Canvas Tote", onHand: 42 },
-    { name: "Ceramic Mug", onHand: 18 },
-    { name: "Leather Wallet", onHand: 3, low: true },
-    { name: "Candle Set", onHand: 27 },
+    { name: "Vitamin D3", onHand: 42 },
+    { name: "Pain Relief", onHand: 18 },
+    { name: "Cough Syrup", onHand: 3, low: true },
+    { name: "Allergy Relief", onHand: 27 },
   ],
   inStock: "In stock",
   lowStock: "Low stock",

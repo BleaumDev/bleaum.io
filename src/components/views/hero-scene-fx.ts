@@ -1,6 +1,6 @@
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { BOX, P, THUMB, TILL, TOKEN, doors, flaps, fold, thumb } from "./hero-iso"
+import { BAG, P, STOCK, THUMB, TILL, TOKEN, bag, doors, fold, thumb } from "./hero-iso"
 
 // Screen offset for a move of `d` scene units along the scene's x axis (the way the van faces).
 const along = (d: number) => ({ x: d * 0.866, y: d * 0.5 })
@@ -8,7 +8,7 @@ const along = (d: number) => ({ x: d * 0.866, y: d * 0.5 })
 const AWAY = 900 // px below its place: past the section's bottom edge at every width
 
 // Brings the Home hero art (hero-scene.tsx) to life: the box unfolds once, then one sale plays on repeat.
-// Hand rises -> two taps -> order sheet -> confirm -> hand leaves -> order reaches the counter -> carton packed -> loaded -> van leaves -> restock -> van returns.
+// Hand rises -> two taps -> order sheet -> confirm -> hand leaves -> order reaches the counter -> bag packed -> loaded -> van leaves -> restock -> van returns.
 // Runs inside home-fx's reduced-motion gsap.matchMedia, which reverts every tween made here.
 export function heroScene(root: HTMLElement, bloom: Element) {
   const q = (name: string) => [...root.querySelectorAll<SVGElement>(`[data-s=${name}]`)]
@@ -31,8 +31,8 @@ export function heroScene(root: HTMLElement, bloom: Element) {
     draw()
     intro
       .set(q("lid"), { opacity: 1 }, 0)
-      .set([q("print"), q("road"), q("wire")].flat(), { opacity: 0 }, 0)
-      .set([q("pop"), q("bulb")].flat(), { scale: 0, transformOrigin: "50% 100%" }, 0)
+      .set([q("print"), q("road")].flat(), { opacity: 0 }, 0)
+      .set(q("pop"), { scale: 0, transformOrigin: "50% 100%" }, 0)
       .set(q("awning"), { scaleY: 0, transformOrigin: "50% 0%" }, 0)
       .set(q("van"), { ...along(360), opacity: 0 }, 0)
       .fromTo(svg, { rotation: -1.4, transformOrigin: "50% 80%" }, { rotation: 1.4, duration: 0.08, repeat: 6, yoyo: true, ease: "sine.inOut" }, 0.7)
@@ -43,9 +43,7 @@ export function heroScene(root: HTMLElement, bloom: Element) {
       .to(box, { wall: 90, duration: 1, ease: "bounce.out", onUpdate: draw }, "open+=0.35")
       .to(q("print"), { opacity: 1, duration: 0.3 }, "open+=1.2")
       .to(q("awning"), { scaleY: 1, duration: 0.6, ease: "back.out(1.6)" }, "open+=0.6")
-      .to(q("pop"), { scale: 1, duration: 0.55, stagger: 0.06, ease: "back.out(1.9)" }, "open+=0.6")
-      .to(q("wire"), { opacity: 1, duration: 0.3 }, "open+=1.2")
-      .to(q("bulb"), { scale: 1, duration: 0.4, stagger: 0.06, ease: "back.out(2.5)" }, "open+=1.2")
+      .to(q("pop"), { scale: 1, duration: 0.55, stagger: { amount: 1 }, ease: "back.out(1.9)" }, "open+=0.6")
       .to(q("road"), { opacity: 1, duration: 0.4 }, "open+=1.3")
       .to(q("van"), { opacity: 1, duration: 0.2 }, "open+=1.4")
       .to(q("van"), { x: 0, y: 0, duration: 1.3, ease: "power2.out" }, "open+=1.4")
@@ -92,18 +90,18 @@ export function heroScene(root: HTMLElement, bloom: Element) {
       .fromTo(el, { y: y0 }, { y: Math.min(y0, y1) - rise, duration: duration * 0.42, ease: "power2.out" }, at)
       .to(el, { y: y1, duration: duration * 0.58, ease: "power2.in" }, at + duration * 0.42)
 
-  const lid = { open: 0 }
-  const drawLid = () => flaps(lid.open).forEach((p, i) => q("flap")[i].setAttribute("points", p))
+  const mouth = { open: 0 }
+  const drawBag = () => bag(mouth.open).forEach((p, i) => q("side")[i].setAttribute("points", p))
   const gate = { open: 0 }
   const drawGate = () => doors(gate.open).forEach((p, i) => q("door")[i].setAttribute("points", p))
-  const mid = [BOX.x + BOX.w / 2, BOX.y + BOX.w / 2] as const
+  const mid = [BAG.x + BAG.w / 2, BAG.y + BAG.d / 2] as const
   const ground = { svgOrigin: P(...mid).join(" ") }
-  // From a shelf spot (screen) down into the open carton.
-  const into = (x: number, y: number) => [P(...mid, BOX.h)[0] - x, P(...mid, BOX.h)[1] + 12 - y]
-  const [tote, mug] = q("tile")
+  // From a shelf spot down into the open bag.
+  const into = ([x, y, z]: readonly [number, number, number]) => [P(...mid)[0] - P(x, y)[0], P(...mid, BAG.h)[1] + 18 - P(x, y, z)[1]]
+  const [tub, vial] = q("tile")
   const burst = q("burst").flatMap((g) => [...g.children])
-  const [mugDrop, toteDrop] = q("drop")
-  const [mugStock, toteStock] = q("stock")
+  const [vialDrop, tubDrop] = q("drop")
+  const [vialStock, tubStock] = q("stock")
 
   // Every fromTo names the same properties on both sides: GSAP applies from-only ones on the first loop and then not again.
 
@@ -115,8 +113,8 @@ export function heroScene(root: HTMLElement, bloom: Element) {
     .set([q("seal-ring"), burst].flat(), { scale: 0, transformOrigin: "50% 50%" }, 0)
     .set(q("check"), { strokeDashoffset: 1.05 }, 0)
     .fromTo(q("hand"), { y: AWAY, rotation: 9, transformOrigin: "50% 100%" }, { y: 0, rotation: 0, duration: 1.2, ease: "power3.out" }, 0)
-  tap(178, 298, 1.1, mug)
-  tap(90, 294, 1.75, tote)
+  tap(178, 298, 1.1, vial)
+  tap(90, 294, 1.75, tub)
   story
     .to(q("hand"), { rotation: -4, duration: 0.4, ease: "sine.inOut", repeat: 1, yoyo: true, repeatDelay: 0.1 }, 1.65)
     .fromTo(q("picked")[1], { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2.5)" }, 1.5)
@@ -155,10 +153,10 @@ export function heroScene(root: HTMLElement, bloom: Element) {
     .set(q("packed"), { scale: 0, transformOrigin: "50% 50%" }, 7.4)
     .fromTo(q("ticket"), { opacity: 1, scale: 0, transformOrigin: "50% 100%" }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2)" }, 7.6)
 
-  // 4. A carton opens; the two items leave the shelves and drop in
+  // 4. A bag opens; the two items leave the shelves and drop in
   story
     .fromTo(q("parcel"), { opacity: 1, x: 0, y: 0, scale: 0, ...ground }, { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.45, ease: "back.out(2)" }, 8)
-    .fromTo(lid, { open: 0 }, { open: 1, duration: 0.45, ease: "back.out(1.6)", onUpdate: drawLid }, 8.25)
+    .fromTo(mouth, { open: 0 }, { open: 1, duration: 0.45, ease: "back.out(1.6)", onUpdate: drawBag }, 8.25)
   const pack = (shelf: Element, item: Element, to: number[], done: Element, at: number) => {
     story.set(shelf, { opacity: 0 }, at).set(item, { opacity: 1, scale: 1, transformOrigin: "50% 50%" }, at)
     hop(item, [0, 0], to, 46, 0.85, at)
@@ -169,20 +167,21 @@ export function heroScene(root: HTMLElement, bloom: Element) {
       .to(q("parcel"), { scaleY: 0.9, scaleX: 1.05, ...ground, duration: 0.09, repeat: 1, yoyo: true }, at + 0.82)
       .to(done, { scale: 1, duration: 0.4, ease: "back.out(2.5)" }, at + 0.85)
   }
-  pack(mugStock, mugDrop, into(387, 228), q("packed")[0], 8.75)
-  pack(toteStock, toteDrop, into(426, 280), q("packed")[1], 9.3)
+  pack(vialStock, vialDrop, into(STOCK.vial), q("packed")[0], 8.75)
+  pack(tubStock, tubDrop, into(STOCK.tub), q("packed")[1], 9.3)
 
-  // 5. Closed, taped, carried into the van
+  // 5. Folded shut, sealed, carried into the van
   story
-    .to(lid, { open: 0, duration: 0.35, ease: "power2.in", onUpdate: drawLid }, 10.35)
+    .to(mouth, { open: 0, duration: 0.35, ease: "power2.in", onUpdate: drawBag }, 10.35)
     .fromTo(q("seal"), { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.in" }, 10.7)
     .to(q("ticket"), { scale: 0, opacity: 0, duration: 0.3, ease: "back.in(2)" }, 10.6)
     .to(gate, { open: 1, duration: 0.45, ease: "back.out(1.4)", onUpdate: drawGate }, 10.75)
   // Past the counter, then up between the doors
   const stops = [[0, 0, 0], [48, -8, 0], [120, -68, 14]].map(([x, y, z]) => [(x - y) * 0.866, (x + y) * 0.5 - z])
   hop(q("parcel"), stops[0], stops[1], 30, 0.5, 11.1)
-  hop(q("parcel"), stops[1], stops[2], 34, 0.6, 11.65)
+  hop(q("parcel"), stops[1], stops[2], 8, 0.6, 11.65)
   story
+    .to(q("parcel"), { scale: 0.85, ...ground, duration: 0.4, ease: "power1.in" }, 11.85)
     .set(q("parcel"), { opacity: 0 }, 12.25)
     .to(q("van"), { y: 4, duration: 0.1, repeat: 1, yoyo: true, ease: "sine.inOut" }, 12.22)
     .to(gate, { open: 0, duration: 0.3, ease: "power2.in", onUpdate: drawGate }, 12.3)
@@ -206,11 +205,10 @@ export function heroScene(root: HTMLElement, bloom: Element) {
     .to(q("van"), { x: 0, y: 0, duration: 1.6, ease: "power2.out" }, 15)
     .to(q("wheel"), { rotation: 0, duration: 1.6, ease: "power2.out" }, 15)
 
-  // Small things that never stop: the shop's slow float, flames, bulbs, the sign's halo, dots rising out of the box.
+  // Small things that never stop: the shop's slow float, the cross sign's lights and halo, dots rising out of the box.
   const idle = gsap.timeline()
   idle.to(svg, { y: -7, duration: 2.8, repeat: -1, yoyo: true, ease: "sine.inOut" }, 0)
-  q("flame").forEach((el) => idle.to(el, { scaleY: 1.25, scaleX: 0.88, transformOrigin: "50% 100%", duration: gsap.utils.random(0.25, 0.5), repeat: -1, yoyo: true, ease: "sine.inOut" }, 0))
-  q("bulb").forEach((el, i) => idle.to(el.firstElementChild, { opacity: 0.35, duration: 1.1, delay: (i % 4) * 0.35, repeat: -1, yoyo: true, ease: "sine.inOut" }, 0))
+  idle.to(q("sign").flatMap((g) => [...g.children]), { opacity: 0.4, duration: 0.7, stagger: { amount: 1.4, from: "center", repeat: -1, yoyo: true }, ease: "sine.inOut" }, 0)
   idle.to(q("halo"), { scale: 1.25, opacity: 0.6, transformOrigin: "50% 50%", duration: 1.8, repeat: -1, yoyo: true, ease: "sine.inOut" }, 0)
   idle.to(q("pool").flatMap((g) => [...g.children]), { opacity: 0.45, duration: 1.2, stagger: { amount: 2.4, from: "center", repeat: -1, yoyo: true }, ease: "sine.inOut" }, 0)
   q("mote").forEach((el, i) =>

@@ -61,19 +61,23 @@ export function fold(wall: number, flap: number) {
 export const TOKEN = [258, 314] as const
 export const TILL = P(111, 117, 74)
 
-// The carton an order is packed in: where it stands, how big it is.
-export const BOX = { x: 128, y: 148, w: 36, h: 27 }
+// Where the two ordered items stand on the shelves (x, y, z).
+export const STOCK = { vial: [78, 10, 58], tub: [108, 10, 22] } as const
 
-// Its four top flaps, back two first. `open`: 0 shut, 1 folded out.
-export function flaps(open: number) {
-  const { x, y, w, h } = BOX
-  const [i, u] = [(Math.cos(open * 2.3) * w) / 2, (Math.sin(open * 2.3) * w) / 2 + h]
-  const [X, Y] = [x + w, y + w]
+// The paper bag an order is packed in: where it stands, how big it is.
+export const BAG = { x: 124, y: 150, w: 36, d: 24, neck: 28, h: 46 }
+
+// Its sides: back, left, front, front above the neck, right. `open`: 1 standing open, 0 pinched shut along the top.
+export function bag(open: number) {
+  const { x, y, w, d, neck, h } = BAG
+  const [X, Y, half] = [x + w, y + d, (d / 2) * (1 - open)]
+  const [b, f] = [y + half, Y - half]
   return [
-    pts([x, y, h], [x, Y, h], [x + i, Y, u], [x + i, y, u]),
-    pts([x, y, h], [X, y, h], [X, y + i, u], [x, y + i, u]),
-    pts([X, y, h], [X, Y, h], [X - i, Y, u], [X - i, y, u]),
-    pts([x, Y, h], [X, Y, h], [X, Y - i, u], [x, Y - i, u]),
+    pts([x, y, 0], [X, y, 0], [X, y, neck], [X, b, h], [x, b, h], [x, y, neck]),
+    pts([x, y, 0], [x, Y, 0], [x, Y, neck], [x, f, h], [x, b, h], [x, y, neck]),
+    pts([x, Y, 0], [X, Y, 0], [X, Y, neck], [x, Y, neck]),
+    pts([x, Y, neck], [X, Y, neck], [X, f, h], [x, f, h]),
+    pts([X, y, 0], [X, Y, 0], [X, Y, neck], [X, f, h], [X, b, h], [X, y, neck]),
   ]
 }
 

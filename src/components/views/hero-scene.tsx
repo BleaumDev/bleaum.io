@@ -1,10 +1,11 @@
 import type { ReactNode } from "react"
 import { ShoppingBag, Store, Truck } from "lucide-react"
-import { BOX, H, P, THUMB, TILL, TOKEN, VAN, W, doors, flaps, floorM, fold, leftM, pts, rightM, thumb } from "./hero-iso"
+import { BAG, H, P, STOCK, THUMB, TILL, TOKEN, VAN, W, bag, doors, floorM, fold, leftM, pts, rightM, thumb } from "./hero-iso"
 import { hero } from "./home-content"
 
-// Home hero illustration: "your business in a box", run "from one hand". A copper box unfolds into a lit shop. A hand
-// comes up in front of it, places an order on the phone and leaves; the shop packs the order and the van takes it away.
+// Home hero illustration: "your business in a box", run "from one hand". A copper box unfolds into a lit pharmacy. A
+// hand comes up in front of it, places an order on the phone and leaves; the shop bags the order and the van takes it away.
+// Pharmacy only: cannabis products, leaves and signage stay out (website-updates/home.md #20, #24, #138).
 // The scene itself is wordless; the only text is the POS copy on the phone (home-content hero.pos).
 // Server-rendered in its finished, open state. hero-scene-fx.ts finds the data-s hooks and brings it to life.
 
@@ -64,91 +65,171 @@ function Parcel({ x, y, z = 0, w = 26, h = 22 }: { x: number; y: number; z?: num
   )
 }
 
-const Mug = ({ x, z, f }: { x: number; z: number; f: readonly [string, string] }) => {
-  const [cx, cy] = P(x, 10, z)
-  return (
-    <g {...s("pop")}>
-      <path d={`M${cx + 7} ${cy - 10}c8 -1 8 9 -1 8`} stroke={f[1]} strokeWidth={2.4} {...line} />
-      <Can x={x} y={10} z={z} r={6.2} h={13} f={f} />
-    </g>
-  )
+// Cross with arms `2a` wide, reaching `b` from its center.
+const cross = (a: number, b: number) => `M${-a}${-b}h${2 * a}v${b - a}h${b - a}v${2 * a}h${a - b}v${b - a}h${-2 * a}v${a - b}h${a - b}v${-2 * a}h${b - a}z`
+
+// A label wrapped round a Can, from height a to b.
+function Band({ x, y, z, r, a, b, fill }: { x: number; y: number; z: number; r: number; a: number; b: number; fill: string }) {
+  const [cx, cy] = P(x, y, z)
+  const [rx, ry] = [r * 1.22, r * 0.71]
+  return <path d={`M${cx - rx} ${cy - b}a${rx} ${ry} 0 0 0 ${2 * rx} 0V${cy - a}a${rx} ${ry} 0 0 1 ${-2 * rx} 0z`} fill={fill} />
 }
 
-const Candle = ({ x, y, z, h }: { x: number; y: number; z: number; h: number }) => {
-  const [cx, cy] = P(x, y, z + h)
-  return (
-    <g {...s("pop")}>
-      <Can x={x} y={y} z={z} r={4.6} h={h} f={["#FBE7DA", "#E2B195"]} />
-      <path {...s("flame")} d={`M${cx} ${cy - 1}c-3.6-3-2.6-6.5 0-10 2.6 3.5 3.6 7 0 10z`} fill="#FFD9A8" />
-    </g>
-  )
-}
+const white = ["#FFFFFF", "#D5DFE9"] as const
+const copper = ["#F2B48F", "#C47D56"] as const
+const amber = ["#F0AE63", "#D97F2B"] as const
+const syrup = ["#8A4E2E", "#6E3B20"] as const
+type Spot = { x: number; y?: number; z: number }
 
-const Tote = ({ x, z, color }: { x: number; z: number; color: string }) => (
-  <g transform={rightM(x, 4, z)}>
-    <path d="M6 1c0-13 10-13 10 0" stroke={color} strokeWidth={2} {...line} />
-    <path d="M0 0h22l2 25H-2z" fill={color} />
-    <g transform="translate(11 14)" fill="#0B1E31" fillOpacity={0.45}>
-      <Mark r={7} gap={3} dot={1.3} />
+// Amber prescription vial, supplement tub, syrup bottle, medicine box.
+const Vial = ({ x, y = 10, z, h = 17 }: Spot & { h?: number }) => (
+  <>
+    <Can x={x} y={y} z={z} r={5} h={h} f={amber} />
+    <Band x={x} y={y} z={z} r={5} a={4} b={h * 0.62} fill="#FFFFFF" />
+    <Can x={x} y={y} z={z + h} r={5.5} h={5} f={white} />
+  </>
+)
+const Tub = ({ x, y = 10, z, lid = copper, label = "#DF9770" }: Spot & { lid?: readonly [string, string]; label?: string }) => (
+  <>
+    <Can x={x} y={y} z={z} r={6.4} h={16} f={white} />
+    <Band x={x} y={y} z={z} r={6.4} a={4} b={12} fill={label} />
+    <Can x={x} y={y} z={z + 16} r={5.6} h={4} f={lid} />
+  </>
+)
+const Syrup = ({ x, y = 10, z }: Spot) => (
+  <>
+    <Can x={x} y={y} z={z} r={5.6} h={14} f={syrup} />
+    <Band x={x} y={y} z={z} r={5.6} a={3} b={11} fill="#F6F8FB" />
+    <Can x={x} y={y} z={z + 14} r={2.8} h={4} f={syrup} />
+    <Can x={x} y={y} z={z + 18} r={3.4} h={4} f={white} />
+  </>
+)
+const MedBox = ({ x, y = 4, z, w = 18, h = 22, color = "#DF9770" }: Spot & { w?: number; h?: number; color?: string }) => (
+  <>
+    <Box x={x} y={y} z={z} w={w} d={11} h={h} f={["#FFFFFF", "#F1F5F9", "#B9C7D6"]} />
+    <g transform={rightM(x, y + 11, z)} fill={color}>
+      <rect y={-h * 0.34} width={w} height={h * 0.34} />
+      <path d={cross(1.5, 4.4)} transform={`translate(${w / 2} ${-h * 0.67})`} />
     </g>
+  </>
+)
+const Capsule = ({ x, y, k = 1, r = -35 }: { x: number; y: number; k?: number; r?: number }) => (
+  <g transform={`translate(${x} ${y}) rotate(${r}) scale(${k})`}>
+    <rect x={-10} y={-4.5} width={20} height={9} rx={4.5} fill="#DF9770" />
+    <path d="M0-4.5h5.5a4.5 4.5 0 0 1 0 9H0z" fill="#EAF0F6" />
   </g>
 )
 
+// The wall of stock, three shelves. The two ordered items are drawn in place but as their own group.
+const navyLid = ["#2C6391", "#1C4B70"] as const
+const SHELVES: { z: number; row: ReactNode[] }[] = [
+  {
+    z: 94,
+    row: [
+      <Tub key={1} x={34} z={94} />,
+      <Tub key={2} x={51} z={94} lid={navyLid} label="#2C6391" />,
+      <Tub key={3} x={68} z={94} />,
+      <MedBox key={4} x={80} z={94} color="#2C6391" />,
+      <MedBox key={5} x={100} z={94} h={18} />,
+      <Vial key={6} x={130} z={94} />,
+      <Vial key={7} x={144} z={94} h={13} />,
+      <Vial key={8} x={158} z={94} />,
+      <Vial key={9} x={172} z={94} h={13} />,
+    ],
+  },
+  {
+    z: 58,
+    row: [
+      <MedBox key={1} x={26} z={58} />,
+      <MedBox key={2} x={46} z={58} h={18} color="#2C6391" />,
+      <g key={3} {...s("stock")}><Vial x={STOCK.vial[0]} z={STOCK.vial[2]} /></g>,
+      <Vial key={4} x={93} z={58} h={13} />,
+      <Vial key={5} x={108} z={58} />,
+      <Syrup key={6} x={125} z={58} />,
+      <Syrup key={7} x={141} z={58} />,
+      <MedBox key={8} x={152} z={58} />,
+      <MedBox key={9} x={171} z={58} w={11} h={16} color="#2C6391" />,
+    ],
+  },
+  {
+    z: 22,
+    row: [
+      <Syrup key={1} x={34} z={22} />,
+      <Syrup key={2} x={50} z={22} />,
+      <MedBox key={3} x={60} z={22} w={15} color="#2C6391" />,
+      <MedBox key={4} x={77} z={22} w={15} h={17} />,
+      <g key={5} {...s("stock")}><Tub x={STOCK.tub[0]} z={STOCK.tub[2]} /></g>,
+      <Tub key={6} x={126} z={22} lid={navyLid} label="#2C6391" />,
+      <Tub key={7} x={144} z={22} />,
+      <MedBox key={8} x={156} z={22} />,
+    ],
+  },
+]
+
 // The four products on the phone, flat, in a 48 x 40 box. Same order as home-content hero.pos.items.
 const GOODS = [
-  <g key="tote">
-    <path d="M17 15c0-13 14-13 14 0" stroke="#DF9770" strokeWidth={2.6} {...line} />
-    <path d="M11 14h26l2 24H9z" fill="#DF9770" />
-    <g transform="translate(24 26)" fill="#0B1E31" fillOpacity={0.5}><Mark r={8} gap={3.4} dot={1.5} /></g>
+  <g key="vitamin">
+    <rect x={15} y={1} width={18} height={8} rx={2} fill="#DF9770" />
+    <path d="M12 14a5 5 0 0 1 5-5h14a5 5 0 0 1 5 5v21a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4z" fill="#EAF0F6" />
+    <path d="M12 16h24v17H12z" fill="#F2B48F" />
+    <circle cx={24} cy={24.5} r={3.4} fill="#0B1E31" />
+    <path d="M24 18v1.6M24 29.4V31M17.5 24.5h1.6M28.9 24.5h1.6M19.4 19.9l1.1 1.1M27.5 28l1.1 1.1M28.6 19.9l-1.1 1.1M20.5 28l-1.1 1.1" stroke="#0B1E31" strokeWidth={1.5} {...line} />
   </g>,
-  <g key="mug">
-    <path d="M32 14c10-1 10 13 0 12" stroke="#B7C4D2" strokeWidth={3} {...line} />
-    <path d="M12 7h21v23a7 7 0 0 1-7 7h-7a7 7 0 0 1-7-7z" fill="#EAF0F6" />
-    <path d="M12 7h21v5H12z" fill="#DF9770" />
+  <g key="pain">
+    <rect x={5} y={1} width={22} height={9} rx={2} fill="#FFFFFF" />
+    <path d="M10 2.5v6M14 2.5v6M18 2.5v6M22 2.5v6" stroke="#B7C4D2" strokeWidth={1.4} {...line} />
+    <path d="M7 10h18v25a4 4 0 0 1-4 4H11a4 4 0 0 1-4-4z" fill="#D97F2B" />
+    <path d="M7 16h18v15H7z" fill="#FFFFFF" />
+    <path d="M10 20h12M10 24h12M10 28h7" stroke="#A9B8C8" strokeWidth={1.6} {...line} />
+    <Capsule x={36} y={23} r={-50} />
+    <Capsule x={36} y={34.5} r={-8} />
   </g>,
-  <g key="wallet">
-    <rect x={6} y={9} width={36} height={27} rx={4} fill="#8A4E2E" />
-    <path d="M6 18v-5a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v5z" fill="#A4572C" />
-    <rect x={31} y={19} width={11} height={9} rx={4.5} fill="#DF9770" />
+  <g key="syrup">
+    <rect x={14} y={0} width={12} height={7} rx={1.5} fill="#EAF0F6" />
+    <path d="M16 7h8v4c0 3 6 4 6 9v16a3 3 0 0 1-3 3H13a3 3 0 0 1-3-3V20c0-5 6-6 6-9z" fill="#8A4E2E" />
+    <path d="M10 20h20v14H10z" fill="#FFE2C6" />
+    <path d="M20 22c3 3.6 3.8 5 3.8 6.6a3.8 3.8 0 0 1-7.6 0c0-1.6.8-3 3.8-6.6z" fill="#DF9770" />
+    <path d="M33 29h11l-1.6 10h-7.8z" fill="#B7C4D2" fillOpacity={0.5} />
+    <path d="M33.6 33h9.8l-1 6h-7.8z" fill="#8A4E2E" />
   </g>,
-  <g key="candles">
-    {[[8, 20, 10], [20, 12, 10], [32, 24, 9]].map(([x, y, w]) => (
-      <g key={x}>
-        <path d={`M${x + w / 2} ${y}c-3.6-3-2.6-6.5 0-10 2.6 3.5 3.6 7 0 10z`} fill="#FFD9A8" />
-        <path d={`M${x} ${y}h${w}v${37 - y}h-${w}z`} fill="#FBE7DA" />
-      </g>
-    ))}
+  <g key="allergy">
+    <rect x={4} y={6} width={25} height={33} rx={2} fill="#EAF0F6" />
+    <path d="M4 28h25v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" fill="#DF9770" />
+    <path d={cross(2.2, 6.6)} transform="translate(16.5 17)" fill="#DF9770" />
+    <rect x={24} y={13} width={21} height={26} rx={3} fill="#A9B8C8" />
+    {[18, 26, 34].map((y) => [30, 39].map((x) => <circle key={`${x}${y}`} cx={x} cy={y} r={3} fill="#F6F8FB" />))}
   </g>,
 ]
 const Good = ({ i, className }: { i: number; className: string }) => (
   <svg viewBox="0 0 48 40" className={className} aria-hidden="true">{GOODS[i]}</svg>
 )
 
-// The carton an order is packed in. Items drop in between its back flaps and its front walls.
-function Carton() {
-  const { x, y, w, h } = BOX
-  const [X, Y] = [x + w, y + w]
-  const f = flaps(0)
-  const [a, b] = [x + w * 0.36, x + w * 0.64]
-  const flap = (i: number, fill: string) => <polygon {...s("flap")} points={f[i]} fill={fill} stroke={fill} strokeWidth={0.6} strokeLinejoin="round" />
+// The paper bag an order is packed in. Items drop in between its back and its front.
+function OrderBag() {
+  const { x, y, w, d, h } = BAG
+  const [X, Y, mid] = [x + w, y + d, y + d / 2]
+  const b = bag(0)
+  const side = (i: number, fill: string) => <polygon {...s("side")} points={b[i]} fill={fill} stroke={fill} strokeWidth={0.6} strokeLinejoin="round" />
   return (
     <g {...s("parcel")} className={LATER}>
       <polygon points={pts([x - 3, y + 4, 0], [X + 2, y + 4, 0], [X + 2, Y + 8, 0], [x - 3, Y + 8, 0])} fill="#071321" fillOpacity={0.3} />
-      <polygon points={pts([x, y, h], [X, y, h], [X, Y, h], [x, Y, h])} fill="#6E3B20" />
-      {flap(0, "#DCA07C")}
-      {flap(1, "#EAB592")}
-      <g {...s("drop")} opacity={0}><Mug x={76} z={70} f={["#FFFFFF", "#D5DFE9"]} /></g>
-      <g {...s("drop")} opacity={0}><Tote x={104} z={54} color="#DF9770" /></g>
-      <polygon points={pts([x, Y, 0], [X, Y, 0], [X, Y, h], [x, Y, h])} fill={kraft[1]} />
-      <polygon points={pts([X, y, 0], [X, Y, 0], [X, Y, h], [X, y, h])} fill={kraft[2]} />
-      {flap(2, "#DDA07B")}
-      {flap(3, kraft[0])}
+      {side(0, "#9FB0C2")}
+      {side(1, "#B3C1CF")}
+      <g {...s("drop")} opacity={0}><Vial x={STOCK.vial[0]} z={STOCK.vial[2]} /></g>
+      <g {...s("drop")} opacity={0}><Tub x={STOCK.tub[0]} z={STOCK.tub[2]} /></g>
+      {side(2, "#F4F7FA")}
+      {side(3, "#FFFFFF")}
+      {side(4, "#C3D0DD")}
+      {/* Top rolled over and closed with a round seal; the label is stuck on the front */}
       <g {...s("seal")}>
-        <polygon points={pts([a, y, h], [b, y, h], [b, Y, h], [a, Y, h])} fill={parcelTape} />
-        <polygon points={pts([a, Y, h], [b, Y, h], [b, Y, h - 9], [a, Y, h - 9])} fill={parcelTape} />
-        <g transform={leftM(X, Y, 12)}>
-          <rect x={6} y={-8} width={20} height={15} rx={1.5} fill="#FFFFFF" />
-          <path d="M9-3.5h9M9 0h13M9 3.5h6" stroke="#A9B8C8" strokeWidth={1.6} {...line} />
+        <polygon points={pts([x, mid, h + 1], [X, mid, h + 1], [X, mid + 6, h - 8], [x, mid + 6, h - 8])} fill="#D3DDE8" />
+        <g transform={rightM(x + w / 2, mid + 6, h - 8)}>
+          <circle r={7.5} fill="#DF9770" />
+          <path d={cross(1.5, 4.5)} fill="#FFFFFF" />
+        </g>
+        <g transform={rightM(x, Y, 5)}>
+          <rect x={5} y={-15} width={26} height={15} rx={1.5} fill="#FFE2C6" />
+          <path d="M8.5-11h12M8.5-7.5h18M8.5-4h9" stroke="#B9714A" strokeWidth={1.6} {...line} />
         </g>
       </g>
     </g>
@@ -206,26 +287,20 @@ function Van() {
   )
 }
 
-// Points along a quadratic curve, for the string lights and the order's dot trail.
+// Points along a quadratic curve, for the order's dot trail.
 const curve = (a: readonly number[], b: readonly number[], c: readonly number[], n: number) =>
   Array.from({ length: n }, (_, i) => {
     const t = (i + 0.5) / n
     return [0, 1].map((k) => +((1 - t) ** 2 * a[k] + 2 * (1 - t) * t * b[k] + t * t * c[k]).toFixed(1))
   })
 
-const strA = P(0, W, H - 2)
-const strB = P(W, 0, H - 2)
-const strM = [330, 284] as const
-const BULBS = curve(strA, strM, strB, 9)
 // The order hangs where the phone's check mark was, then arcs to the counter screen.
 const ORDER = curve(TOKEN, [TOKEN[0] + 34, TOKEN[1] - 190], TILL, 9)
 
-// Scalloped awning over the right-hand wall: 8 stripes from (x, 0, H-6) down to (x, 24, H-22).
-const STRIPES = Array.from({ length: 8 }, (_, i) => {
-  const [a, b] = [6 + i * 23.5, 6 + (i + 1) * 23.5]
-  const [p, q] = [P(a, 24, H - 24), P(b, 24, H - 24)]
-  return { top: pts([a, 0, H - 4], [b, 0, H - 4], [b, 24, H - 24], [a, 24, H - 24]), edge: `M${p[0]} ${p[1]}v8q${(q[0] - p[0]) / 2} ${14 + (q[1] - p[1]) / 2} ${q[0] - p[0]} ${q[1] - p[1]}v-8z`, on: i % 2 === 0 }
-})
+// The dots that fill the cross sign: biggest in the middle, like the mark.
+const LED = Array.from({ length: 13 * 13 }, (_, i) => [(i % 13) - 6, Math.floor(i / 13) - 6])
+  .filter(([i, j]) => Math.min(Math.abs(i), Math.abs(j)) < 2)
+  .map(([i, j]) => [i * 6.9, j * 6.9, +(3.1 - Math.hypot(i, j) * 0.26).toFixed(2)])
 
 const PANELS_OPEN = fold(90, 1)
 
@@ -278,13 +353,15 @@ function Scene() {
           <Mark r={58} gap={11} dot={5} name="pool" />
         </g>
 
-        {/* Left wall: the mark as a lit sign, and the insights screen */}
+        {/* Left wall: a lit pharmacy cross made of the mark's dots, and the insights screen */}
         <g {...s("pop")}>
           <g transform={leftM(0, 0, 0)}>
-            <circle cx={-58} cy={-92} r={46} fill="url(#hs-glow)" {...s("halo")} />
-            <circle cx={-58} cy={-92} r={37} fill="#0B1E31" stroke="#DF9770" strokeWidth={2} />
-            <g transform="translate(-58 -92)" fill="#F2B48F">
-              <Mark r={31} gap={6.4} dot={3.3} name="sign" />
+            <circle cx={-56} cy={-88} r={62} fill="url(#hs-glow)" {...s("halo")} />
+            <g transform="translate(-56 -88)">
+              <path d={cross(17, 46)} fill="#DF9770" stroke="#FFE2C6" strokeWidth={3} strokeLinejoin="round" />
+              <g {...s("sign")} fill="#FFF6EE">
+                {LED.map(([x, y, r]) => <circle key={`${x},${y}`} cx={x} cy={y} r={r} />)}
+              </g>
             </g>
           </g>
         </g>
@@ -294,50 +371,68 @@ function Scene() {
             <path d="M-176-78h56M-176-92h56M-176-106h56" stroke="#1C4B70" strokeWidth={1} {...line} />
             <path {...s("chart")} pathLength={1} strokeDasharray="1 3" d="M-176-80l11-7 10 4 11-15 10 7 14-18" stroke="#DF9770" strokeWidth={2.6} {...line} />
             <path {...s("spark")} d="M-124-124l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="#FFE2C6" />
-            {/* invoices pinned up */}
+            {/* prescriptions pinned up */}
             {[-176, -146].map((x, i) => (
               <g key={x} transform={`rotate(${i ? 3 : -3} ${x + 10} -52)`}>
                 <rect x={x} y={-52} width={22} height={30} rx={1.5} fill="#EAF0F6" />
-                <path d={`M${x + 4}-45h14M${x + 4}-40h14M${x + 4}-35h9`} stroke="#A9B8C8" strokeWidth={1.4} {...line} />
+                <path d={cross(1.3, 4)} transform={`translate(${x + 8} -44)`} fill="#DF9770" />
+                <path d={`M${x + 4}-36h14M${x + 4}-31.5h14M${x + 4}-27h9`} stroke="#A9B8C8" strokeWidth={1.4} {...line} />
                 <circle cx={x + 11} cy={-52} r={2} fill="#DF9770" />
               </g>
             ))}
           </g>
         </g>
 
-        {/* Right wall: shelves and awning */}
-        {[70, 24].map((z) => (
-          <Box key={z} x={26} y={0} z={z - 4} w={150} d={20} h={4} f={["#E9B391", "#B9714A", "#A9643F"]} />
+        {/* Right wall: lit shelves of medicine under a pharmacy fascia */}
+        {SHELVES.map(({ z, row }) => (
+          <g key={z}>
+            <polygon points={pts([0, 0, z - 4], [W, 0, z - 4], [W, 0, z - 20], [0, 0, z - 20])} fill="#FFE2C6" fillOpacity={0.12} />
+            <Box x={22} y={0} z={z - 4} w={160} d={20} h={4} f={["#FFFFFF", "#DCE5EE", "#B9C7D6"]} />
+            <polygon points={pts([22, 20, z - 4], [182, 20, z - 4], [182, 20, z - 5.4], [22, 20, z - 5.4])} fill="#F2B48F" />
+            {row.map((item, i) => <g key={i} {...s("pop")}>{item}</g>)}
+          </g>
         ))}
-        <Mug x={40} z={70} f={["#FFFFFF", "#D5DFE9"]} />
-        <Mug x={58} z={70} f={["#F2B48F", "#C47D56"]} />
-        <g {...s("stock")}><Mug x={76} z={70} f={["#FFFFFF", "#D5DFE9"]} /></g>
-        <Candle x={100} y={10} z={70} h={13} />
-        <Candle x={114} y={10} z={70} h={19} />
-        <Candle x={128} y={10} z={70} h={10} />
-        <g {...s("pop")}><Box x={142} y={5} z={70} w={26} d={12} h={5} f={["#8A4E2E", "#6E3B20", "#5A2F19"]} /><Box x={143} y={5} z={75} w={24} d={12} h={5} f={["#A4572C", "#8A4E2E", "#6E3B20"]} /></g>
-        <g {...s("pop")}><Box x={34} y={5} z={24} w={22} d={12} h={5} f={["#A4572C", "#8A4E2E", "#6E3B20"]} /><Box x={35} y={5} z={29} w={20} d={12} h={5} f={["#8A4E2E", "#6E3B20", "#5A2F19"]} /></g>
-        <g {...s("pop")}><Tote x={72} z={54} color="#EAF0F6" /></g>
-        <g {...s("pop")}><g {...s("stock")}><Tote x={104} z={54} color="#DF9770" /></g></g>
-        <g {...s("pop")}><Tote x={136} z={54} color="#EAF0F6" /></g>
         <g {...s("awning")}>
-          {STRIPES.map((t) => (
-            <g key={t.top}>
-              <path d={t.edge} fill={t.on ? "#C47D56" : "#DCE3EB"} />
-              <polygon points={t.top} fill={t.on ? "#DF9770" : "#FFFFFF"} />
-            </g>
-          ))}
+          <Box x={4} y={0} z={126} w={194} d={18} h={22} f={["#FFFFFF", "#F6F8FB", "#C3D0DD"]} />
+          <g transform={rightM(4, 18, 126)}>
+            <rect y={-3.5} width={194} height={3.5} fill="#DF9770" />
+            {[30, 164].map((x) => <circle key={x} cx={x} cy={-12.5} r={5.4} fill="#1C4B70" />)}
+            {[30, 164].map((x) => <path key={x} d={`M${x - 3}-9.5l6-6`} stroke="#F6F8FB" strokeWidth={1.4} {...line} />)}
+            <Capsule x={62} y={-12.5} k={0.95} />
+            <Capsule x={132} y={-12.5} k={0.95} />
+            <path d={cross(2.9, 8.2)} transform="translate(97 -12.6)" fill="#DF9770" />
+          </g>
         </g>
 
         {/* Counter with the POS */}
         <g {...s("pop")}>
           <polygon points={pts([56, 96, 0], [172, 96, 0], [172, 146, 0], [56, 146, 0])} fill="#071321" fillOpacity={0.3} />
-          <Box x={62} y={100} w={98} d={32} h={42} f={["#0F2F4C", "#12395A", "#0B2740"]} />
-          <g transform={rightM(62, 132, 0)} stroke="#DF9770" strokeOpacity={0.55} strokeWidth={2}>
-            {Array.from({ length: 11 }, (_, i) => <path key={i} d={`M${8 + i * 8.2}-6v-29`} {...line} />)}
+          <Box x={62} y={100} w={98} d={32} h={42} f={["#F6F8FB", "#E4EBF2", "#B9C7D6"]} />
+          {/* Locked glass front */}
+          <g transform={rightM(62, 132, 0)}>
+            <rect x={5} y={-37} width={88} height={30} rx={1.5} fill="#0B2740" />
+            <rect x={5} y={-37} width={88} height={3} fill="#FFE2C6" fillOpacity={0.55} />
+            {[12, 20, 28, 68, 76, 84].map((x, i) => (
+              <g key={x}>
+                <rect x={x} y={-19} width={6} height={12} rx={1} fill={i < 3 ? "#D97F2B" : "#EAF0F6"} />
+                <rect x={x - 0.6} y={-22} width={7.2} height={3.4} rx={0.8} fill={i < 3 ? "#FFFFFF" : "#DF9770"} />
+              </g>
+            ))}
+            <path d="M8-11 34-34h9L17-11zM56-11 80-34h5L61-11z" fill="#fff" fillOpacity={0.12} />
+            <path d="M49-37v30" stroke="#A9B8C8" strokeWidth={1.6} {...line} />
+            <path d="M45.5-21v-3.2a3.5 3.5 0 0 1 7 0v3.2" stroke="#FFE2C6" strokeWidth={1.8} {...line} />
+            <rect x={43.5} y={-21.5} width={11} height={9} rx={1.6} fill="#DF9770" />
           </g>
-          <Box x={57} y={96} z={42} w={108} d={40} h={5} f={["#F0C3A4", "#DF9770", "#B9714A"]} />
-          <Candle x={70} y={122} z={47} h={9} />
+          <Box x={57} y={96} z={42} w={108} d={40} h={5} f={["#FFFFFF", "#DF9770", "#B9714A"]} />
+          {/* Mortar and pestle */}
+          <g transform={`translate(${P(71, 122, 47).join(" ")})`}>
+            <path d="M3-13 12-25" stroke="#DF9770" strokeWidth={4.4} {...line} />
+            <path d="M-12-13h24c0 8-3.4 11-6 12.6h-12C-8.6-2-12-5-12-13z" fill="#D5DFE9" />
+            <path d="M-7-.6h14v2.6h-14z" fill="#B9C7D6" />
+            <ellipse cy={-13} rx={12} ry={4.6} fill="#FFFFFF" />
+            <ellipse cy={-12.6} rx={9} ry={3} fill="#A9B8C8" />
+            <path d="M2-12.5 12-25" stroke="#DF9770" strokeWidth={4.4} {...line} />
+          </g>
           <Box x={104} y={110} z={47} w={14} d={12} h={5} f={["#A9B8C8", "#71869C", "#53687F"]} />
           <g transform={rightM(0, 117, 0)}>
             <rect {...s("till")} x={84} y={-94} width={54} height={42} rx={5} fill="#071321" stroke="#A9B8C8" strokeWidth={2} />
@@ -381,17 +476,8 @@ function Scene() {
       </g>
       <g {...s("pop")}><Parcel x={212} y={18} w={30} h={26} /><Parcel x={216} y={22} z={26} w={20} h={16} /></g>
       <g {...s("van")}><polygon {...s("door")} points={doors(0)[0]} fill="#B9C7D6" /></g>
-      <Carton />
+      <OrderBag />
       <Van />
-
-      {/* String lights */}
-      <path d={`M${strA.join(" ")}Q${strM.join(" ")} ${strB.join(" ")}`} stroke="#0B1E31" strokeWidth={1.6} {...line} {...s("wire")} />
-      {BULBS.map(([x, y]) => (
-        <g key={x} {...s("bulb")}>
-          <circle cx={x} cy={y + 6} r={11} fill="url(#hs-glow)" />
-          <circle cx={x} cy={y + 6} r={4} fill="#FFE2C6" />
-        </g>
-      ))}
 
       {/* The order: a check mark on its way to the counter, then a ticket over it with the two items to pack */}
       <g fill="#FFE2C6">{ORDER.map(([x, y]) => <circle key={x} {...s("order")} cx={x} cy={y} r={4.4} opacity={0} />)}</g>
@@ -565,7 +651,7 @@ export function HeroScene() {
       <div className="pointer-events-none absolute left-[40%] top-0 -ml-[116px] origin-top scale-[.86] sm:top-[20%] sm:scale-100 lg:left-[44%] lg:top-[16%] lg:scale-[.8] xl:top-[20%] xl:scale-100 motion-reduce:lg:left-0 motion-reduce:lg:ml-0">
         <div {...s("hand")} className={LATER}>
           <div data-fx="phone" className="relative w-[232px]">
-            <span className="absolute -inset-x-64 -inset-y-32 bg-[radial-gradient(closest-side,rgba(3,10,19,.72),transparent)]" />
+            <span className="absolute -inset-x-64 -inset-y-32 motion-reduce:hidden bg-[radial-gradient(closest-side,rgba(3,10,19,.72),transparent)]" />
             <HandBack />
             <Phone />
             <HandFront />
