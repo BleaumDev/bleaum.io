@@ -16,39 +16,37 @@ export function heroScene(root: HTMLElement, bloom: Element) {
   const svg = root.querySelector("svg")!
   const panels = [...root.querySelectorAll("[data-panel]")]
 
-  // Only fold from closed if the art is still hidden by its CSS entrance delay; a late script must not snap an open box shut.
-  const early = +getComputedStyle(q("stage")[0]).opacity < 0.05
+  // Every load starts from the shut box: CSS keeps the art hidden until this shows it, however late the script runs.
   const intro = gsap.timeline()
   // The tablet is hidden by CSS on load, so moving it below the section and showing it in one step never flashes it.
   gsap.set(q("tablet"), { y: AWAY, opacity: 1, transformPerspective: 1500 })
-  if (early) {
-    const box = { wall: 0, flap: 0 }
-    const draw = () =>
-      fold(box.wall, box.flap).forEach((p, i) => {
-        panels[i].setAttribute("points", p.points)
-        panels[i].setAttribute("fill", p.fill)
-        panels[i].setAttribute("stroke", p.fill)
-      })
-    draw()
-    intro
-      .set(q("lid"), { opacity: 1 }, 0)
-      .set([q("print"), q("road")].flat(), { opacity: 0 }, 0)
-      .set(q("pop"), { scale: 0, transformOrigin: "50% 100%" }, 0)
-      .set(q("awning"), { scaleY: 0, transformOrigin: "50% 0%" }, 0)
-      .set(q("van"), { ...along(360), opacity: 0 }, 0)
-      .fromTo(svg, { rotation: -1.4, transformOrigin: "50% 80%" }, { rotation: 1.4, duration: 0.08, repeat: 6, yoyo: true, ease: "sine.inOut" }, 0.7)
-      .to(svg, { rotation: 0, duration: 0.1 })
-      .addLabel("open")
-      .to(q("lid"), { opacity: 0, duration: 0.15 }, "open")
-      .to(box, { flap: 1, duration: 0.8, ease: "back.out(1.5)", onUpdate: draw }, "open")
-      .to(box, { wall: 90, duration: 1, ease: "bounce.out", onUpdate: draw }, "open+=0.35")
-      .to(q("print"), { opacity: 1, duration: 0.3 }, "open+=1.2")
-      .to(q("awning"), { scaleY: 1, duration: 0.6, ease: "back.out(1.6)" }, "open+=0.6")
-      .to(q("pop"), { scale: 1, duration: 0.55, stagger: { amount: 1 }, ease: "back.out(1.9)" }, "open+=0.6")
-      .to(q("road"), { opacity: 1, duration: 0.4 }, "open+=1.3")
-      .to(q("van"), { opacity: 1, duration: 0.2 }, "open+=1.4")
-      .to(q("van"), { x: 0, y: 0, duration: 1.3, ease: "power2.out" }, "open+=1.4")
-  }
+  const box = { wall: 0, flap: 0 }
+  const draw = () =>
+    fold(box.wall, box.flap).forEach((p, i) => {
+      panels[i].setAttribute("points", p.points)
+      panels[i].setAttribute("fill", p.fill)
+      panels[i].setAttribute("stroke", p.fill)
+    })
+  draw()
+  intro
+    .fromTo(q("stage"), { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0)
+    .set(q("lid"), { opacity: 1 }, 0)
+    .set([q("print"), q("road")].flat(), { opacity: 0 }, 0)
+    .set(q("pop"), { scale: 0, transformOrigin: "50% 100%" }, 0)
+    .set(q("awning"), { scaleY: 0, transformOrigin: "50% 0%" }, 0)
+    .set(q("van"), { ...along(360), opacity: 0 }, 0)
+    .fromTo(svg, { rotation: -1.4, transformOrigin: "50% 80%" }, { rotation: 1.4, duration: 0.08, repeat: 6, yoyo: true, ease: "sine.inOut" }, 0.7)
+    .to(svg, { rotation: 0, duration: 0.1 })
+    .addLabel("open")
+    .to(q("lid"), { opacity: 0, duration: 0.15 }, "open")
+    .to(box, { flap: 1, duration: 0.8, ease: "back.out(1.5)", onUpdate: draw }, "open")
+    .to(box, { wall: 90, duration: 1, ease: "bounce.out", onUpdate: draw }, "open+=0.35")
+    .to(q("print"), { opacity: 1, duration: 0.3 }, "open+=1.2")
+    .to(q("awning"), { scaleY: 1, duration: 0.6, ease: "back.out(1.6)" }, "open+=0.6")
+    .to(q("pop"), { scale: 1, duration: 0.55, stagger: { amount: 1 }, ease: "back.out(1.9)" }, "open+=0.6")
+    .to(q("road"), { opacity: 1, duration: 0.4 }, "open+=1.3")
+    .to(q("van"), { opacity: 1, duration: 0.2 }, "open+=1.4")
+    .to(q("van"), { x: 0, y: 0, duration: 1.3, ease: "power2.out" }, "open+=1.4")
 
   // Light ripples out from the middle of the dot field behind the box.
   const dots = [...bloom.querySelectorAll("circle")]
@@ -64,7 +62,7 @@ export function heroScene(root: HTMLElement, bloom: Element) {
   })
   ripple.to(dots, { attr: { r: (i: number) => base[i] }, duration: 0.7, ease: "sine.inOut", stagger: (i: number) => far[i] * 0.0032 }, 0.4)
 
-  const story = gsap.timeline({ repeat: -1, repeatDelay: 1, delay: early ? intro.duration() + 0.3 : 1.5, defaults: { immediateRender: false } })
+  const story = gsap.timeline({ repeat: -1, repeatDelay: 1, delay: intro.duration() + 0.3, defaults: { immediateRender: false } })
 
   const screen = q<HTMLElement>("screen")[0]
   // A spot on an element, in screen pixels. Offsets ignore transforms, so the tablet's scale and tilt do not matter.
@@ -239,11 +237,7 @@ export function heroScene(root: HTMLElement, bloom: Element) {
     ),
   )
 
-  // Nothing runs while the hero is off screen.
-  ScrollTrigger.create({
-    trigger: root,
-    start: "top bottom",
-    end: "bottom top",
-    onToggle: ({ isActive }) => [intro, story, idle].forEach((tl) => tl.paused(!isActive)),
-  })
+  // Nothing runs while the hero is off screen, including a reload further down the page: the box waits shut until it is seen.
+  const run = ({ isActive }: { isActive: boolean }) => [intro, story, idle].forEach((tl) => tl.paused(!isActive))
+  run(ScrollTrigger.create({ trigger: root, start: "top bottom", end: "bottom top", onToggle: run }))
 }

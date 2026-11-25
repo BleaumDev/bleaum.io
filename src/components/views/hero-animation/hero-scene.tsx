@@ -668,7 +668,7 @@ export function HeroScene() {
   return (
     <div data-fx="scene" className="max-lg:pb-16 lg:-mt-10 lg:mb-6">
       <div className="relative max-lg:-mx-3 lg:-mr-[11%] lg:ml-[2%]">
-        <div {...s("stage")} className="animate-rise [animation-delay:350ms]">
+        <div {...s("stage")} className={LATER}>
           <Scene />
         </div>
         {/* In front of the shop, centered on TOKEN, cropped by the section's bottom edge, which it rises from. Without motion it rests smaller, at the side. */}
