@@ -387,3 +387,62 @@ export const ReportingAssistantIcon = (p: Props) => (
     </Pop>
   </AnimatedIcon>
 )
+
+// ── Other Home icons ──
+
+// Smart notifications: a bell with a new-alert badge; it swings on hover.
+export const NotificationsIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <g className={`${hov} origin-top group-hover:rotate-12`}>
+      <path {...D} d="M24 11V7M14 21a10 10 0 0 1 20 0v9l4 6H10l4-6zM20 40a4 4 0 0 0 8 0" />
+    </g>
+    {[[7, 15, 1.3], [4.5, 21, 1], [41, 24, 1.3], [43.5, 30, 1]].map(([x, y, r], i) => <Dot key={i} x={x} y={y} r={r} />)}
+    <Pop>
+      <circle cx="38" cy="9" r="5" className={`${solid} ${hov} origin-center group-hover:scale-125`} />
+    </Pop>
+  </AnimatedIcon>
+)
+
+// ── "Built by Operators" values (home.tsx), in the order of about.values ──
+
+// Our Mission: a target; the arrow lands in the bullseye on hover.
+export const MissionIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d={ring(22, 26, 17) + ring(22, 26, 9.5)} />
+    {[[22, 9], [5, 26], [22, 43], [39, 26]].map(([x, y], i) => <Dot key={i} x={x} y={y} r={1.4} />)}
+    <Pop>
+      <circle cx="22" cy="26" r="3.5" className={`${solid} ${hov} origin-center group-hover:scale-125`} />
+    </Pop>
+    <g className={`${hov} group-hover:-translate-x-0.5 group-hover:translate-y-0.5`}>
+      <path {...D} d="M25 23L41 7M41 7l1-5M41 7l5-1" className={acc} />
+    </g>
+  </AnimatedIcon>
+)
+
+// Our Vision: a road to a rising sun; the sun swells on hover.
+export const VisionIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d="M3 34h42M6 46l15-12M42 46L27 34M24 37.5v2.5M24 43v3" />
+    {[[10.8, 29.2, 1.4], [16, 22.5, 1.4], [24, 20, 1.7], [32, 22.5, 1.4], [37.2, 29.2, 1.4]].map(([x, y, r], i) => <Dot key={i} x={x} y={y} r={r} />)}
+    <Pop>
+      <path d="M15 34a9 9 0 0 1 18 0z" className={`${solid} ${hov} origin-bottom group-hover:scale-110`} />
+    </Pop>
+  </AnimatedIcon>
+)
+
+// Our Values: a hand offering a heart (shape after lucide's hand-heart, at 2×); the heart lifts on hover.
+export const ValuesIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path
+      {...D}
+      d="M22 28h4a4 4 0 1 0 0-8h-6c-1.2 0-2.2.4-2.8 1.2L6 32M14 40l3.2-2.8c.6-.8 1.6-1.2 2.8-1.2h8c2.2 0 4.2-.8 5.6-2.4l9.2-8.8a4 4 0 0 0-5.5-5.82l-8.4 7.8M4 30l12 12"
+    />
+    {[[45, 6, 1.3], [18.5, 7, 1.1], [46, 14, 0.9]].map(([x, y, r], i) => <Dot key={i} x={x} y={y} r={r} />)}
+    <Pop>
+      <path
+        d="M39 17c1.4-1.4 3-3.2 3-5.4A5.46 5.46 0 0 0 32 8a5.56 5.56 0 0 0-10 3.6c0 2.4 1.6 4 3 5.6L32 24z"
+        className={`${solid} ${hov} origin-center group-hover:-translate-y-0.5 group-hover:scale-110`}
+      />
+    </Pop>
+  </AnimatedIcon>
+)

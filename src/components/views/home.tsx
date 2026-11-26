@@ -24,6 +24,10 @@ const productIcons = [
 ]
 // In the order of c.ai.assistants.
 const aiIcons = [icons.CustomerAssistantIcon, icons.InsightsAssistantIcon, icons.ReportingAssistantIcon]
+// In the order of c.mobile.items.
+const mobileIcons = [icons.StoreIcon, icons.PaymentsIcon, icons.NotificationsIcon]
+// In the order of c.about.values.
+const valueIcons = [icons.MissionIcon, icons.VisionIcon, icons.ValuesIcon]
 // In the order of c.why.items.
 const whyIcons = [icons.SetupIcon, icons.OneSystemIcon, icons.DevicesIcon, icons.PeopleIcon, icons.RegulatedIcon, icons.PricingIcon]
 
@@ -66,10 +70,6 @@ function Float(p: { pos: string; tilt: string; delay: number; Icon: LucideIcon; 
       </div>
     </div>
   )
-}
-
-function DotMark({ small }: { small?: boolean }) {
-  return <span data-fx="dot" className={small ? ui.dotmarkSm : ui.dotmark} aria-hidden="true" />
 }
 
 function Head({ id, title, subtitle, kicker }: { id: string; title: string; subtitle?: string; kicker?: string }) {
@@ -422,15 +422,18 @@ export default function HomeView() {
             panel={
               <div className={vis}>
                 <Block title={c.mobile.native.title} text={c.mobile.native.text} />
-                {c.mobile.items.map((it, i) => (
-                  <div key={it.title} className={`flex items-center gap-3 px-1.5 py-2.5 ${i > 0 ? "border-t border-white/[.08]" : ""}`}>
-                    <DotMark small />
-                    <div>
-                      <b className={`${ui.label} block text-[.9375rem]`}>{it.title}</b>
-                      <span className="text-[.875rem] text-fog-300">{it.text}</span>
+                {c.mobile.items.map((it, i) => {
+                  const Icon = mobileIcons[i]
+                  return (
+                    <div key={it.title} className={`group flex items-center gap-3 px-1.5 py-2.5 ${i > 0 ? "border-t border-white/[.08]" : ""}`}>
+                      <Icon className="size-10 text-fog-100" delay={i * 0.12} />
+                      <div>
+                        <b className={`${ui.label} block text-[.9375rem]`}>{it.title}</b>
+                        <span className="text-[.875rem] text-fog-300">{it.text}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             }
           />
@@ -564,15 +567,18 @@ export default function HomeView() {
               </figcaption>
             </figure>
             <ul className="grid gap-7">
-              {c.about.values.map((v) => (
-                <li key={v.title} {...rv("flex gap-4")}>
-                  <DotMark small />
-                  <div>
-                    <h3 className={ui.h3}>{v.title}</h3>
-                    <p className="mt-1 text-h-muted">{v.description}</p>
-                  </div>
-                </li>
-              ))}
+              {c.about.values.map((v, i) => {
+                const Icon = valueIcons[i]
+                return (
+                  <li key={v.title} {...rv("group flex gap-4")}>
+                    <Icon className="size-12 text-h-text" delay={0.2 + i * 0.12} />
+                    <div>
+                      <h3 className={ui.h3}>{v.title}</h3>
+                      <p className="mt-1 text-h-muted">{v.description}</p>
+                    </div>
+                  </li>
+                )
+              })}
             </ul>
           </div>
           <ul className="mt-14 grid grid-cols-2 gap-x-6 md:grid-cols-4">

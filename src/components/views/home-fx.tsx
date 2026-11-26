@@ -102,10 +102,7 @@ export function HomeFx() {
         gsap.from(el.children, { opacity: 0, y: 14, duration: 0.5, stagger: 0.08, ease: "power2.out", scrollTrigger: once(el) }),
       )
 
-      // Small marks pop: brand dots spin in, stock chips follow their table rows.
-      fx("dot").forEach((el) =>
-        gsap.from(el, { scale: 0, rotate: -90, duration: 0.7, ease: "back.out(2)", scrollTrigger: once(el, "top 92%") }),
-      )
+      // Stock chips pop in after their table rows.
       fx("chip").forEach((el) =>
         gsap.from(el, { scale: 0.5, opacity: 0, duration: 0.5, delay: 0.4, ease: "back.out(2.5)", scrollTrigger: once(el, "top 92%") }),
       )
