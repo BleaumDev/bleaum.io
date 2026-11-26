@@ -8,56 +8,69 @@ import { InstagramIcon, LinkedinIcon, MenuIcon, TwitterIcon, XIcon } from "lucid
 import { DemoLink } from "@/components/views/home-client"
 import { footer, nav } from "@/components/views/home-content"
 import * as ui from "@/components/views/home-ui"
+import * as icons from "@/components/icons/product-icons"
 
 type MenuLink = { title: string; text: string; href: string }
+
+// Menu link → its animated icon, keyed by href so copy edits in home-content.ts don't break the match.
+const menuIcons: Record<string, typeof icons.PosIcon> = {
+  "/grow/point-of-sale": icons.PosIcon,
+  "/grow/ecommerce": icons.StoreIcon,
+  "/grow/marketing": icons.MarketingIcon,
+  "/grow/payments": icons.PaymentsIcon,
+  "/grow/delivery": icons.DeliveryIcon,
+  "/operations/reporting-analytics": icons.ReportingIcon,
+  "/operations/automated-compliance": icons.ComplianceIcon,
+  "/operations/inventory-management": icons.InventoryIcon,
+  "/operations/integrations": icons.IntegrationsIcon,
+  "/#products": icons.AllProductsIcon,
+  "/blog": icons.BlogIcon,
+  "/resources/sops": icons.SopsIcon,
+  "/resources/refer": icons.ReferIcon,
+  "/company/about": icons.AboutIcon,
+  "/company/careers": icons.CareersIcon,
+  "/support": icons.SupportIcon,
+}
 
 // Nav links and menu buttons share one look.
 const navLink =
   "whitespace-nowrap border-b-2 border-transparent py-1.5 text-[.9375rem] font-medium text-fog-300 transition-[color,border-color] duration-200 hover:border-copper-400 hover:text-white"
-const summary = `${navLink} flex cursor-pointer list-none items-center gap-2 group-open:border-copper-400 group-open:text-white [&::-webkit-details-marker]:hidden after:size-1.5 after:-translate-y-0.5 after:rotate-45 after:border-current after:[border-width:0_1.5px_1.5px_0] after:transition-transform after:duration-200 after:ease-soft group-open:after:translate-y-px group-open:after:rotate-[225deg]`
+const summary = `${navLink} flex cursor-pointer list-none items-center gap-2 group-open/m:border-copper-400 group-open/m:text-white [&::-webkit-details-marker]:hidden after:size-1.5 after:-translate-y-0.5 after:rotate-45 after:border-current after:[border-width:0_1.5px_1.5px_0] after:transition-transform after:duration-200 after:ease-soft group-open/m:after:translate-y-px group-open/m:after:rotate-[225deg]`
 // Same trigger inside the mobile panel: full-width row with the chevron on the right.
 const mobileSummary = `${summary} justify-between border-b border-b-white/10 py-3.5 text-base`
 const footLink ="text-fog-300 transition-colors duration-200 hover:text-white hover:underline hover:decoration-copper-400 hover:underline-offset-4"
 
-// Mini halftone bloom (the brand mark's motif): dots swell and brighten when the row is hovered.
-const bloomDots = ["size-[3px]", "size-1", "size-[3px]", "size-1", "size-[7px]", "size-1", "size-[3px]", "size-1", "size-[3px]"]
-
+// Each row's icon assembles every time its menu opens, one after another down the list;
+// its hover move plays on row hover (`group`).
 function MenuLinks({ links }: { links: MenuLink[] }) {
-  return links.map((l) => (
-    <Link
-      key={l.title}
-      href={l.href}
-      className="group/item flex items-center gap-3.5 rounded-card p-2.5 transition-colors duration-200 hover:bg-white/[.06] focus-visible:bg-white/[.06]"
-    >
-      <span
-        aria-hidden="true"
-        className="grid size-10 shrink-0 grid-cols-3 place-items-center rounded-ctl bg-white/[.05] p-2 ring-1 ring-white/10 transition-[background-color,box-shadow] duration-200 group-hover/item:bg-copper-400/15 group-hover/item:ring-copper-400/50"
+  return links.map((l, i) => {
+    const Icon = menuIcons[l.href]
+    return (
+      <Link
+        key={l.title}
+        href={l.href}
+        className="group group/item flex items-center gap-3.5 rounded-card p-2.5 transition-colors duration-200 hover:bg-white/[.06] focus-visible:bg-white/[.06]"
       >
-        {bloomDots.map((d, i) => (
-          <i
-            key={i}
-            className={`${d} rounded-full bg-copper-400 opacity-60 transition-[transform,opacity] duration-250 ease-soft group-hover/item:scale-[1.4] group-hover/item:opacity-100`}
-          />
-        ))}
-      </span>
-      <span className="min-w-0 flex-1">
-        <b className={`${ui.label} block text-[.9375rem] text-white`}>{l.title}</b>
-        <span className="block text-[.8125rem] leading-[1.35] text-fog-300">{l.text}</span>
-      </span>
-      <svg
-        viewBox="0 0 16 16"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-        className="size-4 shrink-0 -translate-x-1.5 text-copper-400 opacity-0 transition-[opacity,transform] duration-200 ease-soft group-hover/item:translate-x-0 group-hover/item:opacity-100 group-focus-visible/item:translate-x-0 group-focus-visible/item:opacity-100"
-      >
-        <path d="M3 8h10M9 4l4 4-4 4" />
-      </svg>
-    </Link>
-  ))
+        {Icon && <Icon className="size-10 text-fog-100" delay={i * 0.06} />}
+        <span className="min-w-0 flex-1">
+          <b className={`${ui.label} block text-[.9375rem] text-white`}>{l.title}</b>
+          <span className="block text-[.8125rem] leading-[1.35] text-fog-300">{l.text}</span>
+        </span>
+        <svg
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+          className="size-4 shrink-0 -translate-x-1.5 text-copper-400 opacity-0 transition-[opacity,transform] duration-200 ease-soft group-hover/item:translate-x-0 group-hover/item:opacity-100 group-focus-visible/item:translate-x-0 group-focus-visible/item:opacity-100"
+        >
+          <path d="M3 8h10M9 4l4 4-4 4" />
+        </svg>
+      </Link>
+    )
+  })
 }
 
 function Brand() {
@@ -375,7 +388,7 @@ export function SiteHeader() {
             <div className={`${ui.wrap} py-2`}>
               <Link href="/operations/integrations" className={`${mobileSummary} after:hidden`}>Integrations</Link>
               <Link href={nav.industries.href} className={`${mobileSummary} after:hidden`}>{nav.industries.text}</Link>
-              <details className="group">
+              <details className="group/m">
                 <summary className={mobileSummary}>Product</summary>
                 <div className="grid gap-4 py-3 md:grid-cols-2">
                   {nav.product.map((g) => (
@@ -388,11 +401,11 @@ export function SiteHeader() {
                   ))}
                 </div>
               </details>
-              <details className="group">
+              <details className="group/m">
                 <summary className={mobileSummary}>Resources</summary>
                 <div className="grid gap-1 py-3 md:grid-cols-2"><MenuLinks links={nav.resources} /></div>
               </details>
-              <details className="group">
+              <details className="group/m">
                 <summary className={mobileSummary}>Company</summary>
                 <div className="grid gap-1 py-3 md:grid-cols-2"><MenuLinks links={nav.company} /></div>
               </details>

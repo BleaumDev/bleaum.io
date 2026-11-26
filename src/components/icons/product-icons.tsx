@@ -1,8 +1,8 @@
 import type { ReactNode } from "react"
 import { AnimatedIcon } from "./animated-icon"
 
-// Product icons. Use anywhere: <PosIcon />, <DeliveryIcon className="size-10 text-white" delay={0.2} />.
-// Each one assembles itself on first view (see animated-icon.tsx).
+// Line-art icons. Use anywhere: <PosIcon />, <DeliveryIcon className="size-10 text-white" delay={0.2} />.
+// Each one assembles itself whenever it comes into view (see animated-icon.tsx).
 
 type Props = { className?: string; delay?: number }
 
@@ -149,6 +149,241 @@ export const IntegrationsIcon = (p: Props) => (
     <Pop>
       <circle cx="24" cy="24" r="6" className={solid} />
       <circle cx="24" cy="24" r="2.25" className={cut} />
+    </Pop>
+  </AnimatedIcon>
+)
+
+// ── Header menu icons (site-chrome.tsx) ──
+
+// A hover-only stroke: hidden at rest, draws itself while the parent "group" is hovered.
+const hoverDraw = "[stroke-dashoffset:1.05] transition-[stroke-dashoffset] duration-500 ease-soft group-hover:[stroke-dashoffset:0]"
+
+// All products: the whole set of tools; the last tile turns on hover.
+export const AllProductsIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d={rr(5, 5, 16, 16, 3) + rr(27, 5, 16, 16, 3) + rr(5, 27, 16, 16, 3)} />
+    {[[13, 13], [35, 13], [13, 35]].map(([x, y], i) => <Dot key={i} x={x} y={y} r={2} />)}
+    <Pop>
+      <rect x="27" y="27" width="16" height="16" rx="3" className={`${solid} ${hov} origin-center group-hover:rotate-45 group-hover:scale-90`} />
+    </Pop>
+  </AnimatedIcon>
+)
+
+// Blog: a page of writing; the pencil scribbles on hover.
+export const BlogIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d={`${rr(5, 4, 25, 35, 3)}M11 12h13M11 18h13M11 24h8`} />
+    {[12, 16, 20].map((x) => <Dot key={x} x={x} y={31} r={1.1} />)}
+    <Pop>
+      <path d="M31 45l1.3-5 11-11 3.7 3.7-11 11z" className={`${solid} ${hov} origin-bottom-left group-hover:-translate-x-1 group-hover:-rotate-6`} />
+    </Pop>
+  </AnimatedIcon>
+)
+
+// SOPs: a checklist on a clipboard; the last step gets ticked on hover.
+export const SopsIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d={`${rr(8, 7, 32, 37, 4)}M19 19h14M19 27h14M19 35h7`} />
+    {[19, 27, 35].map((y) => <Dot key={y} x={14} y={y} r={1.5} />)}
+    <Pop>
+      <rect x="17" y="3" width="14" height="8" rx="2.5" className={solid} />
+    </Pop>
+    <path d="M29.5 35l3 3 5.5-6" pathLength={1} strokeDasharray="1 3" strokeWidth={2.25} className={`${acc} ${hoverDraw}`} />
+  </AnimatedIcon>
+)
+
+// Refer a business: pass it on; the plus badge spins on hover.
+export const ReferIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d={`${ring(15, 14, 6.5)}M4 40c0-7 4.9-12 11-12s11 5 11 12`} />
+    {[[27, 14], [31, 17.5], [34.5, 21.5]].map(([x, y], i) => <Dot key={i} x={x} y={y} r={1.2} />)}
+    <Pop>
+      <g className={`${hov} origin-center group-hover:rotate-90 group-hover:scale-110`}>
+        <circle cx="37" cy="33" r="7.5" className={solid} />
+        <path d="M37 29.5v7M33.5 33h7" strokeWidth={2} className="stroke-navy-900" />
+      </g>
+    </Pop>
+  </AnimatedIcon>
+)
+
+// About: the Bleaum bloom, a halftone that swells on hover.
+const bloom = [-14, -7, 0, 7, 14]
+  .flatMap((x) => [-14, -7, 0, 7, 14].map((y) => [x, y, Math.hypot(x, y)]))
+  .filter(([, , d]) => d > 0 && d < 16)
+export const AboutIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d={ring(24, 24, 20.5)} />
+    <g className={`${hov} origin-center group-hover:scale-110`}>
+      {bloom.map(([x, y, d], i) => <Dot key={i} x={24 + x} y={24 + y} r={+(3.2 - d * 0.13).toFixed(2)} />)}
+    </g>
+    <Pop>
+      <circle cx="24" cy="24" r="4" className={`${solid} ${hov} origin-center group-hover:scale-125`} />
+    </Pop>
+  </AnimatedIcon>
+)
+
+// Careers: a briefcase; the handle lifts on hover.
+export const CareersIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d={`${rr(5, 14, 38, 28, 4)}M5 27h13M30 27h13`} />
+    <path {...D} d="M18 14v-3.5a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V14" className={`${hov} group-hover:-translate-y-1`} />
+    <Pop>
+      <rect x="19" y="23.5" width="10" height="7" rx="2" className={solid} />
+    </Pop>
+    <Dot x={39} y={8} r={1.7} />
+    <Dot x={43.5} y={4} r={1.1} />
+  </AnimatedIcon>
+)
+
+// Support: a chat with someone typing, and a copper reply that hops on hover.
+export const SupportIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d="M9 6h22a5 5 0 0 1 5 5v13a5 5 0 0 1-5 5H18l-7 6v-6H9a5 5 0 0 1-5-5V11a5 5 0 0 1 5-5z" />
+    {[13, 20, 27].map((x) => <Dot key={x} x={x} y={17.5} r={2} />)}
+    <Pop>
+      <path
+        d="M30 31h10a4 4 0 0 1 4 4v3a4 4 0 0 1-4 4h-.5v4l-5-4H30a4 4 0 0 1-4-4v-3a4 4 0 0 1 4-4z"
+        className={`${solid} ${hov} origin-bottom-right group-hover:-translate-y-1 group-hover:-rotate-6`}
+      />
+    </Pop>
+  </AnimatedIcon>
+)
+
+// ── "Why teams choose Bleaum" icons (home.tsx), in the order of why.items ──
+
+// Quick to set up: a checklist whose last step just got ticked; it springs on hover.
+export const SetupIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d={`${rr(5, 4, 9, 9, 2.5)}${rr(5, 17.5, 9, 9, 2.5)}M7.5 8.5l1.8 1.8 2.7-3.3M7.5 22l1.8 1.8 2.7-3.3M20 8.5h23M20 22h17`} />
+    <path {...D} d="M20 35.5h15" className={acc} />
+    <Pop>
+      <g className={`${hov} origin-center group-hover:-rotate-12 group-hover:scale-110`}>
+        <rect x="5" y="31" width="9" height="9" rx="2.5" className={solid} />
+        <path d="M7.5 35.5l1.8 1.8 2.7-3.3" className="stroke-navy-900" />
+      </g>
+    </Pop>
+    {[[39.5, 32.5, 1.4], [43.5, 36, 1], [42.5, 29, 0.9]].map(([x, y, r], i) => <Dot key={i} x={x} y={y} r={r} />)}
+  </AnimatedIcon>
+)
+
+// One system, every location: one record feeding every store; the stores hop in turn on hover.
+const pin = (x: number, y: number) => `M${x} ${y}s-5.5-5-5.5-9.5a5.5 5.5 0 0 1 11 0c0 4.5-5.5 9.5-5.5 9.5z`
+export const OneSystemIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d="M20.1 13.6L9.5 26.5M24 15.5V27M27.9 13.6L38.5 26.5" />
+    {[8, 24, 40].map((x, i) => (
+      <g key={x} style={{ transitionDelay: `${i * 70}ms` }} className={`${hov} group-hover:-translate-y-1`}>
+        <path {...D} d={pin(x, 44)} />
+        <Dot x={x} y={34.5} r={1.8} />
+      </g>
+    ))}
+    <Pop>
+      <circle cx="24" cy="9" r="6" className={`${solid} ${hov} origin-center group-hover:scale-110`} />
+    </Pop>
+  </AnimatedIcon>
+)
+
+// Works with what you have: computer, tablet and phone in sync; the link between them draws on hover.
+export const DevicesIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d={`${rr(2, 10, 25, 18, 2.5)}M14.5 28v5M9.5 34h10`} />
+    <path {...D} d={rr(29, 16, 11, 18, 2) + rr(41.5, 22, 5.5, 12, 1.5)} />
+    <Dot x={14.5} y={19} r={2.4} />
+    <Dot x={34.5} y={25} r={2} />
+    <Dot x={44.25} y={28} r={1.4} />
+    <path d="M15 6.5C24 1 38 2 44.25 18" pathLength={1} strokeDasharray="1 3" className={`${acc} ${hoverDraw}`} />
+  </AnimatedIcon>
+)
+
+// Real people when you need help: a person answering in a chat; they lean in on hover.
+export const PeopleIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <g className={`${hov} origin-bottom-left group-hover:-translate-y-0.5 group-hover:-rotate-3`}>
+      <path {...D} d="M23 4h18a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H29l-6 5v-5a5 5 0 0 1-5-5V9a5 5 0 0 1 5-5zM24 11h16" />
+      {[25, 29, 33].map((x) => <Dot key={x} x={x} y={17} r={1.3} />)}
+    </g>
+    <path {...D} d="M2 46c0-5 3.6-8 8-8s8 3 8 8" className={acc} />
+    <Pop>
+      <circle cx="10" cy="30" r="4.5" className={`${solid} ${hov} origin-center group-hover:-translate-y-0.5 group-hover:scale-110`} />
+    </Pop>
+  </AnimatedIcon>
+)
+
+// Built for regulated retail: a store with compliance built in; the shield turns on hover.
+export const RegulatedIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d="M3 17l3.5-10h22L32 17zM6 17v25h23V17M14 42v-9h7v9" />
+    {[11, 17.5, 24].map((x) => <Dot key={x} x={x} y={23} r={1.3} />)}
+    <Pop>
+      <g className={`${hov} origin-center group-hover:-rotate-6 group-hover:scale-110`}>
+        <path d="M41 20l7 2.6v5.4c0 5-3 8.4-7 10-4-1.6-7-5-7-10v-5.4z" className={solid} />
+        <path d="M38 29l2 2 4-4.5" className="stroke-navy-900" />
+      </g>
+    </Pop>
+  </AnimatedIcon>
+)
+
+// Clear pricing: a signed price sheet with a seal that stamps on hover.
+export const PricingIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d={`${rr(4, 4, 26, 40, 4)}M10 12h10M10 18h14`} />
+    <Pop>
+      <rect x="10" y="23" width="11" height="4.5" rx="2.25" className={solid} />
+    </Pop>
+    <path {...D} d="M10 35c2-4 3-4 4 0s3 4 5 0 3-2 5-1" className={acc} />
+    {[10, 13.5, 17, 20.5, 24].map((x) => <Dot key={x} x={x} y={40} r={0.9} />)}
+    <Pop>
+      <g className={`${hov} origin-center group-hover:rotate-[20deg] group-hover:scale-110`}>
+        <circle cx="39.5" cy="27" r="7" className={solid} />
+        <circle cx="39.5" cy="27" r="3.5" className="stroke-navy-900" />
+      </g>
+    </Pop>
+  </AnimatedIcon>
+)
+
+// ── Bleaum AI icons (home.tsx), in the order of ai.assistants ──
+
+// Customer Assistant: a customer card with a suggestion being typed; the bubble nudges up on hover.
+export const CustomerAssistantIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d={`${rr(3, 4, 33, 25, 4)}${ring(12, 13.5, 3.5)}M6 25c1-4 3.5-5.5 6-5.5s5 1.5 6 5.5M22 13h9M22 19h6`} />
+    <Dot x={31} y={9.5} r={1.5} />
+    <g className={`${hov} origin-top-left group-hover:-translate-y-1 group-hover:scale-105`}>
+      <Pop>
+        <rect x="20" y="31" width="26" height="13" rx="6.5" className={solid} />
+      </Pop>
+      {/* Navy dots on the copper bubble: their twinkle reads as typing. */}
+      {[27, 33, 39].map((x) => <circle key={x} data-dot="" cx={x} cy={37.5} r={1.6} className={cut} />)}
+    </g>
+  </AnimatedIcon>
+)
+
+// Insights Assistant: a trend with one unusual point flagged; the flag ring swells on hover.
+export const InsightsAssistantIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d="M5 4v38h40" />
+    <path {...D} d="M9 34l7-5 7 4 8-13 7 7 7-5" className={acc} />
+    {[[16, 29], [23, 33], [38, 27]].map(([x, y]) => <Dot key={x} x={x} y={y} r={1.4} />)}
+    <Pop>
+      <circle cx="31" cy="20" r="5" strokeWidth={1.5} className={`${acc} ${hov} origin-center group-hover:scale-[1.35]`} />
+      <circle cx="31" cy="20" r="2.2" className={solid} />
+    </Pop>
+  </AnimatedIcon>
+)
+
+// Reporting Assistant: a report writing itself, with a spark that turns on hover.
+export const ReportingAssistantIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d={`${rr(4, 4, 28, 40, 4)}M10 20h16M10 26h16M10 32h8`} />
+    <path {...D} d="M10 12h11" className={acc} />
+    {[21, 24.5, 28].map((x) => <Dot key={x} x={x} y={32} r={1.1} />)}
+    <Dot x={45.5} y={20} r={1.2} />
+    <Pop>
+      <path
+        d="M40.5 4l1.6 4.4 4.4 1.6-4.4 1.6-1.6 4.4-1.6-4.4-4.4-1.6 4.4-1.6z"
+        strokeWidth={1}
+        className="fill-copper-400 stroke-copper-400 transition-transform duration-700 ease-soft [transform-origin:40.5px_10px] group-hover:rotate-90 group-hover:scale-110"
+      />
     </Pop>
   </AnimatedIcon>
 )

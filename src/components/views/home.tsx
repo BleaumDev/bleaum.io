@@ -7,7 +7,7 @@ import * as ui from "./home-ui"
 import * as c from "./home-content"
 import { Box, Check, CreditCard, ShoppingBag, TriangleAlert, type LucideIcon } from "lucide-react"
 import { Bloom } from "./bloom"
-import { AiArt, GalleryArt, TrustArt, WhyArt } from "./home-art"
+import { GalleryArt, TrustArt } from "./home-art"
 import * as icons from "@/components/icons/product-icons"
 
 // In the order of c.products.items.
@@ -22,6 +22,10 @@ const productIcons = [
   icons.MarketingIcon,
   icons.IntegrationsIcon,
 ]
+// In the order of c.ai.assistants.
+const aiIcons = [icons.CustomerAssistantIcon, icons.InsightsAssistantIcon, icons.ReportingAssistantIcon]
+// In the order of c.why.items.
+const whyIcons = [icons.SetupIcon, icons.OneSystemIcon, icons.DevicesIcon, icons.PeopleIcon, icons.RegulatedIcon, icons.PricingIcon]
 
 // Marks an element for the scroll reveal in home-fx.tsx. `cls` is the element's own classes.
 const rv = (cls = "") => ({ "data-fx": "reveal", className: cls })
@@ -293,18 +297,21 @@ export default function HomeView() {
         <div className={ui.wrap}>
           <Head id="ai-h" kicker={c.ai.kicker} title={c.ai.title} subtitle={c.ai.subtitle} />
           <ul className={grid3}>
-            {c.ai.assistants.map((a, i) => (
-              <li key={a.title} data-card {...rv()}>
-                <div className={`group flex h-full flex-col gap-2 rounded-card border border-h-line bg-h-surface p-6 ${glow} ${ui.lift}`}>
-                  <AiArt i={i} />
-                  <h3 className={ui.h3}>{a.title}</h3>
-                  <p className="flex-1 text-[.9375rem] text-h-muted">{a.description}</p>
-                  <span className={`${chip} self-start ${a.live ? "bg-copper-400 text-navy-900" : "bg-h-surface2 text-h-muted"}`}>
-                    {a.live ? c.ai.live : c.ai.soon}
-                  </span>
-                </div>
-              </li>
-            ))}
+            {c.ai.assistants.map((a, i) => {
+              const Icon = aiIcons[i]
+              return (
+                <li key={a.title} data-card {...rv()}>
+                  <div className={`group flex h-full flex-col gap-2 rounded-card border border-h-line bg-h-surface p-6 ${glow} ${ui.lift}`}>
+                    <Icon className="mb-2 size-14 text-h-text" delay={0.2 + (i % 3) * 0.12} />
+                    <h3 className={ui.h3}>{a.title}</h3>
+                    <p className="flex-1 text-[.9375rem] text-h-muted">{a.description}</p>
+                    <span className={`${chip} self-start ${a.live ? "bg-copper-400 text-navy-900" : "bg-h-surface2 text-h-muted"}`}>
+                      {a.live ? c.ai.live : c.ai.soon}
+                    </span>
+                  </div>
+                </li>
+              )
+            })}
           </ul>
 
           <div className="mt-pad grid gap-12 lg:grid-cols-2 lg:gap-[72px] [&>*]:min-w-0">
@@ -519,13 +526,16 @@ export default function HomeView() {
         <div className={ui.wrap}>
           <Head id="why-h" title={c.why.title} subtitle={c.why.subtitle} />
           <ul className="mt-10 grid gap-x-10 border-t border-h-line md:grid-cols-2 lg:grid-cols-3">
-            {c.why.items.map((r, i) => (
-              <li key={r.title} {...rv("group border-b border-h-line py-7")}>
-                <WhyArt i={i} />
-                <h3 className={`${ui.h3} mt-3`}>{r.title}</h3>
-                <p className="mt-1.5 text-h-muted">{r.description}</p>
-              </li>
-            ))}
+            {c.why.items.map((r, i) => {
+              const Icon = whyIcons[i]
+              return (
+                <li key={r.title} {...rv("group border-b border-h-line py-7")}>
+                  <Icon className="size-14 text-h-text" delay={0.2 + (i % 3) * 0.12} />
+                  <h3 className={`${ui.h3} mt-3`}>{r.title}</h3>
+                  <p className="mt-1.5 text-h-muted">{r.description}</p>
+                </li>
+              )
+            })}
           </ul>
         </div>
       </section>
