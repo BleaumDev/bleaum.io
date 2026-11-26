@@ -12,6 +12,29 @@ const all = (sel: string) => gsap.utils.toArray<HTMLElement>(sel)
 const fx = (name: string) => all(`[data-fx=${name}]`)
 const once = (trigger: Element, start = "top 88%") => ({ trigger, start, once: true })
 
+// Hover moves for the line-art spots, by [data-hover] name (home-art.tsx). Each one ends where it started.
+const center = { transformOrigin: "50% 50%" }
+const moves: Record<string, (t: NodeListOf<Element>) => gsap.core.Animation> = {
+  redraw: (t) => gsap.fromTo(t, { strokeDashoffset: 1.05 }, { strokeDashoffset: 0, duration: 0.6, stagger: 0.1, ease: "power2.inOut" }),
+  fill: (t) => gsap.fromTo(t, { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.7, ease: "power3.out" }),
+  hop: (t) => gsap.to(t, { y: -5, duration: 0.22, yoyo: true, repeat: 1, stagger: 0.08, ease: "sine.inOut" }),
+  pulse: (t) => gsap.to(t, { ...center, scale: 1.3, duration: 0.25, yoyo: true, repeat: 1, stagger: 0.1, ease: "sine.inOut" }),
+  beat: (t) => gsap.to(t, { ...center, scale: 1.08, duration: 0.16, yoyo: true, repeat: 3, ease: "sine.inOut" }),
+  spin: (t) => gsap.to(t, { ...center, rotation: "+=360", duration: 0.8, ease: "back.inOut(1.7)" }),
+  flow: (t) => gsap.to(t, { strokeDashoffset: "-=12", duration: 1, ease: "power1.inOut" }),
+  tilt: (t) =>
+    gsap.to(t, {
+      keyframes: [{ ...center, rotation: -8, duration: 0.2 }, { rotation: 6, duration: 0.2 }, { rotation: -3, duration: 0.15 }, { rotation: 0, duration: 0.15 }],
+    }),
+  // Drives off to the right and arrives back from the left.
+  drive: (t) =>
+    gsap
+      .timeline()
+      .to(t, { x: 24, opacity: 0, duration: 0.35, ease: "power2.in" })
+      .set(t, { x: -24 })
+      .to(t, { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" }),
+}
+
 // Scroll and pointer motion for the Home page. The markup stays on the server page; this only finds its hooks:
 // data-fx = scene (hero-animation/hero-scene-fx.ts), reveal, slide (+ data-dir), stagger, chip, dot, draw, words, scrub-words, stars, count, hero, drift, tablet,
 // ping, cta-bloom, bloom, magnet, progress; data-wipe, data-card. Skipped for prefers-reduced-motion,
@@ -87,15 +110,17 @@ export function HomeFx() {
         gsap.from(el, { scale: 0.5, opacity: 0, duration: 0.5, delay: 0.4, ease: "back.out(2.5)", scrollTrigger: once(el, "top 92%") }),
       )
 
-      // Line-art spots (home-art.tsx) draw their paths one after another, then any [data-pop] accent springs in.
-      // Without this they just show fully drawn.
+      // Line-art spots (home-art.tsx) draw their paths one after another, then any [data-pop] accent springs in
+      // and the marks on those accents (checkmarks) draw last. Without this they just show fully drawn.
       fx("draw").forEach((el) => {
+        const q = (s: string) => el.querySelectorAll(s)
         const tl = gsap
           .timeline({ scrollTrigger: once(el, "top 92%") })
-          .from(el.querySelectorAll("[data-draw]"), { strokeDashoffset: 1.05, duration: 0.9, stagger: 0.15, ease: "power2.inOut" })
-        const pops = el.querySelectorAll("[data-pop]")
-        if (pops.length)
-          tl.from(pops, { scale: 0, rotate: -90, transformOrigin: "50% 50%", duration: 0.6, stagger: 0.12, ease: "back.out(2.5)" }, "-=0.45")
+          .from(q("[data-draw]:not([data-pop] *)"), { strokeDashoffset: 1.05, duration: 0.9, stagger: 0.15, ease: "power2.inOut" })
+        const pops = q("[data-pop]")
+        if (pops.length) tl.from(pops, { scale: 0, transformOrigin: "50% 50%", duration: 0.6, stagger: 0.12, ease: "back.out(2.5)" }, "-=0.45")
+        const late = q("[data-pop] [data-draw]")
+        if (late.length) tl.from(late, { strokeDashoffset: 1.05, duration: 0.5, ease: "power2.out" }, "-=0.3")
       })
 
       // Gallery images unwrap top to bottom.
@@ -176,6 +201,24 @@ export function HomeFx() {
         }
         el.addEventListener("pointermove", spot)
         off.push(() => el.removeEventListener("pointermove", spot))
+      })
+
+      // Gallery art plays its moves when the card is hovered or focused. A run already playing finishes first.
+      fx("draw").forEach((svg) => {
+        const card = svg.closest<HTMLElement>(".group")
+        if (!card || !svg.querySelector("[data-hover]")) return
+        let tl: gsap.core.Timeline | undefined
+        const play = () => {
+          if (tl?.isActive()) return
+          tl = gsap.timeline()
+          for (const [name, move] of Object.entries(moves)) {
+            const t = svg.querySelectorAll(`[data-hover=${name}]`)
+            if (t.length) tl.add(move(t), 0)
+          }
+        }
+        card.addEventListener("pointerenter", play)
+        card.addEventListener("focusin", play)
+        off.push(() => (card.removeEventListener("pointerenter", play), card.removeEventListener("focusin", play)))
       })
 
       // The hero dot field drifts against the pointer for depth.
