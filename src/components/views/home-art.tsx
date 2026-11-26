@@ -2,7 +2,7 @@ import type { ReactNode } from "react"
 
 // Wordless line-art spots for the Home page, in the brand's navy and copper. No text inside, so no copy to
 // keep in sync with website-updates/. Inline SVG: no requests, themes with the h-* colors.
-// home-fx.tsx draws every [data-draw] path once the svg scrolls into view (data-fx="draw").
+// home-fx.tsx draws every [data-draw] path once the svg scrolls into view (data-fx="draw"), then springs in any [data-pop].
 
 function Art({ children }: { children: ReactNode }) {
   return (
@@ -31,15 +31,17 @@ const pop = "origin-center [transform-box:fill-box] transition-transform duratio
 // Customer Assistant: a customer card with a suggestion bubble.
 const Customer = () => (
   <Art>
-    <rect x="8" y="8" width="76" height="56" rx="8" />
-    <circle cx="28" cy="28" r="8" />
-    <path d="M14 54c2-7 8-10 14-10s12 3 14 10" />
+    <rect {...D} x="8" y="8" width="76" height="56" rx="8" />
+    <circle {...D} cx="28" cy="28" r="8" />
+    <path {...D} d="M14 54c2-7 8-10 14-10s12 3 14 10" />
     <path {...D} d="M52 24h24M52 34h16" />
-    <g className={pop}>
-      <rect x="62" y="46" width="48" height="26" rx="13" className={solid} />
-      {[76, 86, 96].map((x) => (
-        <circle key={x} cx={x} cy="59" r="2.5" className="fill-navy-900 stroke-none" />
-      ))}
+    <g data-pop="">
+      <g className={pop}>
+        <rect x="62" y="46" width="48" height="26" rx="13" className={solid} />
+        {[76, 86, 96].map((x) => (
+          <circle key={x} data-pop="" cx={x} cy="59" r="2.5" className="fill-navy-900 stroke-none" />
+        ))}
+      </g>
     </g>
   </Art>
 )
@@ -47,11 +49,13 @@ const Customer = () => (
 // Insights Assistant: a trend line with one unusual point flagged.
 const Insights = () => (
   <Art>
-    <path d="M10 8v62h100" />
+    <path {...D} d="M10 8v62h100" />
     <path {...D} d="M16 56l16-10 16 8 18-26 16 14 22-12" className={acc} />
-    <g className={pop}>
-      <circle cx="66" cy="28" r="9" className="stroke-copper-400" />
-      <circle cx="66" cy="28" r="4" className={solid} />
+    <g data-pop="">
+      <g className={pop}>
+        <circle cx="66" cy="28" r="9" className="stroke-copper-400" />
+        <circle cx="66" cy="28" r="4" className={solid} />
+      </g>
     </g>
   </Art>
 )
@@ -59,10 +63,12 @@ const Insights = () => (
 // Reporting Assistant: a report page being written, with a spark.
 const Report = () => (
   <Art>
-    <rect x="12" y="6" width="70" height="68" rx="8" />
+    <rect {...D} x="12" y="6" width="70" height="68" rx="8" />
     <path {...D} d="M24 22h28" className={acc} />
     <path {...D} d="M24 36h46M24 46h46M24 56h26" />
-    <path d="M98 13l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" className={`${pop} ${solid}`} />
+    <g data-pop="">
+      <path d="M98 13l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" className={`${pop} ${solid}`} />
+    </g>
   </Art>
 )
 

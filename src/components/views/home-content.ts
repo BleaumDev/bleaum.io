@@ -38,6 +38,14 @@ export const hero = {
     confirm: "Complete Order",
     alt: "Sample Bleaum POS screen with four items and a cart total of $38.00",
   },
+  // Hero spotlight (consepts/A-product-spotlight): the dashboard with sample activity cards around it.
+  spotlight: {
+    image: "/marketing/pos-dashboard.webp",
+    alt: "Sample Bleaum dashboard with sales, revenue and store activity",
+    order: "Online order · Delivery",
+    register: "Register 1 · Card",
+    delivery: "Delivery · 2:43 pm",
+  },
 }
 
 export const products = {

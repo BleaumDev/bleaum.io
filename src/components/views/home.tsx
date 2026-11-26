@@ -5,9 +5,23 @@ import { DemoLink } from "./home-client"
 import { HomeFx } from "./home-fx"
 import * as ui from "./home-ui"
 import * as c from "./home-content"
+import { Box, Check, CreditCard, ShoppingBag, TriangleAlert, type LucideIcon } from "lucide-react"
 import { Bloom } from "./bloom"
-import { HeroScene } from "./hero-animation/hero-scene"
 import { AiArt, GalleryArt, TrustArt, WhyArt } from "./home-art"
+import * as icons from "@/components/icons/product-icons"
+
+// In the order of c.products.items.
+const productIcons = [
+  icons.PosIcon,
+  icons.PaymentsIcon,
+  icons.DeliveryIcon,
+  icons.StoreIcon,
+  icons.InventoryIcon,
+  icons.ComplianceIcon,
+  icons.ReportingIcon,
+  icons.MarketingIcon,
+  icons.IntegrationsIcon,
+]
 
 // Marks an element for the scroll reveal in home-fx.tsx. `cls` is the element's own classes.
 const rv = (cls = "") => ({ "data-fx": "reveal", className: cls })
@@ -27,6 +41,27 @@ function Lift({ text, from }: { text: string; from: number }) {
       </span>
     </Fragment>
   ))
+}
+
+// Sample activity card floating beside the hero dashboard. The outer box rises in; the inner one floats (home-fx "tablet").
+function Float(p: { pos: string; tilt: string; delay: number; Icon: LucideIcon; tone: string; label: string; children: ReactNode; amount?: string }) {
+  return (
+    <div {...at(p.delay)} className={`absolute z-[4] hidden animate-rise xl:block ${p.pos}`} aria-hidden="true">
+      <div
+        data-fx="tablet"
+        className={`flex items-center gap-3 rounded-[14px] bg-[rgba(15,38,62,.92)] px-4 py-3.5 shadow-[0_0_0_1px_rgba(255,255,255,.12),0_20px_50px_rgba(0,0,0,.45)] backdrop-blur-[10px] ${p.tilt}`}
+      >
+        <span className={`grid size-[38px] flex-none place-items-center rounded-[10px] ${p.tone}`}>
+          <p.Icon className="size-[19px]" />
+        </span>
+        <div className="leading-[1.45]">
+          <small className="block text-[.8125rem] text-fog-300">{p.label}</small>
+          <strong className="text-[.9375rem] font-semibold">{p.children}</strong>
+        </div>
+        {p.amount && <span className="ml-3.5 text-[.9375rem] font-semibold">{p.amount}</span>}
+      </div>
+    </div>
+  )
 }
 
 function DotMark({ small }: { small?: boolean }) {
@@ -151,41 +186,77 @@ export default function HomeView() {
       <HomeFx />
       <div data-fx="progress" className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left scale-x-0 bg-copper-400" aria-hidden="true" />
 
-      {/* Hero */}
-      <section data-fx="hero" className={`relative overflow-hidden text-white ${ui.heroBg}`} aria-labelledby="hero-h">
-        <div className="absolute inset-0 origin-[78%_50%] lg:-translate-x-[5%] lg:-translate-y-[5%] lg:scale-[1.16]">
-          <Bloom />
-        </div>
-        <div data-fx="drift" className={`${ui.wrap} relative grid items-center gap-12 py-hero lg:grid-cols-[6fr_5fr] xl:grid-cols-[4fr_5fr] [&>*]:min-w-0`}>
-          <div>
+      {/* Hero: product spotlight (consepts/A-product-spotlight). --stage is how much of the tilted dashboard shows. */}
+      <section
+        data-fx="hero"
+        className="relative overflow-hidden bg-[radial-gradient(1200px_700px_at_50%_108%,#17406a_0%,transparent_60%),linear-gradient(180deg,#0B1E31_0%,#0a1a2c_100%)] text-white [--stage:clamp(180px,24vw,340px)]"
+        aria-labelledby="hero-h"
+      >
+        {/* Copper dot field, brightest around the dashboard's top edge; drifts against the pointer (home-fx "bloom") */}
+        <div
+          data-fx="bloom"
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,rgba(223,151,112,.5)_1.4px,transparent_1.9px)] bg-[length:26px_26px] [-webkit-mask-image:radial-gradient(560px_300px_at_50%_calc(100%_-_var(--stage)_+_164px),#000,transparent)] [mask-image:radial-gradient(560px_300px_at_50%_calc(100%_-_var(--stage)_+_164px),#000,transparent)]"
+        />
+        <div className={`${ui.wrap} relative`}>
+          <div data-fx="drift" className="flex flex-col items-center pt-14 text-center">
             {/* A strip of copper packing tape runs across the kicker, then peels off to show it */}
-            <p
-              className={`${ui.kicker} relative w-fit text-copper-400 before:absolute before:-inset-x-2 before:-inset-y-0.5 before:scale-x-0 before:rounded-[3px] before:bg-copper-400 before:animate-tape`}
-            >
-              <span className="animate-show">{hero.kicker}</span>
+            <p className="relative inline-flex items-center gap-2.5 rounded-full bg-copper-400/10 py-[7px] pl-2 pr-3.5 text-[.875rem] font-semibold text-copper-400 shadow-[inset_0_0_0_1px_rgba(223,151,112,.35)] before:absolute before:inset-0 before:scale-x-0 before:rounded-full before:bg-copper-400 before:animate-tape">
+              <span className="inline-flex animate-show items-center gap-2.5">
+                <span className="grid size-[22px] place-items-center rounded-full bg-copper-400 text-navy-900">
+                  <Box className="size-[13px]" strokeWidth={2.4} aria-hidden="true" />
+                </span>
+                {hero.kicker}
+              </span>
             </p>
-            <h1 id="hero-h" className={ui.h1}>
+            <h1 id="hero-h" className={`${ui.h1} mt-[22px] font-medium`}>
               <Lift text={hero.titleLine1} from={300} />
               <br />
-              <span className="relative inline-block">
+              <span className="text-copper-400">
                 <Lift text={hero.titleLine2} from={580} />
-                {/* Dotted copper trail, like the van's road in the scene, drawn in under the last line */}
-                <span
-                  {...at(1250)}
-                  aria-hidden="true"
-                  className="absolute -bottom-[.14em] left-[.04em] right-[-.6em] h-[.12em] animate-trail bg-[radial-gradient(circle,#DF9770_45%,transparent_52%)] bg-[length:.26em_100%] [mask-image:linear-gradient(90deg,#000_55%,transparent)]"
-                />
               </span>
             </h1>
-            <p {...at(950)} className="mt-6 max-w-[44ch] text-[1.25rem] leading-[1.5] text-fog-200 animate-rise">{hero.lede}</p>
-            <div {...at(1100)} data-fx="magnet" className={`${ui.actions} mt-8 animate-rise`}>
+            <p {...at(950)} className="mt-5 max-w-[620px] text-[1.25rem] leading-[1.5] text-fog-200 animate-rise">{hero.lede}</p>
+            <div {...at(1100)} data-fx="magnet" className={`${ui.actions} mt-[30px] justify-center animate-rise max-[479px]:w-full`}>
               <DemoLink className={`${ui.btnCopper} ${ui.stack}`}>{hero.primaryCta}</DemoLink>
               <Link href={hero.secondaryHref} className={`${ui.btnGhost} ${ui.stack}`}>
                 {hero.secondaryCta}
               </Link>
             </div>
           </div>
-          <HeroScene />
+
+          {/* The dashboard, tilted back; the section clips it below --stage */}
+          <div {...at(1200)} className="relative mx-auto mt-14 h-[var(--stage)] max-w-[1080px] animate-rise [perspective:1500px]">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute left-1/2 top-[-28px] h-[420px] w-[1000px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgba(223,151,112,.32),transparent)] blur-[20px]"
+            />
+            <div className="relative origin-top rounded-2xl bg-[linear-gradient(#1b3a5a,#10263d)] p-1.5 shadow-[0_0_0_1px_rgba(255,255,255,.12),0_-20px_80px_rgba(223,151,112,.18),0_40px_100px_rgba(0,0,0,.5)] [transform:rotateX(24deg)] sm:p-2.5">
+              <Image
+                src={hero.spotlight.image}
+                alt={hero.spotlight.alt}
+                width={2400}
+                height={1350}
+                priority
+                sizes="(min-width: 1144px) 1060px, 100vw"
+                className="block w-full rounded-[9px]"
+              />
+            </div>
+            <Float pos="left-[-90px] top-[88px]" tilt="-rotate-3" delay={1500} Icon={ShoppingBag} tone="bg-copper-400/15 text-copper-400" label={hero.spotlight.order} amount={hero.pos.cart.total}>
+              {hero.pos.cart.label}
+            </Float>
+            <Float pos="left-[-40px] top-[222px]" tilt="rotate-2" delay={1700} Icon={CreditCard} tone="bg-[#4fc79a]/15 text-[#4fc79a]" label={hero.spotlight.register} amount={hero.pos.items[0].price}>
+              {hero.pos.items[0].name}
+            </Float>
+            <Float pos="right-[-90px] top-[64px]" tilt="rotate-3" delay={1600} Icon={TriangleAlert} tone="bg-[#f2b45c]/15 text-[#f2b45c]" label={c.inventory.visHead[0]}>
+              {hero.pos.items[2].name}
+              <span className="ml-2.5 rounded-md bg-[#c98a1c] px-2 py-[3px] text-[.6875rem] font-semibold text-white">{c.inventory.lowStock}</span>
+            </Float>
+            <Float pos="right-[-70px] top-[212px]" tilt="-rotate-2" delay={1800} Icon={Check} tone="bg-[#4fc79a]/15 text-[#4fc79a]" label={hero.spotlight.delivery}>
+              {c.delivery.steps[3].title} · {c.delivery.steps[3].text}
+            </Float>
+            <div aria-hidden="true" className="pointer-events-none absolute bottom-0 left-1/2 z-[3] h-1/2 w-screen -translate-x-1/2 bg-[linear-gradient(transparent,#0a1a2c_85%)]" />
+          </div>
         </div>
       </section>
 
@@ -194,21 +265,25 @@ export default function HomeView() {
         <div className={ui.wrap}>
           <Head id="prod-h" title={c.products.title} subtitle={c.products.subtitle} />
           <ul className={grid3}>
-            {c.products.items.map((p) => (
-              <li key={p.title} data-card {...rv()}>
-                <Link
-                  className={`group flex h-full flex-col gap-2 rounded-card border border-h-line bg-h-surface p-6 ${glow} ${ui.lift}`}
-                  href={p.href}
-                >
-                  <DotMark />
-                  <h3 className={ui.h3}>{p.title}</h3>
-                  <p className="flex-1 text-[.9375rem] text-h-muted">{p.description}</p>
-                  <span className="text-[.9375rem] font-semibold text-h-accent transition-transform duration-250 ease-soft group-hover:translate-x-1.5">
-                    {c.products.linkText}
-                  </span>
-                </Link>
-              </li>
-            ))}
+            {c.products.items.map((p, i) => {
+              const Icon = productIcons[i]
+              return (
+                <li key={p.title} data-card {...rv()}>
+                  <Link
+                    className={`group flex h-full flex-col gap-2 rounded-card border border-h-line bg-h-surface p-6 ${glow} ${ui.lift}`}
+                    href={p.href}
+                  >
+                    {/* Cards in a row assemble their icons one after another. */}
+                    <Icon className="mb-2 size-14 text-h-text" delay={0.2 + (i % 3) * 0.12} />
+                    <h3 className={ui.h3}>{p.title}</h3>
+                    <p className="flex-1 text-[.9375rem] text-h-muted">{p.description}</p>
+                    <span className="text-[.9375rem] font-semibold text-h-accent transition-transform duration-250 ease-soft group-hover:translate-x-1.5">
+                      {c.products.linkText}
+                    </span>
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
         </div>
       </section>

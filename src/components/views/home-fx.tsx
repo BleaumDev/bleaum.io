@@ -87,16 +87,16 @@ export function HomeFx() {
         gsap.from(el, { scale: 0.5, opacity: 0, duration: 0.5, delay: 0.4, ease: "back.out(2.5)", scrollTrigger: once(el, "top 92%") }),
       )
 
-      // Line-art spots (home-art.tsx) draw their paths one after another. Without this they just show fully drawn.
-      fx("draw").forEach((el) =>
-        gsap.from(el.querySelectorAll("[data-draw]"), {
-          strokeDashoffset: 1.05,
-          duration: 0.9,
-          stagger: 0.15,
-          ease: "power2.inOut",
-          scrollTrigger: once(el, "top 92%"),
-        }),
-      )
+      // Line-art spots (home-art.tsx) draw their paths one after another, then any [data-pop] accent springs in.
+      // Without this they just show fully drawn.
+      fx("draw").forEach((el) => {
+        const tl = gsap
+          .timeline({ scrollTrigger: once(el, "top 92%") })
+          .from(el.querySelectorAll("[data-draw]"), { strokeDashoffset: 1.05, duration: 0.9, stagger: 0.15, ease: "power2.inOut" })
+        const pops = el.querySelectorAll("[data-pop]")
+        if (pops.length)
+          tl.from(pops, { scale: 0, rotate: -90, transformOrigin: "50% 50%", duration: 0.6, stagger: 0.12, ease: "back.out(2.5)" }, "-=0.45")
+      })
 
       // Gallery images unwrap top to bottom.
       all("[data-wipe]").forEach((el) =>
@@ -135,7 +135,8 @@ export function HomeFx() {
         return [[el, el.textContent!] as const]
       })
 
-      heroScene(fx("scene")[0], fx("bloom")[0])
+      const scene = fx("scene")[0]
+      if (scene) heroScene(scene, fx("bloom")[0])
 
       // The tablet floats and the hero drifts as it scrolls away.
       gsap.to(fx("tablet"), { y: -8, duration: 2.4, ease: "sine.inOut", yoyo: true, repeat: -1 })
