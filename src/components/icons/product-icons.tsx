@@ -446,3 +446,196 @@ export const ValuesIcon = (p: Props) => (
     </Pop>
   </AnimatedIcon>
 )
+
+// ── Industries page icons (resources/industries/page.tsx) ──
+
+// Pharmaceutical outlets: a pill bottle with a cross; the cap twists off on hover.
+export const PharmacyIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d={`${rr(11, 14, 26, 30, 4)}M17 20h14`} />
+    <path {...D} d="M24 26v11M18.5 31.5h11" className={acc} />
+    <Pop>
+      <rect x="9" y="4" width="30" height="7.5" rx="2" className={`${solid} ${hov} origin-bottom-left group-hover:-translate-y-1 group-hover:-rotate-6`} />
+    </Pop>
+    {[[43, 24, 1.4], [45.5, 30, 1], [42.5, 35, 1.2]].map(([x, y, r], i) => <Dot key={i} x={x} y={y} r={r} />)}
+  </AnimatedIcon>
+)
+
+// Liquor stores: a bottle and a glass; the glass tips toward you on hover.
+export const LiquorIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d="M12 4h6v8c0 2.5 4 4.5 4 9.5V42a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V21.5c0-5 4-7 4-9.5zM8 28h14" />
+    <g className={`${hov} origin-bottom group-hover:rotate-12`}>
+      <path {...D} d="M29 18h16c0 7-3.5 11-8 11s-8-4-8-11zM37 29v12M32 43h10" />
+      <Pop>
+        <path d="M32 22.5h10c-.9 2.6-2.8 3.8-5 3.8s-4.1-1.2-5-3.8z" className={solid} />
+      </Pop>
+    </g>
+    {[[33, 12, 1.2], [37.5, 8, 1.5], [41.5, 12.5, 1]].map(([x, y, r], i) => <Dot key={i} x={x} y={y} r={r} />)}
+  </AnimatedIcon>
+)
+
+// Medical: a stethoscope (shape after lucide's, at 2×); the chest piece swells on hover.
+export const MedicalIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d="M10 4v4M22 4v4M10 6H8a4 4 0 0 0-4 4v8a12 12 0 0 0 24 0v-8a4 4 0 0 0-4-4h-2M16 30a12 12 0 0 0 24 0v-5" />
+    {[[44.5, 34, 1.3], [42, 40, 1]].map(([x, y, r], i) => <Dot key={i} x={x} y={y} r={r} />)}
+    <Pop>
+      <g className={`${hov} origin-center group-hover:scale-125`}>
+        <circle cx="40" cy="18" r="5" className={solid} />
+        <circle cx="40" cy="18" r="1.8" className={cut} />
+      </g>
+    </Pop>
+  </AnimatedIcon>
+)
+
+// Recreational: a leaf on its stem; it sways on hover.
+export const LeafIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d="M5 43l8.5-8.5" />
+    <Pop>
+      <g className={`${hov} origin-bottom-left group-hover:-rotate-12`}>
+        <path d="M14 34C12 18 26 6 42 6c0 16-12 30-28 28z" className={solid} />
+        <path d="M18 30L34 14" className="stroke-navy-900" />
+      </g>
+    </Pop>
+    {[[8, 12, 1.4], [14, 5.5, 1], [5, 20, 1]].map(([x, y, r], i) => <Dot key={i} x={x} y={y} r={r} />)}
+  </AnimatedIcon>
+)
+
+// Apparel & footwear: a t-shirt (shape after lucide's, at 2×) with a price tag that swings on hover.
+export const ApparelIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path
+      {...D}
+      d="M40.76 6.92L32 4a8 8 0 0 1-16 0L7.24 6.92a4 4 0 0 0-2.68 4.46l1.16 6.94a2 2 0 0 0 1.98 1.68H12v20a4 4 0 0 0 4 4h16a4 4 0 0 0 4-4V20h4.3a2 2 0 0 0 1.98-1.68l1.16-6.94a4 4 0 0 0-2.68-4.46z"
+    />
+    <Pop>
+      <g className={`${hov} [transform-origin:19px_26px] group-hover:rotate-12`}>
+        <path d="M19 22.5h7.5l3.5 3.5-3.5 3.5H19z" className={solid} />
+        <circle cx="22" cy="26" r="1.2" className={cut} />
+      </g>
+    </Pop>
+    {[20, 24, 28].map((x) => <Dot key={x} x={x} y={37} r={1.1} />)}
+  </AnimatedIcon>
+)
+
+// Convenience stores: a storefront whose striped awning flaps on hover.
+export const ConvenienceIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d="M4 14l4-8h32l4 8zM7 25v17h34V25M20 42V31h8v11" />
+    <path {...D} d={rr(32, 29, 6, 6, 1.5)} />
+    <Pop>
+      <path
+        d="M4 16.5h40a5 5 0 0 1-10 0a5 5 0 0 1-10 0a5 5 0 0 1-10 0a5 5 0 0 1-10 0z"
+        className={`${solid} ${hov} origin-top group-hover:scale-y-125`}
+      />
+    </Pop>
+    {[[11, 30], [15, 30], [11, 34], [15, 34]].map(([x, y], i) => <Dot key={i} x={x} y={y} r={1.2} />)}
+  </AnimatedIcon>
+)
+
+// Beauty & cosmetics: a lipstick and a sparkle; the lipstick rises and the sparkle turns on hover.
+export const BeautyIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d={`${rr(10, 28, 16, 16, 2.5)}${rr(12.5, 19, 11, 9, 1.5)}M10 34h16`} />
+    <Pop>
+      <path d="M14.5 17.5V10l7-4.5v12z" className={`${solid} ${hov} group-hover:-translate-y-1`} />
+    </Pop>
+    <Pop>
+      <path
+        d="M37 6l2 5.5 5.5 2-5.5 2-2 5.5-2-5.5-5.5-2 5.5-2z"
+        strokeWidth={1}
+        className="fill-copper-400 stroke-copper-400 transition-transform duration-700 ease-soft [transform-origin:37px_13.5px] group-hover:rotate-90"
+      />
+    </Pop>
+    {[[41, 30, 1.4], [35, 35, 1], [43.5, 39, 1.1]].map(([x, y, r], i) => <Dot key={i} x={x} y={y} r={r} />)}
+  </AnimatedIcon>
+)
+
+// Electronics: a screen with a charge bolt that flickers on hover.
+export const ElectronicsIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d={`${rr(4, 6, 40, 27, 3)}M24 33v6M16 41h16`} />
+    <Pop>
+      <path d="M27 10.5l-9 11.5h6l-3 7.5 9-11.5h-6z" className={`${solid} motion-safe:group-hover:animate-pulse`} />
+    </Pop>
+    <Dot x={9} y={28} r={1.2} />
+    <Dot x={13} y={28} r={1.2} />
+  </AnimatedIcon>
+)
+
+// Specialty retail: a gift box; the lid lifts on hover.
+export const GiftIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d={rr(7, 25, 34, 18, 2.5)} />
+    <path {...D} d="M24 25v18" className={acc} />
+    <g className={`${hov} group-hover:-translate-y-1`}>
+      <path {...D} d={rr(4, 16, 40, 8, 2)} />
+      <path {...D} d="M24 16v8" className={acc} />
+      <Pop>
+        <path d="M24 14.5c-3-6-10-7-10-2.5s6 2.5 10 2.5zM24 14.5c3-6 10-7 10-2.5s-6 2.5-10 2.5z" className={solid} />
+      </Pop>
+    </g>
+    {[[7, 8, 1.3], [41, 6, 1.4], [44.5, 11, 0.9]].map(([x, y, r], i) => <Dot key={i} x={x} y={y} r={r} />)}
+  </AnimatedIcon>
+)
+
+// Wholesale & distribution: a truck (shape after lucide's, at 2×) carrying a crate; it rolls forward on hover.
+export const WholesaleIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <g className={`${hov} group-hover:translate-x-1`}>
+      <path
+        {...D}
+        d={`M28 36V12a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v22a2 2 0 0 0 2 2h4M30 36H18M38 36h4a2 2 0 0 0 2-2v-7.3a2 2 0 0 0-.44-1.25l-6.96-8.7A2 2 0 0 0 35.04 16H28${ring(14, 36, 4)}${ring(34, 36, 4)}`}
+      />
+      <Dot x={14} y={36} r={1.3} />
+      <Dot x={34} y={36} r={1.3} />
+      <Pop>
+        <rect x="10" y="15" width="12" height="12" rx="2" className={solid} />
+        <path d="M16 17v3.5" className="stroke-navy-900" />
+      </Pop>
+    </g>
+  </AnimatedIcon>
+)
+
+// Health & wellness: a heart with a pulse running through it (after lucide's heart-pulse, at 2×); it beats on hover.
+export const WellnessIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <g className={`${hov} origin-center group-hover:scale-110`}>
+      <path {...D} d="M38 28c2.98-2.92 6-6.42 6-11A11 11 0 0 0 33 6c-3.52 0-6 1-9 4-3-3-5.48-4-9-4A11 11 0 0 0 4 17c0 4.6 3 8.1 6 11l14 14z" />
+      <path {...D} d="M6.44 26H19l1-2 4 9 4-14 3 7h10.54" className={acc} />
+      <Pop>
+        <circle cx="28" cy="19" r="2.75" className={solid} />
+      </Pop>
+    </g>
+    {[[44, 34, 1.3], [40.5, 39, 1]].map(([x, y, r], i) => <Dot key={i} x={x} y={y} r={r} />)}
+  </AnimatedIcon>
+)
+
+// Supplements & nutrition: a capsule, half copper, with tablets beside it; it turns on hover.
+export const SupplementsIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <g className={`${hov} origin-center group-hover:rotate-12`}>
+      <g transform="rotate(-45 24 24)">
+        <path {...D} d="M24 17H13a7 7 0 0 0 0 14h11z" />
+        <Pop>
+          <path d="M25.5 17H35a7 7 0 0 1 0 14h-9.5z" className={solid} />
+        </Pop>
+      </g>
+    </g>
+    {[[38, 38, 2.2], [43.5, 31.5, 1.4], [10, 10, 1.4], [31, 43.5, 1]].map(([x, y, r], i) => <Dot key={i} x={x} y={y} r={r} />)}
+  </AnimatedIcon>
+)
+
+// Customizable workflows: sliders set your way; the copper one grows on hover.
+export const WorkflowIcon = (p: Props) => (
+  <AnimatedIcon {...p}>
+    <path {...D} d={`M4 12h21.5M34.5 12H44M4 24h6M22 24h22M4 36h25.5M38.5 36H44${ring(30, 12, 4.5)}${ring(34, 36, 4.5)}`} />
+    <Dot x={30} y={12} r={1.5} />
+    <Dot x={34} y={36} r={1.5} />
+    <Pop>
+      <circle cx="16" cy="24" r="4.5" className={`${solid} ${hov} origin-center group-hover:scale-110`} />
+    </Pop>
+  </AnimatedIcon>
+)

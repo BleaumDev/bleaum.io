@@ -107,6 +107,9 @@ const config = {
         // Integrations orbit: a dash runs along a path (pathLength=100), the hub rings spread out and fade.
         flow: { from: { strokeDashoffset: "100" }, to: { strokeDashoffset: "0" } },
         halo: { from: { transform: "scale(1)", opacity: ".7" }, to: { transform: "scale(1.9)", opacity: "0" } },
+        // Integrations hero: a packet fades in, rides its road (pathLength=100) and fades out; logo tiles bob.
+        packet: { "0%": { strokeDashoffset: "100", opacity: "0" }, "12%, 88%": { opacity: "1" }, "100%": { strokeDashoffset: "0", opacity: "0" } },
+        float: { "0%, 100%": { transform: "translateY(0)" }, "50%": { transform: "translateY(-6px)" } },
       },
       animation: {
         rise: "rise .7s cubic-bezier(.2, .7, .2, 1) both",
@@ -118,6 +121,8 @@ const config = {
         "menu-in": "menu-in .18s cubic-bezier(.2, .7, .2, 1) both",
         flow: "flow 3.6s linear infinite",
         halo: "halo 3.2s cubic-bezier(.2, .7, .2, 1) infinite",
+        packet: "packet 2.7s linear infinite",
+        float: "float 4s ease-in-out infinite",
       },
     },
   },

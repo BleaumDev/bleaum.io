@@ -8,6 +8,8 @@ import { hero } from "../home-content"
 // Pharmacy only: cannabis products, leaves and signage stay out (website-updates/home.md #20, #24, #138).
 // The scene itself is wordless; the only text is the POS copy on the tablet (home-content hero.pos).
 // Server-rendered in its finished, open state. hero-scene-fx.ts finds the data-s hooks and brings it to life.
+// `Scene` (the box alone, at rest) is also the centre of the integrations hero art (integrations-hero-art.tsx).
+// The industries hero art reuses Box, Parcel and Mark.
 
 const s = (name: string) => ({ "data-s": name })
 // Parts the story brings in later: hidden from the first paint, shown only when there is no motion or no script.
@@ -16,7 +18,7 @@ const line = { strokeLinecap: "round", strokeLinejoin: "round", fill: "none" } a
 
 // Isometric cuboid: three visible faces.
 type BoxProps = { x: number; y: number; z?: number; w: number; d: number; h: number; f: readonly [string, string, string] }
-function Box({ x, y, z = 0, w, d, h, f }: BoxProps) {
+export function Box({ x, y, z = 0, w, d, h, f }: BoxProps) {
   const [X, Y, Z] = [x + w, y + d, z + h]
   return (
     <>
@@ -41,7 +43,7 @@ function Can({ x, y, z, r, h, f, children }: { x: number; y: number; z: number; 
 }
 
 // The brand mark: a grid of dots that shrink away from the center.
-function Mark({ r, gap, dot, className, name }: { r: number; gap: number; dot: number; className?: string; name?: string }) {
+export function Mark({ r, gap, dot, className, name }: { r: number; gap: number; dot: number; className?: string; name?: string }) {
   const dots: ReactNode[] = []
   const n = Math.floor(r / gap)
   for (let i = -n; i <= n; i++)
@@ -55,7 +57,7 @@ function Mark({ r, gap, dot, className, name }: { r: number; gap: number; dot: n
 const kraft = ["#E9B391", "#CF8C66", "#AD6A45"] as const
 const parcelTape = "#F7DCC8"
 
-function Parcel({ x, y, z = 0, w = 26, h = 22 }: { x: number; y: number; z?: number; w?: number; h?: number }) {
+export function Parcel({ x, y, z = 0, w = 26, h = 22 }: { x: number; y: number; z?: number; w?: number; h?: number }) {
   return (
     <>
       <Box x={x} y={y} z={z} w={w} d={w} h={h} f={kraft} />
@@ -313,7 +315,7 @@ const FLAP_DOTS = ["flapBL", "flapBR"].flatMap((id) => {
   })
 })
 
-function Scene() {
+export function Scene() {
   return (
     <svg viewBox="0 0 660 570" className="block h-auto w-full overflow-visible" aria-hidden="true">
       <defs>

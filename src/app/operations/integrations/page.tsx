@@ -7,6 +7,7 @@ import { Bloom } from "@/components/views/bloom"
 import { DemoLink, RevealOnScroll } from "@/components/views/home-client"
 import * as ui from "@/components/views/home-ui"
 import { IntegrationsCatalog, type Partner, type PartnerGroup } from "@/components/views/integrations-catalog"
+import { IntegrationsHeroArt } from "@/components/views/integrations-hero-art"
 
 export const metadata: Metadata = {
   title: "Integrations",
@@ -303,10 +304,11 @@ export default function IntegrationsPage() {
       {/* Hero */}
       <section className={`relative overflow-hidden text-white ${ui.heroBg}`} aria-labelledby="int-h">
         <Bloom />
-        <div className={`${ui.wrap} relative grid items-center gap-10 py-hero lg:grid-cols-[7fr_5fr]`}>
+        <div className={`${ui.wrap} relative grid items-center gap-10 py-hero lg:grid-cols-[1fr_1.15fr]`}>
           <div>
             <h1 id="int-h" className={`${ui.h1} max-w-[18ch] animate-rise`}>
-              One Platform. Total Sync. No Double Entry.
+              <span className="lg:block">One Platform.</span> <span className="lg:block">Total Sync.</span>{" "}
+              <span className="lg:block">No Double Entry.</span>
             </h1>
             <p className="mt-5 max-w-[52ch] animate-rise text-[1.125rem] text-fog-200 [animation-delay:90ms]">
               Bleaum unifies your business — from mobile apps and ecommerce to POS, delivery, payments, and compliance —
@@ -327,6 +329,10 @@ export default function IntegrationsPage() {
             </blockquote>
             <figcaption className="mt-4 text-[.9375rem] font-semibold text-copper-400">— Diana, Doctor Greens</figcaption>
           </figure> */}
+          {/* The open box with roads out to partner systems (consepts/H-box-city) */}
+          <div className="animate-rise [animation-delay:200ms] max-lg:mx-auto max-lg:w-full max-lg:max-w-[40rem] lg:-mr-[8%]">
+            <IntegrationsHeroArt />
+          </div>
         </div>
       </section>
 
