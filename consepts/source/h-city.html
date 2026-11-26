@@ -1,0 +1,42 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><link rel="stylesheet" href="iso.css"></head><body>
+<div class="text">
+  <p class="kicker">Your business in a box</p>
+  <h1>Run your whole business<br><span class="trail">from one hand.</span></h1>
+  <p class="lede">Bleaum puts POS, invoicing, inventory, ordering, delivery and AI on one real-time platform.</p>
+  <div class="ctas"><span class="btn cu">Book a demo</span><span class="btn gh">See the product</span></div>
+</div>
+<img class="store" src="store.svg" style="left:780px;top:250px;width:400px;z-index:3">
+<div id="cards"></div>
+<script src="iso.js"></script>
+<script>
+const back = layer(1), front = layer(4)
+add(back, DEFS)
+bloom(back, 1000, 520, 560, { op: .3, x0: 660 })
+// iso directions on screen
+const UR = [0.866, -0.5], DL = [-0.866, 0.5], DR = [0.866, 0.5]
+const go = ([x, y], d, n) => [x + d[0] * n, y + d[1] * n]
+// store.svg at left 780, top 250, width 400: flap ends and the van's road exit
+const L = [780, 517], R = [1180, 517], V = [1171, 580]
+const e1 = go(R, UR, 110), e2 = go(L, DL, 80), e3 = go(V, DR, 120)
+road(back, [R, e1]); road(back, [L, e2]); road(back, [V, e3])
+road(back, [e1, go(e1, UR, 90)], { op: .35 }); road(back, [e2, go(e2, DL, 70)], { op: .35 })
+cube(back, e1[0] + 10, e1[1] + 40, 52, 48)
+cube(back, e2[0] - 6, e2[1] + 56, 60, 56)
+cube(back, e3[0] + 24, e3[1] + 48, 40, 36)
+// [anchor x, y, card, card x, y]
+const cards = [
+  [e1[0] + 10, e1[1] + 40 - 100, card(0, 0, "store", "Downtown Store", "Live counts · transfers"), 1150, 300],
+  [e2[0] - 6, e2[1] + 56 - 116, card(0, 0, "box", "Warehouse", "Orders, inventory and delivery"), 630, 372],
+  [e3[0] + 24, e3[1] + 48, card(0, 0, "check", "Delivered", "Customer notified"), 1150, 742],
+]
+let html = "", lines = ""
+cards.forEach(([px, py, c, cx, cy]) => {
+  const dy = cy - py
+  html += c.replace("left:0px;top:0px;", `left:${cx}px;top:${cy}px;`)
+  lines += `<line x1="${px}" y1="${py}" x2="${cx + 40}" y2="${cy + (dy < 0 ? 54 : 0)}" stroke="#DF9770" stroke-width="1.5" stroke-dasharray="1 5" stroke-linecap="round"/><circle cx="${px}" cy="${py}" r="4.5" fill="#DF9770" stroke="#fff" stroke-width="1.5"/>`
+})
+add(front, lines)
+document.getElementById("cards").innerHTML = html
+</script>
+<script src="base.js"></script>
+</body></html>

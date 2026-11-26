@@ -1,0 +1,44 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><link rel="stylesheet" href="iso.css">
+<style>
+.top { position: absolute; left: 0; right: 0; top: 150px; text-align: center; z-index: 5; display: flex; flex-direction: column; align-items: center }
+.top h1 { font-size: 58px; margin-top: 14px }
+.top .lede { margin-top: 18px; font-size: 19px }
+.top .ctas { margin-top: 24px }
+.chip { position: absolute; z-index: 6; display: flex; align-items: center; gap: 10px; padding: 8px 15px 8px 8px; border-radius: 99px; white-space: nowrap; font-size: 14px; font-weight: 500; transform: translate(-50%, -50%);
+  background: rgba(17,42,68,.96); box-shadow: 0 0 0 1px rgba(255,255,255,.13), 0 14px 30px rgba(0,0,0,.4) }
+.chip .ic { width: 30px; height: 30px; border-radius: 99px; display: grid; place-items: center; background: rgba(223,151,112,.15); color: var(--cu) }
+.chip .ic i { width: 16px; height: 16px }
+.chip.ai { background: var(--cu); color: var(--n900); font-weight: 600 } .chip.ai .ic { background: rgba(11,30,49,.15); color: var(--n900) }
+</style></head><body>
+<div class="top">
+  <p class="kicker">Your business in a box</p>
+  <h1>Run your whole business<br><span class="trail">from one hand.</span></h1>
+  <p class="lede">Bleaum puts POS, invoicing, inventory, ordering, delivery and AI on one real-time platform.</p>
+  <div class="ctas"><span class="btn cu">Book a demo</span><span class="btn gh">See the product</span></div>
+</div>
+<img class="store" src="store.svg" style="left:450px;top:436px;width:540px;z-index:3">
+<div id="chips"></div>
+<script src="iso.js"></script>
+<script>
+const back = layer(1), mid = layer(4)
+bloom(back, 720, 660, 600, { op: .32, y0: 440 })
+// Products burst out of the open box along dotted arcs, like the van's road.
+const O = [720, 640]
+const chips = [
+  ["Point of Sale", "cart", 330, 498], ["Payments", "card", 232, 590], ["Inventory", "box", 262, 690], ["Compliance", "shield", 352, 790],
+  ["Delivery", "truck", 1108, 498], ["Online store", "store", 1208, 590], ["Reporting & analytics", "chart", 1176, 690], ["Marketing & loyalty", "heart", 1090, 790],
+]
+const quad = (a, c, b, n) => Array.from({ length: n + 1 }, (_, i) => { const t = i / n, u = 1 - t; return [u * u * a[0] + 2 * u * t * c[0] + t * t * b[0], u * u * a[1] + 2 * u * t * c[1] + t * t * b[1]] })
+chips.forEach(([, , x, y]) => {
+  const ctrl = [(O[0] + x) / 2, Math.min(O[1], y) - 150]
+  const pts = quad(O, ctrl, [x, y], 40)
+  // fade the trail in from the box so it reads as motion
+  pts.forEach(([px, py], i) => i % 2 || add(mid, `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${(1.6 + 2.2 * i / 40).toFixed(2)}" fill="#F0B48F" fill-opacity="${(0.25 + 0.75 * i / 40).toFixed(2)}"/>`))
+})
+document.getElementById("chips").innerHTML = chips.map(([t, ic, x, y]) => `<div class="chip" style="left:${x}px;top:${y}px"><span class="ic"><i data-i="${ic}"></i></span>${t}</div>`).join("")
+  + `<div class="chip ai" style="left:720px;top:452px"><span class="ic"><i data-i="spark"></i></span>Bleaum AI</div>`
+// a few loose sparkles above the opening
+;[[650, 470, 3], [790, 455, 2.4], [700, 430, 2], [760, 500, 2.8], [610, 520, 2]].forEach(([x, y, r]) => add(mid, `<circle cx="${x}" cy="${y}" r="${r}" fill="#FFE2C6"/>`))
+</script>
+<script src="base.js"></script>
+</body></html>

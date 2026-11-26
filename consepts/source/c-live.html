@@ -1,0 +1,80 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css">
+<style>
+body { background: radial-gradient(800px 600px at 78% 50%, #133659 0%, transparent 70%), #0B1E31 }
+.bgdots { position: absolute; inset: 116px 0 0 600px; background: radial-gradient(circle, rgba(223,151,112,.45) 1.3px, transparent 1.8px) 0 0/24px 24px;
+  -webkit-mask-image: radial-gradient(420px 380px at 62% 52%, #000, transparent) }
+.text { position: absolute; left: 145px; top: 262px; width: 520px; z-index: 3 }
+.live { display: inline-flex; align-items: center; gap: 9px; color: var(--cu); font-weight: 600; font-size: 15px }
+.live:before { content: ""; width: 9px; height: 9px; border-radius: 99px; background: var(--cu); box-shadow: 0 0 0 5px rgba(223,151,112,.2) }
+h1 { font-size: 62px; margin-top: 18px; font-weight: 500 }
+h1 em { font-style: normal; color: var(--cu) }
+.lede { margin-top: 24px; max-width: 460px }
+.ctas { margin-top: 34px }
+.panel { position: absolute; width: 520px; border-radius: 20px; background: rgba(14,36,59,.94); box-shadow: 0 0 0 1px rgba(255,255,255,.11), 0 40px 90px rgba(0,0,0,.5); padding: 20px 22px; z-index: 2 }
+.ghost { left: 880px; top: 128px; height: 640px; transform: scale(.92); opacity: .42; z-index: 1 }
+.ghost .hd b { color: var(--f2) }
+.main { left: 760px; top: 206px; height: 690px; overflow: hidden }
+.hd { display: flex; align-items: center; gap: 10px; font-size: 14px }
+.hd b { font-weight: 600 }
+.hd .dot { width: 8px; height: 8px; border-radius: 99px; background: var(--ok); box-shadow: 0 0 0 4px rgba(79,199,154,.18) }
+.hd small { margin-left: auto; color: var(--f3); font-size: 12.5px; padding: 4px 10px; border-radius: 99px; box-shadow: inset 0 0 0 1px var(--line) }
+.stats { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 10px; margin: 18px 0 14px }
+.stats div { background: rgba(255,255,255,.035); border-radius: 12px; padding: 11px 13px }
+.stats strong { display: block; font: 600 21px/1.2 Montserrat }
+.stats small { color: var(--f3); font-size: 11.5px }
+.feed { position: relative; -webkit-mask-image: linear-gradient(#000 62%, transparent 98%) }
+.feed:before { content: ""; position: absolute; left: 21px; top: 30px; bottom: 0; width: 3px; background: radial-gradient(circle, #DF9770 1.4px, transparent 1.8px) 0 0/3px 10px; opacity: .7 }
+.ev { position: relative; display: flex; align-items: center; gap: 14px; padding: 11px 12px 11px 0; border-radius: 14px; margin-bottom: 6px }
+.ev .ic { position: relative; z-index: 1; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; flex: none; background: #15324f; color: var(--f2); box-shadow: 0 0 0 4px rgba(14,36,59,1) }
+.ev .ic i { width: 20px; height: 20px }
+.ev strong { display: block; font-weight: 600; font-size: 15px }
+.ev small { color: var(--f3); font-size: 13px }
+.ev .r { margin-left: auto; text-align: right; font-size: 12.5px; color: var(--f3) }
+.ev .r b { display: block; color: #fff; font-size: 15px; font-weight: 600 }
+.ev.hot { background: linear-gradient(90deg, rgba(223,151,112,.24), rgba(223,151,112,.08)); box-shadow: inset 0 0 0 1.5px rgba(223,151,112,.8), 0 10px 30px rgba(223,151,112,.15); padding-left: 0; margin-left: -10px; margin-right: -10px; padding-left: 10px }
+.ev.hot .ic { background: var(--ok); color: #06291c; box-shadow: 0 0 0 4px rgba(79,199,154,.22) }
+.tag { font-size: 10.5px; font-weight: 600; padding: 2px 7px; border-radius: 5px; background: #c98a1c; color: #fff; margin-left: 8px; vertical-align: 2px }
+.toast { position: absolute; left: 1150px; top: 420px; z-index: 4; width: 220px; border-radius: 16px; padding: 14px; background: rgba(18,44,70,.97); box-shadow: 0 0 0 1px rgba(255,255,255,.14), 0 30px 60px rgba(0,0,0,.5); transform: rotate(3deg) }
+.toast small { color: var(--f3); font-size: 11.5px }
+.route { display: block; width: 100%; height: 104px; margin: 8px 0 6px; border-radius: 10px; background: #0c1f33 }
+.toast p { font-size: 13px; font-weight: 500 }
+</style></head><body>
+<div class="bgdots"></div>
+<div class="text">
+  <p class="live">Your business in a box</p>
+  <h1>Run your whole business <em>from one hand.</em></h1>
+  <p class="lede">Bleaum puts POS, invoicing, inventory, ordering, delivery and AI on one real-time platform.</p>
+  <div class="ctas"><span class="btn cu">Book a demo</span><span class="btn gh">See the product</span></div>
+</div>
+
+<div class="panel ghost"><div class="hd"><span class="dot"></span><b>Downtown Store</b><small>Today</small></div></div>
+<div class="panel main">
+  <div class="hd"><span class="dot"></span><b>Main Street Store</b><span style="color:var(--f3)">· Live</span><small>Today</small></div>
+  <div class="stats">
+    <div><strong>$4,286.40</strong><small>Fulfilled net sales</small></div>
+    <div><strong>131</strong><small>Total orders</small></div>
+    <div><strong>17</strong><small>New customers</small></div>
+  </div>
+  <div class="feed">
+    <div class="ev hot"><span class="ic"><i data-i="check"></i></span><div><strong>Delivered</strong><small>Customer notified</small></div><span class="r"><b>$38.00</b>2:43 pm</span></div>
+    <div class="ev"><span class="ic"><i data-i="id"></i></span><div><strong>ID checked</strong><small>Signature captured at the door</small></div><span class="r">2:38 pm</span></div>
+    <div class="ev"><span class="ic"><i data-i="truck"></i></span><div><strong>Driver assigned</strong><small>Route planned across four stops</small></div><span class="r">2:12 pm</span></div>
+    <div class="ev"><span class="ic"><i data-i="box"></i></span><div><strong>Order packed</strong><small>Ready for pickup at 2:10 pm</small></div><span class="r">2:04 pm</span></div>
+    <div class="ev"><span class="ic"><i data-i="bag"></i></span><div><strong>Online order</strong><small>2 items in cart · Delivery</small></div><span class="r"><b>$38.00</b>1:58 pm</span></div>
+    <div class="ev"><span class="ic" style="color:var(--warn)"><i data-i="alert"></i></span><div><strong>Cough Syrup<span class="tag">Low stock</span></strong><small>Inventory</small></div><span class="r">1:31 pm</span></div>
+    <div class="ev"><span class="ic"><i data-i="card"></i></span><div><strong>Sale · Register 1</strong><small>Vitamin D3</small></div><span class="r"><b>$24.00</b>1:30 pm</span></div>
+  </div>
+</div>
+
+<div class="toast">
+  <small>Delivery · 4 stops</small>
+  <svg class="route" viewBox="0 0 192 104">
+    <g stroke="rgba(255,255,255,.07)" stroke-width="6"><path d="M0 30h192M0 72h192M40 0v104M104 0v104M160 0v104"/></g>
+    <path d="M18 88 C40 88 40 72 60 72 S104 72 104 50 S130 30 160 30 S176 14 180 12" fill="none" stroke="#DF9770" stroke-width="3" stroke-linecap="round" stroke-dasharray="0 8"/>
+    <g fill="#0c1f33" stroke="#DF9770" stroke-width="2.5"><circle cx="18" cy="88" r="5"/><circle cx="60" cy="72" r="5"/><circle cx="104" cy="50" r="5"/><circle cx="160" cy="30" r="5"/></g>
+    <circle cx="180" cy="12" r="7" fill="#4fc79a"/><path d="M176.5 12l2.5 2.5 4.5-5" stroke="#06291c" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </svg>
+  <p>Route planned across four stops</p>
+</div>
+<script src="base.js"></script>
+</body></html>

@@ -1,0 +1,79 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css">
+<style>
+body { background: radial-gradient(900px 700px at 72% 56%, #143a5f 0%, transparent 65%), #0B1E31 }
+.text { position: absolute; left: 145px; top: 250px; width: 540px; z-index: 3 }
+h1 { font-size: 64px; margin-top: 18px }
+h1 em { font-style: normal; color: var(--cu) }
+.lede { margin-top: 24px; max-width: 470px }
+.ctas { margin-top: 34px }
+.trust { margin-top: 44px; display: flex; gap: 10px; align-items: center; color: var(--f3); font-size: 13.5px }
+.trust b { color: #fff; font-weight: 600 }
+svg.rings { position: absolute; left: 0; top: 0; width: 1440px; height: 900px; z-index: 1 }
+.glow { position: absolute; left: 1020px; top: 505px; width: 560px; height: 560px; margin: -280px; border-radius: 50%; background: radial-gradient(closest-side, rgba(223,151,112,.30), transparent) }
+.phone { position: absolute; left: 1020px; top: 505px; width: 214px; height: 396px; margin: -198px -107px; z-index: 3; border-radius: 34px; padding: 9px; background: linear-gradient(145deg, #3a5470, #172b42 40%, #0e1d2e); box-shadow: 0 0 0 1px rgba(255,255,255,.15), 0 40px 80px rgba(0,0,0,.55), 0 0 60px rgba(223,151,112,.25) }
+.scr { height: 100%; border-radius: 26px; background: #0c1c2d; overflow: hidden; padding: 30px 14px 14px; position: relative }
+.scr:before { content: ""; position: absolute; top: 9px; left: 50%; width: 64px; height: 18px; margin-left: -32px; border-radius: 99px; background: #000 }
+.scr .row { display: flex; justify-content: space-between; align-items: center }
+.scr small { color: var(--f3); font-size: 10.5px }
+.big { font: 600 25px/1.1 Montserrat; margin-top: 4px }
+.up { color: var(--ok); font-size: 10.5px; font-weight: 600 }
+.spark { display: block; width: 100%; height: 44px; margin: 8px 0 12px }
+.item { display: flex; align-items: center; gap: 9px; padding: 8px; border-radius: 10px; background: rgba(255,255,255,.04); margin-top: 6px; font-size: 11.5px }
+.item .th { width: 28px; height: 28px; border-radius: 7px; background: rgba(223,151,112,.16); color: var(--cu); display: grid; place-items: center }
+.item .th i { width: 15px; height: 15px }
+.item span:last-child { margin-left: auto; font-weight: 600 }
+.low { font-size: 8.5px; color: #fff; background: #c98a1c; border-radius: 4px; padding: 1px 5px; margin-left: 4px }
+.go { margin-top: 12px; height: 38px; border-radius: 10px; background: var(--cu); color: var(--n900); font-weight: 600; font-size: 12.5px; display: flex; align-items: center; justify-content: center }
+.chip { position: absolute; z-index: 4; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 10px; padding: 8px 15px 8px 8px; border-radius: 99px; white-space: nowrap; font-size: 14px; font-weight: 500;
+  background: rgba(17,42,68,.95); box-shadow: 0 0 0 1px rgba(255,255,255,.13), 0 14px 30px rgba(0,0,0,.4) }
+.chip .ic { width: 30px; height: 30px; border-radius: 99px; display: grid; place-items: center; background: rgba(223,151,112,.15); color: var(--cu) }
+.chip .ic i { width: 16px; height: 16px }
+.chip.ai { background: var(--cu); color: var(--n900); font-weight: 600 }
+.chip.ai .ic { background: rgba(11,30,49,.15); color: var(--n900) }
+.chip.dim { opacity: .9 }
+</style></head><body>
+<div class="text">
+  <p class="kicker">Your business in a box</p>
+  <h1>Run your whole business <em>from one hand.</em></h1>
+  <p class="lede">Bleaum puts POS, invoicing, inventory, ordering, delivery and AI on one real-time platform.</p>
+  <div class="ctas"><span class="btn cu">Book a demo</span><span class="btn gh">See the product</span></div>
+</div>
+<div class="glow"></div>
+<svg class="rings" id="rings"></svg>
+<div class="phone"><div class="scr">
+  <div class="row"><small>Main Street Store</small><small>Today</small></div>
+  <div class="big">$4,286.40</div>
+  <div class="row"><small>Fulfilled net sales</small><span class="up">▲ 9%</span></div>
+  <svg class="spark" viewBox="0 0 180 44" preserveAspectRatio="none"><defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#DF9770" stop-opacity=".45"/><stop offset="1" stop-color="#DF9770" stop-opacity="0"/></linearGradient></defs>
+    <path d="M0 36 C20 30 30 34 45 26 S70 30 85 20 S110 24 125 14 S155 16 180 6 V44 H0Z" fill="url(#g)"/><path d="M0 36 C20 30 30 34 45 26 S70 30 85 20 S110 24 125 14 S155 16 180 6" fill="none" stroke="#DF9770" stroke-width="2"/></svg>
+  <div class="item"><span class="th"><i data-i="bag"></i></span>Vitamin D3<span>$24.00</span></div>
+  <div class="item"><span class="th"><i data-i="bag"></i></span>Pain Relief<span>$14.00</span></div>
+  <div class="item"><span class="th"><i data-i="bag"></i></span>Allergy Relief<span>$18.00</span></div>
+  <div class="go">Complete Order</div>
+</div></div>
+<div id="chips"></div>
+<script>
+const cx = 1020, cy = 505
+// [label, icon, rx, ry, angle]
+const chips = [
+  ["Point of Sale", "cart", 232, 236, 180], ["Delivery", "truck", 232, 236, 0], ["Bleaum AI", "spark", 232, 236, -90, "ai"],
+  ["Payments", "card", 345, 345, -148], ["Inventory", "box", 345, 345, -112], ["Online store", "store", 345, 345, -50],
+  ["Compliance", "shield", 345, 345, 18], ["Reporting & analytics", "chart", 345, 345, 66], ["Marketing & loyalty", "heart", 345, 345, 118], ["Integrations", "plug", 345, 345, 158],
+]
+const rad = (a) => (a * Math.PI) / 180
+document.getElementById("chips").innerHTML = chips.map(([t, ic, rx, ry, a, cls = ""]) =>
+  `<div class="chip ${cls}" style="left:${cx + rx * Math.cos(rad(a))}px;top:${cy + ry * Math.sin(rad(a))}px"><span class="ic"><i data-i="${ic}"></i></span>${t}</div>`).join("")
+// Dotted orbits (brand halftone dots) + a faint hairline each, plus spokes from each chip into the phone.
+let s = ""
+;[[232, 236, .55, 12], [345, 345, .4, 15], [470, 470, .18, 18]].forEach(([rx, ry, o, gap]) => {
+  s += `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="none" stroke="rgba(255,255,255,.06)"/>`
+  s += `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="none" stroke="#DF9770" stroke-opacity="${o}" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="0 ${gap}"/>`
+})
+chips.forEach(([, , rx, ry, a]) => {
+  const x = cx + rx * Math.cos(rad(a)), y = cy + ry * Math.sin(rad(a))
+  s += `<line x1="${x}" y1="${y}" x2="${cx}" y2="${cy}" stroke="url(#sp)" stroke-width="1.2" stroke-dasharray="2 5"/>`
+})
+document.getElementById("rings").innerHTML = `<defs><radialGradient id="sp" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="360"><stop offset=".3" stop-color="#DF9770" stop-opacity=".0"/><stop offset="1" stop-color="#DF9770" stop-opacity=".55"/></radialGradient></defs>` + s
+</script>
+<script src="base.js"></script>
+</body></html>

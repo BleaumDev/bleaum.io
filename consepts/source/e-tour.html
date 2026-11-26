@@ -1,0 +1,32 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><link rel="stylesheet" href="iso.css"></head><body>
+<div class="text">
+  <p class="kicker">Your business in a box</p>
+  <h1>Run your whole business<br><span class="trail">from one hand.</span></h1>
+  <p class="lede">Bleaum puts POS, invoicing, inventory, ordering, delivery and AI on one real-time platform.</p>
+  <div class="ctas"><span class="btn cu">Book a demo</span><span class="btn gh">See the product</span></div>
+</div>
+<img class="store" src="store.svg" style="left:620px;top:150px;width:780px">
+<div id="cards"></div>
+<script src="iso.js"></script>
+<script>
+const back = layer(1), front = layer(4)
+add(back, DEFS); bloom(back, 1010, 400, 600, { op: .75, x0: 660 })
+// [part x, y, card x, y, card]
+const marks = [
+  [858, 436, 690, 262, card(0, 0, "chart", "Reporting &amp; analytics", "Fulfilled net sales", "$4,286.40")],
+  [1105, 436, 1135, 238, card(0, 0, "box", "Inventory", 'Cough Syrup<span class="low">Low stock</span>')],
+  [1001, 501, 690, 660, card(0, 0, "cart", "Point of Sale", "2 items in cart", "$38.00")],
+  [1192, 626, 1110, 790, card(0, 0, "truck", "Delivery", "Route planned across four stops")],
+]
+let cards = "", lines = ""
+marks.forEach(([px, py, cx, cy, html]) => {
+  cards += html.replace('left:0px;top:0px;', `left:${cx}px;top:${cy}px;`)
+  const tx = cx + 120, ty = cy + 27
+  lines += `<line x1="${px}" y1="${py}" x2="${tx}" y2="${ty}" stroke="#DF9770" stroke-width="1.6" stroke-dasharray="1 6" stroke-linecap="round"/>`
+  lines += `<circle cx="${px}" cy="${py}" r="14" fill="#DF9770" opacity=".22"/><circle cx="${px}" cy="${py}" r="6" fill="#DF9770" stroke="#fff" stroke-width="2"/>`
+})
+add(front, lines)
+document.getElementById("cards").innerHTML = cards
+</script>
+<script src="base.js"></script>
+</body></html>

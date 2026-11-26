@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=block");
+:root {
+  --n950: #071321; --n900: #0B1E31; --n850: #0d2740; --n800: #0F2F4C;
+  --cu: #DF9770; --cu7: #A4572C; --f1: #EAF0F6; --f2: #C9D5E1; --f3: #A9B8C8;
+  --line: rgba(255, 255, 255, .09); --card: rgba(16, 41, 66, .82);
+  --ok: #4fc79a; --warn: #f2b45c;
+}
+* { box-sizing: border-box; margin: 0; padding: 0 }
+html, body { width: 1440px; height: 900px; overflow: hidden }
+body { background: var(--n900); color: #fff; font: 400 15px/1.45 "IBM Plex Sans", system-ui, sans-serif; -webkit-font-smoothing: antialiased; position: relative }
+.util { height: 40px; background: #081624; display: flex; align-items: center; justify-content: space-between; padding: 0 145px; font-size: 13px; color: var(--f2); position: relative; z-index: 6 }
+.nav { height: 76px; display: flex; align-items: center; padding: 0 145px; gap: 30px; position: relative; z-index: 6; border-bottom: 1px solid rgba(255,255,255,.05) }
+.brand { display: flex; align-items: center; gap: 6px; margin-right: 8px }
+.brand img:first-child { width: 30px; height: 30px } .brand img:last-child { height: 16px }
+.nav a { color: var(--f2); font-size: 15px; font-weight: 500; text-decoration: none }
+.nav .btn { margin-left: auto }
+.btn { display: inline-flex; align-items: center; gap: 10px; height: 46px; padding: 0 22px; border-radius: 10px; font-weight: 600; font-size: 15px; white-space: nowrap }
+.btn.cu { background: var(--cu); color: var(--n900) }
+.btn.gh { box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.35); color: #fff }
+.btn svg { width: 16px; height: 16px }
+.kicker { color: var(--cu); font-weight: 600; font-size: 15px }
+h1 { font-family: Montserrat, sans-serif; font-weight: 400; letter-spacing: -.02em; line-height: 1.08 }
+.lede { color: var(--f2); font-size: 20px; line-height: 1.5 }
+.ctas { display: flex; gap: 14px }
+i[data-i] { display: inline-flex; width: 18px; height: 18px; flex: none }
+i[data-i] svg { width: 100%; height: 100% }
+.mono { font-family: "IBM Plex Mono", monospace }

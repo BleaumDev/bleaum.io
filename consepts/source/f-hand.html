@@ -1,0 +1,45 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><link rel="stylesheet" href="iso.css"></head><body>
+<div class="text">
+  <p class="kicker">Your business in a box</p>
+  <h1>Run your whole business<br><span class="trail">from one hand.</span></h1>
+  <p class="lede">Bleaum puts POS, invoicing, inventory, ordering, delivery and AI on one real-time platform.</p>
+  <div class="ctas"><span class="btn cu">Book a demo</span><span class="btn gh">See the product</span></div>
+</div>
+<img class="store" src="store.svg" style="left:800px;top:262px;width:450px;z-index:3;filter:drop-shadow(0 30px 30px rgba(3,10,19,.55))">
+<script src="iso.js"></script>
+<script>
+// Paint a hand silhouette on a hidden canvas, blur it for volume, then turn it into copper halftone dots.
+const c = document.createElement("canvas"); c.width = 1440; c.height = 900
+const x = c.getContext("2d")
+x.fillStyle = x.strokeStyle = "#fff"; x.lineCap = x.lineJoin = "round"
+const seg = (w, ...p) => { x.lineWidth = w; x.beginPath(); x.moveTo(...p[0]); p.slice(1).forEach((q) => x.lineTo(...q)); x.stroke() }
+const curve = (w, a, b, c2, d) => { x.lineWidth = w; x.beginPath(); x.moveTo(...a); x.bezierCurveTo(...b, ...c2, ...d); x.stroke() }
+// Palm-up hand seen from the side: fingers curl up on the left, thumb rises on the right, the box rests between them.
+const K = 8.4, OX = 748, OY = 612 - 27 * K // local y=27 (the palm top) lands at page y=612
+x.setTransform(K, 0, 0, K, OX, OY)
+x.filter = "blur(.6px)"
+x.fill(new Path2D("M104 25 L72 27 C70 20 66 10 60 9 C55 8 53 13 54 18 C55 22 54 26 48 27 L16 27 C10 27 7 24 6 18 C5.5 14 2 13 1.2 16 C0 22 1 30 6 35 C14 42 30 44 50 44 C70 44 88 52 104 62 Z"))
+// stacked finger edges and the knuckle crease
+x.strokeStyle = "rgba(0,0,0,.85)"; x.lineWidth = .95; x.lineCap = "round"
+;["M3.2 24 C7 32 16 35.5 31 36.5", "M4.8 31 C10 37.5 19 39.6 33 40.4", "M34 30 C36 34 36.5 38 35.5 43", "M57 13 C58 18 58 22 56 26"].forEach((d) => x.stroke(new Path2D(d)))
+x.setTransform(1, 0, 0, 1, 0, 0)
+// light from above: the top of the hand is brightest, it falls off toward the underside and the wrist
+x.globalCompositeOperation = "source-atop"; x.filter = "none"
+const g = x.createLinearGradient(0, 520, 0, 900); g.addColorStop(0, "rgba(0,0,0,0)"); g.addColorStop(.45, "rgba(0,0,0,.25)"); g.addColorStop(1, "rgba(0,0,0,.7)")
+x.fillStyle = g; x.fillRect(0, 400, 1440, 500)
+const g2 = x.createLinearGradient(1300, 0, 1440, 0); g2.addColorStop(0, "rgba(0,0,0,0)"); g2.addColorStop(1, "rgba(0,0,0,.5)")
+x.fillStyle = g2; x.fillRect(1300, 400, 140, 500)
+x.globalCompositeOperation = "source-over"
+const img = x.getImageData(0, 0, 1440, 900).data
+const s = layer(2), gap = 9.5
+let h = ""
+for (let yy = 120; yy < 900; yy += gap) for (let xx = 640; xx < 1440; xx += gap) {
+  const i = (Math.round(yy) * 1440 + Math.round(xx)) * 4, a = img[i + 3] / 255, v = (img[i] / 255) * a
+  const r = 4.4 * v
+  if (r > 0.6) h += `<circle cx="${xx.toFixed(1)}" cy="${yy.toFixed(1)}" r="${r.toFixed(2)}"/>`
+}
+add(s, `<g fill="#DF9770">${h}</g>`)
+const back = layer(1); bloom(back, 1040, 330, 520, { op: .2, x0: 660, max: 9 })
+</script>
+<script src="base.js"></script>
+</body></html>
