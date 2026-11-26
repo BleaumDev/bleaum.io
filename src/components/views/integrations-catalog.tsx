@@ -88,13 +88,20 @@ function Logo({ p }: { p: Partner }) {
   )
 }
 
-// Every card stays on the page. A tour walks through the categories on its own: a copper pill slides to the
-// next category, its cards flip forward and glow, and the rest blur back. Cards also tilt toward the pointer.
-// A chip click, or the pause button, takes over from the tour. Reduced motion gets the chips and no tour.
+// Scrolls to a category's first card ("All" goes to the top of the list).
+function scrollToCategory(root: HTMLElement, list: HTMLElement, c: string | null, smooth: boolean) {
+  const card = c ? Array.from(root.querySelectorAll<HTMLElement>("[data-card]")).find((el) => el.dataset.cat === c) : undefined
+  ;(card ?? list).scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: card ? "center" : "start" })
+}
+
+// Every card stays on the page. Picking a category slides a copper pill to it, scrolls to its cards, flips them
+// forward with a glow and blurs the rest back. Cards also tilt toward the pointer. The tour is off until the
+// play button starts it; it then steps through the categories and scrolls along. A chip click stops it.
+// Reduced motion gets the chips and no tour.
 export function IntegrationsCatalog({ partners, groups }: { partners: Partner[]; groups: PartnerGroup[] }) {
   const order = useMemo<(string | null)[]>(() => [null, ...Array.from(new Set(partners.map((p) => p.category)))], [partners])
   const [active, setActive] = useState<string | null>(null)
-  const [playing, setPlaying] = useState(true)
+  const [playing, setPlaying] = useState(false)
   const [inView, setInView] = useState(false)
   const [hover, setHover] = useState(false)
   const reduced = useReducedMotion()
@@ -115,7 +122,7 @@ export function IntegrationsCatalog({ partners, groups }: { partners: Partner[];
     return () => io.disconnect()
   }, [])
 
-  // Tour clock: the bar in the pill fills, then the next category takes over.
+  // Tour clock: the bar in the pill fills, then the next category takes over and the page follows it.
   useEffect(() => {
     gsap.set(bar.current, { scaleX: 0 })
     if (!touring) return
@@ -123,7 +130,11 @@ export function IntegrationsCatalog({ partners, groups }: { partners: Partner[];
       scaleX: 1,
       duration: DWELL,
       ease: "none",
-      onComplete: () => setActive((a) => order[(order.indexOf(a) + 1) % order.length]),
+      onComplete: () => {
+        const next = order[(order.indexOf(active) + 1) % order.length]
+        setActive(next)
+        scrollToCategory(root.current!, list.current!, next, true)
+      },
     })
     return () => {
       t.kill()
@@ -221,12 +232,10 @@ export function IntegrationsCatalog({ partners, groups }: { partners: Partner[];
     return () => mm.revert()
   }, [])
 
-  // A chip click also scrolls to that category's first card ("All" goes to the top of the list).
   const pick = (c: string | null) => {
     setPlaying(false)
     setActive(c)
-    const card = c ? Array.from(root.current!.querySelectorAll<HTMLElement>("[data-card]")).find((el) => el.dataset.cat === c) : undefined
-    ;(card ?? list.current)?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: card ? "center" : "start" })
+    scrollToCategory(root.current!, list.current!, c, !reduced)
   }
 
   return (

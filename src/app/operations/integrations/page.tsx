@@ -25,18 +25,20 @@ const tileGroups: { title: string; items: Tile[] }[] = [
     title: "General integrations",
     items: [
       { name: "QuickBooks", logo: "/integrations/quickbooks.png", category: "Coming Soon" },
-      { name: "Lightspeed", logo: "/integrations/lightspeed.png", category: "POS" },
+      // No longer a client
+      // { name: "Lightspeed", logo: "/integrations/lightspeed.png", category: "POS" },
       { name: "Google Analytics", logo: "/integrations/googleanalytics.png", category: "Analytics" },
     ],
   },
   {
     title: "Regulated retail integrations",
     items: [
-      { name: "Treez", logo: "/integrations/treez.png", category: "POS" },
-      { name: "Cova", logo: "/integrations/cova.png", category: "POS" },
-      { name: "Indica Online", logo: "/integrations/indicaonlinr.png", category: "POS" },
-      { name: "GrowFlow", logo: "/integrations/growflow1.png", category: "Inventory" },
-      { name: "Weave", logo: "/integrations/weave.png", category: "CRM" },
+      // No longer clients
+      // { name: "Treez", logo: "/integrations/treez.png", category: "POS" },
+      // { name: "Cova", logo: "/integrations/cova.png", category: "POS" },
+      // { name: "Indica Online", logo: "/integrations/indicaonlinr.png", category: "POS" },
+      // { name: "GrowFlow", logo: "/integrations/growflow1.png", category: "Inventory" },
+      // { name: "Weave", logo: "/integrations/weave.png", category: "CRM" },
       { name: "Leafly", logo: "/integrations/leafly.png", category: "Marketplace" },
       { name: "Weedmaps", logo: "/integrations/weedmaps.png", category: "Marketplace" },
       { name: "Springbig", logo: "/integrations/springbig.png", category: "Loyalty" },
@@ -105,6 +107,7 @@ const partners: Partner[] = [
     status: "Active",
     group: "regulated",
   },
+  /* No longer clients: GrowFlow, Lightspeed, Treez, Cova, Indica Online, Weave
   {
     name: "GrowFlow",
     category: "INVENTORY",
@@ -159,6 +162,7 @@ const partners: Partner[] = [
     status: "Active",
     group: "regulated",
   },
+  */
   {
     name: "Leafly",
     category: "MARKETPLACE",
@@ -263,8 +267,33 @@ const benefits: { title: string; text: string }[] = [
   },
 ]
 
+// Partnerships orbit: integrations sit on an ellipse around the Bleaum hub (SVG units, 1000×620 box).
+// Each node draws its own line to the hub, so hovering a node lights its line. Below lg it is a plain grid.
+const [generalTiles, regulatedTiles, programTiles] = tileGroups
+const W = 1000
+const H = 620
+const CX = 500
+const CY = 290
+const round = (v: number) => Math.round(v * 10) / 10
+const orbit = [...generalTiles.items, ...regulatedTiles.items].map((t, i, all) => {
+  // General integrations start just left of top, so they sit as a pair at 12 o'clock.
+  const a = ((-90 - 180 / all.length + (360 / all.length) * i) * Math.PI) / 180
+  const x = CX + 400 * Math.cos(a)
+  const y = CY + 215 * Math.sin(a)
+  // Curve the line a little off the straight path.
+  const qx = (x + CX) / 2 - (CY - y) * 0.18
+  const qy = (y + CY) / 2 + (CX - x) * 0.18
+  return {
+    ...t,
+    general: i < generalTiles.items.length,
+    live: t.category !== "Coming Soon",
+    left: `${round((x / W) * 100)}%`,
+    top: `${round((y / H) * 100)}%`,
+    d: `M${round(x)} ${round(y)} Q${round(qx)} ${round(qy)} ${CX} ${CY}`,
+  }
+})
 // White tile so dark logos stay readable in dark mode.
-const logoTile = "relative size-16 rounded-ctl bg-white sm:size-20"
+const logoTile = "relative size-14 shrink-0 rounded-ctl bg-white transition-transform duration-300 ease-soft group-hover:scale-110"
 
 export default function IntegrationsPage() {
   return (
@@ -311,27 +340,86 @@ export default function IntegrationsPage() {
               Microsoft for Startups and AWS.
             </p>
           </div>
-          <div className="mt-10 grid gap-10">
-            {tileGroups.map((g) => (
-              <div key={g.title}>
-                <h3 {...ui.rv(0, ui.h3)}>{g.title}</h3>
-                <ul className="mt-5 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-6">
-                  {g.items.map((t, i) => (
-                    <li key={t.name} {...ui.rv(i % 6)}>
-                      <div className={`${ui.lift} flex h-full flex-col items-center rounded-card border border-h-line bg-h-surface p-4 text-center`}>
-                        <div className={logoTile}>
-                          <Image src={t.logo} alt={`${t.name} Logo`} fill sizes="80px" className="object-contain p-2" />
-                        </div>
-                        <p className="mt-3 font-display text-[.9375rem] font-medium leading-[1.3]">{t.name}</p>
-                        <span className="mt-2 rounded-full bg-h-surface2 px-3 py-1 text-[.75rem] font-semibold text-h-accent">
-                          {t.category}
-                        </span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          {/* Legend: the two integration groups, told apart by the ring around each logo */}
+          <div {...ui.rv(0, "mt-8 flex flex-wrap gap-x-8 gap-y-3")}>
+            {[generalTiles, regulatedTiles].map((g, i) => (
+              <h3 key={g.title} className={`${ui.label} flex items-center gap-2.5 text-[1rem]`}>
+                <span className={`size-2.5 rounded-full ${i ? "bg-fog-300" : "bg-copper-400"}`} aria-hidden="true" />
+                {g.title}
+              </h3>
             ))}
+          </div>
+
+          <div {...ui.rv(1, "relative mt-8 lg:mx-auto lg:mt-4 lg:aspect-[1000/620] lg:max-w-[1000px]")}>
+            {/* Glow and a slowly turning dotted orbit */}
+            <div className="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden="true">
+              <div className="absolute left-1/2 top-[46.8%] size-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(223,151,112,.16),transparent)]" />
+              <svg viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 size-full" fill="none">
+                <ellipse cx={CX} cy={CY} rx={400} ry={215} pathLength={100} strokeDasharray=".25 1.25" strokeLinecap="round" strokeWidth={2} className="animate-[flow_120s_linear_infinite] stroke-h-line" />
+              </svg>
+            </div>
+
+            <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:block">
+              {orbit.map((t, i) => (
+                <li key={t.name} className="group">
+                  {/* Line to the hub; a copper pulse runs along it (in or out) while the integration is live */}
+                  <svg viewBox={`0 0 ${W} ${H}`} className="pointer-events-none absolute inset-0 hidden size-full lg:block" fill="none" aria-hidden="true">
+                    <path d={t.d} strokeWidth={1.5} strokeDasharray={t.live ? undefined : "4 6"} className="stroke-h-line transition-[stroke] duration-300 group-hover:stroke-copper-400" />
+                    {t.live && (
+                      <path
+                        d={t.d}
+                        pathLength={100}
+                        strokeWidth={3}
+                        strokeLinecap="round"
+                        strokeDasharray="5 95"
+                        className={`animate-flow stroke-copper-400 ${i % 2 ? "[animation-direction:reverse]" : ""}`}
+                        style={{ animationDelay: `${-i * 0.45}s` }}
+                      />
+                    )}
+                  </svg>
+                  <div
+                    className="flex h-full flex-col items-center rounded-card border border-h-line bg-h-surface p-4 text-center lg:absolute lg:z-10 lg:h-auto lg:w-40 lg:-translate-x-1/2 lg:-translate-y-7 lg:border-0 lg:bg-transparent lg:p-0"
+                    style={{ left: t.left, top: t.top }}
+                  >
+                    <div className={`${logoTile} ring-2 ring-offset-4 ring-offset-h-surface lg:ring-offset-h-bg ${t.general ? "ring-copper-400" : "ring-fog-300/50"}`}>
+                      <Image src={t.logo} alt={`${t.name} Logo`} fill sizes="56px" className="object-contain p-2" />
+                    </div>
+                    <p className="mt-4 font-display text-[.9375rem] font-medium leading-[1.3] lg:[text-shadow:0_0_6px_var(--h-bg),0_0_12px_var(--h-bg)]">
+                      {t.name}
+                      <span className="sr-only">, {t.general ? generalTiles.title : regulatedTiles.title}</span>
+                    </p>
+                    <span className="mt-1.5 rounded-full bg-h-surface2 px-3 py-1 text-[.75rem] font-semibold text-h-accent">
+                      {t.category}
+                    </span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            {/* Bleaum hub */}
+            <div className="absolute left-1/2 top-[46.8%] z-20 hidden size-32 -translate-x-1/2 -translate-y-1/2 place-items-center lg:grid" aria-hidden="true">
+              <span className="absolute inset-0 animate-halo rounded-full border border-copper-400/70" />
+              <span className="absolute inset-0 animate-halo rounded-full border border-copper-400/70 [animation-delay:1.6s]" />
+              <span className="relative grid size-full place-items-center rounded-full border border-white/15 bg-navy-900 shadow-[0_24px_64px_-20px_rgba(223,151,112,.55)]">
+                <Image src="/brand/bleaum-dots.svg" alt="" width={72} height={72} className="size-[4.5rem]" />
+              </span>
+            </div>
+          </div>
+
+          {/* Programs and memberships: one hairline strip */}
+          <div className="mt-14 lg:mt-10">
+            <h3 {...ui.rv(0, ui.h3)}>{programTiles.title}</h3>
+            <ul {...ui.rv(1, "mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-card border border-h-line bg-h-line sm:grid-cols-3 lg:grid-cols-6")}>
+              {programTiles.items.map((t) => (
+                <li key={t.name} className="group flex flex-col items-center bg-h-surface px-3 py-6 text-center transition-colors duration-300 hover:bg-h-surface2">
+                  <div className={logoTile}>
+                    <Image src={t.logo} alt={`${t.name} Logo`} fill sizes="56px" className="object-contain p-2" />
+                  </div>
+                  <p className="mt-3 font-display text-[.9375rem] font-medium leading-[1.3]">{t.name}</p>
+                  <span className="mt-1 text-[.75rem] font-semibold text-h-accent">{t.category}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>

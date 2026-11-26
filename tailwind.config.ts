@@ -104,6 +104,9 @@ const config = {
         show: { "0%, 49%": { opacity: "0" }, "50%": { opacity: "1" } },
         lift: { from: { transform: "translateY(140%) rotate(4deg)" } },
         trail: { from: { clipPath: "inset(0 100% 0 0)" } },
+        // Integrations orbit: a dash runs along a path (pathLength=100), the hub rings spread out and fade.
+        flow: { from: { strokeDashoffset: "100" }, to: { strokeDashoffset: "0" } },
+        halo: { from: { transform: "scale(1)", opacity: ".7" }, to: { transform: "scale(1.9)", opacity: "0" } },
       },
       animation: {
         rise: "rise .7s cubic-bezier(.2, .7, .2, 1) both",
@@ -113,6 +116,8 @@ const config = {
         lift: "lift .9s cubic-bezier(.25, 1.25, .5, 1) both",
         trail: "trail 1.1s cubic-bezier(.6, 0, .2, 1) both",
         "menu-in": "menu-in .18s cubic-bezier(.2, .7, .2, 1) both",
+        flow: "flow 3.6s linear infinite",
+        halo: "halo 3.2s cubic-bezier(.2, .7, .2, 1) infinite",
       },
     },
   },
