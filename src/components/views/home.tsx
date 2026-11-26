@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react"
+import { Fragment, type CSSProperties, type ReactNode } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { DemoLink } from "./home-client"
@@ -6,16 +6,28 @@ import { HomeFx } from "./home-fx"
 import * as ui from "./home-ui"
 import * as c from "./home-content"
 import { Bloom } from "./bloom"
-// TEMP: isometric hero illustration disabled; old phone POS shown instead. Re-enable with the HeroScene block below + home-fx.tsx.
-// import { HeroScene } from "./hero-animation/hero-scene"
+import { HeroScene } from "./hero-animation/hero-scene"
 import { AiArt, GalleryArt, TrustArt, WhyArt } from "./home-art"
 
 // Marks an element for the scroll reveal in home-fx.tsx. `cls` is the element's own classes.
 const rv = (cls = "") => ({ "data-fx": "reveal", className: cls })
 // Same, but the block slides in from one side (-1 left, 1 right) on wide screens.
 const slide = (dir: number) => ({ "data-fx": "slide", "data-dir": dir })
-// Staggers the entrance animation of hero items.
-const rise = (i: number) => ({ style: { animationDelay: `${i * 90}ms` } as CSSProperties })
+// Delays a hero item's entrance animation by `ms`.
+const at = (ms: number) => ({ style: { animationDelay: `${ms}ms` } as CSSProperties })
+
+// Hero headline: each word lifts out of its own slot, one after another, like things taken out of a box.
+// CSS only, so it plays on first paint, before the script loads.
+function Lift({ text, from }: { text: string; from: number }) {
+  return text.split(" ").map((w, i) => (
+    <Fragment key={i}>
+      {i > 0 && " "}
+      <span className="inline-block [clip-path:inset(-50%_-20%_-.15em_-20%)]">
+        <span {...at(from + i * 70)} className="inline-block origin-bottom-left animate-lift">{w}</span>
+      </span>
+    </Fragment>
+  ))
+}
 
 function DotMark({ small }: { small?: boolean }) {
   return <span data-fx="dot" className={small ? ui.dotmarkSm : ui.dotmark} aria-hidden="true" />
@@ -146,60 +158,34 @@ export default function HomeView() {
         </div>
         <div data-fx="drift" className={`${ui.wrap} relative grid items-center gap-12 py-hero lg:grid-cols-[6fr_5fr] xl:grid-cols-[4fr_5fr] [&>*]:min-w-0`}>
           <div>
-            <p {...rise(0)} className={`${ui.kicker} text-copper-400 animate-rise`}>{hero.kicker}</p>
-            <h1 id="hero-h" {...rise(1)} className={`${ui.h1} animate-rise`}>
-              {hero.titleLine1}
+            {/* A strip of copper packing tape runs across the kicker, then peels off to show it */}
+            <p
+              className={`${ui.kicker} relative w-fit text-copper-400 before:absolute before:-inset-x-2 before:-inset-y-0.5 before:scale-x-0 before:rounded-[3px] before:bg-copper-400 before:animate-tape`}
+            >
+              <span className="animate-show">{hero.kicker}</span>
+            </p>
+            <h1 id="hero-h" className={ui.h1}>
+              <Lift text={hero.titleLine1} from={300} />
               <br />
-              {hero.titleLine2}
+              <span className="relative inline-block">
+                <Lift text={hero.titleLine2} from={580} />
+                {/* Dotted copper trail, like the van's road in the scene, drawn in under the last line */}
+                <span
+                  {...at(1250)}
+                  aria-hidden="true"
+                  className="absolute -bottom-[.14em] left-[.04em] right-[-.6em] h-[.12em] animate-trail bg-[radial-gradient(circle,#DF9770_45%,transparent_52%)] bg-[length:.26em_100%] [mask-image:linear-gradient(90deg,#000_55%,transparent)]"
+                />
+              </span>
             </h1>
-            <p {...rise(2)} className="mt-5 max-w-[44ch] text-[1.25rem] leading-[1.5] text-fog-200 animate-rise">{hero.lede}</p>
-            <div {...rise(3)} data-fx="magnet" className={`${ui.actions} mt-8 animate-rise`}>
+            <p {...at(950)} className="mt-6 max-w-[44ch] text-[1.25rem] leading-[1.5] text-fog-200 animate-rise">{hero.lede}</p>
+            <div {...at(1100)} data-fx="magnet" className={`${ui.actions} mt-8 animate-rise`}>
               <DemoLink className={`${ui.btnCopper} ${ui.stack}`}>{hero.primaryCta}</DemoLink>
               <Link href={hero.secondaryHref} className={`${ui.btnGhost} ${ui.stack}`}>
                 {hero.secondaryCta}
               </Link>
             </div>
           </div>
-          {/* <HeroScene /> */}
-          <div data-fx="tilt" {...rise(2)} className="w-[min(100%,340px)] animate-rise justify-self-center">
-            <div
-              data-fx="phone"
-              className="rounded-[34px] bg-navy-950 p-3.5 text-fog-100 shadow-[inset_0_0_0_1.5px_rgba(255,255,255,.22),0_40px_100px_-30px_rgba(223,151,112,.45)]"
-              role="img"
-              aria-label={hero.pos.alt}
-            >
-              <div className="mb-3 flex gap-1 text-[.75rem]">
-                {hero.pos.tabs.map((t, i) => (
-                  <span key={t} className={`rounded-full px-2.5 py-1.5 ${i === 0 ? "bg-white/[.12] text-white" : "text-fog-300"}`}>
-                    {t}
-                  </span>
-                ))}
-              </div>
-              <div data-fx="pos-items" className="grid grid-cols-2 gap-2">
-                {hero.pos.items.map((it) => (
-                  <div
-                    key={it.name}
-                    className="relative flex min-h-24 flex-col justify-end gap-0.5 rounded-xl bg-white/[.06] p-2.5 text-[.8125rem] transition-colors duration-200 before:absolute before:inset-x-2.5 before:top-2.5 before:h-[38px] before:bg-[radial-gradient(circle,rgba(223,151,112,.55)_1.4px,transparent_1.9px)] before:bg-[length:8px_8px] before:[mask-image:linear-gradient(#000,transparent)] before:[-webkit-mask-image:linear-gradient(#000,transparent)] hover:bg-white/10"
-                  >
-                    <b className="font-semibold">{it.name}</b>
-                    <i className="not-italic text-fog-300">
-                      {it.price}
-                      {it.low && (
-                        <>
-                          {" · "}
-                          <span className="font-semibold text-copper-400">Low stock</span>
-                        </>
-                      )}
-                    </i>
-                  </div>
-                ))}
-              </div>
-              <div data-fx="pos-cart" className="mt-3 flex justify-between rounded-xl bg-copper-400 px-3.5 py-[13px] text-[.875rem] font-semibold text-navy-900">
-                <span>{hero.pos.cart.label}</span>
-                <span>{hero.pos.cart.total}</span>
-              </div>
-            </div>
-          </div>
+          <HeroScene />
         </div>
       </section>
 

@@ -8,7 +8,7 @@ const along = (d: number) => ({ x: d * 0.866, y: d * 0.5 })
 
 const AWAY = 900 // px below its place: past the section's bottom edge at every width
 
-// Brings the Home hero art (hero-scene.tsx) to life: the box unfolds once, then one sale plays on repeat.
+// Brings the Home hero art (hero-scene.tsx) to life: the box drops in and unfolds once, then one sale plays on repeat.
 // Tablet rises -> two products tapped into the cart -> Complete Order -> tablet leaves -> order reaches the counter -> bag packed -> loaded -> van leaves -> restock -> van returns.
 // Runs inside home-fx's reduced-motion gsap.matchMedia, which reverts every tween made here.
 export function heroScene(root: HTMLElement, bloom: Element) {
@@ -16,8 +16,21 @@ export function heroScene(root: HTMLElement, bloom: Element) {
   const svg = root.querySelector("svg")!
   const panels = [...root.querySelectorAll("[data-panel]")]
 
+  // Light ripples out from the middle of the dot field behind the box.
+  const dots = [...bloom.querySelectorAll("circle")]
+  const num = (el: Element, a: string) => +el.getAttribute(a)!
+  const base = dots.map((d) => num(d, "r"))
+  const far = dots.map((d) => Math.hypot(num(d, "cx") - 380, num(d, "cy") - 380))
+  const ripple = () =>
+    gsap
+      .timeline()
+      .to(dots, { attr: { r: (i: number) => base[i] * 1.4 }, duration: 0.4, ease: "sine.inOut", stagger: (i: number) => far[i] * 0.0032 })
+      .to(dots, { attr: { r: (i: number) => base[i] }, duration: 0.7, ease: "sine.inOut", stagger: (i: number) => far[i] * 0.0032 }, 0.4)
+
   // Every load starts from the shut box: CSS keeps the art hidden until this shows it, however late the script runs.
+  // The box is dropped in: it falls, lands with a squash that sends a ripple through the dot field, then shakes and opens.
   const intro = gsap.timeline()
+  const fall = svg.clientWidth * 0.25
   // The tablet is hidden by CSS on load, so moving it below the section and showing it in one step never flashes it.
   gsap.set(q("tablet"), { y: AWAY, opacity: 1, transformPerspective: 1500 })
   const box = { wall: 0, flap: 0 }
@@ -29,15 +42,21 @@ export function heroScene(root: HTMLElement, bloom: Element) {
     })
   draw()
   intro
-    .fromTo(q("stage"), { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0)
+    .fromTo(q("stage"), { opacity: 0 }, { opacity: 1, duration: 0.25 }, 0)
+    .fromTo(q("stage"), { y: -fall }, { y: 0, duration: 0.55, ease: "power3.in" }, 0)
+    .fromTo(q("shadow"), { opacity: 0, scale: 0.4, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.55, ease: "power3.in" }, 0)
+    .to(q("stage"), { scaleX: 1.05, scaleY: 0.9, transformOrigin: "50% 81%", duration: 0.09, ease: "power2.out" }, 0.55)
+    .to(q("stage"), { scaleX: 1, scaleY: 1, duration: 0.7, ease: "elastic.out(1, 0.35)" }, 0.64)
+    .add(ripple(), 0.55)
     .set(q("lid"), { opacity: 1 }, 0)
     .set([q("print"), q("road")].flat(), { opacity: 0 }, 0)
     .set(q("pop"), { scale: 0, transformOrigin: "50% 100%" }, 0)
     .set(q("awning"), { scaleY: 0, transformOrigin: "50% 0%" }, 0)
     .set(q("van"), { ...along(360), opacity: 0 }, 0)
-    .fromTo(svg, { rotation: -1.4, transformOrigin: "50% 80%" }, { rotation: 1.4, duration: 0.08, repeat: 6, yoyo: true, ease: "sine.inOut" }, 0.7)
-    .to(svg, { rotation: 0, duration: 0.1 })
-    .addLabel("open")
+    .fromTo(svg, { rotation: -1.4, transformOrigin: "50% 80%" }, { rotation: 1.4, duration: 0.08, repeat: 6, yoyo: true, ease: "sine.inOut" }, 1.15)
+    // ">" keys off the shake: the landing ripple runs on longer and would push a plain append back.
+    .to(svg, { rotation: 0, duration: 0.1 }, ">")
+    .addLabel("open", ">")
     .to(q("lid"), { opacity: 0, duration: 0.15 }, "open")
     .to(box, { flap: 1, duration: 0.8, ease: "back.out(1.5)", onUpdate: draw }, "open")
     .to(box, { wall: 90, duration: 1, ease: "bounce.out", onUpdate: draw }, "open+=0.35")
@@ -47,20 +66,6 @@ export function heroScene(root: HTMLElement, bloom: Element) {
     .to(q("road"), { opacity: 1, duration: 0.4 }, "open+=1.3")
     .to(q("van"), { opacity: 1, duration: 0.2 }, "open+=1.4")
     .to(q("van"), { x: 0, y: 0, duration: 1.3, ease: "power2.out" }, "open+=1.4")
-
-  // Light ripples out from the middle of the dot field behind the box.
-  const dots = [...bloom.querySelectorAll("circle")]
-  const num = (el: Element, a: string) => +el.getAttribute(a)!
-  const base = dots.map((d) => num(d, "r"))
-  const far = dots.map((d) => Math.hypot(num(d, "cx") - 380, num(d, "cy") - 380))
-  const ripple = gsap.timeline()
-  ripple.to(dots, {
-    attr: { r: (i: number) => base[i] * 1.4 },
-    duration: 0.4,
-    ease: "sine.inOut",
-    stagger: (i: number) => far[i] * 0.0032,
-  })
-  ripple.to(dots, { attr: { r: (i: number) => base[i] }, duration: 0.7, ease: "sine.inOut", stagger: (i: number) => far[i] * 0.0032 }, 0.4)
 
   const story = gsap.timeline({ repeat: -1, repeatDelay: 1, delay: intro.duration() + 0.3, defaults: { immediateRender: false } })
 
@@ -165,7 +170,7 @@ export function heroScene(root: HTMLElement, bloom: Element) {
   story
     .fromTo(q("till"), { attr: { fill: "#DF9770" } }, { attr: { fill: "#071321" }, duration: 0.7 }, 7.35)
     .fromTo(q("pay"), { fill: "#DF9770" }, { fill: "#FFFFFF", duration: 0.15, repeat: 3, yoyo: true }, 7.35)
-    .add(ripple, 7.35)
+    .add(ripple(), 7.35)
     .fromTo(q("receipt"), { y: 28, opacity: 1 }, { y: 0, opacity: 1, duration: 0.8, ease: "steps(6)" }, 7.45)
     .set(q("packed"), { scale: 0, transformOrigin: "50% 50%" }, 7.4)
     .fromTo(q("ticket"), { opacity: 1, scale: 0, transformOrigin: "50% 100%" }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2)" }, 7.6)

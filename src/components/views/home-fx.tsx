@@ -4,8 +4,7 @@ import { useEffect } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { SplitText } from "gsap/SplitText"
-// TEMP: hero scene animation disabled; old phone animation below. Re-enable with HeroScene in home.tsx.
-// import { heroScene } from "./hero-animation/hero-scene-fx"
+import { heroScene } from "./hero-animation/hero-scene-fx"
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
@@ -136,15 +135,10 @@ export function HomeFx() {
         return [[el, el.textContent!] as const]
       })
 
-      // heroScene(fx("scene")[0], fx("bloom")[0])
+      heroScene(fx("scene")[0], fx("bloom")[0])
 
-      // Phone items pop in after the hero text, then the phone floats and the hero drifts as it scrolls away.
-      gsap
-        .timeline({ delay: 0.5 })
-        .from(fx("pos-items")[0].children, { opacity: 0, scale: 0.9, y: 14, duration: 0.5, stagger: 0.07, ease: "back.out(1.6)" })
-        .from(fx("pos-cart"), { opacity: 0, y: 16, duration: 0.4, ease: "power2.out" }, "-=0.2")
-      gsap.to(fx("phone"), { y: -8, duration: 2.4, ease: "sine.inOut", yoyo: true, repeat: -1 })
-      // gsap.to(fx("tablet"), { y: -8, duration: 2.4, ease: "sine.inOut", yoyo: true, repeat: -1 })
+      // The tablet floats and the hero drifts as it scrolls away.
+      gsap.to(fx("tablet"), { y: -8, duration: 2.4, ease: "sine.inOut", yoyo: true, repeat: -1 })
       gsap.to(fx("drift"), {
         y: 70,
         ease: "none",
@@ -171,8 +165,6 @@ export function HomeFx() {
         area.addEventListener("pointerleave", leave)
         off.push(() => (area.removeEventListener("pointermove", move), area.removeEventListener("pointerleave", leave)))
       }
-      lean(fx("tilt")[0], fx("hero")[0], 14, 10)
-
       // Cards also hand the pointer position to their CSS spotlight (--mx / --my).
       all("[data-card]").forEach((el) => {
         lean(el, el, 8, 8)

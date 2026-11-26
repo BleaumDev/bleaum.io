@@ -325,7 +325,7 @@ function Scene() {
         <clipPath id="hs-slot"><rect x={60} y={-140} width={140} height={84} /></clipPath>
       </defs>
 
-      <ellipse cx={330} cy={452} rx={370} ry={132} fill="url(#hs-shadow)" />
+      <ellipse {...s("shadow")} cx={330} cy={452} rx={370} ry={132} fill="url(#hs-shadow)" />
 
       {/* Road the van leaves on */}
       <g fill="#DF9770" {...s("road")}>
