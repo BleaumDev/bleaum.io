@@ -1,13 +1,13 @@
-<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><link rel="stylesheet" href="iso.css"></head><body>
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../_shared/base.css"><link rel="stylesheet" href="../_shared/iso.css"></head><body>
 <div class="text">
   <p class="kicker">Your business in a box</p>
   <h1>Run your whole business<br><span class="trail">from one hand.</span></h1>
   <p class="lede">Bleaum puts POS, invoicing, inventory, ordering, delivery and AI on one real-time platform.</p>
   <div class="ctas"><span class="btn cu">Book a demo</span><span class="btn gh">See the product</span></div>
 </div>
-<img class="store" src="store.svg" style="left:780px;top:250px;width:400px;z-index:3">
+<img class="store" src="../_shared/store.svg" style="left:780px;top:250px;width:400px;z-index:3">
 <div id="cards"></div>
-<script src="iso.js"></script>
+<script src="../_shared/iso.js"></script>
 <script>
 const back = layer(1), front = layer(4)
 add(back, DEFS)
@@ -38,5 +38,5 @@ cards.forEach(([px, py, c, cx, cy]) => {
 add(front, lines)
 document.getElementById("cards").innerHTML = html
 </script>
-<script src="base.js"></script>
+<script src="../_shared/base.js"></script>
 </body></html>

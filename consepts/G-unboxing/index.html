@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><link rel="stylesheet" href="iso.css">
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../_shared/base.css"><link rel="stylesheet" href="../_shared/iso.css">
 <style>
 .top { position: absolute; left: 0; right: 0; top: 150px; text-align: center; z-index: 5; display: flex; flex-direction: column; align-items: center }
 .top h1 { font-size: 58px; margin-top: 14px }
@@ -16,9 +16,9 @@
   <p class="lede">Bleaum puts POS, invoicing, inventory, ordering, delivery and AI on one real-time platform.</p>
   <div class="ctas"><span class="btn cu">Book a demo</span><span class="btn gh">See the product</span></div>
 </div>
-<img class="store" src="store.svg" style="left:450px;top:436px;width:540px;z-index:3">
+<img class="store" src="../_shared/store.svg" style="left:450px;top:436px;width:540px;z-index:3">
 <div id="chips"></div>
-<script src="iso.js"></script>
+<script src="../_shared/iso.js"></script>
 <script>
 const back = layer(1), mid = layer(4)
 bloom(back, 720, 660, 600, { op: .32, y0: 440 })
@@ -40,5 +40,5 @@ document.getElementById("chips").innerHTML = chips.map(([t, ic, x, y]) => `<div 
 // a few loose sparkles above the opening
 ;[[650, 470, 3], [790, 455, 2.4], [700, 430, 2], [760, 500, 2.8], [610, 520, 2]].forEach(([x, y, r]) => add(mid, `<circle cx="${x}" cy="${y}" r="${r}" fill="#FFE2C6"/>`))
 </script>
-<script src="base.js"></script>
+<script src="../_shared/base.js"></script>
 </body></html>

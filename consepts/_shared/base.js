@@ -24,6 +24,6 @@ const svg = (k) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 document.querySelectorAll("i[data-i]").forEach((el) => (el.innerHTML = svg(el.dataset.i)))
 document.body.insertAdjacentHTML("afterbegin", `
 <div class="util"><span>Your business in a box.</span><span>Support</span></div>
-<div class="nav"><span class="brand"><img src="bleaum-dots.svg"><img src="bleaum-wordmark.svg"></span>
+<div class="nav"><span class="brand"><img src="../_shared/bleaum-dots.svg"><img src="../_shared/bleaum-wordmark.svg"></span>
 <a>Integrations</a><a>Industries</a><a>Product</a><a>Resources</a><a>Company</a>
 <span class="btn cu">Book a demo ${svg("arrow")}</span></div>`)

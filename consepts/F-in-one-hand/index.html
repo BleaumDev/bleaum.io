@@ -1,12 +1,12 @@
-<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><link rel="stylesheet" href="iso.css"></head><body>
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../_shared/base.css"><link rel="stylesheet" href="../_shared/iso.css"></head><body>
 <div class="text">
   <p class="kicker">Your business in a box</p>
   <h1>Run your whole business<br><span class="trail">from one hand.</span></h1>
   <p class="lede">Bleaum puts POS, invoicing, inventory, ordering, delivery and AI on one real-time platform.</p>
   <div class="ctas"><span class="btn cu">Book a demo</span><span class="btn gh">See the product</span></div>
 </div>
-<img class="store" src="store.svg" style="left:800px;top:262px;width:450px;z-index:3;filter:drop-shadow(0 30px 30px rgba(3,10,19,.55))">
-<script src="iso.js"></script>
+<img class="store" src="../_shared/store.svg" style="left:800px;top:262px;width:450px;z-index:3;filter:drop-shadow(0 30px 30px rgba(3,10,19,.55))">
+<script src="../_shared/iso.js"></script>
 <script>
 // Paint a hand silhouette on a hidden canvas, blur it for volume, then turn it into copper halftone dots.
 const c = document.createElement("canvas"); c.width = 1440; c.height = 900
@@ -41,5 +41,5 @@ for (let yy = 120; yy < 900; yy += gap) for (let xx = 640; xx < 1440; xx += gap)
 add(s, `<g fill="#DF9770">${h}</g>`)
 const back = layer(1); bloom(back, 1040, 330, 520, { op: .2, x0: 660, max: 9 })
 </script>
-<script src="base.js"></script>
+<script src="../_shared/base.js"></script>
 </body></html>
